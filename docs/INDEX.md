@@ -8,6 +8,8 @@
 | `AI_ARCHITECTURE.md` | Pipeline-ul asistentului, politica de refuz, baza de cunoștințe, măsurători reale |
 | `LIVE_ACTIVITIES.md` | Cardul de pe ecranul blocat: fișiere, contractul de date, fluxul, testarea |
 | `NOTIFICARI.md` | Notificările push: abonare, mediul APNs, test din laptop |
+| `DATE_DINAMICE.md` | Ce vine de la backend și de la tracker față de ce afișează aplicația, ce e dinamic și ce lipsește |
+| `INTREBARI_TEST_AI.md` | Întrebările de test pentru asistent, cu răspunsul așteptat |
 | `SHARE_FLIGHT.md` | Partajarea zborului cu familia: pagina web, contractul serverului, confidențialitate, prompt pentru backend |
 | `IOS_BUILD.md` | Build pe Mac mini comandat din laptop: pași, semnare, depanare |
 | `REPRODUCE.md` | Reproducerea verificărilor, cu timpii măsurați |
