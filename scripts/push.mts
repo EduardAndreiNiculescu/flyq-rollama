@@ -5,6 +5,8 @@
  *   npx tsx scripts/push.mts event gate_changed --gate 3 --old 2
  *   npx tsx scripts/push.mts event delay_changed --delay 25
  *   npx tsx scripts/push.mts event boarding_started
+ *   npx tsx scripts/push.mts card --status boarding --gate 7 --boarding 08:35     (Live Activity card; needs ACTIVITY_TOKEN, also in .env.local)
+ *   npx tsx scripts/push.mts card end --status departed
  *   npx tsx scripts/push.mts demo            (boarding, gate change, delay, gate closing: one every 4 seconds, for the stage)
  *
  * Secrets: FLYQ_ADMIN_TOKEN (the server's admin token, from whoever runs the server) and DEVICE_TOKEN (shown in the app: Profil > Mod test >
@@ -71,6 +73,30 @@ if (cmd === 'test') {
   if (flag('belt')) data.baggageBelt = flag('belt');
   if (flag('delay')) data.delayMinutes = Number(flag('delay'));
   process.exitCode = (await event(name, data)) ? 0 : 1;
+} else if (cmd === 'card') {
+  // Sets the Live Activity card directly (POST /v1/admin/push/liveactivity/test), without a flight event. The state is what the card shows.
+  const activity = get('ACTIVITY_TOKEN');
+  if (!activity) {
+    console.error('Lipseste ACTIVITY_TOKEN (token-ul cardului: apare in Mod test dupa "Porneste cardul"; pune-l in .env.local).');
+    process.exit(2);
+  }
+  const kind = rest[0] === 'end' ? 'end' : 'update';
+  const delay = Number(flag('delay') ?? 0);
+  const contentState = {
+    status: flag('status') ?? (delay > 0 ? 'delayed' : 'scheduled'),
+    gate: flag('gate') ?? null,
+    boardingTime: flag('boarding') ?? null,
+    departureTime: flag('dep') ?? '08:40',
+    estimatedDeparture: flag('est') ?? null,
+    delayMinutes: delay,
+    updatedAt: Math.floor(Date.now() / 1000),
+    flightNumber: flag('flight') ?? 'W69901',
+    from: 'CRA',
+    to: flag('to') ?? 'LTN',
+  };
+  const r = await call('/v1/admin/push/liveactivity/test', { activityToken: activity, environment, event: kind, contentState });
+  console.log(kind, JSON.stringify(contentState.status), JSON.stringify(r));
+  process.exitCode = r.http === 200 ? 0 : 1;
 } else if (cmd === 'demo') {
   const steps: Array<[string, Record<string, unknown>]> = [['boarding_started', {}], ['gate_changed', { gate: '3', oldGate: '2' }], ['delay_changed', { delayMinutes: 25 }], ['gate_closing_soon', {}]];
   for (const [name, data] of steps) {
@@ -78,6 +104,6 @@ if (cmd === 'test') {
     await new Promise((r) => setTimeout(r, 4000));
   }
 } else {
-  console.error('Comenzi: test "Titlu" "Mesaj" | event <nume> [--gate 3 --old 2 --delay 25 --belt 1] | demo');
+  console.error('Comenzi: test "Titlu" "Mesaj" | event <nume> [--gate 3 --old 2 --delay 25 --belt 1] | card [update|end] [--status boarding --gate 7 --boarding 08:35 --dep 08:40 --est 09:05 --delay 25] | demo');
   process.exit(2);
 }
