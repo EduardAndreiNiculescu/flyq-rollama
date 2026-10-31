@@ -128,13 +128,13 @@ export function answerFromTool(tool: string, content: string, question: string):
     if (/no flight selected/.test(parsed.error)) return ro ? 'Spune-mi numărul zborului (de exemplu W43763) ca să pot verifica.' : 'Tell me your flight number (for example W43763) so I can check.';
     if (/not found/.test(parsed.error)) return ro ? 'Nu am date offline despre acest zbor. Verifică panourile din aeroport sau aplicația companiei.' : 'I have no offline data for this flight. Check the airport screens or the airline app.';
     if (/not allowed|clarification|confirmed|map/.test(parsed.error)) return ro ? 'Nu pot face asta acum. Pot verifica zborul, poarta, timpul rămas sau regulile de călătorie.' : 'I cannot do that right now. I can check your flight, gate, time remaining or travel rules.';
-    return ro ? 'Nu am această informație offline și nu vreau să te induc în eroare. Întreabă la ghișeul companiei sau la informații.' : 'I do not have this information offline and I would rather not mislead you. Ask the airline desk or information.';
+    return ro ? 'Nu am informația asta în baza mea de cunoștințe și nu vreau să te induc în eroare. Întreabă la ghișeul companiei sau la informații.' : 'I do not have this in my knowledge base and I would rather not mislead you. Ask the airline desk or information.';
   }
   const r = parsed.result ?? {};
   if (tool === 'search_knowledge') {
     const docs = (r.documents as Array<{ title?: string; text?: string; source?: string; mayBeOutdated?: boolean; verifiedOn?: string | null }> | undefined) ?? [];
     const d = docs[0];
-    if (!d?.text) return ro ? 'Nu am această informație offline. Întreabă la ghișeul companiei sau la informații.' : 'I do not have this information offline. Ask the airline desk or information.';
+    if (!d?.text) return ro ? 'Nu am informația asta în baza mea de cunoștințe (asistentul funcționează, dar nu știe răspunsul). Întreabă la ghișeul companiei sau la informații.' : 'I do not have this in my knowledge base (the assistant is working, it just does not know the answer). Ask the airline desk or information.';
     const caveat = d.mayBeOutdated || !d.verifiedOn ? (ro ? ' Regulile se pot schimba: confirmă la companie sau la aeroport.' : ' Rules can change: confirm with the airline or the airport.') : '';
     const src = d.source ? (ro ? ` Sursă: ${d.source}.` : ` Source: ${d.source}.`) : '';
     return `${sentences(d.text, 2)}${caveat}${src}`;

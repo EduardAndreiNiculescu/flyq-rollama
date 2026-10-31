@@ -9,7 +9,7 @@ import { Glass } from '../components/Glass';
 import { ScreenHeader, ScrollScreen } from '../components/Layout';
 import { generateBench } from '../bench/questions';
 import { runBenchmark, summarize, type BenchResult } from '../bench/runner';
-import { adapterLoaded, downloadDeviceModel, deviceModelState, loadDeviceModel } from '../services/live/DeviceAssistantService';
+import { adapterLoaded, downloadDeviceModel, deviceModelState, engine, loadDeviceModel } from '../services/live/DeviceAssistantService';
 import { flightData } from '../services';
 import { useLanguage } from '../i18n';
 import { addDemoFlight, addLiveFlight } from '../services/live/addLive';
@@ -22,6 +22,7 @@ import { checkModel, specForTier } from '../llm/modelProvision';
 import { useLive, type AssistantSource, type ModelTier, type TrackerSource } from '../store/live';
 import { useActiveTicket } from '../store/tickets';
 import { colors, radii, spacing } from '../theme/tokens';
+import { useAssistantDiag } from '../store/assistantDiag';
 
 function Field({ label, value, onChange, secure, placeholder }: { label: string; value: string; onChange: (v: string) => void; secure?: boolean; placeholder?: string }) {
   return (
@@ -58,6 +59,7 @@ export function LiveScreen() {
   const [benchBusy, setBenchBusy] = useState(false);
   const language = useLanguage();
   const [pushStatus, setPushStatus] = useState<string | null>(null);
+  const diag = useAssistantDiag(st => st.entries);
   const [pushToken, setPushToken] = useState<string | null>(null);
   const [activityToken, setActivityToken] = useState<string | null>(null);
 
@@ -203,6 +205,13 @@ export function LiveScreen() {
             </AppText>
           </>
         )}
+      </View>
+
+      <View style={styles.section}>
+        <AppText variant="label">Diagnostic asistent (ultimele răspunsuri)</AppText>
+        <AppText variant="caption" color={colors.text3}>{`sursă=${live.assistantSource} · model=${model ?? '…'} · încărcat=${engine.ready ? 'da' : 'nu (se încarcă la prima întrebare)'}`}</AppText>
+        {diag.length === 0 ? <AppText variant="caption" color={colors.text3}>Pune o întrebare în Asistent, apoi revino aici: fiecare răspuns apare cu calea, unealta, JSON-ul modelului și documentele găsite.</AppText> : diag.map((d, i) => <AppText key={i} variant="caption" selectable>{d}</AppText>)}
+        {diag.length ? <Button label="Șterge diagnosticul" variant="glass" size="sm" onPress={() => useAssistantDiag.getState().clear()} /> : null}
       </View>
 
       <View style={styles.section}>

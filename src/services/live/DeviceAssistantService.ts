@@ -7,6 +7,7 @@ import { DEFAULT_CONFIG, LlamaEngine } from '../../llm/llamaEngine';
 import { checkModel, provisionModel, type ModelStatus } from '../../llm/modelProvision';
 import { buildRouterPrompt } from '../../llm/rollama';
 import { ROUTER_DEBUG, RollamaEngine } from '../../llm/rollamaEngine';
+import { useAssistantDiag } from '../../store/assistantDiag';
 import { useFlightStatus } from '../../store/flightStatus';
 import { useModelUi, useProgress } from '../../store/assistantUi';
 import { useLive, type ModelTier } from '../../store/live';
@@ -303,6 +304,23 @@ export class DeviceToolsAssistantService implements AssistantService {
       path = out.path;
       timing = out.timing;
       guardViolations = g.violations.map(v => v.kind);
+      // One line per turn for the Mod test diagnostic box and the native console: enough to see why an answer was what it was.
+      let docs = '';
+      let toolNote = '';
+      for (const mm of out.messages) {
+        if (mm.role !== 'tool') continue;
+        try {
+          const j = JSON.parse(mm.content) as { result?: { documents?: { id: string }[]; safetyRefusal?: string; note?: string }; error?: string };
+          if (j.result?.documents) docs = j.result.documents.map(d => d.id).join(',') || 'none';
+          if (j.result?.safetyRefusal) toolNote += ` refused:${j.result.safetyRefusal}`;
+          if (j.error) toolNote += ` error:${j.error}`;
+        } catch {
+          /* a tool message that is not JSON: nothing to read */
+        }
+      }
+      const line = `${new Date().toLocaleTimeString()} q="${question.slice(0, 60)}" path=${out.path} tools=${out.trace.map(t => t.name).join('+') || '-'} model=${rollama.lastRaw.slice(0, 70) || '-'} decision=${rollama.lastDecision || '-'} docs=[${docs || '-'}]${toolNote} src=${useLive.getState().assistantSource} ready=${engine.ready} -> ${text.slice(0, 70)}`;
+      useAssistantDiag.getState().push(line);
+      console.error('[FlyQ] ask: ' + line);
     } catch {
       text = modelMissing ? MSG.missing[lang] : MSG.failed[lang];
       failed = true;

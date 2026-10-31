@@ -232,8 +232,8 @@ export const FlightRouteMap = memo(function FlightRouteMap({ from, to, landmarks
               <Stop offset="1" stopColor={colors.accentGlow} stopOpacity={0} />
             </RadialGradient>
             <LinearGradient id="flown" x1="0" y1="0" x2="1" y2="0">
-              <Stop offset="0" stopColor={colors.accentRuby} />
-              <Stop offset="1" stopColor={colors.accent} />
+              <Stop offset="0" stopColor={colors.accentWarm} />
+              <Stop offset="1" stopColor={colors.accentIndigo} />
             </LinearGradient>
           </Defs>
 

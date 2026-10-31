@@ -3,6 +3,7 @@ import { useLive } from '../../store/live';
 import { useTickets } from '../../store/tickets';
 import type { BoardingPass } from '../../types';
 import { clock, flightData } from '../index';
+import { flightNumberCandidates } from '../../lib/flightNumber';
 import { fetchFlight } from './gatewayClient';
 import { buildLiveEntry, registerLive } from './liveFlights';
 
@@ -24,8 +25,20 @@ export async function addLiveFlight(raw: string, date?: string): Promise<AddResu
   if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) return { ok: false, message: 'Data trebuie să fie de forma AAAA-LL-ZZ (ex. 2026-11-01).' };
   if (!/^[A-Z0-9]{2,3}\d{1,4}[A-Z]?$/.test(number)) return { ok: false, message: 'Format de zbor invalid (ex. RO311, W63541).' };
   try {
-    const { record } = await fetchFlight(number, date);
-    if (!record) return { ok: false, message: 'Serverul a găsit zborul, dar fără orar complet; nu inventez ore.' };
+    // The server knows a flight under one spelling: try the others (GFA006 -> GFA6 -> GF6 ...) until it answers.
+    const tried: string[] = [];
+    let record: Awaited<ReturnType<typeof fetchFlight>>['record'] = null;
+    for (const candidate of flightNumberCandidates(number)) {
+      tried.push(candidate);
+      try {
+        record = (await fetchFlight(candidate, date)).record;
+        if (record) break;
+      } catch (e) {
+        if (e instanceof Error && e.message === 'not_found') continue; // this spelling is unknown to the server: the next one
+        throw e;
+      }
+    }
+    if (!record) return { ok: false, message: `Serverul nu găsește zborul. Am încercat: ${tried.join(', ')}${date ? ` pentru ${date}` : ' pentru azi'}. Verifică numărul și data; un zbor de mâine sau de ieri cere data în câmpul „Data plecării”.` };
     const built = buildLiveEntry(record);
     if (!built.ok) return { ok: false, message: `Nu pot adăuga zborul: ${built.error}.` };
     registerLive(built.entry);

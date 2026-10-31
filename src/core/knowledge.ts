@@ -324,10 +324,12 @@ export function retrieve(
     const { kwTokens, textTokens, kwStr, textStr } = idx[i];
     let score = 0;
     let rare = 0; // tie-break: entries matching the query's rare words first ("caine" beats "cabina")
+    let exact = 0; // tie-break 2: the query word is a keyword on its own, not only a part of a phrase
     for (const q of qt) {
       if (kwTokens.some((t) => tokenMatch(q, t))) {
         score += W_LITERAL_KW * (IDF_FLOOR + (1 - IDF_FLOOR) * rar.get(q)!);
         rare += rar.get(q)!;
+        if (kwStr.includes(' ' + q + ' |') || kwStr.endsWith(' ' + q + ' ')) exact += 1;
       }
       else if (textTokens.some((t) => tokenMatch(q, t))) score += W_LITERAL_TEXT;
     }
@@ -341,9 +343,9 @@ export function retrieve(
       score += w ? w + (oov ? OOV_BOOST : 0) : 0;
     }
     if (lang && entry.lang === lang) score *= 1.5;
-    return { entry, score, rare };
+    return { entry, score, rare, exact };
   });
-  return scored.filter((s) => s.score >= MIN_SCORE).sort((a, b) => b.score - a.score || b.rare - a.rare).slice(0, k).map(({ entry, score }) => ({ entry, score }));
+  return scored.filter((s) => s.score >= MIN_SCORE).sort((a, b) => b.score - a.score || b.rare - a.rare || b.exact - a.exact).slice(0, k).map(({ entry, score }) => ({ entry, score }));
 }
 
 export function formatForPrompt(hits: Retrieved[]): string {
