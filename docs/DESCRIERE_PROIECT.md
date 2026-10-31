@@ -27,4 +27,4 @@ FlyQ este un asistent de aeroport care rulează **complet offline pe iPhone**, p
 
 **Reproducere.** Repo-ul public conține un script de verificare (`node scripts/verify.mjs`: typecheck, 675 de teste, benchmark determinist, ~8 s pe o clonă nouă), pașii de build iOS (5 min 25 s pentru un build incremental pe Mac mini M4) și scriptul care verifică modelul după mărime și SHA-256. Modelul (851 MB) nu e în repo și se obține de la echipă.
 
-**Repo:** https://github.com/EduardAndreiNiculescu/flightflow-rollama
+**Repo:** https://github.com/EduardAndreiNiculescu/flyq-rollama

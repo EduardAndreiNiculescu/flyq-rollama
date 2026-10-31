@@ -75,7 +75,7 @@ __pycache__/
 
 /tools/
 
-# flightflow-rollama: models, training data and local artefacts are never versioned
+# flyq-rollama: models, training data and local artefacts are never versioned
 assets/models/
 finetune/data/
 finetune/out/

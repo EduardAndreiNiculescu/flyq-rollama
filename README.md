@@ -67,7 +67,7 @@ Serverul echipei (repo separat, `FlyQ-backend`) oferă sesiuni, zboruri de la ae
 Pașii exacți, cu timpii măsurați: **`docs/REPRODUCE.md`**.
 
 ```bash
-git clone https://github.com/EduardAndreiNiculescu/flightflow-rollama.git && cd flightflow-rollama
+git clone https://github.com/EduardAndreiNiculescu/flyq-rollama.git && cd flyq-rollama
 npm ci --ignore-scripts      # pe Windows; pe macOS poți rula `npm ci` fără opțiune
 node scripts/verify.mjs      # typecheck + teste + benchmark determinist (~8 s)
 ```

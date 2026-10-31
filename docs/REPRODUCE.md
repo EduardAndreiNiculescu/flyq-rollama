@@ -7,8 +7,8 @@ Document pentru organizatori. Fiecare cifră de mai jos e marcată **MĂSURAT** 
 Cerințe: Node 20+ (testat cu Node 24.18), npm, git. Fără chei, fără rețea după instalare, fără model.
 
 ```bash
-git clone https://github.com/EduardAndreiNiculescu/flightflow-rollama.git
-cd flightflow-rollama
+git clone https://github.com/EduardAndreiNiculescu/flyq-rollama.git
+cd flyq-rollama
 npm ci --ignore-scripts      # vezi nota despre Windows mai jos
 node scripts/verify.mjs      # typecheck + teste + benchmark determinist; scrie verify-report.json
 ```
