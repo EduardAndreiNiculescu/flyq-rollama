@@ -1,6 +1,7 @@
 import * as Notifications from 'expo-notifications';
 import { AppState } from 'react-native';
 import type { FlightRecord } from '../../core/types';
+import { useFlightMode } from '../../store/flightMode';
 import { useFlightStatus, type FlightOverlay } from '../../store/flightStatus';
 import { useLive } from '../../store/live';
 import { useTickets } from '../../store/tickets';
@@ -87,6 +88,11 @@ export async function syncNow(): Promise<boolean> {
     }
     applyRecord(target.flightId, record);
     void syncReminders(); // the delay or gate may have moved the reminders
+    // The provider says the aircraft is en route: switch the flight screen to the in-air view by itself (it used to need the manual "In zbor" switch).
+    if (isLiveFlightId(target.flightId) && record.providerStatus === 'en-route' && useFlightMode.getState().phase === 'ground') {
+      const f = flightData.getFlight(target.flightId);
+      if (f) useFlightMode.getState().takeOff(f);
+    }
     if (Date.now() - lastEtaAt >= ETA_EVERY_MS && etaWindowOpen(record)) {
       lastEtaAt = Date.now();
       await refreshFlightActivity(record, null, target.flightId); // server ETA into the store (and the card, if one is running)

@@ -29,9 +29,9 @@ const FlightActivity = (props: FlightActivityProps) => {
   'widget';
   const white = '#FFFFFF';
   const gray = '#8E8E93';
-  const labels: Record<string, string> = { scheduled: 'La timp', boarding: 'Îmbarcare', delayed: 'Întârziat', gate_closing: 'Poarta se închide', departed: 'În zbor', landed: 'A aterizat', cancelled: 'Anulat', diverted: 'Deviat' };
-  const colors: Record<string, string> = { scheduled: '#30D158', boarding: '#30D158', delayed: '#FF9F0A', gate_closing: '#FF6B35', departed: '#64D2FF', landed: '#30D158', cancelled: '#FF453A', diverted: '#FF9F0A' };
-  const stage: Record<string, number> = { scheduled: 0.1, delayed: 0.1, boarding: 0.4, gate_closing: 0.7, departed: 1, landed: 1, cancelled: 0, diverted: 0.6 };
+  const labels: Record<string, string> = { checkin: 'Check-in deschis', scheduled: 'La timp', boarding: 'Îmbarcare', delayed: 'Întârziat', gate_closing: 'Poarta se închide', departed: 'În zbor', landed: 'A aterizat', cancelled: 'Anulat', diverted: 'Deviat' };
+  const colors: Record<string, string> = { checkin: '#64D2FF', scheduled: '#30D158', boarding: '#30D158', delayed: '#FF9F0A', gate_closing: '#FF6B35', departed: '#64D2FF', landed: '#30D158', cancelled: '#FF453A', diverted: '#FF9F0A' };
+  const stage: Record<string, number> = { checkin: 0.2, scheduled: 0.1, delayed: 0.1, boarding: 0.4, gate_closing: 0.7, departed: 1, landed: 1, cancelled: 0, diverted: 0.6 };
   const status = labels[props.status] ?? 'Zbor';
   const color = colors[props.status] ?? '#30D158';
   const late = props.delayMinutes > 0;

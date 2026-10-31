@@ -43,6 +43,12 @@ export class RollamaEngine implements LlmEngine {
       const tool = asked?.tool_calls?.[0].function.name ?? '';
       return { text: answerFromTool(tool, last.content, question), stats: ZERO, toolCalls: [] };
     }
+    // Greetings, thanks and "who are you" are answered by the assistant itself. A 1B model sometimes routes "Salut" to the flight tool: not trusted, not even asked.
+    if (isSocial(question)) {
+      this.lastRaw = '(social)';
+      this.lastDecision = 'social';
+      return { text: noneReply(question), stats: ZERO, toolCalls: [] };
+    }
     const r = await this.raw.completeRaw(buildRouterPrompt(normalizePassengerQuery(question)), { grammar: ROLLAMA_GRAMMAR });
     const call = parseRouterJson(r.text);
     this.lastRaw = r.text;
