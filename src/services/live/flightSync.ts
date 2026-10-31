@@ -9,7 +9,7 @@ import { fetchFlight } from './gatewayClient';
 import { refreshFlightActivity } from './liveActivity';
 import { buildLiveEntry, getLiveEntry, isLiveFlightId, registerLive } from './liveFlights';
 import { syncReminders } from './localReminders';
-import { gateFromNotificationText } from './notificationGate';
+import { readNotificationChange } from './notificationGate';
 import { FLYQ_DEMO_FLIGHT_ID } from './push';
 
 /**
@@ -97,22 +97,28 @@ export async function syncNow(): Promise<boolean> {
 
 function onNotification(n: Notifications.Notification) {
   const content = n.request.content;
-  const data = (content.data ?? {}) as Record<string, unknown>;
-  // If the push carries the new gate in its data, use it right away; otherwise read the server.
-  const gate = typeof data.gate === 'string' ? data.gate : typeof data.newGate === 'string' ? data.newGate : null;
+  const change = readNotificationChange(content.data as Record<string, unknown> | undefined, `${content.title ?? ''} ${content.body ?? ''}`);
   const target = syncTarget();
-  if (target && gate) {
-    const overlay = useFlightStatus.getState().overlays[target.flightId];
+  if (target && change.source !== 'none' && (change.gate || change.delayMinutes !== undefined)) {
+    // The push already says what changed: show it at once, then read the server to confirm.
+    const store = useFlightStatus.getState();
+    const old = store.overlays[target.flightId];
     const base = flightData.getFlight(target.flightId);
-    useFlightStatus.getState().apply(target.flightId, { ...(overlay ?? overlayFrom({ flightNumber: target.number, departureAirport: '', arrivalAirport: '', scheduledDeparture: '', scheduledArrival: '', gate: null, gateStatus: 'unconfirmed', dataSource: 'demo', lastUpdated: null })), gate, gateStatus: 'confirmed', receivedAt: Date.now() }, overlay?.gate ?? base?.gate ?? null);
-  } else if (target && !isLiveFlightId(target.flightId)) {
-    const text = `${content.title ?? ''} ${content.body ?? ''}`;
-    const fromText = gateFromNotificationText(text);
-    if (fromText && /poart|gate/i.test(text)) {
-      const overlay = useFlightStatus.getState().overlays[target.flightId];
-      const base = flightData.getFlight(target.flightId);
-      useFlightStatus.getState().apply(target.flightId, { gate: fromText, gateStatus: 'confirmed', estimatedDeparture: overlay?.estimatedDeparture ?? null, estimatedArrival: overlay?.estimatedArrival ?? null, departureDelayMin: overlay?.departureDelayMin ?? null, arrivalDelayMin: overlay?.arrivalDelayMin ?? null, providerStatus: overlay?.providerStatus ?? null, receivedAt: Date.now() }, overlay?.gate ?? base?.gate ?? null);
-    }
+    const delay = change.delayMinutes ?? old?.departureDelayMin ?? null;
+    store.apply(
+      target.flightId,
+      {
+        gate: change.gate ?? old?.gate ?? null,
+        gateStatus: change.gate || old?.gateStatus === 'confirmed' ? 'confirmed' : 'unconfirmed',
+        estimatedDeparture: old?.estimatedDeparture ?? null,
+        estimatedArrival: old?.estimatedArrival ?? null,
+        departureDelayMin: delay,
+        arrivalDelayMin: old?.arrivalDelayMin ?? null,
+        providerStatus: old?.providerStatus ?? null,
+        receivedAt: Date.now(),
+      },
+      change.oldGate ?? old?.gate ?? base?.gate ?? null,
+    );
   }
   void syncNow();
 }

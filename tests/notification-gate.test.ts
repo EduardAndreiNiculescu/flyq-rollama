@@ -12,3 +12,16 @@ describe('gate in a notification text', () => {
     expect(gateFromNotificationText('Îmbarcarea a început')).toBeNull();
   });
 });
+
+import { readNotificationChange } from '../src/services/live/notificationGate';
+
+describe('what a flight notification says changed', () => {
+  it('reads the FlyQ data fields, top level or under flyq', () => {
+    expect(readNotificationChange({ flightId: 'DEMO-gate_change-D-W69901', event: 'gate_changed', gate: '7', newGate: '7', oldGate: '3' })).toEqual({ gate: '7', oldGate: '3', delayMinutes: undefined, source: 'data' });
+    expect(readNotificationChange({ flyq: { event: 'delay_changed', delayMinutes: 25 } })).toMatchObject({ delayMinutes: 25, source: 'data' });
+  });
+  it('falls back to the text only when there is no data', () => {
+    expect(readNotificationChange({}, 'Poarta s-a schimbat: 2 → 3')).toEqual({ gate: '3', source: 'text' });
+    expect(readNotificationChange(undefined, 'Îmbarcarea a început')).toEqual({ source: 'none' });
+  });
+});
