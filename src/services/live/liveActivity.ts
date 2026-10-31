@@ -34,13 +34,17 @@ export type ActivityResult = { ok: boolean; message: string };
  * Starts the Live Activity and hands its push token to the FlyQ server (needs the push subscription first). Every new activity has its own token,
  * so the listener sends each one. iOS only; throws nothing: the result says what happened.
  */
-export async function startFlightActivity(record: FlightRecord, boarding?: Boarding | null): Promise<ActivityResult> {
+export async function startFlightActivity(record: FlightRecord, boarding?: Boarding | null, onToken?: (token: string) => void): Promise<ActivityResult> {
   if (Platform.OS !== 'ios') return { ok: false, message: 'Live Activities există doar pe iPhone.' };
   try {
     for (const old of FlightActivity.getInstances()) await old.end('immediate'); // one card at a time
     const activity = FlightActivity.start(activityProps(record, boarding));
-    activity.addPushTokenListener(e => void patchLiveActivityToken(e.pushToken));
+    activity.addPushTokenListener(e => {
+      onToken?.(e.pushToken);
+      void patchLiveActivityToken(e.pushToken);
+    });
     const token = await activity.getPushToken();
+    if (token) onToken?.(token);
     const sent = token ? await patchLiveActivityToken(token) : 'Token-ul activității nu e gata încă; îl trimit când apare.';
     return { ok: true, message: `Card pornit. ${sent}` };
   } catch (e) {

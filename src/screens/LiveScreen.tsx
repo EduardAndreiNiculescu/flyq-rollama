@@ -59,6 +59,7 @@ export function LiveScreen() {
   const language = useLanguage();
   const [pushStatus, setPushStatus] = useState<string | null>(null);
   const [pushToken, setPushToken] = useState<string | null>(null);
+  const [activityToken, setActivityToken] = useState<string | null>(null);
 
   const enablePush = async () => {
     setPushStatus('Cer permisiunea…');
@@ -82,7 +83,7 @@ export function LiveScreen() {
     setPushStatus('Pornesc cardul…');
     const from = flightData.getAirport(flight.from);
     const boarding = from && flight.boardingUtc ? { time: formatLocalTime(flight.boardingUtc, from.utcOffsetMin), epoch: Math.floor(new Date(flight.boardingUtc).getTime() / 1000) } : null;
-    setPushStatus((await startFlightActivity(recordFor(flight), boarding)).message);
+    setPushStatus((await startFlightActivity(recordFor(flight), boarding, setActivityToken)).message);
   };
 
   useEffect(() => {
@@ -213,8 +214,14 @@ export function LiveScreen() {
         {pushStatus ? <AppText variant="caption" color={colors.text3}>{pushStatus}</AppText> : null}
         {pushToken ? (
           <>
-            <AppText variant="caption" color={colors.text3}>Token APNs (pentru un test de pe laptop: scripts/push-test.ts):</AppText>
+            <AppText variant="caption" color={colors.text3}>Token APNs al dispozitivului (notificări obișnuite: scripts/push-test.ts):</AppText>
             <AppText variant="caption" selectable>{pushToken}</AppText>
+          </>
+        ) : null}
+        {activityToken ? (
+          <>
+            <AppText variant="caption" color={colors.text3}>Token-ul CARDULUI Live Activity (altul decât al dispozitivului; doar acesta merge pe ruta liveactivity; dă-l privat):</AppText>
+            <AppText variant="caption" selectable>{activityToken}</AppText>
           </>
         ) : null}
       </View>
