@@ -1,11 +1,11 @@
 import { HStack, Image, ProgressView, Spacer, Text, VStack } from '@expo/ui/swift-ui';
-import { backgroundOverlay, bold, clipShape, font, foregroundStyle, monospacedDigit, padding, strikethrough, tint } from '@expo/ui/swift-ui/modifiers';
+import { activityBackgroundTint, backgroundOverlay, bold, clipShape, font, foregroundStyle, monospacedDigit, padding, strikethrough, tint } from '@expo/ui/swift-ui/modifiers';
 import { createLiveActivity } from 'expo-widgets';
 
 /**
- * The Live Activity card (lock screen banner + Dynamic Island). The keys are the FlyQ server's `content-state` contract
- * (docs/backend/live-activity-contract.json in the backend repo); flightNumber/from/to and the two epochs are optional additions.
- * The component runs inside the widget extension: no hooks, no imports used in the body, no module-scope values.
+ * The Live Activity card (lock screen banner + Dynamic Island), full black like the Dynamic Island. The keys are the FlyQ server's
+ * `content-state` contract (docs/backend/live-activity-contract.json in the backend repo); flightNumber/from/to, the two epochs and
+ * arrivalTime are optional additions. The component runs inside the widget extension: no hooks, no imports used in the body, no module-scope values.
  */
 export type FlightActivityProps = {
   flightNumber?: string;
@@ -16,6 +16,7 @@ export type FlightActivityProps = {
   boardingTime?: string | null; // "08:35", Craiova time
   departureTime: string; // "08:40"
   estimatedDeparture?: string | null;
+  arrivalTime?: string | null; // local time at the destination
   delayMinutes: number;
   updatedAt: number; // unix seconds
   boardingEpoch?: number | null; // unix seconds: with it the card counts down to boarding by itself, without server updates
@@ -24,85 +25,110 @@ export type FlightActivityProps = {
 
 const FlightActivity = (props: FlightActivityProps) => {
   'widget';
+  const white = '#FFFFFF';
+  const gray = '#8E8E93';
   const labels: Record<string, string> = { scheduled: 'La timp', boarding: 'Îmbarcare', delayed: 'Întârziat', gate_closing: 'Poarta se închide', departed: 'A decolat', landed: 'A aterizat', cancelled: 'Anulat', diverted: 'Deviat' };
-  const colors: Record<string, string> = { scheduled: '#5B8CFF', boarding: '#34C759', delayed: '#FF9F0A', gate_closing: '#FF6B35', departed: '#64D2FF', landed: '#30D158', cancelled: '#FF453A', diverted: '#FF9F0A' };
-  const stage: Record<string, number> = { scheduled: 0.12, delayed: 0.12, boarding: 0.5, gate_closing: 0.82, departed: 1, landed: 1, cancelled: 0, diverted: 0.6 };
+  const colors: Record<string, string> = { scheduled: '#30D158', boarding: '#30D158', delayed: '#FF9F0A', gate_closing: '#FF6B35', departed: '#64D2FF', landed: '#30D158', cancelled: '#FF453A', diverted: '#FF9F0A' };
+  const stage: Record<string, number> = { scheduled: 0.1, delayed: 0.1, boarding: 0.4, gate_closing: 0.7, departed: 1, landed: 1, cancelled: 0, diverted: 0.6 };
   const status = labels[props.status] ?? 'Zbor';
-  const color = colors[props.status] ?? '#5B8CFF';
-  const gate = props.gate ? props.gate : '–';
+  const color = colors[props.status] ?? '#30D158';
   const late = props.delayMinutes > 0;
   const estimated = props.estimatedDeparture && props.estimatedDeparture !== props.departureTime ? props.estimatedDeparture : null;
-  const route = props.from && props.to ? `${props.from}  ✈  ${props.to}` : 'FlyQ';
+  const from = props.from ?? 'CRA';
+  const to = props.to ?? '···';
   const flight = props.flightNumber ?? 'FlyQ';
-  const countdown = props.boardingEpoch && props.boardingEpoch > props.updatedAt && (props.status === 'scheduled' || props.status === 'delayed');
-  const progress = countdown ? (
-    <ProgressView timerInterval={{ lower: new Date(props.updatedAt * 1000), upper: new Date((props.boardingEpoch as number) * 1000) }} countsDown modifiers={[tint(color)]}>
-      <Text modifiers={[font({ size: 12 }), foregroundStyle('#8E8E93')]}>Până la îmbarcare</Text>
-    </ProgressView>
+  const counting = !!props.boardingEpoch && props.boardingEpoch > props.updatedAt && (props.status === 'scheduled' || props.status === 'delayed');
+
+  const gateBadge = props.gate ? (
+    <HStack spacing={4} modifiers={[padding({ horizontal: 10, vertical: 5 }), backgroundOverlay({ color: '#FFD60A' }), clipShape('capsule')]}>
+      <Image systemName="door.left.hand.open" color="#000000" size={12} />
+      <Text modifiers={[font({ weight: 'heavy', size: 15 }), monospacedDigit(), foregroundStyle('#000000')]}>{props.gate}</Text>
+    </HStack>
   ) : (
-    <ProgressView value={stage[props.status] ?? 0.1} modifiers={[tint(color)]}>
-      <Text modifiers={[font({ size: 12 }), foregroundStyle('#8E8E93')]}>{props.boardingTime ? `Îmbarcare ${props.boardingTime}` : 'Urmărit în timp real'}</Text>
-    </ProgressView>
+    <Text modifiers={[font({ weight: 'semibold', size: 12 }), foregroundStyle(gray), padding({ horizontal: 10, vertical: 5 }), backgroundOverlay({ color: '#2C2C2E' }), clipShape('capsule')]}>Poartă neanunțată</Text>
   );
-  const pill = (
-    <Text modifiers={[font({ weight: 'semibold', size: 13 }), foregroundStyle(color), padding({ horizontal: 10, vertical: 4 }), backgroundOverlay({ color: color + '2E' }), clipShape('capsule')]}>{late && props.status === 'delayed' ? `${status} +${props.delayMinutes} min` : status}</Text>
+
+  const line = <ProgressView value={stage[props.status] ?? 0.1} modifiers={[tint(color)]} />;
+
+  const detail = counting ? (
+    <HStack spacing={4}>
+      <Text modifiers={[font({ size: 13 }), foregroundStyle(gray)]}>Îmbarcare în</Text>
+      <Text timerInterval={{ lower: new Date(props.updatedAt * 1000), upper: new Date((props.boardingEpoch as number) * 1000) }} countsDown modifiers={[font({ weight: 'semibold', size: 13 }), monospacedDigit(), foregroundStyle(white)]} />
+    </HStack>
+  ) : (
+    <Text modifiers={[font({ size: 13 }), foregroundStyle(gray)]}>{late ? `Întârziere ${props.delayMinutes} min` : props.boardingTime ? `Îmbarcare ${props.boardingTime}` : 'Urmărit în timp real'}</Text>
   );
+
+  const statusRow = (
+    <HStack spacing={6}>
+      <Image systemName="circle.fill" color={color} size={8} />
+      <Text modifiers={[font({ weight: 'semibold', size: 14 }), foregroundStyle(color)]}>{status}</Text>
+    </HStack>
+  );
+
   return {
     banner: (
-      <VStack spacing={10} modifiers={[padding({ all: 16 })]}>
-        <HStack spacing={8}>
-          <Image systemName="airplane.departure" color={color} />
-          <Text modifiers={[font({ weight: 'bold', size: 16 })]}>{flight}</Text>
-          <Text modifiers={[font({ size: 14 }), foregroundStyle('#8E8E93')]}>{route}</Text>
-          <Spacer />
-          {pill}
-        </HStack>
+      <VStack spacing={12} modifiers={[padding({ all: 16 }), activityBackgroundTint('#000000')]}>
         <HStack>
-          <VStack alignment="leading" spacing={2}>
-            <Text modifiers={[font({ weight: 'semibold', size: 11 }), foregroundStyle('#8E8E93')]}>POARTA</Text>
-            <Text modifiers={[font({ weight: 'heavy', size: 40 }), monospacedDigit(), foregroundStyle(color)]}>{gate}</Text>
-          </VStack>
+          <Text modifiers={[font({ weight: 'semibold', size: 13 }), foregroundStyle(gray)]}>{flight}</Text>
           <Spacer />
-          <VStack alignment="trailing" spacing={2}>
-            <Text modifiers={[font({ weight: 'semibold', size: 11 }), foregroundStyle('#8E8E93')]}>DECOLARE</Text>
+          {gateBadge}
+        </HStack>
+        <HStack spacing={10}>
+          <VStack alignment="leading" spacing={2}>
+            <Text modifiers={[font({ weight: 'heavy', size: 34 }), foregroundStyle(white)]}>{from}</Text>
             {estimated ? (
-              <HStack spacing={6}>
-                <Text modifiers={[font({ size: 15 }), foregroundStyle('#8E8E93'), strikethrough({ isActive: true, pattern: 'solid' })]}>{props.departureTime}</Text>
-                <Text modifiers={[font({ weight: 'bold', size: 26 }), monospacedDigit(), foregroundStyle(color)]}>{estimated}</Text>
+              <HStack spacing={4}>
+                <Text modifiers={[font({ size: 12 }), foregroundStyle(gray), strikethrough({ isActive: true, pattern: 'solid' })]}>{props.departureTime}</Text>
+                <Text modifiers={[font({ weight: 'semibold', size: 13 }), monospacedDigit(), foregroundStyle(color)]}>{estimated}</Text>
               </HStack>
             ) : (
-              <Text modifiers={[font({ weight: 'bold', size: 26 }), monospacedDigit()]}>{props.departureTime}</Text>
+              <Text modifiers={[font({ weight: 'semibold', size: 13 }), monospacedDigit(), foregroundStyle(gray)]}>{props.departureTime}</Text>
             )}
           </VStack>
+          <Image systemName="airplane" color={color} size={16} />
+          {line}
+          <VStack alignment="trailing" spacing={2}>
+            <Text modifiers={[font({ weight: 'heavy', size: 34 }), foregroundStyle(white)]}>{to}</Text>
+            <Text modifiers={[font({ weight: 'semibold', size: 13 }), monospacedDigit(), foregroundStyle(gray)]}>{props.arrivalTime ?? ' '}</Text>
+          </VStack>
         </HStack>
-        {progress}
+        <HStack>
+          {statusRow}
+          <Spacer />
+          {detail}
+        </HStack>
       </VStack>
     ),
     compactLeading: <Image systemName={props.status === 'landed' ? 'airplane.arrival' : 'airplane.departure'} color={color} />,
-    compactTrailing: <Text modifiers={[bold(), monospacedDigit(), foregroundStyle(color)]}>{late && props.status === 'delayed' ? `+${props.delayMinutes}'` : props.gate ? props.gate : props.departureTime}</Text>,
+    compactTrailing: <Text modifiers={[bold(), monospacedDigit(), foregroundStyle(late && props.status === 'delayed' ? '#FF9F0A' : '#FFD60A')]}>{late && props.status === 'delayed' ? `+${props.delayMinutes}'` : props.gate ? props.gate : props.departureTime}</Text>,
     minimal: <Image systemName="airplane" color={color} />,
     expandedLeading: (
       <VStack alignment="leading" spacing={2} modifiers={[padding({ leading: 6 })]}>
-        <Image systemName="airplane.departure" color={color} />
-        <Text modifiers={[font({ weight: 'bold', size: 15 })]}>{flight}</Text>
+        <Text modifiers={[font({ weight: 'heavy', size: 28 }), foregroundStyle(white)]}>{from}</Text>
+        <Text modifiers={[font({ weight: 'semibold', size: 12 }), monospacedDigit(), foregroundStyle(estimated ? color : gray)]}>{estimated ?? props.departureTime}</Text>
       </VStack>
     ),
     expandedTrailing: (
-      <VStack alignment="trailing" spacing={0} modifiers={[padding({ trailing: 6 })]}>
-        <Text modifiers={[font({ weight: 'semibold', size: 10 }), foregroundStyle('#8E8E93')]}>POARTA</Text>
-        <Text modifiers={[font({ weight: 'heavy', size: 30 }), monospacedDigit(), foregroundStyle(color)]}>{gate}</Text>
+      <VStack alignment="trailing" spacing={2} modifiers={[padding({ trailing: 6 })]}>
+        <Text modifiers={[font({ weight: 'heavy', size: 28 }), foregroundStyle(white)]}>{to}</Text>
+        <Text modifiers={[font({ weight: 'semibold', size: 12 }), monospacedDigit(), foregroundStyle(gray)]}>{props.arrivalTime ?? ' '}</Text>
       </VStack>
     ),
     expandedCenter: (
-      <VStack spacing={2}>
-        <Text modifiers={[font({ weight: 'semibold', size: 14 })]}>{route}</Text>
-        {pill}
+      <VStack spacing={4}>
+        <Image systemName="airplane" color={color} size={18} />
+        {statusRow}
       </VStack>
     ),
     expandedBottom: (
-      <VStack spacing={6} modifiers={[padding({ horizontal: 8 })]}>
-        {progress}
-        <Text modifiers={[font({ size: 12 }), foregroundStyle('#8E8E93')]}>{estimated ? `Decolare ${props.departureTime} → ${estimated}` : `Decolare ${props.departureTime}`}</Text>
+      <VStack spacing={8} modifiers={[padding({ horizontal: 8 })]}>
+        {line}
+        <HStack>
+          {gateBadge}
+          <Spacer />
+          {detail}
+        </HStack>
       </VStack>
     ),
   };

@@ -20,6 +20,7 @@ export function activityProps(record: FlightRecord, boarding?: Boarding | null):
     gate: record.gate,
     boardingTime: boarding?.time ?? null,
     boardingEpoch: boarding?.epoch ?? null,
+    arrivalTime: clock(record.scheduledArrival),
     departureEpoch: Number.isFinite(departure) ? Math.floor(departure / 1000) : null,
     departureTime: clock(record.scheduledDeparture) ?? '--:--',
     estimatedDeparture: clock(record.estimatedDeparture),
