@@ -9,8 +9,8 @@ import { Readable } from 'node:stream';
 import { join } from 'node:path';
 
 const NAME = 'rollama-1b-dpo-q4.gguf';
-const BYTES = 851333600;
-const SHA256 = '16f11f48099052f614a2c02941c767ed811e474d3c029ba56c0c4479daed24a0';
+const BYTES = 851469152;
+const SHA256 = '54e17f65a03176a017167e04361d51e8b81d49ab1016f870370d691276e2e961';
 
 const url = process.env.MODEL_URL;
 if (!url) {
