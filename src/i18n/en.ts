@@ -252,6 +252,8 @@ export const en: Record<TranslationKey, string> = {
   'profile.avoidStairs': 'Step-free routes (lift)',
   'profile.localTimeHint': 'On landing we show the local time and time difference',
   'profile.airplaneReminderHint': 'We remind you to turn off airplane mode after landing',
+  'profile.flightReminders': 'Flight reminders',
+  'profile.flightRemindersHint': 'Notifications on this phone: boarding and gate closing, no internet needed',
   'profile.reduceTransparencyHint': 'Cards become opaque, for better contrast',
   'profile.avoidStairsHint': 'Routes through the airport use lifts only',
   'profile.demoClockLabel': 'Simulated clock',

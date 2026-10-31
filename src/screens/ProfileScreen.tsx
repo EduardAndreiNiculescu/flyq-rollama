@@ -20,6 +20,7 @@ import { appStorage } from '../store/storage';
 import { useTickets } from '../store/tickets';
 import { useLayout } from '../theme/responsive';
 import { colors, radii, spacing } from '../theme/tokens';
+import { syncReminders } from '../services/live/localReminders';
 
 export function ProfileScreen() {
   const t = useT();
@@ -95,6 +96,7 @@ export function ProfileScreen() {
         <AppText variant="label">{t('profile.landing')}</AppText>
         <Glass style={styles.list}>
           <ListRow icon={Clock} title={t('profile.localTime')} subtitle={t('profile.localTimeHint')} right={<Toggle value={settings.landingLocalTime} onChange={settings.setLandingLocalTime} label={t('profile.localTime')} />} />
+          <ListRow icon={Bell} title={t('profile.flightReminders')} subtitle={t('profile.flightRemindersHint')} right={<Toggle value={settings.flightReminders} onChange={v => { settings.setFlightReminders(v); void syncReminders(); }} label={t('profile.flightReminders')} />} />
           <ListRow icon={Bell} title={t('profile.airplaneReminder')} subtitle={t('profile.airplaneReminderHint')} right={<Toggle value={settings.landingAirplaneReminder} onChange={settings.setLandingAirplaneReminder} label={t('profile.airplaneReminder')} />} last />
         </Glass>
       </View>

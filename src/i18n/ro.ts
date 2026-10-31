@@ -252,6 +252,8 @@ export const ro = {
   'profile.avoidStairs': 'Rute fără scări (lift)',
   'profile.localTimeHint': 'La aterizare îți arătăm ora orașului și diferența de fus',
   'profile.airplaneReminderHint': 'Îți amintim să oprești modul avion după aterizare',
+  'profile.flightReminders': 'Memento-uri pentru zbor',
+  'profile.flightRemindersHint': 'Notificări pe telefon: îmbarcarea și închiderea porții, fără internet',
   'profile.reduceTransparencyHint': 'Cardurile devin opace, pentru contrast mai bun',
   'profile.avoidStairsHint': 'Rutele prin aeroport folosesc doar lifturi',
   'profile.demoClockLabel': 'Ceas simulat',

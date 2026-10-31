@@ -8,6 +8,7 @@ import { flightData } from '../index';
 import { fetchFlight } from './gatewayClient';
 import { refreshFlightActivity } from './liveActivity';
 import { buildLiveEntry, getLiveEntry, isLiveFlightId, registerLive } from './liveFlights';
+import { syncReminders } from './localReminders';
 import { gateFromNotificationText } from './notificationGate';
 import { FLYQ_DEMO_FLIGHT_ID } from './push';
 
@@ -80,6 +81,7 @@ export async function syncNow(): Promise<boolean> {
       return false;
     }
     applyRecord(target.flightId, record);
+    void syncReminders(); // the delay or gate may have moved the reminders
     if (Date.now() - lastEtaAt >= ETA_EVERY_MS && etaWindowOpen(record)) {
       lastEtaAt = Date.now();
       await refreshFlightActivity(record, null, target.flightId); // server ETA into the store (and the card, if one is running)
@@ -127,13 +129,17 @@ export function startFlightSync(): () => void {
     if (timer) clearInterval(timer);
     timer = null;
   };
+  void syncReminders();
   if (AppState.currentState === 'active') start();
   const appSub = AppState.addEventListener('change', s => (s === 'active' ? start() : stop()));
   const received = Notifications.addNotificationReceivedListener(onNotification);
   const response = Notifications.addNotificationResponseReceivedListener(r => onNotification(r.notification));
   // A different active ticket: read it at once instead of waiting for the next tick.
   const unsubTickets = useTickets.subscribe((s, prev) => {
-    if (s.activeTicketId !== prev.activeTicketId) void syncNow();
+    if (s.activeTicketId !== prev.activeTicketId) {
+      void syncNow();
+      void syncReminders();
+    }
   });
   return () => {
     stop();
