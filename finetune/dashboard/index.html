@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FlightFlow – antrenare</title>
+<style>
+:root{--bg:#0f1115;--card:#181b22;--fg:#e8eaf0;--mut:#8b91a1;--acc:#4f8cff;--ok:#3ecf8e;--warn:#f5a524;--bad:#ef5350}
+@media (prefers-color-scheme:light){:root{--bg:#f4f5f8;--card:#fff;--fg:#14161c;--mut:#667}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px system-ui,sans-serif;padding:16px}
+h1{font-size:18px;margin:0 0 12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.card{background:var(--card);border-radius:10px;padding:12px}.k{color:var(--mut);font-size:12px}.v{font-size:22px;font-weight:600;margin-top:2px}
+.bar{height:10px;background:#0003;border-radius:6px;overflow:hidden;margin:12px 0}.bar>i{display:block;height:100%;background:var(--acc);width:0;transition:width .5s}
+canvas{width:100%;height:240px;background:var(--card);border-radius:10px;margin-top:10px}
+pre{background:var(--card);border-radius:10px;padding:12px;max-height:200px;overflow:auto;font-size:12px;color:var(--mut)}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;background:var(--acc);color:#fff}
+</style></head><body>
+<h1>FlightFlow · QLoRA Qwen3-4B <span id="state" class="pill">în așteptare</span></h1>
+<div class="bar"><i id="bar"></i></div>
+<div class="grid">
+<div class="card"><div class="k">Pas</div><div class="v" id="step">–</div></div>
+<div class="card"><div class="k">Epoca</div><div class="v" id="epoch">–</div></div>
+<div class="card"><div class="k">Loss antrenare</div><div class="v" id="loss">–</div></div>
+<div class="card"><div class="k">Loss validare</div><div class="v" id="vloss">–</div></div>
+<div class="card"><div class="k">Learning rate</div><div class="v" id="lr">–</div></div>
+<div class="card"><div class="k">VRAM (GB)</div><div class="v" id="vram">–</div></div>
+<div class="card"><div class="k">Timp scurs</div><div class="v" id="el">–</div></div>
+<div class="card"><div class="k">ETA</div><div class="v" id="eta">–</div></div>
+</div>
+<canvas id="c" width="900" height="240"></canvas>
+<pre id="log">…</pre>
+<script>
+const $=id=>document.getElementById(id), fmt=s=>s==null?'–':`${Math.floor(s/3600)}h ${Math.floor(s%3600/60)}m ${Math.floor(s%60)}s`;
+function draw(tr,ev){const c=$('c'),x=c.getContext('2d'),W=c.width,H=c.height;x.clearRect(0,0,W,H);
+ const all=[...tr,...ev];if(all.length<2)return;const mx=Math.max(...all.map(p=>p[0])),my=Math.max(...all.map(p=>p[1]))*1.05,mn=0;
+ x.strokeStyle='#8886';x.fillStyle='#889';x.font='11px sans-serif';
+ for(let i=0;i<=4;i++){const y=H-20-(H-30)*i/4;x.beginPath();x.moveTo(40,y);x.lineTo(W-8,y);x.stroke();x.fillText((my*i/4).toFixed(2),4,y+3)}
+ const P=(a,col)=>{x.strokeStyle=col;x.lineWidth=2;x.beginPath();a.forEach(([s,l],i)=>{const X=40+(W-48)*s/mx,Y=H-20-(H-30)*(l-mn)/(my-mn);i?x.lineTo(X,Y):x.moveTo(X,Y)});x.stroke()};
+ P(tr,'#4f8cff');P(ev,'#3ecf8e');x.fillStyle='#4f8cff';x.fillText('train',50,12);x.fillStyle='#3ecf8e';x.fillText('val',95,12)}
+async function tick(){try{const s=await (await fetch('status.json?'+Date.now())).json();
+ $('state').textContent=s.state;$('state').style.background=s.state==='finalizat'?'var(--ok)':s.state==='eroare'?'var(--bad)':'var(--acc)';
+ const pct=s.max_steps?100*s.step/s.max_steps:0;$('bar').style.width=pct+'%';
+ $('step').textContent=`${s.step}/${s.max_steps}`;$('epoch').textContent=s.epoch?.toFixed(2)??'–';
+ $('loss').textContent=s.loss?.toFixed(4)??'–';$('vloss').textContent=s.eval_loss?.toFixed(4)??'–';
+ $('lr').textContent=s.lr?s.lr.toExponential(1):'–';$('vram').textContent=s.vram_gb?.toFixed(2)??'–';
+ $('el').textContent=fmt(s.elapsed);$('eta').textContent=fmt(s.eta);$('log').textContent=(s.log||[]).slice(-40).join('\n');
+ draw(s.train_curve||[],s.eval_curve||[])}catch(e){$('log').textContent='aștept datele de antrenare…'}}
+tick();setInterval(tick,2000);
+</script></body></html>

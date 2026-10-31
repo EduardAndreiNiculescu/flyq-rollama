@@ -1,0 +1,22 @@
+{
+  "char_cnn": {
+    "best_val_acc": 0.907027027027027,
+    "calibrated_ece": 0.06758985070384899,
+    "training_time_sec": 24.524380445480347,
+    "temperature": 1.0376876592636108
+  },
+  "fasttext": {
+    "best_val_acc": 0.5394594594594595,
+    "calibrated_ece": 0.08245917340860387,
+    "training_time_sec": 14.585461139678955,
+    "temperature": 0.6891383528709412
+  },
+  "tiny_encoder": {
+    "best_val_acc": 0.6194594594594595,
+    "calibrated_ece": 0.04579705274729551,
+    "training_time_sec": 21.965789079666138,
+    "temperature": 1.2827273607254028
+  },
+  "peak_vram_mb": 88.25,
+  "peak_vram_gb": 0.086
+}

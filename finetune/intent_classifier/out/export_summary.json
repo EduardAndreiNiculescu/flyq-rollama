@@ -1,0 +1,16 @@
+{
+  "char_cnn": {
+    "onnx_fp32_mb": 0.766,
+    "onnx_int8_mb": 0.477,
+    "max_abs_diff_ort_vs_torch": 5e-06,
+    "budget_status": "PASSED (<= 25 MB)"
+  },
+  "fasttext": {
+    "onnx_fp32_mb": 2.032,
+    "budget_status": "PASSED (<= 25 MB)"
+  },
+  "tiny_encoder": {
+    "onnx_fp32_mb": 0.408,
+    "budget_status": "PASSED (<= 25 MB)"
+  }
+}

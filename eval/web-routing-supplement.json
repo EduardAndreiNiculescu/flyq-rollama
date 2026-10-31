@@ -1,0 +1,1412 @@
+[
+  {
+    "id": "web-routing-001",
+    "question": "Is my flight RO311 still on time?",
+    "label": "get_flight_details",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-002",
+    "question": "Has flight W61234 been delayed?",
+    "label": "get_flight_details",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-003",
+    "question": "What is the current status of my flight?",
+    "label": "get_flight_details",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-004",
+    "question": "Did my flight leave on schedule?",
+    "label": "get_flight_details",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-005",
+    "question": "Has the departure time changed?",
+    "label": "get_flight_details",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-006",
+    "question": "Is the arrival of RO311 delayed?",
+    "label": "get_flight_details",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-007",
+    "question": "What is the latest estimated departure time?",
+    "label": "get_flight_details",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-008",
+    "question": "Has my flight been cancelled today?",
+    "label": "get_flight_details",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-009",
+    "question": "What time is my flight scheduled to arrive?",
+    "label": "get_flight_details",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-010",
+    "question": "Has the estimated arrival time changed?",
+    "label": "get_flight_details",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-011",
+    "question": "Is my plane expected to depart late?",
+    "label": "get_flight_details",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-012",
+    "question": "What is the scheduled departure for DEMO123?",
+    "label": "get_flight_details",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-013",
+    "question": "Does my itinerary show local arrival time?",
+    "label": "get_flight_details",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-014",
+    "question": "Has my flight already departed?",
+    "label": "get_flight_details",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-015",
+    "question": "Is the inbound flight running behind schedule?",
+    "label": "get_flight_details",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-016",
+    "question": "What is the updated arrival time for my plane?",
+    "label": "get_flight_details",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-017",
+    "question": "What is the difference between my scheduled and estimated departure?",
+    "label": "get_flight_details",
+    "sourceName": "Changi Airport FAQ",
+    "sourceUrl": "https://www.changiairport.com/en/help/assistance/faq.html",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-018",
+    "question": "What is the latest ETA for my flight?",
+    "label": "get_flight_details",
+    "sourceName": "Changi Airport FAQ",
+    "sourceUrl": "https://www.changiairport.com/en/help/assistance/faq.html",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-019",
+    "question": "Is the flight listed as boarding or delayed?",
+    "label": "get_flight_details",
+    "sourceName": "Changi Airport FAQ",
+    "sourceUrl": "https://www.changiairport.com/en/help/assistance/faq.html",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-020",
+    "question": "Has my flight status changed to cancelled?",
+    "label": "get_flight_details",
+    "sourceName": "Changi Airport FAQ",
+    "sourceUrl": "https://www.changiairport.com/en/help/assistance/faq.html",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-021",
+    "question": "What does the departure board say about my flight?",
+    "label": "get_flight_details",
+    "sourceName": "Changi Airport FAQ",
+    "sourceUrl": "https://www.changiairport.com/en/help/assistance/faq.html",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-022",
+    "question": "Is my flight expected or already departed?",
+    "label": "get_flight_details",
+    "sourceName": "Changi Airport FAQ",
+    "sourceUrl": "https://www.changiairport.com/en/help/assistance/faq.html",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-023",
+    "question": "What is the estimated time of arrival?",
+    "label": "get_flight_details",
+    "sourceName": "Changi Airport FAQ",
+    "sourceUrl": "https://www.changiairport.com/en/help/assistance/faq.html",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-024",
+    "question": "Is my flight en route now?",
+    "label": "get_flight_details",
+    "sourceName": "SITA Flight Status Overview",
+    "sourceUrl": "https://www.developer.aero/api-catalog/flight-status-overview",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-025",
+    "question": "Has the aircraft arrived at the airport?",
+    "label": "get_flight_details",
+    "sourceName": "SITA Flight Status Overview",
+    "sourceUrl": "https://www.developer.aero/api-catalog/flight-status-overview",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-026",
+    "question": "Is the flight diverted?",
+    "label": "get_flight_details",
+    "sourceName": "SITA Flight Status Overview",
+    "sourceUrl": "https://www.developer.aero/api-catalog/flight-status-overview",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-027",
+    "question": "Does the provider mark my flight as departed?",
+    "label": "get_flight_details",
+    "sourceName": "SITA Flight Status Overview",
+    "sourceUrl": "https://www.developer.aero/api-catalog/flight-status-overview",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-028",
+    "question": "Is the status still expected?",
+    "label": "get_flight_details",
+    "sourceName": "SITA Flight Status Overview",
+    "sourceUrl": "https://www.developer.aero/api-catalog/flight-status-overview",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-029",
+    "question": "What status code is reported for my flight?",
+    "label": "get_flight_details",
+    "sourceName": "SITA Flight Status Overview",
+    "sourceUrl": "https://www.developer.aero/api-catalog/flight-status-overview",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-030",
+    "question": "Has the plane landed yet?",
+    "label": "get_flight_details",
+    "sourceName": "SITA Flight Status Overview",
+    "sourceUrl": "https://www.developer.aero/api-catalog/flight-status-overview",
+    "expectedAny": [
+      "get_flight_details"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-031",
+    "question": "From which gate does my flight depart?",
+    "label": "get_gate",
+    "sourceName": "Transavia gate FAQ",
+    "sourceUrl": "https://www.transavia.com/help/en-eu/preparation-and-check-in/airport/gate-flight",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-032",
+    "question": "What is the boarding gate for RO311?",
+    "label": "get_gate",
+    "sourceName": "Transavia gate FAQ",
+    "sourceUrl": "https://www.transavia.com/help/en-eu/preparation-and-check-in/airport/gate-flight",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-033",
+    "question": "Has a gate been assigned to my flight?",
+    "label": "get_gate",
+    "sourceName": "Transavia gate FAQ",
+    "sourceUrl": "https://www.transavia.com/help/en-eu/preparation-and-check-in/airport/gate-flight",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-034",
+    "question": "Which gate should I go to for W61234?",
+    "label": "get_gate",
+    "sourceName": "Transavia gate FAQ",
+    "sourceUrl": "https://www.transavia.com/help/en-eu/preparation-and-check-in/airport/gate-flight",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-035",
+    "question": "What gate is shown for my departure?",
+    "label": "get_gate",
+    "sourceName": "Transavia gate FAQ",
+    "sourceUrl": "https://www.transavia.com/help/en-eu/preparation-and-check-in/airport/gate-flight",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-036",
+    "question": "Can you tell me my departure gate number?",
+    "label": "get_gate",
+    "sourceName": "Transavia gate FAQ",
+    "sourceUrl": "https://www.transavia.com/help/en-eu/preparation-and-check-in/airport/gate-flight",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-037",
+    "question": "Has my boarding gate been announced?",
+    "label": "get_gate",
+    "sourceName": "Transavia gate FAQ",
+    "sourceUrl": "https://www.transavia.com/help/en-eu/preparation-and-check-in/airport/gate-flight",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-038",
+    "question": "Where does my flight board?",
+    "label": "get_gate",
+    "sourceName": "Transavia gate FAQ",
+    "sourceUrl": "https://www.transavia.com/help/en-eu/preparation-and-check-in/airport/gate-flight",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-039",
+    "question": "Did the gate for my flight change?",
+    "label": "get_gate",
+    "sourceName": "PHL Boarding Passes & Flight Information",
+    "sourceUrl": "https://phl.helpscoutdocs.com/article/365-boarding-passes-flight-information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-040",
+    "question": "Is the gate on my boarding pass still correct?",
+    "label": "get_gate",
+    "sourceName": "PHL Boarding Passes & Flight Information",
+    "sourceUrl": "https://phl.helpscoutdocs.com/article/365-boarding-passes-flight-information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-041",
+    "question": "What is the latest gate assignment?",
+    "label": "get_gate",
+    "sourceName": "PHL Boarding Passes & Flight Information",
+    "sourceUrl": "https://phl.helpscoutdocs.com/article/365-boarding-passes-flight-information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-042",
+    "question": "The monitor shows another gate; which gate is current?",
+    "label": "get_gate",
+    "sourceName": "PHL Boarding Passes & Flight Information",
+    "sourceUrl": "https://phl.helpscoutdocs.com/article/365-boarding-passes-flight-information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-043",
+    "question": "Why is no gate number listed for my flight?",
+    "label": "get_gate",
+    "sourceName": "PHL Boarding Passes & Flight Information",
+    "sourceUrl": "https://phl.helpscoutdocs.com/article/365-boarding-passes-flight-information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-044",
+    "question": "Has the airport published my gate yet?",
+    "label": "get_gate",
+    "sourceName": "PHL Boarding Passes & Flight Information",
+    "sourceUrl": "https://phl.helpscoutdocs.com/article/365-boarding-passes-flight-information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-045",
+    "question": "Which gate is assigned to DEMO123?",
+    "label": "get_gate",
+    "sourceName": "PHL Boarding Passes & Flight Information",
+    "sourceUrl": "https://phl.helpscoutdocs.com/article/365-boarding-passes-flight-information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-046",
+    "question": "Can you confirm the new gate after a gate change?",
+    "label": "get_gate",
+    "sourceName": "PHL Boarding Passes & Flight Information",
+    "sourceUrl": "https://phl.helpscoutdocs.com/article/365-boarding-passes-flight-information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-047",
+    "question": "Does my boarding pass have an outdated gate?",
+    "label": "get_gate",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-048",
+    "question": "What gate does my plane leave from?",
+    "label": "get_gate",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-049",
+    "question": "Is my flight leaving from gate B12?",
+    "label": "get_gate",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-050",
+    "question": "Where can I see the latest gate for my flight?",
+    "label": "get_gate",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-051",
+    "question": "Has my terminal or gate changed?",
+    "label": "get_gate",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-052",
+    "question": "Which boarding gate is correct for my itinerary?",
+    "label": "get_gate",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-053",
+    "question": "What gate should I wait at?",
+    "label": "get_gate",
+    "sourceName": "JetBlue Flight Status FAQ",
+    "sourceUrl": "https://www.jetblue.com/help/flight-status",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-054",
+    "question": "What gate number is displayed for my flight?",
+    "label": "get_gate",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-055",
+    "question": "Has Ryanair updated my boarding gate?",
+    "label": "get_gate",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-056",
+    "question": "Which gate is listed in the travel assistant?",
+    "label": "get_gate",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-057",
+    "question": "Do I have a gate assignment yet?",
+    "label": "get_gate",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-058",
+    "question": "What is my gate for today’s departure?",
+    "label": "get_gate",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-059",
+    "question": "Can you check the gate for flight RO311?",
+    "label": "get_gate",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-060",
+    "question": "Has the departure gate changed since check-in?",
+    "label": "get_gate",
+    "sourceName": "Ryanair Airport & Flight Information",
+    "sourceUrl": "https://help.ryanair.com/hc/en-gb/sections/12502418324241-Airport-Flight-Information",
+    "expectedAny": [
+      "get_gate"
+    ],
+    "expectedAction": "execute",
+    "forbidden": [],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-061",
+    "question": "Can you upgrade my seat to business class?",
+    "label": "none",
+    "sourceName": "American Airlines FAQ",
+    "sourceUrl": "https://www.aa.com/web/i18n/customer-service/support/flying-with-american.html",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-062",
+    "question": "How many loyalty miles will this trip earn?",
+    "label": "none",
+    "sourceName": "American Airlines FAQ",
+    "sourceUrl": "https://www.aa.com/web/i18n/customer-service/support/flying-with-american.html",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-063",
+    "question": "Can you change the name printed on my ticket?",
+    "label": "none",
+    "sourceName": "American Airlines FAQ",
+    "sourceUrl": "https://www.aa.com/web/i18n/customer-service/support/flying-with-american.html",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-064",
+    "question": "What is the cheapest fare for next month?",
+    "label": "none",
+    "sourceName": "American Airlines FAQ",
+    "sourceUrl": "https://www.aa.com/web/i18n/customer-service/support/flying-with-american.html",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-065",
+    "question": "Can you book a window seat for me?",
+    "label": "none",
+    "sourceName": "American Airlines FAQ",
+    "sourceUrl": "https://www.aa.com/web/i18n/customer-service/support/flying-with-american.html",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-066",
+    "question": "Why was my credit card declined when buying the ticket?",
+    "label": "none",
+    "sourceName": "American Airlines FAQ",
+    "sourceUrl": "https://www.aa.com/web/i18n/customer-service/support/flying-with-american.html",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-067",
+    "question": "Can I use airline miles to pay for this booking?",
+    "label": "none",
+    "sourceName": "American Airlines FAQ",
+    "sourceUrl": "https://www.aa.com/web/i18n/customer-service/support/flying-with-american.html",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-068",
+    "question": "What meal did I select in my reservation?",
+    "label": "none",
+    "sourceName": "American Airlines FAQ",
+    "sourceUrl": "https://www.aa.com/web/i18n/customer-service/support/flying-with-american.html",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-069",
+    "question": "What exchange rate does the airport currency desk offer today?",
+    "label": "none",
+    "sourceName": "Geneva Airport FAQ",
+    "sourceUrl": "https://www.gva.ch/en/passengers/travel-preparation/faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-070",
+    "question": "Can you reserve an airport locker for me?",
+    "label": "none",
+    "sourceName": "Geneva Airport FAQ",
+    "sourceUrl": "https://www.gva.ch/en/passengers/travel-preparation/faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-071",
+    "question": "What shops are open at Geneva Airport tonight?",
+    "label": "none",
+    "sourceName": "Geneva Airport FAQ",
+    "sourceUrl": "https://www.gva.ch/en/passengers/travel-preparation/faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-072",
+    "question": "Can you purchase lounge access for me?",
+    "label": "none",
+    "sourceName": "Geneva Airport FAQ",
+    "sourceUrl": "https://www.gva.ch/en/passengers/travel-preparation/faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-073",
+    "question": "What is the Wi-Fi password at this airport?",
+    "label": "none",
+    "sourceName": "Geneva Airport FAQ",
+    "sourceUrl": "https://www.gva.ch/en/passengers/travel-preparation/faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-074",
+    "question": "Can you make a restaurant reservation in the terminal?",
+    "label": "none",
+    "sourceName": "Geneva Airport FAQ",
+    "sourceUrl": "https://www.gva.ch/en/passengers/travel-preparation/faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-075",
+    "question": "How much cash can the airport ATM dispense?",
+    "label": "none",
+    "sourceName": "Geneva Airport FAQ",
+    "sourceUrl": "https://www.gva.ch/en/passengers/travel-preparation/faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-076",
+    "question": "Can you buy a local SIM card for me?",
+    "label": "none",
+    "sourceName": "Geneva Airport FAQ",
+    "sourceUrl": "https://www.gva.ch/en/passengers/travel-preparation/faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-077",
+    "question": "How much does parking cost for five days?",
+    "label": "none",
+    "sourceName": "Sydney Airport FAQ",
+    "sourceUrl": "https://www.sydneyairport.com.au/info-sheet/contact-us-faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-078",
+    "question": "Can you reserve an airport parking space?",
+    "label": "none",
+    "sourceName": "Sydney Airport FAQ",
+    "sourceUrl": "https://www.sydneyairport.com.au/info-sheet/contact-us-faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-079",
+    "question": "Which lounge membership is cheapest?",
+    "label": "none",
+    "sourceName": "Sydney Airport FAQ",
+    "sourceUrl": "https://www.sydneyairport.com.au/info-sheet/contact-us-faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-080",
+    "question": "Can you connect my phone to the airport Wi-Fi?",
+    "label": "none",
+    "sourceName": "Sydney Airport FAQ",
+    "sourceUrl": "https://www.sydneyairport.com.au/info-sheet/contact-us-faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-081",
+    "question": "What currency exchange commission will I pay?",
+    "label": "none",
+    "sourceName": "Sydney Airport FAQ",
+    "sourceUrl": "https://www.sydneyairport.com.au/info-sheet/contact-us-faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-082",
+    "question": "Can you order a taxi from the airport?",
+    "label": "none",
+    "sourceName": "Sydney Airport FAQ",
+    "sourceUrl": "https://www.sydneyairport.com.au/info-sheet/contact-us-faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-083",
+    "question": "Which restaurant has the best reviews?",
+    "label": "none",
+    "sourceName": "Sydney Airport FAQ",
+    "sourceUrl": "https://www.sydneyairport.com.au/info-sheet/contact-us-faq",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-084",
+    "question": "Can you book a hotel near the airport?",
+    "label": "none",
+    "sourceName": "Calgary Airport FAQ",
+    "sourceUrl": "https://www.yyc.com/at-the-airport/faqs",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-085",
+    "question": "How much is a rental car for the weekend?",
+    "label": "none",
+    "sourceName": "Calgary Airport FAQ",
+    "sourceUrl": "https://www.yyc.com/at-the-airport/faqs",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-086",
+    "question": "Can you find my lost phone in the terminal?",
+    "label": "none",
+    "sourceName": "Calgary Airport FAQ",
+    "sourceUrl": "https://www.yyc.com/at-the-airport/faqs",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-087",
+    "question": "What is the best travel credit card?",
+    "label": "none",
+    "sourceName": "Calgary Airport FAQ",
+    "sourceUrl": "https://www.yyc.com/at-the-airport/faqs",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-088",
+    "question": "Can you tell me a joke while I wait?",
+    "label": "none",
+    "sourceName": "Calgary Airport FAQ",
+    "sourceUrl": "https://www.yyc.com/at-the-airport/faqs",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-089",
+    "question": "Who won the football match last night?",
+    "label": "none",
+    "sourceName": "Calgary Airport FAQ",
+    "sourceUrl": "https://www.yyc.com/at-the-airport/faqs",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "calibration",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  },
+  {
+    "id": "web-routing-090",
+    "question": "What is the weather forecast for my holiday destination?",
+    "label": "none",
+    "sourceName": "Calgary Airport FAQ",
+    "sourceUrl": "https://www.yyc.com/at-the-airport/faqs",
+    "expectedAny": [],
+    "expectedAction": "none",
+    "forbidden": [
+      "get_flight_details",
+      "get_gate",
+      "get_time_remaining",
+      "get_live_tracking",
+      "search_knowledge",
+      "open_airport_map"
+    ],
+    "split": "heldout",
+    "annotation": "human-authored paraphrase grounded in cited web FAQ/source"
+  }
+]

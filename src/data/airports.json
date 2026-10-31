@@ -1,0 +1,82 @@
+{
+  "_note": "Aerodrome reference points. Only values read from an official page are filled; everything else is absent, so ETA stays unavailable for those airports. ianaTimeZone is used to turn provider UTC times into airport-local times.",
+  "airports": [
+    {
+      "iata": "CRA",
+      "icao": "LRCV",
+      "name": "Aeroportul Internațional Craiova",
+      "latDeg": 44.31805556,
+      "lonDeg": 23.88861111,
+      "ianaTimeZone": "Europe/Bucharest",
+      "source": {
+        "url": "https://aeroportcraiova.ro/date-tehnice/",
+        "readOn": "2026-10-29",
+        "as": "Lat:441905 N; Long: 0235319 E"
+      }
+    },
+    {
+      "iata": "OTP",
+      "icao": "LROP",
+      "ianaTimeZone": "Europe/Bucharest",
+      "source": {
+        "note": "time zone only (IANA database mapping); no official coordinates read yet"
+      }
+    },
+    {
+      "iata": "BGY",
+      "icao": "LIME",
+      "ianaTimeZone": "Europe/Rome",
+      "source": {
+        "note": "time zone only (IANA database mapping); no official coordinates read yet"
+      }
+    },
+    {
+      "iata": "FCO",
+      "icao": "LIRF",
+      "ianaTimeZone": "Europe/Rome",
+      "source": {
+        "note": "time zone only (IANA database mapping); no official coordinates read yet"
+      }
+    },
+    {
+      "iata": "MUC",
+      "icao": "EDDM",
+      "ianaTimeZone": "Europe/Berlin",
+      "source": {
+        "note": "time zone only (IANA database mapping); no official coordinates read yet"
+      }
+    },
+    {
+      "iata": "LTN",
+      "icao": "EGGW",
+      "ianaTimeZone": "Europe/London",
+      "source": {
+        "note": "time zone only (IANA database mapping); no official coordinates read yet"
+      }
+    },
+    {
+      "iata": "VIE",
+      "icao": "LOWW",
+      "ianaTimeZone": "Europe/Vienna",
+      "source": {
+        "note": "time zone only (IANA database mapping); no official coordinates read yet"
+      }
+    },
+    {
+      "iata": "CDG",
+      "icao": "LFPG",
+      "ianaTimeZone": "Europe/Paris",
+      "source": {
+        "note": "time zone only (IANA database mapping); no official coordinates read yet"
+      }
+    },
+    {
+      "iata": "AMS",
+      "icao": "EHAM",
+      "ianaTimeZone": "Europe/Amsterdam",
+      "source": {
+        "note": "time zone only (IANA database mapping); no official coordinates read yet"
+      }
+    }
+  ]
+}

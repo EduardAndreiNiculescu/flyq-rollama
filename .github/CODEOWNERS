@@ -1,0 +1,27 @@
+# Completează cu utilizatorii GitHub reali, apoi decomentează liniile.
+# Format: <cale>  @utilizator   (înlocuiește OWNER_A..OWNER_E cu handle-urile echipei)
+#
+# A - iPhone / inferență
+# /App.tsx            @OWNER_A
+# /src/llm/           @OWNER_A
+# /app.json           @OWNER_A
+# /eas.json           @OWNER_A
+# /docs/BENCHMARK.md  @OWNER_A
+#
+# B - Backend
+# /server/            @OWNER_B
+# /src/tracking/      @OWNER_B
+#
+# C - Conținut
+# /src/data/            @OWNER_C
+# /src/core/knowledge.ts @OWNER_C
+# /eval/questions.json  @OWNER_C
+#
+# D - AI
+# /src/tools/           @OWNER_D
+# /src/core/assistant.ts @OWNER_D
+# /src/core/prompt.ts   @OWNER_D
+# /finetune/            @OWNER_D
+#
+# E - Hartă
+# /docs/INTEGRATION.md  @OWNER_E

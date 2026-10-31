@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FlightFlow V4 · Inspector local</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1019;--panel:#111a29;--panel2:#172338;--line:#2c3b52;--text:#e9effa;--muted:#9bb0ce;--a:#82a8ff;--good:#75dfb4;--warn:#f6c575}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    button,input{font:inherit}button{cursor:pointer;border:0;border-radius:10px;background:var(--a);color:#09111e;padding:10px 15px;font-weight:700}button:disabled{opacity:.55;cursor:wait}
+    input{background:#0d1625;border:1px solid var(--line);border-radius:9px;color:var(--text);padding:10px 12px;outline:none}input:focus{border-color:var(--a)}
+    .shell{max-width:1660px;margin:auto;padding:22px 24px 28px}.head{display:flex;justify-content:space-between;gap:22px;align-items:flex-start;margin-bottom:20px}
+    .eyebrow{text-transform:uppercase;letter-spacing:.17em;color:var(--a);font-size:11px;font-weight:800;margin-bottom:5px}h1{font-size:26px;margin:0;letter-spacing:-.03em}p{margin:5px 0 0;color:var(--muted)}
+    .status{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.badge{border:1px solid var(--line);background:var(--panel);padding:7px 10px;border-radius:99px;font-size:12px;color:var(--muted)}.badge strong{color:var(--text)}
+    .layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(390px,.8fr);gap:16px;min-height:calc(100vh - 125px)}
+    .card{border:1px solid var(--line);background:var(--panel);border-radius:15px;min-width:0}.chat{display:flex;flex-direction:column;overflow:hidden}
+    .controls{display:flex;gap:12px;align-items:end;padding:17px;border-bottom:1px solid var(--line);flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:5px;color:var(--muted);font-size:12px;font-weight:700}.field input{width:120px}.field.token input{width:155px}.flight-note{font-size:12px;color:var(--muted);align-self:center}
+    .conversation{flex:1;min-height:330px;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:13px}.empty{margin:auto;text-align:center;max-width:420px;color:var(--muted)}.empty b{display:block;color:var(--text);font-size:20px;margin-bottom:5px}
+    .bubble{max-width:86%;white-space:pre-wrap;padding:13px 15px;border-radius:14px;overflow-wrap:anywhere}.bubble.user{align-self:flex-end;background:#3151a0}.bubble.assistant{align-self:flex-start;background:var(--panel2);border:1px solid var(--line)}.bubble.error{align-self:flex-start;color:#ffb8b5;border:1px solid #824948;background:#2d1c25}.bubble small{display:block;text-transform:uppercase;letter-spacing:.11em;font-size:10px;opacity:.7;margin-bottom:4px;font-weight:800}
+    form{display:flex;gap:10px;padding:15px;border-top:1px solid var(--line)}form input{flex:1;min-width:0}.examples{display:flex;flex-wrap:wrap;gap:7px;padding:0 15px 14px}.examples button{font-size:12px;font-weight:500;background:#1d2a42;color:#bdcff0;padding:6px 9px;border:1px solid var(--line)}
+    .inspect{display:flex;flex-direction:column;gap:14px;overflow:auto;max-height:calc(100vh - 125px)}.section{padding:17px}.section h2{font-size:15px;margin:0 0 12px;letter-spacing:-.01em}.section h2 small{font-weight:400;color:var(--muted);font-size:11px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.metric{background:#0d1625;border:1px solid var(--line);border-radius:10px;padding:10px}.metric .value{font-size:20px;font-weight:800;line-height:1.2}.metric .label{font-size:11px;color:var(--muted);margin-top:4px}
+    .list{display:flex;flex-direction:column;gap:8px}.step{display:flex;gap:10px;align-items:flex-start;border-left:2px solid var(--a);padding:4px 0 4px 12px}.step b{display:block;font-size:12px}.step span{font-size:12px;color:var(--muted)}
+    .trace{background:#0d1625;border:1px solid var(--line);border-radius:10px;padding:10px 11px}.trace b{font-size:13px}.trace small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.trace pre{white-space:pre-wrap;overflow-wrap:anywhere;color:#c6d9fb;font:11px/1.45 ui-monospace,Consolas,monospace;margin:7px 0 0}
+    details{border-top:1px solid var(--line);padding:8px 0}summary{cursor:pointer;color:var(--a);font-size:12px;font-weight:700}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:11px/1.45 ui-monospace,Consolas,monospace;color:#c5d8f6;max-height:290px;overflow:auto}.muted{color:var(--muted);font-size:12px}.warn{color:var(--warn)}
+    @media(max-width:980px){.layout{grid-template-columns:1fr}.inspect{max-height:none}.head{flex-direction:column}.status{justify-content:flex-start}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="head">
+    <div><div class="eyebrow">Laborator local / desktop</div><h1>FlightFlow V4 · Response Inspector</h1><p>Răspuns real al modelului local, apeluri de tool și traseul fiecărui răspuns.</p></div>
+    <div class="status"><div class="badge" id="serverBadge">Gateway: verific…</div><div class="badge" id="modelBadge">Model: verific…</div><div class="badge" id="dataBadge">Date: verific…</div></div>
+  </div>
+  <div class="layout">
+    <section class="card chat" aria-label="Conversație">
+      <div class="controls"><label class="field">Zbor selectat<input id="flight" value="FF123" spellcheck="false"></label><label class="field token">Token gateway<input id="token" type="password" autocomplete="off" placeholder="numai dacă e setat"></label><span class="flight-note" id="flightNote">FF123 este un zbor fictiv pentru test.</span></div>
+      <div id="conversation" class="conversation"><div class="empty" id="empty"><b>Încearcă o întrebare</b>Poți urmări exact ce tool a fost apelat, ce rezultat a primit și dacă răspunsul a fost compus sau generat de model.</div></div>
+      <div class="examples"><button data-q="Care e poarta mea?">Poarta mea</button><button data-q="Când pleacă avionul?">Ora plecării</button><button data-q="Pot lua un powerbank în avion?">Powerbank</button><button data-q="Unde e avionul acum?">Tracking</button></div>
+      <form id="form"><input id="question" placeholder="Întreabă FlightFlow…" maxlength="500" autocomplete="off" autofocus><button id="send">Trimite</button></form>
+    </section>
+    <aside class="inspect" aria-label="Inspector">
+      <section class="card section"><h2>Model și layere</h2><div class="grid"><div class="metric"><div class="value" id="blocks">—</div><div class="label">blocuri Transformer</div></div><div class="metric"><div class="value" id="ctx">—</div><div class="label">context runtime</div></div><div class="metric"><div class="value" id="thinking">OFF</div><div class="label">thinking intern</div></div></div><p class="muted" id="modelNote">Metadatele și configurația apar după conectare. Activările interne ale layerelor nu sunt expuse de Ollama.</p></section>
+      <section class="card section"><h2>Traseul răspunsului <small>observații, nu gândirea internă</small></h2><div id="steps" class="list muted">Trimite o întrebare pentru a vedea etapele.</div></section>
+      <section class="card section"><h2>Apeluri de tool și rezultate</h2><div id="tools" class="list muted">Niciun apel încă.</div></section>
+      <section class="card section"><h2>Timpi</h2><div id="timing" class="grid"><div class="metric"><div class="value">—</div><div class="label">total</div></div><div class="metric"><div class="value">—</div><div class="label">model</div></div><div class="metric"><div class="value">—</div><div class="label">tool</div></div></div></section>
+      <section class="card section"><h2>Mesajele vizibile modelului</h2><p class="muted">Promptul sistem, cererea, apelurile și rezultatele toolurilor. Modelul nu furnizează un jurnal al raționamentului intern.</p><div id="messages" class="muted">Nicio cerere încă.</div></section>
+    </aside>
+  </div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const fragment=new URLSearchParams(location.hash.slice(1));
+if(fragment.get('token'))$('token').value=fragment.get('token');
+if(fragment.get('flight'))$('flight').value=fragment.get('flight');
+const headers=()=>({'content-type':'application/json',...($('token').value?{authorization:'Bearer '+$('token').value}:{})});
+const node=(tag,cls,text)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el};
+const clear=(el)=>{while(el.firstChild)el.firstChild.remove()};
+const ms=n=>Number.isFinite(n)?Math.round(n)+' ms':'—';
+function bubble(kind,text){$('empty')?.remove();const b=node('div','bubble '+kind);b.append(node('small','',kind==='user'?'Tu':'FlightFlow'));b.append(node('div','',text));$('conversation').append(b);b.scrollIntoView({block:'end',behavior:'smooth'});return b}
+async function loadInfo(){
+  try{const [h,m]=await Promise.all([fetch('/health'),fetch('/v1/model',{headers:headers()})]);const health=await h.json();const model=await m.json();
+    $('serverBadge').textContent='Gateway: online';$('dataBadge').textContent='Date: '+(health.dataMode==='demo'?'fictive / FF123':'AirLabs live');
+    if(health.dataMode!=='demo')$('flightNote').textContent='Introduce un număr de zbor pentru date live.';
+    if(m.ok){$('modelBadge').textContent='Model: '+model.name;$('blocks').textContent=model.blocks??'—';$('ctx').textContent=model.runtimeContext??'—';$('thinking').textContent=model.thinking?'ON':'OFF';$('modelNote').textContent=(model.architecture||'model')+' · '+(model.parameters?`${(model.parameters/1e9).toFixed(1)}B parametri · `:'')+'temperatură '+model.temperature+'. Activările interne ale layerelor nu sunt expuse.'}
+    else $('modelBadge').textContent='Model: indisponibil';
+  }catch(e){$('serverBadge').textContent='Gateway: offline';$('modelBadge').textContent='Model: —';}
+}
+function renderSteps(j){const box=$('steps');clear(box);const items=[];const path=j.path;
+  if(path==='fast')items.push(['Fast path','Regulă explicită; 0 apeluri de model.']);
+  else items.push(['Model V4',`${j.timing.modelMs.length} apel(uri) pentru alegerea toolului / răspuns.`]);
+  if(j.trace.length)items.push(['Tool registry',j.trace.map(t=>t.name+(t.ok?'':' (eșec)')).join(', ')]);
+  if(path==='composed')items.push(['Response Composer','Răspuns construit din rezultatul toolului; nu a fost necesar al doilea apel de model.']);
+  if(path==='model')items.push(['Răspuns model','Textul final a fost generat de model.']);
+  if(j.guard?.length)items.push(['Guard',`${j.guard.length} observații; răspunsul a fost verificat.`]);
+  else items.push(['Guard',path==='model'?'Fără observații.':'Nu se aplică textului compus.']);
+  for(const [title,detail] of items){const e=node('div','step');const c=node('div');c.append(node('b','',title),node('span','',detail));e.append(c);box.append(e)}
+}
+function renderTools(j){const box=$('tools');clear(box);const msgs=j.debug?.messages||[];const results=msgs.filter(m=>m.role==='tool');
+  if(!j.trace.length){box.textContent='Niciun tool apelat.';return}
+  j.trace.forEach((t,i)=>{const e=node('div','trace');e.append(node('b','',`${i+1}. ${t.name} ${t.ok?'✓':'· eșec'}`));e.append(node('small','',`argumente: ${t.args} · efect secundar: ${t.sideEffect?'da':'nu'}`));if(results[i]){const p=node('pre','',results[i].content||'');e.append(p)}box.append(e)})
+}
+function renderTiming(j){const box=$('timing');clear(box);const model=(j.timing.modelMs||[]).reduce((s,x)=>s+x.totalMs,0);for(const [value,label] of [[ms(j.ms),'total'],[ms(model),'model'],[ms(j.timing.toolMs),'tool']]){const m=node('div','metric');m.append(node('div','value',value),node('div','label',label));box.append(m)}
+  (j.timing.modelMs||[]).forEach((m,i)=>{const x=node('div','muted',`Apel model ${i+1}: ${ms(m.totalMs)} · primul token ${ms(m.firstTokenMs)} · generare ${ms(m.decodeMs)}`);x.style.gridColumn='1 / -1';box.append(x)})
+}
+function renderMessages(j){const box=$('messages');clear(box);const msgs=j.debug?.messages||[];if(!msgs.length){box.textContent='Mesajele nu sunt disponibile pentru acest răspuns rapid.';return}
+  msgs.forEach((m,i)=>{const d=node('details');const label=`${i+1}. ${m.role}${m.tool_calls?.length?' · '+m.tool_calls.map(x=>x.function.name).join(', '):''}`;d.append(node('summary','',label));d.append(node('pre','',JSON.stringify(m,null,2)));box.append(d)});
+  if(j.debug.rawText!==j.text){const d=node('details');d.append(node('summary','','Text brut înainte de guard'));d.append(node('pre','',j.debug.rawText));box.append(d)}
+}
+function render(j){renderSteps(j);renderTools(j);renderTiming(j);renderMessages(j)}
+$('form').addEventListener('submit',async e=>{e.preventDefault();const q=$('question').value.trim();if(!q)return;$('question').value='';$('send').disabled=true;bubble('user',q);const pending=bubble('assistant','Se procesează…');
+  try{const res=await fetch('/v1/chat',{method:'POST',headers:headers(),body:JSON.stringify({question:q,flightNumber:$('flight').value.trim()||undefined,debug:true})});const j=await res.json();pending.remove();if(!res.ok){bubble('error',j.error||`HTTP ${res.status}`);return}bubble('assistant',j.text||'(răspuns gol)');render(j)}catch(err){pending.remove();bubble('error','Conexiune eșuată: '+err.message)}finally{$('send').disabled=false;$('question').focus()}});
+document.querySelectorAll('.examples button').forEach(b=>b.addEventListener('click',()=>{$('question').value=b.dataset.q;$('question').focus()}));
+loadInfo();
+</script>
+</body>
+</html>

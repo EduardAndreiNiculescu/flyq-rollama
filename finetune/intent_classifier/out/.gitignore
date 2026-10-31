@@ -1,0 +1,6 @@
+*.pt
+*.onnx
+*.joblib
+*.bin
+*.safetensors
+*.pth

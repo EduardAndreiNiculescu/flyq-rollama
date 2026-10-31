@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "FlightFlow",
+    "slug": "flightflow",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.flightflow.craiova.dev",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "plugins": [
+      "expo-sqlite",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "17.0",
+            "buildReactNativeFromSource": true
+          }
+        }
+      ],
+      [
+        "llama.rn",
+        {
+          "enableEntitlements": true,
+          "entitlementsProfile": "production"
+        }
+      ],
+      "expo-secure-store"
+    ]
+  }
+}

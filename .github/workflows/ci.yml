@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      # --ignore-scripts: llama.rn's postinstall downloads native binaries not needed for type/unit checks.
+      - run: npm ci --ignore-scripts
+      - run: npm run typecheck
+      - run: npm test
+      - name: Python helpers (no GPU)
+        run: python3 -I finetune/test_openai_compat.py
+      # Guard: private handoff files and credentials must never be tracked by git.
+      - name: No private files tracked
+        run: |
+          if git ls-files | grep -Ei 'PRIVATE|API\.json|(^|/)\.env($|\.)'; then
+            echo "A private/secret file is tracked by git"; exit 1
+          fi

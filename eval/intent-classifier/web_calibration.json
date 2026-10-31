@@ -1,0 +1,360 @@
+{
+  "model": "<cale-locala>",
+  "method": "per-tool grid search on val + web calibration; web held-out never used for selection",
+  "baselineThresholds": {
+    "get_flight_details": {
+      "confidence": 0.45,
+      "margin": 0.1
+    },
+    "get_gate": {
+      "confidence": 0.45,
+      "margin": 0.1
+    },
+    "get_time_remaining": {
+      "confidence": 0.45,
+      "margin": 0.1
+    },
+    "get_live_tracking": {
+      "confidence": 0.45,
+      "margin": 0.1
+    },
+    "search_knowledge": {
+      "confidence": 0.55,
+      "margin": 0.12
+    },
+    "open_airport_map": {
+      "confidence": 0.45,
+      "margin": 0.1
+    },
+    "clarify": {
+      "confidence": 0.3,
+      "margin": 0.04
+    },
+    "none": {
+      "confidence": 0.3,
+      "margin": 0.04
+    }
+  },
+  "recommendedThresholds": {
+    "get_flight_details": {
+      "confidence": 0.3,
+      "margin": 0.02
+    },
+    "get_gate": {
+      "confidence": 0.3,
+      "margin": 0.1
+    },
+    "get_time_remaining": {
+      "confidence": 0.3,
+      "margin": 0.02
+    },
+    "get_live_tracking": {
+      "confidence": 0.3,
+      "margin": 0.02
+    },
+    "search_knowledge": {
+      "confidence": 0.4,
+      "margin": 0.02
+    },
+    "open_airport_map": {
+      "confidence": 0.3,
+      "margin": 0.02
+    },
+    "clarify": {
+      "confidence": 0.3,
+      "margin": 0.04
+    },
+    "none": {
+      "confidence": 0.3,
+      "margin": 0.04
+    }
+  },
+  "baseline": {
+    "validation": {
+      "total": 925,
+      "accuracy": 0.909189,
+      "coverage": 0.664865,
+      "falseExecutions": 8,
+      "byLabel": {
+        "clarify": {
+          "total": 2,
+          "correct": 2,
+          "accuracy": 1.0
+        },
+        "get_flight_details": {
+          "total": 143,
+          "correct": 131,
+          "accuracy": 0.916084
+        },
+        "get_gate": {
+          "total": 55,
+          "correct": 46,
+          "accuracy": 0.836364
+        },
+        "get_live_tracking": {
+          "total": 116,
+          "correct": 110,
+          "accuracy": 0.948276
+        },
+        "get_time_remaining": {
+          "total": 10,
+          "correct": 8,
+          "accuracy": 0.8
+        },
+        "none": {
+          "total": 257,
+          "correct": 249,
+          "accuracy": 0.968872
+        },
+        "open_airport_map": {
+          "total": 123,
+          "correct": 123,
+          "accuracy": 1.0
+        },
+        "search_knowledge": {
+          "total": 219,
+          "correct": 172,
+          "accuracy": 0.785388
+        }
+      }
+    },
+    "webCalibration": {
+      "total": 45,
+      "accuracy": 0.622222,
+      "coverage": 0.644444,
+      "falseExecutions": 6,
+      "byLabel": {
+        "get_flight_details": {
+          "total": 15,
+          "correct": 9,
+          "accuracy": 0.6
+        },
+        "get_gate": {
+          "total": 15,
+          "correct": 10,
+          "accuracy": 0.666667
+        },
+        "none": {
+          "total": 15,
+          "correct": 9,
+          "accuracy": 0.6
+        }
+      }
+    },
+    "webHeldout": {
+      "total": 45,
+      "accuracy": 0.533333,
+      "coverage": 0.511111,
+      "falseExecutions": 7,
+      "byLabel": {
+        "get_flight_details": {
+          "total": 15,
+          "correct": 11,
+          "accuracy": 0.733333
+        },
+        "get_gate": {
+          "total": 15,
+          "correct": 5,
+          "accuracy": 0.333333
+        },
+        "none": {
+          "total": 15,
+          "correct": 8,
+          "accuracy": 0.533333
+        }
+      }
+    },
+    "test925": {
+      "total": 925,
+      "accuracy": 0.900541,
+      "coverage": 0.629189,
+      "falseExecutions": 13,
+      "byLabel": {
+        "clarify": {
+          "total": 5,
+          "correct": 1,
+          "accuracy": 0.2
+        },
+        "get_flight_details": {
+          "total": 143,
+          "correct": 129,
+          "accuracy": 0.902098
+        },
+        "get_gate": {
+          "total": 49,
+          "correct": 45,
+          "accuracy": 0.918367
+        },
+        "get_live_tracking": {
+          "total": 152,
+          "correct": 144,
+          "accuracy": 0.947368
+        },
+        "get_time_remaining": {
+          "total": 21,
+          "correct": 20,
+          "accuracy": 0.952381
+        },
+        "none": {
+          "total": 293,
+          "correct": 279,
+          "accuracy": 0.952218
+        },
+        "open_airport_map": {
+          "total": 73,
+          "correct": 69,
+          "accuracy": 0.945205
+        },
+        "search_knowledge": {
+          "total": 189,
+          "correct": 146,
+          "accuracy": 0.772487
+        }
+      }
+    }
+  },
+  "calibrated": {
+    "validation": {
+      "total": 925,
+      "accuracy": 0.917838,
+      "coverage": 0.695135,
+      "falseExecutions": 15,
+      "byLabel": {
+        "clarify": {
+          "total": 2,
+          "correct": 2,
+          "accuracy": 1.0
+        },
+        "get_flight_details": {
+          "total": 143,
+          "correct": 135,
+          "accuracy": 0.944056
+        },
+        "get_gate": {
+          "total": 55,
+          "correct": 48,
+          "accuracy": 0.872727
+        },
+        "get_live_tracking": {
+          "total": 116,
+          "correct": 110,
+          "accuracy": 0.948276
+        },
+        "get_time_remaining": {
+          "total": 10,
+          "correct": 8,
+          "accuracy": 0.8
+        },
+        "none": {
+          "total": 257,
+          "correct": 242,
+          "accuracy": 0.941634
+        },
+        "open_airport_map": {
+          "total": 123,
+          "correct": 123,
+          "accuracy": 1.0
+        },
+        "search_knowledge": {
+          "total": 219,
+          "correct": 181,
+          "accuracy": 0.826484
+        }
+      }
+    },
+    "webCalibration": {
+      "total": 45,
+      "accuracy": 0.644444,
+      "coverage": 0.688889,
+      "falseExecutions": 6,
+      "byLabel": {
+        "get_flight_details": {
+          "total": 15,
+          "correct": 10,
+          "accuracy": 0.666667
+        },
+        "get_gate": {
+          "total": 15,
+          "correct": 10,
+          "accuracy": 0.666667
+        },
+        "none": {
+          "total": 15,
+          "correct": 9,
+          "accuracy": 0.6
+        }
+      }
+    },
+    "webHeldout": {
+      "total": 45,
+      "accuracy": 0.555556,
+      "coverage": 0.666667,
+      "falseExecutions": 7,
+      "byLabel": {
+        "get_flight_details": {
+          "total": 15,
+          "correct": 11,
+          "accuracy": 0.733333
+        },
+        "get_gate": {
+          "total": 15,
+          "correct": 6,
+          "accuracy": 0.4
+        },
+        "none": {
+          "total": 15,
+          "correct": 8,
+          "accuracy": 0.533333
+        }
+      }
+    },
+    "test925": {
+      "total": 925,
+      "accuracy": 0.911351,
+      "coverage": 0.672432,
+      "falseExecutions": 25,
+      "byLabel": {
+        "clarify": {
+          "total": 5,
+          "correct": 1,
+          "accuracy": 0.2
+        },
+        "get_flight_details": {
+          "total": 143,
+          "correct": 134,
+          "accuracy": 0.937063
+        },
+        "get_gate": {
+          "total": 49,
+          "correct": 45,
+          "accuracy": 0.918367
+        },
+        "get_live_tracking": {
+          "total": 152,
+          "correct": 146,
+          "accuracy": 0.960526
+        },
+        "get_time_remaining": {
+          "total": 21,
+          "correct": 20,
+          "accuracy": 0.952381
+        },
+        "none": {
+          "total": 293,
+          "correct": 268,
+          "accuracy": 0.914676
+        },
+        "open_airport_map": {
+          "total": 73,
+          "correct": 70,
+          "accuracy": 0.958904
+        },
+        "search_knowledge": {
+          "total": 189,
+          "correct": 159,
+          "accuracy": 0.84127
+        }
+      }
+    }
+  }
+}

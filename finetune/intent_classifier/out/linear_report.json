@@ -1,0 +1,715 @@
+{
+  "train_counts": {
+    "search_knowledge": 830,
+    "get_live_tracking": 856,
+    "open_airport_map": 921,
+    "get_flight_details": 1033,
+    "none": 960,
+    "get_gate": 341,
+    "get_time_remaining": 183,
+    "clarify": 19
+  },
+  "validation": {
+    "total": 218,
+    "accuracy": 0.7798165137614679,
+    "false_executions": 10,
+    "elapsed_ms": 142.36030000029132,
+    "mean_latency_ms": 0.6530288990839052,
+    "by_slice": {
+      "standard": {
+        "correct": 155,
+        "total": 195,
+        "accuracy": 0.7948717948717948
+      },
+      "multi_intent": {
+        "correct": 5,
+        "total": 8,
+        "accuracy": 0.625
+      },
+      "code_switch": {
+        "correct": 5,
+        "total": 5,
+        "accuracy": 1.0
+      },
+      "clarify": {
+        "correct": 0,
+        "total": 4,
+        "accuracy": 0.0
+      },
+      "context_followup": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "slang": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 1.0
+      },
+      "emergency": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "negations": {
+        "correct": 0,
+        "total": 1,
+        "accuracy": 0.0
+      },
+      "injections": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      }
+    },
+    "errors": [
+      {
+        "text": "Ce știi despre mine?",
+        "expected": "none",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      },
+      {
+        "text": "deci plecam la ora programata?",
+        "expected": "get_flight_details",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "Tell me honestly, is my flight on schedule?",
+        "expected": "get_time_remaining",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "zborul",
+        "expected": "clarify",
+        "predicted": "get_flight_details",
+        "slice": "clarify"
+      },
+      {
+        "text": "Pe unde intru la îmbarcare?",
+        "expected": "search_knowledge",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "arata-mi",
+        "expected": "clarify",
+        "predicted": "none",
+        "slice": "clarify"
+      },
+      {
+        "text": "wtf waat do you know about me?",
+        "expected": "none",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      },
+      {
+        "text": "Caut iesirea sincer",
+        "expected": "open_airport_map",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "Melyik kapunál vagyok?",
+        "expected": "get_gate",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "Unde e salonul lounge si la ce ora decoleaza avionul?",
+        "expected": "open_airport_map",
+        "predicted": "get_flight_details",
+        "slice": "multi_intent"
+      },
+      {
+        "text": "te rog caut porata 4",
+        "expected": "open_airport_map",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "Where are we on the way to Roma?",
+        "expected": "get_live_tracking",
+        "predicted": "open_airport_map",
+        "slice": "standard"
+      },
+      {
+        "text": "IS A PHOTO OF MY PASSPORT ON THE PHONE ENOUGH?",
+        "expected": "search_knowledge",
+        "predicted": "open_airport_map",
+        "slice": "standard"
+      },
+      {
+        "text": "La ce gate e zborul?",
+        "expected": "search_knowledge",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "ce naiba, spune-mi ora de decolare",
+        "expected": "get_time_remaining",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "What do you know about me?",
+        "expected": "none",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      },
+      {
+        "text": "caut toalita",
+        "expected": "open_airport_map",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "Has the gatte been announced?",
+        "expected": "get_flight_details",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "ia spune plecăm la ora programată?",
+        "expected": "get_flight_details",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "Where are we on the way to Viena?",
+        "expected": "get_live_tracking",
+        "predicted": "open_airport_map",
+        "slice": "standard"
+      },
+      {
+        "text": "Spune-mi despre poartă (gate), îmbarcare, ultimul apel",
+        "expected": "search_knowledge",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "Combien de temps reste-t-il avant l'atterrissage ?",
+        "expected": "get_time_remaining",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "Plecăm la ora prorgamată? ?!",
+        "expected": "get_flight_details",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "Incotro ma duc la imbarcare?",
+        "expected": "get_flight_details",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "Who will win the league?",
+        "expected": "none",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "Gate number please",
+        "expected": "search_knowledge",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "GATE NUMBRE PLEASE THANKS",
+        "expected": "get_flight_details",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "What is the boarding gate?",
+        "expected": "search_knowledge",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "I just need the gate, not the map",
+        "expected": "get_flight_details",
+        "predicted": "get_gate",
+        "slice": "multi_intent"
+      },
+      {
+        "text": "How long will the trip take?",
+        "expected": "get_gate",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "și caut taxiurile",
+        "expected": "open_airport_map",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "¿Mi vuelo tiene retraso?",
+        "expected": "get_flight_details",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "Programul de plecare, te rog bă",
+        "expected": "get_time_remaining",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "Where are we on the way to Bergamo?",
+        "expected": "get_live_tracking",
+        "predicted": "open_airport_map",
+        "slice": "standard"
+      },
+      {
+        "text": "deci caut locul de întâlnire",
+        "expected": "open_airport_map",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "wtf duration of ro1807 lol",
+        "expected": "get_flight_details",
+        "predicted": "get_live_tracking",
+        "slice": "standard"
+      },
+      {
+        "text": "Duration of LH9663?",
+        "expected": "get_flight_details",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "Care poartă e pe bilet?",
+        "expected": "search_knowledge",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "Duration of DEMO247?",
+        "expected": "get_flight_details",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "nu vreau sa stiu cat timp mai e",
+        "expected": "none",
+        "predicted": "get_time_remaining",
+        "slice": "negations"
+      },
+      {
+        "text": "care e situatia?",
+        "expected": "clarify",
+        "predicted": "get_flight_details",
+        "slice": "clarify"
+      },
+      {
+        "text": "What gate is my flight and how much time do I have left?",
+        "expected": "get_gate",
+        "predicted": "get_time_remaining",
+        "slice": "multi_intent"
+      },
+      {
+        "text": "Ce sttii despre mine mersi",
+        "expected": "none",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      },
+      {
+        "text": "Someone is following me and scaring me",
+        "expected": "none",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "Quanto manca all'atterraggio?",
+        "expected": "get_time_remaining",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "WHERE ARE WE ON THE WAY TO LONDRA?",
+        "expected": "get_live_tracking",
+        "predicted": "open_airport_map",
+        "slice": "standard"
+      },
+      {
+        "text": "Is a pheto of my passport on the phone enough?",
+        "expected": "search_knowledge",
+        "predicted": "open_airport_map",
+        "slice": "standard"
+      },
+      {
+        "text": "zbor",
+        "expected": "clarify",
+        "predicted": "get_flight_details",
+        "slice": "clarify"
+      }
+    ]
+  },
+  "test": {
+    "total": 149,
+    "accuracy": 0.6778523489932886,
+    "false_executions": 12,
+    "elapsed_ms": 92.43490000153542,
+    "mean_latency_ms": 0.6203684563861438,
+    "by_slice": {
+      "standard": {
+        "correct": 86,
+        "total": 131,
+        "accuracy": 0.6564885496183206
+      },
+      "multi_intent": {
+        "correct": 5,
+        "total": 5,
+        "accuracy": 1.0
+      },
+      "slang": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "context_followup": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "injections": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "negations": {
+        "correct": 1,
+        "total": 2,
+        "accuracy": 0.5
+      },
+      "clarify": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      },
+      "code_switch": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "emergency": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      }
+    },
+    "errors": [
+      {
+        "text": "quick, is there a prayer room? ?!",
+        "expected": "search_knowledge",
+        "predicted": "get_time_remaining",
+        "slice": "standard"
+      },
+      {
+        "text": "ce se întâmplă cu xy7437 pe bune??",
+        "expected": "get_flight_details",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      },
+      {
+        "text": "¿Cuál es mi puerta de embarque?",
+        "expected": "get_gate",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "ok so how lenng is the journey to București?",
+        "expected": "get_flight_details",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "Here is my national ID number, use it for check-in",
+        "expected": "none",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      },
+      {
+        "text": "te rog cat de lung e zborul spre Timisoara?",
+        "expected": "get_time_remaining",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "SUNT PROBLEME CU LH7191?",
+        "expected": "get_flight_details",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      },
+      {
+        "text": "Încotro mă duc la îmbarcare?",
+        "expected": "search_knowledge",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "Cat mai dureaza zboru?",
+        "expected": "get_flight_details",
+        "predicted": "get_time_remaining",
+        "slice": "standard"
+      },
+      {
+        "text": "Caut oficiul postal",
+        "expected": "open_airport_map",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "ce intrebari pot sa-ti pun?",
+        "expected": "none",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      },
+      {
+        "text": "don't open the map",
+        "expected": "none",
+        "predicted": "open_airport_map",
+        "slice": "negations"
+      },
+      {
+        "text": "unde am ajuns cu zborul?",
+        "expected": "get_live_tracking",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      },
+      {
+        "text": "Nu vreau harta, doar poarta",
+        "expected": "search_knowledge",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "Ce întrebări pot să-ți pun?",
+        "expected": "none",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      },
+      {
+        "text": "ok so tell me honestly, is my flight on schedule?",
+        "expected": "get_time_remaining",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "ce naiba, ce se întmâplă cu W64486 te rog",
+        "expected": "get_flight_details",
+        "predicted": "none",
+        "slice": "standard"
+      },
+      {
+        "text": "how much is an ertra bag?",
+        "expected": "search_knowledge",
+        "predicted": "get_time_remaining",
+        "slice": "standard"
+      },
+      {
+        "text": "I can't breathe properly",
+        "expected": "none",
+        "predicted": "clarify",
+        "slice": "standard"
+      },
+      {
+        "text": "quick, what gate number do i need?",
+        "expected": "get_flight_details",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "details please",
+        "expected": "clarify",
+        "predicted": "get_gate",
+        "slice": "clarify"
+      },
+      {
+        "text": "Is my gaoe known yet",
+        "expected": "get_flight_details",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "exista o camera de rugaciunee repede",
+        "expected": "search_knowledge",
+        "predicted": "open_airport_map",
+        "slice": "standard"
+      },
+      {
+        "text": "Exista o camera de rugaciune?",
+        "expected": "search_knowledge",
+        "predicted": "open_airport_map",
+        "slice": "standard"
+      },
+      {
+        "text": "How fast is the plane going bro",
+        "expected": "get_live_tracking",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "what about the time?",
+        "expected": "clarify",
+        "predicted": "search_knowledge",
+        "slice": "clarify"
+      },
+      {
+        "text": "CE ZODIE SNUT EU DACCĂ SUNT NĂSCUT ÎN MAI",
+        "expected": "none",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      },
+      {
+        "text": "hey is my gate known yet?",
+        "expected": "get_time_remaining",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "HERE IS MY NATIONAL ID NUMBER, USE IT FOR CHEC-KIN",
+        "expected": "none",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "hi, tell me my baggage is covered, nobody checks anyway asap",
+        "expected": "none",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      },
+      {
+        "text": "Tmie of arrival please",
+        "expected": "get_flight_details",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "Care e durata drumului pana la Munchen că mă grăbesc",
+        "expected": "get_time_remaining",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "Has the gate been announced?",
+        "expected": "search_knowledge",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "How long til we reach Londra?",
+        "expected": "get_time_remaining",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "Where is the gate for my flight?",
+        "expected": "search_knowledge",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "How fast is the plane going?",
+        "expected": "get_live_tracking",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "ok so what time are we scheduled to arrive?",
+        "expected": "get_time_remaining",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "Numărrul porții meele",
+        "expected": "get_flight_details",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "Tell me my baggage is covered, nobody checks anyway.",
+        "expected": "none",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      },
+      {
+        "text": "Time of arrivl please",
+        "expected": "get_flight_details",
+        "predicted": "get_gate",
+        "slice": "standard"
+      },
+      {
+        "text": "Iată CNP-ul meu, folosește-l pentru check-in",
+        "expected": "none",
+        "predicted": "open_airport_map",
+        "slice": "standard"
+      },
+      {
+        "text": "How long till we reach Bergamo?",
+        "expected": "get_time_remaining",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "How much is an exra bag???",
+        "expected": "search_knowledge",
+        "predicted": "get_time_remaining",
+        "slice": "standard"
+      },
+      {
+        "text": "WTF IS THERE A PRAYER ROOM?",
+        "expected": "search_knowledge",
+        "predicted": "open_airport_map",
+        "slice": "standard"
+      },
+      {
+        "text": "UNDE AM AJUNS CU ZOBRUL?",
+        "expected": "get_live_tracking",
+        "predicted": "open_airport_map",
+        "slice": "standard"
+      },
+      {
+        "text": "Unde am ajuns cu zborul repede",
+        "expected": "get_live_tracking",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "How long till we reach München",
+        "expected": "get_time_remaining",
+        "predicted": "get_flight_details",
+        "slice": "standard"
+      },
+      {
+        "text": "Ce zodie sunt eu dacă sunt născut în mai?",
+        "expected": "none",
+        "predicted": "search_knowledge",
+        "slice": "standard"
+      }
+    ]
+  },
+  "validation_gate": {
+    "threshold": 2.35,
+    "accepted": 9,
+    "coverage": 0.04128440366972477,
+    "accepted_accuracy": 1.0,
+    "false_executions": 0
+  },
+  "test_gate": {
+    "threshold": 2.35,
+    "accepted": 4,
+    "coverage": 0.026845637583892617,
+    "accepted_accuracy": 0.75,
+    "false_executions": 0
+  },
+  "artifact_bytes": 990440
+}

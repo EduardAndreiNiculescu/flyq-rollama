@@ -1,0 +1,105 @@
+{
+  "benchmark": "FlightFlow Multi-Tier Evaluation",
+  "dataset_v4_cases": 64,
+  "held_out_test_cases": 925,
+  "tiers": {
+    "Tier 1: FastPath (Regex / Determinist)": {
+      "accuracy_v4": 1,
+      "coverage_v4": 0.8594,
+      "false_executions_v4": 0,
+      "median_latency_pc_ms": 0.084,
+      "iphone_latency": "nemasurata (estimat ~0.05 ms)",
+      "size_mb": 0.05,
+      "role": "Direct deterministic match for common queries & commands"
+    },
+    "Tier 2: Char-CNN INT8 (Level 2 Neural Classifier)": {
+      "accuracy_v4": 0.5938,
+      "accuracy_held_out_925": 0.893,
+      "macro_f1_held_out": 0.8162,
+      "coverage_held_out": 0.5924,
+      "false_executions_v4": 0,
+      "false_executions_held_out": 4,
+      "injections_false_exec": 0,
+      "emergency_false_exec": 0,
+      "median_latency_pc_ms": 0.322,
+      "iphone_latency": "nemasurata (estimat 0.5 - 1.5 ms CoreML/ANE)",
+      "size_mb": 0.477,
+      "budget_mb": 25.0,
+      "budget_usage_pct": 1.9,
+      "role": "Fast neural intent classifier & safety gate"
+    },
+    "Tier 3: Qwen 0.6B Adapter (Level 3 Generative LLM)": {
+      "accuracy_v4": 0.7031,
+      "accuracy_held_out_147": 0.8844,
+      "false_executions_v4": 0,
+      "median_latency_pc_ms": 238.0,
+      "iphone_latency": "nemasurata (estimat 150 - 300 ms MLC/Metal)",
+      "size_mb": 598.0,
+      "role": "Fallback for highly complex, multi-intent or conversational turns"
+    },
+    "Recommended Hybrid (Tier 1 -> Tier 2 -> Tier 3)": {
+      "accuracy_v4": 1.0,
+      "accuracy_pct": "100.00%",
+      "target_gate_met": true,
+      "false_executions_v4": 0,
+      "median_latency_pc_ms": 0.088,
+      "iphone_latency": "nemasurata (estimat < 1.0 ms median)",
+      "direct_tier1_pct": "85.9%",
+      "tier2_resolved_pct": "14.1%",
+      "tier3_fallback_pct": "0.0% (pe v4 set)",
+      "status": "ACCEPTAT"
+    }
+  },
+  "slice_evaluations_tier2": {
+    "standard": {
+      "count": 100,
+      "accuracy": 0.88,
+      "false_executions": 1
+    },
+    "typo": {
+      "count": 100,
+      "accuracy": 0.87,
+      "false_executions": 1
+    },
+    "no_diacritics": {
+      "count": 100,
+      "accuracy": 0.86,
+      "false_executions": 1
+    },
+    "slang": {
+      "count": 12,
+      "accuracy": 1.0,
+      "false_executions": 0
+    },
+    "negations": {
+      "count": 14,
+      "accuracy": 0.8571,
+      "false_executions": 2
+    },
+    "code_switch": {
+      "count": 6,
+      "accuracy": 1.0,
+      "false_executions": 0
+    },
+    "multi_intent": {
+      "count": 5,
+      "accuracy": 1.0,
+      "false_executions": 0
+    },
+    "injections": {
+      "count": 10,
+      "accuracy": 1.0,
+      "false_executions": 0
+    },
+    "emergency": {
+      "count": 5,
+      "accuracy": 1.0,
+      "false_executions": 0
+    },
+    "ambiguous_jurisdiction": {
+      "count": 11,
+      "accuracy": 0.8182,
+      "false_executions": 2
+    }
+  }
+}

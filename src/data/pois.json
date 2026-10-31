@@ -1,0 +1,19 @@
+[
+  { "id": "poi_wc0", "kind": "toilet", "floor": 0, "x": 9, "y": 55, "nodeId": "f0_wc", "label": { "ro": "Toalete", "en": "Toilets" } },
+  { "id": "poi_wc1", "kind": "toilet", "floor": 1, "x": 71, "y": 63, "nodeId": "f1_wc", "label": { "ro": "Toalete", "en": "Toilets" } },
+  { "id": "poi_gate1", "kind": "gate", "floor": 1, "x": 8, "y": 58, "nodeId": "f1_gate1", "label": { "ro": "Poarta 1", "en": "Gate 1" } },
+  { "id": "poi_gate2", "kind": "gate", "floor": 1, "x": 24, "y": 62, "nodeId": "f1_gate2", "label": { "ro": "Poarta 2", "en": "Gate 2" } },
+  { "id": "poi_gate3", "kind": "gate", "floor": 1, "x": 42, "y": 88, "nodeId": "f1_gate3", "label": { "ro": "Poarta 3", "en": "Gate 3" } },
+  { "id": "poi_gate4", "kind": "gate", "floor": 1, "x": 64, "y": 88, "nodeId": "f1_gate4", "label": { "ro": "Poarta 4", "en": "Gate 4" } },
+  { "id": "poi_cafe", "kind": "shop", "floor": 0, "x": 70, "y": 55, "nodeId": "f0_cafe", "label": { "ro": "Cafenea", "en": "Café" } },
+  { "id": "poi_dutyfree", "kind": "shop", "floor": 1, "x": 28, "y": 30, "nodeId": "f1_df", "label": { "ro": "Duty-free", "en": "Duty-free" } },
+  { "id": "poi_smoke", "kind": "smoking", "floor": 1, "x": 73, "y": 78, "nodeId": "f1_smoke", "label": { "ro": "Zonă de fumat", "en": "Smoking area" } },
+  { "id": "poi_power0", "kind": "power", "floor": 0, "x": 52, "y": 54, "nodeId": "f0_power", "label": { "ro": "Prize", "en": "Charging" } },
+  { "id": "poi_power1", "kind": "power", "floor": 1, "x": 40, "y": 74, "nodeId": "f1_power_e", "label": { "ro": "Prize", "en": "Charging" } },
+  { "id": "poi_power2", "kind": "power", "floor": 1, "x": 14, "y": 70, "nodeId": "f1_power_w", "label": { "ro": "Prize", "en": "Charging" } },
+  { "id": "poi_info", "kind": "info", "floor": 0, "x": 24, "y": 94, "nodeId": "f0_info", "label": { "ro": "Informații", "en": "Information" } },
+  { "id": "poi_stairs0", "kind": "stairs", "floor": 0, "x": 14, "y": 14, "nodeId": "f0_stairs", "label": { "ro": "Scară", "en": "Stairs" } },
+  { "id": "poi_stairs1", "kind": "stairs", "floor": 1, "x": 14, "y": 14, "nodeId": "f1_stairs", "label": { "ro": "Scară", "en": "Stairs" } },
+  { "id": "poi_lift0", "kind": "lift", "floor": 0, "x": 66, "y": 14, "nodeId": "f0_lift", "label": { "ro": "Lift", "en": "Lift" } },
+  { "id": "poi_lift1", "kind": "lift", "floor": 1, "x": 66, "y": 14, "nodeId": "f1_lift", "label": { "ro": "Lift", "en": "Lift" } }
+]

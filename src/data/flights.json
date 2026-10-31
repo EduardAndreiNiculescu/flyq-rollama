@@ -1,0 +1,32 @@
+{
+  "airports": [
+    { "code": "CRA", "city": "Craiova", "name": "Aeroportul Internațional Craiova", "lat": 44.3181, "lon": 23.8886, "utcOffsetMin": 120, "schengen": true },
+    { "code": "LTN", "city": "Londra Luton", "name": "London Luton Airport", "lat": 51.8747, "lon": -0.3683, "utcOffsetMin": 0, "schengen": false }
+  ],
+  "flights": [
+    {
+      "id": "W6-3541-2026-10-31",
+      "carrier": "W6",
+      "carrierName": "Wizz Air",
+      "flightNumber": "3541",
+      "from": "CRA",
+      "to": "LTN",
+      "departureUtc": "2026-10-31T08:40:00Z",
+      "arrivalUtc": "2026-10-31T11:50:00Z",
+      "boardingUtc": "2026-10-31T08:00:00Z",
+      "gateCloseUtc": "2026-10-31T08:20:00Z",
+      "gate": "3",
+      "gateFloor": 1,
+      "aircraft": "Airbus A321neo",
+      "cruiseAltitudeM": 11280,
+      "cruiseSpeedKmh": 846
+    }
+  ],
+  "landmarks": [
+    { "id": "vienna", "name": "Viena", "lat": 48.2082, "lon": 16.3738, "kind": "city", "fact": { "ro": "Capitala Austriei, pe Dunăre. Dunărea pe care o vezi aici trece și pe lângă Craiova, la vreo 60 km sud.", "en": "Austria's capital, on the Danube — the same river that flows about 60 km south of Craiova." } },
+    { "id": "munich", "name": "München", "lat": 48.1351, "lon": 11.582, "kind": "city", "fact": { "ro": "Zbori deasupra Bavariei. La sud se văd Alpii: Zugspitze (2 962 m) e cel mai înalt vârf al Germaniei.", "en": "You're over Bavaria. The Alps lie to the south: Zugspitze (2,962 m) is Germany's highest peak." } },
+    { "id": "alps", "name": "Alpi", "lat": 47.3, "lon": 11.4, "kind": "mountain", "fact": { "ro": "Alpii se întind pe aproape 1 200 km, din Franța până în Austria și Slovenia.", "en": "The Alps stretch for about 1,200 km, from France to Austria and Slovenia." } },
+    { "id": "brussels", "name": "Bruxelles", "lat": 50.8503, "lon": 4.3517, "kind": "city", "fact": { "ro": "Belgia e mică: o traversezi cu avionul în cam 15 minute. Mai e puțin până la Canalul Mânecii.", "en": "Belgium is small — you cross it in about 15 minutes. The English Channel is close now." } },
+    { "id": "budapest", "name": "Budapesta", "lat": 47.4979, "lon": 19.0402, "kind": "city", "fact": { "ro": "Budapesta s-a născut din unirea a trei orașe: Buda, Óbuda și Pest, în 1873.", "en": "Budapest was formed in 1873 by merging three towns: Buda, Óbuda and Pest." } }
+  ]
+}

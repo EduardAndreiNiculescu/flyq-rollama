@@ -1,0 +1,698 @@
+{
+  "Char-CNN (PyTorch FP32)": {
+    "accuracy": 0.9027,
+    "macro_f1": 0.8208,
+    "macro_precision": 0.8246,
+    "macro_recall": 0.8251,
+    "ece": 0.0851,
+    "coverage": 0.6292,
+    "false_executions": 15,
+    "false_execution_rate": 0.0162,
+    "pc_latency": {
+      "median_ms": 1.038,
+      "p95_ms": 1.689,
+      "p99_ms": 2.229,
+      "mean_ms": 1.117,
+      "std_ms": 0.318,
+      "hardware": "AMD Ryzen AI 9 HX 370 (8+16 cores) CPU (Windows 11)"
+    },
+    "iphone_latency": "nemasurata (estimat 0.5 - 1.5 ms pe A16/A17 Neural Engine; necesita masurare fizica)",
+    "per_label": {
+      "get_flight_details": {
+        "precision": 0.9286,
+        "recall": 0.9091,
+        "f1": 0.9187,
+        "support": 143
+      },
+      "get_gate": {
+        "precision": 0.9,
+        "recall": 0.9184,
+        "f1": 0.9091,
+        "support": 49
+      },
+      "get_time_remaining": {
+        "precision": 0.9524,
+        "recall": 0.9524,
+        "f1": 0.9524,
+        "support": 21
+      },
+      "get_live_tracking": {
+        "precision": 1.0,
+        "recall": 0.9474,
+        "f1": 0.973,
+        "support": 152
+      },
+      "search_knowledge": {
+        "precision": 0.9669,
+        "recall": 0.7725,
+        "f1": 0.8588,
+        "support": 189
+      },
+      "open_airport_map": {
+        "precision": 0.9079,
+        "recall": 0.9452,
+        "f1": 0.9262,
+        "support": 73
+      },
+      "clarify": {
+        "precision": 0.1,
+        "recall": 0.2,
+        "f1": 0.1333,
+        "support": 5
+      },
+      "none": {
+        "precision": 0.8408,
+        "recall": 0.9556,
+        "f1": 0.8946,
+        "support": 293
+      }
+    },
+    "confusion_matrix": {
+      "get_flight_details": {
+        "get_flight_details": 130,
+        "get_gate": 3,
+        "get_time_remaining": 1,
+        "get_live_tracking": 0,
+        "search_knowledge": 0,
+        "open_airport_map": 0,
+        "clarify": 5,
+        "none": 4
+      },
+      "get_gate": {
+        "get_flight_details": 2,
+        "get_gate": 45,
+        "get_time_remaining": 0,
+        "get_live_tracking": 0,
+        "search_knowledge": 0,
+        "open_airport_map": 0,
+        "clarify": 0,
+        "none": 2
+      },
+      "get_time_remaining": {
+        "get_flight_details": 0,
+        "get_gate": 0,
+        "get_time_remaining": 20,
+        "get_live_tracking": 0,
+        "search_knowledge": 0,
+        "open_airport_map": 0,
+        "clarify": 0,
+        "none": 1
+      },
+      "get_live_tracking": {
+        "get_flight_details": 3,
+        "get_gate": 0,
+        "get_time_remaining": 0,
+        "get_live_tracking": 144,
+        "search_knowledge": 0,
+        "open_airport_map": 1,
+        "clarify": 2,
+        "none": 2
+      },
+      "search_knowledge": {
+        "get_flight_details": 1,
+        "get_gate": 2,
+        "get_time_remaining": 0,
+        "get_live_tracking": 0,
+        "search_knowledge": 146,
+        "open_airport_map": 0,
+        "clarify": 1,
+        "none": 39
+      },
+      "open_airport_map": {
+        "get_flight_details": 0,
+        "get_gate": 0,
+        "get_time_remaining": 0,
+        "get_live_tracking": 0,
+        "search_knowledge": 0,
+        "open_airport_map": 69,
+        "clarify": 0,
+        "none": 4
+      },
+      "clarify": {
+        "get_flight_details": 1,
+        "get_gate": 0,
+        "get_time_remaining": 0,
+        "get_live_tracking": 0,
+        "search_knowledge": 0,
+        "open_airport_map": 2,
+        "clarify": 1,
+        "none": 1
+      },
+      "none": {
+        "get_flight_details": 3,
+        "get_gate": 0,
+        "get_time_remaining": 0,
+        "get_live_tracking": 0,
+        "search_knowledge": 5,
+        "open_airport_map": 4,
+        "clarify": 1,
+        "none": 280
+      }
+    }
+  },
+  "Char-CNN (ONNX INT8)": {
+    "accuracy": 0.893,
+    "macro_f1": 0.8162,
+    "macro_precision": 0.835,
+    "macro_recall": 0.813,
+    "ece": 0.1475,
+    "coverage": 0.5924,
+    "false_executions": 4,
+    "false_execution_rate": 0.0043,
+    "pc_latency": {
+      "median_ms": 0.322,
+      "p95_ms": 0.505,
+      "p99_ms": 0.591,
+      "mean_ms": 0.343,
+      "std_ms": 0.078,
+      "hardware": "AMD Ryzen AI 9 HX 370 (8+16 cores) CPU (Windows 11)"
+    },
+    "iphone_latency": "nemasurata (estimat 0.5 - 1.5 ms pe A16/A17 Neural Engine; necesita masurare fizica)",
+    "per_label": {
+      "get_flight_details": {
+        "precision": 0.9549,
+        "recall": 0.8881,
+        "f1": 0.9203,
+        "support": 143
+      },
+      "get_gate": {
+        "precision": 0.9167,
+        "recall": 0.898,
+        "f1": 0.9072,
+        "support": 49
+      },
+      "get_time_remaining": {
+        "precision": 0.9524,
+        "recall": 0.9524,
+        "f1": 0.9524,
+        "support": 21
+      },
+      "get_live_tracking": {
+        "precision": 1.0,
+        "recall": 0.9408,
+        "f1": 0.9695,
+        "support": 152
+      },
+      "search_knowledge": {
+        "precision": 0.9925,
+        "recall": 0.7037,
+        "f1": 0.8235,
+        "support": 189
+      },
+      "open_airport_map": {
+        "precision": 0.9855,
+        "recall": 0.9315,
+        "f1": 0.9577,
+        "support": 73
+      },
+      "clarify": {
+        "precision": 0.0833,
+        "recall": 0.2,
+        "f1": 0.1176,
+        "support": 5
+      },
+      "none": {
+        "precision": 0.7945,
+        "recall": 0.9898,
+        "f1": 0.8815,
+        "support": 293
+      }
+    },
+    "confusion_matrix": {
+      "get_flight_details": {
+        "get_flight_details": 127,
+        "get_gate": 3,
+        "get_time_remaining": 1,
+        "get_live_tracking": 0,
+        "search_knowledge": 0,
+        "open_airport_map": 0,
+        "clarify": 6,
+        "none": 6
+      },
+      "get_gate": {
+        "get_flight_details": 2,
+        "get_gate": 44,
+        "get_time_remaining": 0,
+        "get_live_tracking": 0,
+        "search_knowledge": 0,
+        "open_airport_map": 0,
+        "clarify": 0,
+        "none": 3
+      },
+      "get_time_remaining": {
+        "get_flight_details": 0,
+        "get_gate": 0,
+        "get_time_remaining": 20,
+        "get_live_tracking": 0,
+        "search_knowledge": 0,
+        "open_airport_map": 0,
+        "clarify": 0,
+        "none": 1
+      },
+      "get_live_tracking": {
+        "get_flight_details": 2,
+        "get_gate": 0,
+        "get_time_remaining": 0,
+        "get_live_tracking": 143,
+        "search_knowledge": 0,
+        "open_airport_map": 0,
+        "clarify": 3,
+        "none": 4
+      },
+      "search_knowledge": {
+        "get_flight_details": 0,
+        "get_gate": 1,
+        "get_time_remaining": 0,
+        "get_live_tracking": 0,
+        "search_knowledge": 133,
+        "open_airport_map": 0,
+        "clarify": 1,
+        "none": 54
+      },
+      "open_airport_map": {
+        "get_flight_details": 0,
+        "get_gate": 0,
+        "get_time_remaining": 0,
+        "get_live_tracking": 0,
+        "search_knowledge": 0,
+        "open_airport_map": 68,
+        "clarify": 0,
+        "none": 5
+      },
+      "clarify": {
+        "get_flight_details": 1,
+        "get_gate": 0,
+        "get_time_remaining": 0,
+        "get_live_tracking": 0,
+        "search_knowledge": 0,
+        "open_airport_map": 1,
+        "clarify": 1,
+        "none": 2
+      },
+      "none": {
+        "get_flight_details": 1,
+        "get_gate": 0,
+        "get_time_remaining": 0,
+        "get_live_tracking": 0,
+        "search_knowledge": 1,
+        "open_airport_map": 0,
+        "clarify": 1,
+        "none": 290
+      }
+    }
+  },
+  "FastText n-grams": {
+    "accuracy": 0.5005,
+    "macro_f1": 0.4362,
+    "macro_precision": 0.5013,
+    "macro_recall": 0.4163,
+    "ece": 0.121,
+    "coverage": 0.4854,
+    "false_executions": 90,
+    "false_execution_rate": 0.0973,
+    "pc_latency": {
+      "median_ms": 0.388,
+      "p95_ms": 0.876,
+      "p99_ms": 1.027,
+      "mean_ms": 0.448,
+      "std_ms": 0.206,
+      "hardware": "AMD Ryzen AI 9 HX 370 (8+16 cores) CPU (Windows 11)"
+    },
+    "iphone_latency": "nemasurata (estimat 0.5 - 1.5 ms pe A16/A17 Neural Engine; necesita masurare fizica)",
+    "per_label": {
+      "get_flight_details": {
+        "precision": 0.6809,
+        "recall": 0.4476,
+        "f1": 0.5401,
+        "support": 143
+      },
+      "get_gate": {
+        "precision": 0.4737,
+        "recall": 0.1837,
+        "f1": 0.2647,
+        "support": 49
+      },
+      "get_time_remaining": {
+        "precision": 0.6842,
+        "recall": 0.619,
+        "f1": 0.65,
+        "support": 21
+      },
+      "get_live_tracking": {
+        "precision": 0.7111,
+        "recall": 0.4211,
+        "f1": 0.5289,
+        "support": 152
+      },
+      "search_knowledge": {
+        "precision": 0.5484,
+        "recall": 0.3598,
+        "f1": 0.4345,
+        "support": 189
+      },
+      "open_airport_map": {
+        "precision": 0.4369,
+        "recall": 0.6164,
+        "f1": 0.5114,
+        "support": 73
+      },
+      "clarify": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 5
+      },
+      "none": {
+        "precision": 0.4751,
+        "recall": 0.6826,
+        "f1": 0.5602,
+        "support": 293
+      }
+    },
+    "confusion_matrix": {
+      "get_flight_details": {
+        "get_flight_details": 64,
+        "get_gate": 4,
+        "get_time_remaining": 3,
+        "get_live_tracking": 11,
+        "search_knowledge": 6,
+        "open_airport_map": 9,
+        "clarify": 19,
+        "none": 27
+      },
+      "get_gate": {
+        "get_flight_details": 3,
+        "get_gate": 9,
+        "get_time_remaining": 1,
+        "get_live_tracking": 2,
+        "search_knowledge": 1,
+        "open_airport_map": 15,
+        "clarify": 4,
+        "none": 14
+      },
+      "get_time_remaining": {
+        "get_flight_details": 1,
+        "get_gate": 0,
+        "get_time_remaining": 13,
+        "get_live_tracking": 0,
+        "search_knowledge": 0,
+        "open_airport_map": 0,
+        "clarify": 2,
+        "none": 5
+      },
+      "get_live_tracking": {
+        "get_flight_details": 6,
+        "get_gate": 1,
+        "get_time_remaining": 2,
+        "get_live_tracking": 64,
+        "search_knowledge": 4,
+        "open_airport_map": 7,
+        "clarify": 17,
+        "none": 51
+      },
+      "search_knowledge": {
+        "get_flight_details": 9,
+        "get_gate": 2,
+        "get_time_remaining": 0,
+        "get_live_tracking": 0,
+        "search_knowledge": 68,
+        "open_airport_map": 4,
+        "clarify": 7,
+        "none": 99
+      },
+      "open_airport_map": {
+        "get_flight_details": 0,
+        "get_gate": 2,
+        "get_time_remaining": 0,
+        "get_live_tracking": 1,
+        "search_knowledge": 2,
+        "open_airport_map": 45,
+        "clarify": 0,
+        "none": 23
+      },
+      "clarify": {
+        "get_flight_details": 0,
+        "get_gate": 0,
+        "get_time_remaining": 0,
+        "get_live_tracking": 2,
+        "search_knowledge": 0,
+        "open_airport_map": 1,
+        "clarify": 0,
+        "none": 2
+      },
+      "none": {
+        "get_flight_details": 11,
+        "get_gate": 1,
+        "get_time_remaining": 0,
+        "get_live_tracking": 10,
+        "search_knowledge": 43,
+        "open_airport_map": 22,
+        "clarify": 6,
+        "none": 200
+      }
+    }
+  },
+  "Tiny Transformer Encoder": {
+    "accuracy": 0.5568,
+    "macro_f1": 0.515,
+    "macro_precision": 0.6146,
+    "macro_recall": 0.5217,
+    "ece": 0.0696,
+    "coverage": 0.3957,
+    "false_executions": 47,
+    "false_execution_rate": 0.0508,
+    "pc_latency": {
+      "median_ms": 1.188,
+      "p95_ms": 4.32,
+      "p99_ms": 7.773,
+      "mean_ms": 1.778,
+      "std_ms": 2.04,
+      "hardware": "AMD Ryzen AI 9 HX 370 (8+16 cores) CPU (Windows 11)"
+    },
+    "iphone_latency": "nemasurata (estimat 0.5 - 1.5 ms pe A16/A17 Neural Engine; necesita masurare fizica)",
+    "per_label": {
+      "get_flight_details": {
+        "precision": 0.7582,
+        "recall": 0.4825,
+        "f1": 0.5897,
+        "support": 143
+      },
+      "get_gate": {
+        "precision": 0.6071,
+        "recall": 0.3469,
+        "f1": 0.4416,
+        "support": 49
+      },
+      "get_time_remaining": {
+        "precision": 0.8333,
+        "recall": 0.7143,
+        "f1": 0.7692,
+        "support": 21
+      },
+      "get_live_tracking": {
+        "precision": 0.9158,
+        "recall": 0.5724,
+        "f1": 0.7045,
+        "support": 152
+      },
+      "search_knowledge": {
+        "precision": 0.6557,
+        "recall": 0.2116,
+        "f1": 0.32,
+        "support": 189
+      },
+      "open_airport_map": {
+        "precision": 0.6301,
+        "recall": 0.6301,
+        "f1": 0.6301,
+        "support": 73
+      },
+      "clarify": {
+        "precision": 0.029,
+        "recall": 0.4,
+        "f1": 0.0541,
+        "support": 5
+      },
+      "none": {
+        "precision": 0.4878,
+        "recall": 0.8157,
+        "f1": 0.6105,
+        "support": 293
+      }
+    },
+    "confusion_matrix": {
+      "get_flight_details": {
+        "get_flight_details": 69,
+        "get_gate": 3,
+        "get_time_remaining": 2,
+        "get_live_tracking": 2,
+        "search_knowledge": 3,
+        "open_airport_map": 4,
+        "clarify": 25,
+        "none": 35
+      },
+      "get_gate": {
+        "get_flight_details": 1,
+        "get_gate": 17,
+        "get_time_remaining": 0,
+        "get_live_tracking": 0,
+        "search_knowledge": 1,
+        "open_airport_map": 5,
+        "clarify": 7,
+        "none": 18
+      },
+      "get_time_remaining": {
+        "get_flight_details": 0,
+        "get_gate": 0,
+        "get_time_remaining": 15,
+        "get_live_tracking": 0,
+        "search_knowledge": 0,
+        "open_airport_map": 0,
+        "clarify": 4,
+        "none": 2
+      },
+      "get_live_tracking": {
+        "get_flight_details": 3,
+        "get_gate": 2,
+        "get_time_remaining": 0,
+        "get_live_tracking": 87,
+        "search_knowledge": 0,
+        "open_airport_map": 7,
+        "clarify": 15,
+        "none": 38
+      },
+      "search_knowledge": {
+        "get_flight_details": 7,
+        "get_gate": 2,
+        "get_time_remaining": 0,
+        "get_live_tracking": 0,
+        "search_knowledge": 40,
+        "open_airport_map": 0,
+        "clarify": 6,
+        "none": 134
+      },
+      "open_airport_map": {
+        "get_flight_details": 0,
+        "get_gate": 2,
+        "get_time_remaining": 0,
+        "get_live_tracking": 1,
+        "search_knowledge": 0,
+        "open_airport_map": 46,
+        "clarify": 2,
+        "none": 22
+      },
+      "clarify": {
+        "get_flight_details": 0,
+        "get_gate": 0,
+        "get_time_remaining": 0,
+        "get_live_tracking": 1,
+        "search_knowledge": 0,
+        "open_airport_map": 0,
+        "clarify": 2,
+        "none": 2
+      },
+      "none": {
+        "get_flight_details": 11,
+        "get_gate": 2,
+        "get_time_remaining": 1,
+        "get_live_tracking": 4,
+        "search_knowledge": 17,
+        "open_airport_map": 11,
+        "clarify": 8,
+        "none": 239
+      }
+    }
+  },
+  "benchmark_slices": {
+    "standard": {
+      "count": 100,
+      "accuracy": 0.88,
+      "false_executions": 1,
+      "clean_rejection_rate": 0.0
+    },
+    "typo": {
+      "count": 100,
+      "accuracy": 0.87,
+      "false_executions": 1,
+      "clean_rejection_rate": 0.0
+    },
+    "no_diacritics": {
+      "count": 100,
+      "accuracy": 0.86,
+      "false_executions": 1,
+      "clean_rejection_rate": 0.0
+    },
+    "slang": {
+      "count": 12,
+      "accuracy": 1.0,
+      "false_executions": 0,
+      "clean_rejection_rate": 1.0
+    },
+    "negations": {
+      "count": 14,
+      "accuracy": 0.8571,
+      "false_executions": 2,
+      "clean_rejection_rate": 0.0
+    },
+    "code_switch": {
+      "count": 6,
+      "accuracy": 1.0,
+      "false_executions": 0,
+      "clean_rejection_rate": 1.0
+    },
+    "multi_intent": {
+      "count": 5,
+      "accuracy": 1.0,
+      "false_executions": 0,
+      "clean_rejection_rate": 1.0
+    },
+    "injections": {
+      "count": 10,
+      "accuracy": 1.0,
+      "false_executions": 0,
+      "clean_rejection_rate": 1.0
+    },
+    "emergency": {
+      "count": 5,
+      "accuracy": 1.0,
+      "false_executions": 0,
+      "clean_rejection_rate": 1.0
+    },
+    "ambiguous_jurisdiction": {
+      "count": 11,
+      "accuracy": 0.8182,
+      "false_executions": 2,
+      "clean_rejection_rate": 0.0
+    }
+  },
+  "entity_extraction": {
+    "flightNumber": {
+      "precision": 0.8108,
+      "recall": 0.9375,
+      "f1": 0.8696,
+      "support": 96
+    },
+    "destination": {
+      "precision": 0.1318,
+      "recall": 0.2361,
+      "f1": 0.1692,
+      "support": 72
+    }
+  },
+  "artifact_sizes": {
+    "char_cnn": {
+      "onnx_fp32_mb": 0.766,
+      "onnx_int8_mb": 0.477,
+      "max_abs_diff_ort_vs_torch": 5e-06,
+      "budget_status": "PASSED (<= 25 MB)"
+    },
+    "fasttext": {
+      "onnx_fp32_mb": 2.032,
+      "budget_status": "PASSED (<= 25 MB)"
+    },
+    "tiny_encoder": {
+      "onnx_fp32_mb": 0.408,
+      "budget_status": "PASSED (<= 25 MB)"
+    }
+  }
+}

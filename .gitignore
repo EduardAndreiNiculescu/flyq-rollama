@@ -1,0 +1,89 @@
+﻿# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
+# generated native folders
+/ios
+/android
+node_modules/
+.expo/
+ios/
+android/
+*.gguf
+!assets/models/ff-adapter-v4-f16.gguf
+eval/results/
+finetune/out/
+finetune/intent_classifier/data_v*/
+finetune/intent_classifier/out_v*/
+eval/intent-classifier/v*/
+eval/intent-classifier/ro_stress_500_v*_results.json
+eval/intent-classifier/ro_stress_500_v4_*.json
+eval/intent-classifier/ro_stress_500_v3_*.json
+eval/intent-classifier/v4_*_calibration.json
+eval/intent-classifier/v4_safety_gate.json
+finetune/robaselm/
+finetune/rost/
+finetune/rollama/
+finetune/data/rollama/
+eval/robaselm_s_smoke.json
+eval/robaselm_s_stress_results.json
+eval/robaselm_s_embedding_results.json
+eval/robaselm_m_embedding_results.json
+
+.env
+.env.*
+API.json
+*secret*
+
+
+__pycache__/
+*.pyc
+
+/tools/
+
+# flightflow-rollama: models, training data and local artefacts are never versioned
+assets/models/
+finetune/data/
+finetune/out/
+models/*.gguf
+models/*.safetensors
+eval/apify-*.json
+scripts/apify-*.ts
+.env
+.env.*
+
+.claude/

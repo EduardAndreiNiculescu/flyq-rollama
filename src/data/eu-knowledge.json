@@ -1,0 +1,845 @@
+{
+  "_note": "Drafted by a research agent from official EU pages; 'checked' = I re-read the cited page on 2026-10-29 and the claims matched. checked=false entries are agent-reviewed only and ship with verifiedOn=null.",
+  "checkedOn": "2026-10-29",
+  "sources": {
+    "AIR": {
+      "name": "Your Europe - Air passenger rights",
+      "url": "https://europa.eu/youreurope/citizens/travel/passenger-rights/air/",
+      "jurisdiction": "EU"
+    },
+    "SECURITY": {
+      "name": "European Commission - Information for air travellers",
+      "url": "https://transport.ec.europa.eu/transport-modes/air/aviation-security/information-air-travellers_en",
+      "jurisdiction": "EU"
+    },
+    "LUGGAGE": {
+      "name": "Your Europe - Luggage restrictions",
+      "url": "https://europa.eu/youreurope/citizens/travel/carry/luggage-restrictions/",
+      "jurisdiction": "EU"
+    },
+    "PRM": {
+      "name": "Your Europe - Reduced mobility passenger rights",
+      "url": "https://europa.eu/youreurope/citizens/travel/transport-disability/reduced-mobility/index_en.htm",
+      "jurisdiction": "EU"
+    },
+    "MINORS": {
+      "name": "Your Europe - Documents for minors",
+      "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/travel-documents-minors/indexamp_en.htm",
+      "jurisdiction": "EU"
+    },
+    "LOST": {
+      "name": "Your Europe - Expired or lost passports",
+      "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/expired-lost-passports/",
+      "jurisdiction": "EU"
+    },
+    "EUID": {
+      "name": "Your Europe - Travel documents for EU citizens",
+      "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/eu-citizen/indexamp_ro.htm",
+      "jurisdiction": "EU"
+    },
+    "PETS": {
+      "name": "Your Europe - Travelling with pets",
+      "url": "https://europa.eu/youreurope/citizens/travel/carry/pets-and-other-animals/index_en.htm",
+      "jurisdiction": "EU"
+    },
+    "EMERGENCY": {
+      "name": "Your Europe - Emergency number FAQ",
+      "url": "https://europa.eu/youreurope/citizens/travel/security-and-emergencies/emergency/faq/index_en.htm",
+      "jurisdiction": "EU"
+    },
+    "FAQ": {
+      "name": "Your Europe - Air passenger rights FAQ",
+      "url": "https://europa.eu/youreurope/citizens/travel/passenger-rights/air/faq/index_en.htm",
+      "jurisdiction": "EU"
+    },
+    "ROBP": {
+      "name": "Poliția de Frontieră Română - declarația notarială pentru minori",
+      "url": "https://www.politiadefrontiera.ro/ro/main/i-vacanta-incepe-cu-documentele-pregatite-cand-este-necesara-declaratia-notariala-pentru-minori-43983.html",
+      "jurisdiction": "RO"
+    },
+    "SCHENGEN_NEWS": {
+      "name": "European Commission - Bulgaria and Romania join the Schengen area",
+      "url": "https://home-affairs.ec.europa.eu/news/bulgaria-and-romania-join-schengen-area-2025-01-03_en",
+      "jurisdiction": "EU"
+    },
+    "CRA_SEC": {
+      "name": "Aeroportul Craiova - Controlul de securitate",
+      "url": "https://aeroportcraiova.ro/controlul-de-securitate/",
+      "jurisdiction": "RO"
+    },
+    "CRA_PRM": {
+      "name": "Aeroportul Craiova - Pasageri cu mobilitate redusă",
+      "url": "https://aeroportcraiova.ro/pasageri-cu-mobilitate-redusa/",
+      "jurisdiction": "RO"
+    },
+    "EU_CITIZEN": {
+      "name": "Your Europe - Travel documents for EU citizens",
+      "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/eu-citizen/index_en.htm",
+      "jurisdiction": "EU"
+    },
+    "E112": {
+      "name": "European Commission - 112, the European emergency number",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/112",
+      "jurisdiction": "EU"
+    }
+  },
+  "entries": [
+    {
+      "id": "ff_eu_cancel_options",
+      "topic": "passenger_rights",
+      "source": "AIR",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "anulare",
+        "anulat",
+        "zbor anulat",
+        "cancelled",
+        "canceled",
+        "rambursare",
+        "refund",
+        "redirectionare",
+        "rerouting"
+      ],
+      "ro": {
+        "title": "Zbor anulat: ce opțiuni ai",
+        "body": "Dacă zborul este anulat și se aplică normele UE, compania trebuie să îți ofere opțiuni de rambursare sau redirecționare și asistența prevăzută de reguli. Contactează compania și păstrează confirmările. Informații generale despre drepturile UE, nu consultanță juridică."
+      },
+      "en": {
+        "title": "Cancelled flight: your options",
+        "body": "If your flight is canceled and EU rules apply, the airline must offer reimbursement or rerouting options and the assistance required by the rules. Contact the airline and keep confirmations. General information about EU passenger rights, not legal advice."
+      }
+    },
+    {
+      "id": "ff_eu_cancel_compensation",
+      "topic": "passenger_rights",
+      "source": "AIR",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "anulare",
+        "compensatie",
+        "despagubire",
+        "cancelled",
+        "compensation",
+        "notificare"
+      ],
+      "ro": {
+        "title": "Compensație pentru anulare",
+        "body": "În UE, o anulare poate da dreptul la compensație în anumite condiții, inclusiv în funcție de momentul notificării și de cauza anulării. Circumstanțele extraordinare pot exclude compensația, nu neapărat și asistența. Verifică situația individuală. Informații generale UE, nu consultanță juridică."
+      },
+      "en": {
+        "title": "Compensation for cancellation",
+        "body": "Under EU rules, a cancellation may qualify for compensation depending on factors including the notice period and the reason for cancellation. Extraordinary circumstances may exclude compensation, but not necessarily assistance. Check your individual case. General EU information, not legal advice."
+      }
+    },
+    {
+      "id": "ff_eu_delay_arrival",
+      "topic": "passenger_rights",
+      "source": "AIR",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "intarziere",
+        "intarziat",
+        "sosire",
+        "delay",
+        "delayed",
+        "arrival",
+        "trei ore",
+        "three hours",
+        "3 ore",
+        "compensatie"
+      ],
+      "ro": {
+        "title": "Întârziere la sosire",
+        "body": "Dacă ajungi la destinația finală cu cel puțin trei ore întârziere, poți avea dreptul la compensație conform normelor UE, dacă sunt îndeplinite condițiile și nu se aplică o excepție. Nu te baza doar pe întârzierea la plecare. Informații generale UE, nu consultanță juridică."
+      },
+      "en": {
+        "title": "Arrival delay",
+        "body": "If you arrive at your final destination at least three hours late, EU rules may provide compensation if the eligibility conditions are met and no exception applies. Departure delay alone is not enough to decide. General EU information, not legal advice."
+      }
+    },
+    {
+      "id": "ff_eu_delay_five_hours",
+      "topic": "passenger_rights",
+      "source": "AIR",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "intarziere",
+        "cinci ore",
+        "5 ore",
+        "5h",
+        "rambursare",
+        "refund",
+        "departure delay",
+        "plecare"
+      ],
+      "ro": {
+        "title": "Întârziere la plecare de 5 ore",
+        "body": "Dacă întârzierea la plecare ajunge la cel puțin cinci ore și normele UE se aplică, poți solicita rambursarea biletului în condițiile prevăzute de regulament; dacă este cazul, se oferă și transport de întoarcere la punctul de plecare. Informații generale UE, nu consultanță juridică."
+      },
+      "en": {
+        "title": "Five-hour departure delay",
+        "body": "If departure is delayed by at least five hours and EU rules apply, you can request ticket reimbursement under the regulation; a return flight to the original departure point may also apply. General EU information, not legal advice."
+      }
+    },
+    {
+      "id": "ff_eu_denied_boarding",
+      "topic": "passenger_rights",
+      "source": "AIR",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "overbooking",
+        "suprarezervare",
+        "refuz",
+        "refuz imbarcare",
+        "denied boarding",
+        "imbarcare refuzata"
+      ],
+      "ro": {
+        "title": "Refuzul îmbarcării",
+        "body": "Dacă ți se refuză îmbarcarea involuntar din cauza suprarezervării, deși te-ai prezentat la timp cu documentele necesare, normele UE pot prevedea compensație, asistență și opțiuni de rambursare sau redirecționare. Excepțiile contează. Informații generale UE, nu consultanță juridică."
+      },
+      "en": {
+        "title": "Denied boarding",
+        "body": "If you are involuntarily denied boarding because of overbooking after arriving on time with the required documents, EU rules may provide compensation, assistance, and reimbursement or rerouting options. Exceptions matter. General EU information, not legal advice."
+      }
+    },
+    {
+      "id": "ff_eu_assistance_waiting",
+      "topic": "passenger_rights",
+      "source": "AIR",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "masa",
+        "mancare",
+        "hotel",
+        "cazare",
+        "asistenta",
+        "intarziere",
+        "meals",
+        "accommodation",
+        "delay",
+        "refreshments"
+      ],
+      "ro": {
+        "title": "Asistență în timpul așteptării",
+        "body": "În cazul unor anulări sau întârzieri care îndeplinesc pragurile din normele UE, compania trebuie să ofere asistență proporțională cu așteptarea: de exemplu, băuturi, mese și, în anumite cazuri, cazare și transport. Păstrează bonurile pentru cheltuieli necesare și rezonabile. Informații generale UE, nu consultanță juridică."
+      },
+      "en": {
+        "title": "Assistance while you wait",
+        "body": "For cancellations or delays meeting the thresholds in EU rules, the airline must provide care appropriate to the wait, such as refreshments, meals and sometimes accommodation and transport. Keep receipts for necessary and reasonable expenses. General EU information, not legal advice."
+      }
+    },
+    {
+      "id": "ff_eu_extraordinary",
+      "topic": "passenger_rights",
+      "source": "AIR",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "circumstante extraordinare",
+        "vreme",
+        "defectiune",
+        "compensatie",
+        "extraordinary",
+        "weather",
+        "technical"
+      ],
+      "ro": {
+        "title": "Circumstanțe extraordinare",
+        "body": "În UE, compania poate fi scutită de compensație dacă dovedește circumstanțe extraordinare pe care nu le putea evita prin toate măsurile rezonabile. Vremea severă poate fi un exemplu; multe defecțiuni tehnice obișnuite nu sunt automat extraordinare. Informații generale UE, nu consultanță juridică."
+      },
+      "en": {
+        "title": "Extraordinary circumstances",
+        "body": "Under EU rules, an airline may avoid compensation if it proves extraordinary circumstances that could not have been prevented by all reasonable measures. Severe weather may qualify; many routine technical faults do not automatically qualify. General EU information, not legal advice."
+      }
+    },
+    {
+      "id": "ff_eu_baggage_complaint",
+      "topic": "baggage",
+      "source": "AIR",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "bagaj deteriorat",
+        "bagaj intarziat",
+        "reclamatie",
+        "7 zile",
+        "21 zile",
+        "damaged baggage",
+        "delayed baggage",
+        "claim",
+        "complaint",
+        "written"
+      ],
+      "ro": {
+        "title": "Reclamație scrisă pentru bagaj",
+        "body": "Pentru bagajul de cală deteriorat, trimite o reclamație scrisă companiei în cel mult șapte zile. Pentru bagaj întârziat, termenul este de 21 de zile de la primirea lui. Anunță problema imediat la aeroport și păstrează eticheta și documentele. Informații generale privind drepturile din UE, nu consultanță juridică."
+      },
+      "en": {
+        "title": "Written baggage claims",
+        "body": "For damaged checked baggage, submit a written complaint to the airline within seven days. For delayed baggage, the deadline is 21 days after you receive it. Report the issue at the airport and retain the baggage tag and documents. General information on rights applicable in the EU, not legal advice."
+      }
+    },
+    {
+      "id": "ff_eu_liquids_100ml",
+      "topic": "security",
+      "source": "SECURITY",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "lichide",
+        "lichid",
+        "apa",
+        "gel",
+        "100 ml",
+        "100ml",
+        "punga",
+        "liquids",
+        "sticla"
+      ],
+      "ro": {
+        "title": "Lichide în bagajul de mână (UE)",
+        "body": "Ca regulă generală la plecarea din aeroporturile UE, lichidele din bagajul de mână trebuie să fie în recipiente de cel mult 100 ml, într-o pungă transparentă resigilabilă de maximum un litru. Pot exista excepții și cerințe locale. Verifică regulile aeroportului înainte de călătorie."
+      },
+      "en": {
+        "title": "Liquids in cabin baggage (EU)",
+        "body": "As a general rule when departing an EU airport, cabin liquids must be in containers of no more than 100 ml within one transparent resealable bag of up to one litre. Exceptions and local procedures may apply. Check the airport rules before travel."
+      }
+    },
+    {
+      "id": "ff_eu_liquid_exemptions",
+      "topic": "security",
+      "source": "SECURITY",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "medicamente",
+        "medicament",
+        "bebelus",
+        "lapte",
+        "hrana",
+        "baby food",
+        "medicines",
+        "milk",
+        "security",
+        "lichide"
+      ],
+      "ro": {
+        "title": "Medicamente și hrană pentru copii",
+        "body": "Medicamentele esențiale și hrana sau laptele pentru copii necesare în călătorie pot depăși limita obișnuită de 100 ml. Personalul de securitate poate cere verificări sau dovezi suplimentare. Pregătește produsele pentru control."
+      },
+      "en": {
+        "title": "Medicines and baby food",
+        "body": "Essential medicines and baby food or milk needed for the journey may exceed the usual 100 ml limit. Security staff may request checks or evidence of authenticity. Have these items ready for screening."
+      }
+    },
+    {
+      "id": "ff_eu_dutyfree_liquids",
+      "topic": "security",
+      "source": "SECURITY",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "duty free",
+        "dutyfree",
+        "alcool",
+        "parfum",
+        "sigilat",
+        "sealed",
+        "receipt",
+        "bon",
+        "lichide"
+      ],
+      "ro": {
+        "title": "Lichide duty-free",
+        "body": "Lichidele cumpărate duty-free pot fi transportate în cabină dacă produsul și bonul rămân sigilate în punga de securitate primită la cumpărare. Nu deschide punga înainte de destinația finală; la conexiuni pot exista controale suplimentare."
+      },
+      "en": {
+        "title": "Duty-free liquids",
+        "body": "Duty-free liquids may be carried in cabin baggage if the item and receipt stay sealed in the security bag provided at purchase. Do not open it before your final destination; connecting airports may carry out additional screening."
+      }
+    },
+    {
+      "id": "ff_eu_sharp_objects",
+      "topic": "security",
+      "source": "LUGGAGE",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "cutit",
+        "foarfeca",
+        "obiecte ascutite",
+        "sharp",
+        "knife",
+        "scissors",
+        "arma"
+      ],
+      "ro": {
+        "title": "Obiecte ascuțite în cabină",
+        "body": "Obiectele ascuțite care pot fi folosite ca arme, precum unele cuțite și foarfece, nu sunt permise în cabină. Verifică lista oficială de articole interzise înainte de a face bagajul; unele obiecte pot fi admise doar la cală."
+      },
+      "en": {
+        "title": "Sharp objects in cabin baggage",
+        "body": "Sharp objects that could be used as weapons, including some knives and scissors, are not allowed in the cabin. Check the official prohibited-items list before packing; some items may be allowed only in checked baggage."
+      }
+    },
+    {
+      "id": "ff_eu_explosives",
+      "topic": "security",
+      "source": "LUGGAGE",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "explozibili",
+        "artificii",
+        "inflamabile",
+        "interzis",
+        "prohibited",
+        "fireworks",
+        "explosive"
+      ],
+      "ro": {
+        "title": "Articole interzise în orice bagaj",
+        "body": "Explozibilii, artificiile și anumite substanțe inflamabile sau toxice sunt interzise atât în cabină, cât și în bagajul de cală. Nu le transporta la aeroport. Consultă regulile oficiale pentru fiecare categorie de produs."
+      },
+      "en": {
+        "title": "Items prohibited in all baggage",
+        "body": "Explosives, fireworks and certain flammable or toxic substances are prohibited in both cabin and checked baggage. Do not bring them to the airport. Consult official rules for each type of item."
+      }
+    },
+    {
+      "id": "ff_eu_cabin_sizes",
+      "topic": "baggage",
+      "source": "LUGGAGE",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "dimensiuni",
+        "bagaj de mana",
+        "bagaj cabina",
+        "greutate",
+        "kg",
+        "kilograme",
+        "wizz",
+        "ryanair",
+        "cabin baggage",
+        "allowance",
+        "size"
+      ],
+      "ro": {
+        "title": "Limitele bagajului de cabină",
+        "body": "Compania aeriană stabilește dimensiunea și numărul de bagaje de cabină permise. Verifică regulile companiei pentru biletul tău; nu presupune că toate companiile au aceleași limite."
+      },
+      "en": {
+        "title": "Cabin baggage limits",
+        "body": "The airline sets the size and number of cabin bags allowed. Check your airline's rules for your ticket; do not assume every airline uses the same limits."
+      }
+    },
+    {
+      "id": "ff_eu_screening",
+      "topic": "security",
+      "source": "SECURITY",
+      "checked": false,
+      "mayBeOutdated": true,
+      "keywords": [
+        "securitate",
+        "control",
+        "control de securitate",
+        "bagaj",
+        "tava",
+        "security",
+        "screening",
+        "scanner"
+      ],
+      "ro": {
+        "title": "Controlul de securitate",
+        "body": "La plecarea de pe un aeroport din UE, pasagerii și bagajele sunt supuse controlului de securitate. Personalul poate solicita să scoți obiecte din buzunare, haina sau lichidele pentru verificare. Urmează instrucțiunile afișate și ale personalului, care pot varia după echipament."
+      },
+      "en": {
+        "title": "Airport security screening",
+        "body": "At an EU airport, passengers and luggage undergo security screening before boarding. Staff may ask you to remove items from pockets, your coat or liquids for inspection. Follow posted instructions and staff directions; procedures vary with equipment."
+      }
+    },
+    {
+      "id": "ff_eu_prm_free",
+      "topic": "accessibility",
+      "source": "PRM",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "mobilitate redusa",
+        "dizabilitate",
+        "handicap",
+        "asistenta gratuita",
+        "prm",
+        "scaun cu rotile",
+        "wheelchair",
+        "disability",
+        "assistance"
+      ],
+      "ro": {
+        "title": "Asistență gratuită pentru mobilitate redusă",
+        "body": "Pasagerii cu dizabilități sau mobilitate redusă au dreptul la asistență gratuită în aeroport și la îmbarcare sau debarcare, conform regulilor UE. Solicită ajutor prin compania aeriană, agentul de bilete sau operatorul de turism și indică nevoile concrete."
+      },
+      "en": {
+        "title": "Free assistance for reduced mobility",
+        "body": "Passengers with disabilities or reduced mobility are entitled to free airport and boarding or disembarkation assistance under EU rules. Request support through the airline, ticket seller or tour operator and describe your specific needs."
+      }
+    },
+    {
+      "id": "ff_eu_prm_48h",
+      "topic": "accessibility",
+      "source": "PRM",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "48 ore",
+        "48 de ore",
+        "asistenta",
+        "mobilitate",
+        "anunt",
+        "wheelchair",
+        "accessibility",
+        "notification",
+        "prm"
+      ],
+      "ro": {
+        "title": "Anunțarea asistenței cu 48 de ore înainte",
+        "body": "Pentru a facilita asistența, anunță compania aeriană, vânzătorul de bilete sau operatorul de turism cu cel puțin 48 de ore înainte. Dacă nu ai anunțat, trebuie totuși depuse eforturi rezonabile pentru a te ajuta. Specifică echipamentele și tipul de sprijin necesar."
+      },
+      "en": {
+        "title": "Notify about assistance 48 hours ahead",
+        "body": "To arrange assistance, notify the airline, ticket seller or tour operator at least 48 hours ahead. If you did not notify them, reasonable efforts must still be made to help you. Describe your equipment and the support you need."
+      }
+    },
+    {
+      "id": "ff_eu_prm_mobility_equipment",
+      "topic": "accessibility",
+      "source": "PRM",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "caine de asistenta",
+        "scaun rulant",
+        "echipament",
+        "baterie",
+        "wheelchair",
+        "battery",
+        "guide dog",
+        "assistance dog",
+        "mobility equipment"
+      ],
+      "ro": {
+        "title": "Echipament de mobilitate și câine de asistență",
+        "body": "Regulile UE prevăd asistență care include, în condițiile aplicabile, transportul gratuit al unui câine de asistență recunoscut, al echipamentelor medicale și al două echipamente de mobilitate. Anunță din timp scaunul rulant și tipul bateriei, dacă există."
+      },
+      "en": {
+        "title": "Mobility equipment and assistance dogs",
+        "body": "EU assistance rules include, where applicable, free transport of a recognised assistance dog, medical equipment and two pieces of mobility equipment. Tell the airline in advance about your wheelchair and its battery type, if any."
+      }
+    },
+    {
+      "id": "ff_eu_minors_authorisation",
+      "topic": "travel_documents",
+      "source": "MINORS",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "minor",
+        "copil",
+        "copii",
+        "acord parinti",
+        "declaratie",
+        "parental",
+        "children",
+        "authorization",
+        "authorisation"
+      ],
+      "ro": {
+        "title": "Minori și acordul părinților",
+        "body": "Un minor care călătorește singur, cu un singur părinte sau cu un adult care nu este reprezentantul său legal poate avea nevoie de un document oficial semnat de părinți sau tutore. Nu există reguli UE comune: fiecare țară decide. Verifică cerințele țărilor de plecare, tranzit și destinație."
+      },
+      "en": {
+        "title": "Minors and parental authorisation",
+        "body": "A child travelling alone, with only one parent, or with an adult who is not their legal guardian may need an extra official document signed by the parents or guardian. There are no common EU rules: each country decides. Check the requirements of the departure, transit and destination countries."
+      }
+    },
+    {
+      "id": "ff_eu_minors_documents",
+      "topic": "travel_documents",
+      "source": "EUID",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "copil",
+        "document",
+        "pasaport",
+        "buletin",
+        "carte de identitate",
+        "minor",
+        "child",
+        "passport",
+        "id"
+      ],
+      "ro": {
+        "title": "Copiii au nevoie de propriul document",
+        "body": "Copiii au nevoie de propriul pașaport sau carte de identitate valabilă, în plus față de eventualele documente suplimentare cerute. Verifică și regulile României pentru ieșirea minorilor din țară."
+      },
+      "en": {
+        "title": "Children need their own travel document",
+        "body": "Children need their own valid passport or ID card, in addition to any extra documents that may be required. Also check Romania's rules for minors leaving the country."
+      }
+    },
+    {
+      "id": "ff_eu_lost_passport",
+      "topic": "travel_documents",
+      "source": "LOST",
+      "checked": false,
+      "mayBeOutdated": true,
+      "keywords": [
+        "pasaport pierdut",
+        "pasaport furat",
+        "pierdut pasaportul",
+        "consulat",
+        "ambasada",
+        "lost passport",
+        "stolen",
+        "pasaport",
+        "poza pasaport"
+      ],
+      "ro": {
+        "title": "Pașaport pierdut sau furat în străinătate",
+        "body": "Dacă îți pierzi pașaportul, contactează ambasada sau consulatul țării tale. În afara UE, dacă țara ta nu are consulat acolo, poți cere protecție consulară de la orice altă țară UE. Regulile pentru a călători fără document valabil diferă de la o țară la alta. O fotografie sau o copie scanată a pașaportului nu este un document oficial de călătorie."
+      },
+      "en": {
+        "title": "Lost or stolen passport abroad",
+        "body": "If you lose your passport, contact your country's embassy or consulate. Outside the EU, if your country has none there, you can ask any other EU country's consulate for protection. Rules for travelling without a valid document differ by country. A photo or scan of a passport is not an official travel document."
+      }
+    },
+    {
+      "id": "ff_eu_id_schengen",
+      "topic": "travel_documents",
+      "source": "EU_CITIZEN",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "schengen",
+        "pasaport",
+        "carte de identitate",
+        "buletin",
+        "id",
+        "passport",
+        "travel"
+      ],
+      "ro": {
+        "title": "Documente pentru cetățenii UE",
+        "body": "Cetățenii UE pot călători liber în statele UE și în Islanda, Liechtenstein, Norvegia și Elveția cu un pașaport sau o carte națională de identitate, valabile în ziua călătoriei. Între o țară Schengen și Cipru sau Irlanda este nevoie de pașaport sau carte de identitate valabile."
+      },
+      "en": {
+        "title": "Travel documents for EU citizens",
+        "body": "EU nationals can travel freely in the EU and in Iceland, Liechtenstein, Norway and Switzerland with a valid passport or national ID card, valid on the day of travel. Between a Schengen country and Cyprus or Ireland a valid passport or ID card is required."
+      }
+    },
+    {
+      "id": "ff_eu_schengen_checks",
+      "topic": "travel_documents",
+      "source": "EU_CITIZEN",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "schengen",
+        "non schengen",
+        "control frontiera",
+        "frontiera",
+        "border",
+        "identity",
+        "passport"
+      ],
+      "ro": {
+        "title": "Schengen și controlul la frontieră",
+        "body": "La frontierele interne Schengen, de regulă nu trebuie să arăți pașaportul sau buletinul, dar țările pot reintroduce temporar controale, iar poliția poate face verificări de identitate oriunde, mai ales lângă frontiere, în porturi și aeroporturi."
+      },
+      "en": {
+        "title": "Schengen and border checks",
+        "body": "At internal Schengen borders you normally do not need to show a passport or ID, but countries can temporarily reintroduce controls, and police can carry out identity checks anywhere, especially near borders and in ports and airports."
+      }
+    },
+    {
+      "id": "ff_eu_pets",
+      "topic": "pets",
+      "source": "PETS",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "animale",
+        "animal de companie",
+        "caine",
+        "pisica",
+        "microcip",
+        "vaccin",
+        "rabie",
+        "pets",
+        "dog",
+        "cat",
+        "pasaport european animale",
+        "pet passport",
+        "tenie",
+        "tapeworm"
+      ],
+      "ro": {
+        "title": "Călătoria cu câini, pisici și dihori",
+        "body": "La călătoriile necomerciale în UE, câinii, pisicile și dihorii au nevoie de microcip, vaccin antirabic valabil și pașaport european pentru animale. Unele destinații (Finlanda, Irlanda, Malta, Norvegia, Irlanda de Nord) cer și tratament antiparazitar pentru câini înainte de călătorie. Sosirile din afara UE au alte reguli."
+      },
+      "en": {
+        "title": "Travelling with dogs, cats and ferrets",
+        "body": "For non-commercial travel within the EU, dogs, cats and ferrets need a microchip, a valid rabies vaccination and a European pet passport. Some destinations (Finland, Ireland, Malta, Norway, Northern Ireland) also require tapeworm treatment for dogs before travel. Arrivals from outside the EU follow different rules."
+      }
+    },
+    {
+      "id": "ff_eu_emergency_112",
+      "topic": "emergency",
+      "source": "E112",
+      "checked": true,
+      "mayBeOutdated": false,
+      "keywords": [
+        "urgenta",
+        "urgent",
+        "112",
+        "politie",
+        "ambulanta",
+        "pompieri",
+        "emergency",
+        "romania"
+      ],
+      "ro": {
+        "title": "Numărul de urgență 112",
+        "body": "Într-o urgență reală oriunde în UE, sună la 112; apelul este gratuit. În România, 112 este singurul număr de urgență."
+      },
+      "en": {
+        "title": "Emergency number 112",
+        "body": "For a genuine emergency anywhere in the EU, call 112; the call is free. In Romania, 112 is the only emergency number."
+      }
+    },
+    {
+      "id": "ff_ro_minors_declaration",
+      "topic": "travel_documents",
+      "source": "ROBP",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "minor",
+        "copil",
+        "copii",
+        "declaratie notariala",
+        "acord",
+        "parinte",
+        "insotit",
+        "minor singur",
+        "16 ani",
+        "cazier",
+        "notarised consent",
+        "child",
+        "minor travelling",
+        "border police"
+      ],
+      "ro": {
+        "title": "Minori care ies din România: declarația notarială",
+        "body": "Un minor care iese din România cu un singur părinte are, de regulă, nevoie de declarația notarială a celuilalt părinte, în original (copia sau fotografia nu se acceptă). Excepții: autoritate părintească exclusivă, celălalt părinte decedat sau hotărâre judecătorească. Cu o altă persoană: declarația notarială a părinților și extras de cazier al însoțitorului. De la 16 ani, singur, cu acord notarial."
+      },
+      "en": {
+        "title": "Minors leaving Romania: the notarised declaration",
+        "body": "A minor leaving Romania with only one parent generally needs the other parent's notarised consent, in original (copies or photos are not accepted). Exceptions: sole parental authority, a deceased parent or a court ruling. With another person: the parents' notarised declaration and a criminal-record extract for the companion. From age 16, alone, with notarised consent."
+      }
+    },
+    {
+      "id": "ff_ro_schengen",
+      "topic": "travel_documents",
+      "source": "SCHENGEN_NEWS",
+      "checked": true,
+      "mayBeOutdated": false,
+      "keywords": [
+        "schengen",
+        "romania",
+        "frontiera",
+        "control",
+        "border",
+        "air border",
+        "zbor intern"
+      ],
+      "ro": {
+        "title": "România în spațiul Schengen",
+        "body": "România este membră Schengen completă: controalele la frontierele interne aeriene și maritime au fost ridicate la 31 martie 2024, iar cele terestre la 1 ianuarie 2025."
+      },
+      "en": {
+        "title": "Romania in the Schengen area",
+        "body": "Romania is a full Schengen member: internal air and sea border checks were lifted on 31 March 2024, and land border checks on 1 January 2025."
+      }
+    },
+    {
+      "id": "ff_cra_security",
+      "topic": "security",
+      "source": "CRA_SEC",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "craiova",
+        "laptop",
+        "electronice",
+        "lichide",
+        "securitate",
+        "control",
+        "100 ml",
+        "folie",
+        "metal",
+        "proteza",
+        "security",
+        "liquids",
+        "screening",
+        "prosthesis",
+        "medical device"
+      ],
+      "ro": {
+        "title": "Controlul de securitate la Aeroportul Craiova",
+        "body": "La Aeroportul Craiova, scoate laptopurile și alte echipamente electronice din bagajul de mână pentru control. Recipientele de peste 100 ml nu trec de securitate. Verifică lista obiectelor interzise, nu înveli bagajele în folie, scoate obiectele metalice din buzunare și urmează indicațiile personalului. Spune personalului dacă ai dispozitive medicale sau proteze."
+      },
+      "en": {
+        "title": "Security screening at Craiova Airport",
+        "body": "At Craiova Airport, take laptops and other electronic devices out of your hand baggage for screening. Containers over 100 ml cannot go through security. Check the prohibited-items list, do not wrap bags in film, remove metal items from your pockets and follow staff instructions. Tell staff if you have medical devices or prostheses."
+      }
+    },
+    {
+      "id": "ff_cra_prm",
+      "topic": "accessibility",
+      "source": "CRA_PRM",
+      "checked": true,
+      "mayBeOutdated": true,
+      "keywords": [
+        "craiova",
+        "mobilitate redusa",
+        "scaun rulant",
+        "lift",
+        "toaleta",
+        "parcare",
+        "handicap",
+        "wheelchair",
+        "reduced mobility",
+        "prm",
+        "accessible"
+      ],
+      "ro": {
+        "title": "Mobilitate redusă la Aeroportul Craiova",
+        "body": "Solicită asistență specială când îți rezervi biletul; personalul de îmbarcare este anunțat din timp. Aeroportul Craiova are locuri de parcare rezervate în parcările publice, lift către etajul terminalului și toalete pentru persoane în scaun rulant. Pagina nu spune cum se cere asistența sau cum se contactează serviciul."
+      },
+      "en": {
+        "title": "Reduced mobility at Craiova Airport",
+        "body": "Ask for special assistance when you book your ticket; boarding staff are told in advance. Craiova Airport has reserved spaces in its public car parks, a lift to the upper floor of the terminal and toilets for wheelchair users. The airport page does not say how to request assistance or how to contact the service."
+      }
+    }
+  ]
+}

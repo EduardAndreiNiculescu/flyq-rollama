@@ -1,0 +1,784 @@
+[
+ {
+  "id": "c001",
+  "split": "dev",
+  "q": "mi-a dispărut valiza",
+  "expected": [
+   "baggage-lost",
+   "ff_eu_baggage_complaint"
+  ]
+ },
+ {
+  "id": "c002",
+  "split": "dev",
+  "q": "geamantanul meu nu a venit pe bandă",
+  "expected": [
+   "baggage-lost",
+   "ff_eu_baggage_complaint"
+  ]
+ },
+ {
+  "id": "c003",
+  "split": "dev",
+  "q": "banii înapoi pentru bilet, zborul a fost anulat",
+  "expected": [
+   "ff_eu_cancel_options",
+   "rights-delay"
+  ]
+ },
+ {
+  "id": "c004",
+  "split": "dev",
+  "q": "m-au lăsat pe tușă la îmbarcare",
+  "expected": [
+   "ff_eu_denied_boarding",
+   "rights-delay"
+  ]
+ },
+ {
+  "id": "c005",
+  "split": "dev",
+  "q": "câinele meu poate zbura cu mine?",
+  "expected": [
+   "ff_eu_pets"
+  ]
+ },
+ {
+  "id": "c006",
+  "split": "dev",
+  "q": "am nevoie de scaun cu rotile la aeroport",
+  "expected": [
+   "ff_eu_prm_free",
+   "ff_eu_prm_48h",
+   "ff_eu_prm_mobility_equipment"
+  ]
+ },
+ {
+  "id": "c007",
+  "split": "dev",
+  "q": "pot lua briceag în bagajul de mână?",
+  "expected": [
+   "ff_eu_sharp_objects"
+  ]
+ },
+ {
+  "id": "c008",
+  "split": "dev",
+  "q": "copil singur în avion",
+  "expected": [
+   "ff_eu_minors_authorisation"
+  ]
+ },
+ {
+  "id": "c009",
+  "split": "dev",
+  "q": "my suitcase never showed up",
+  "expected": [
+   "baggage-lost",
+   "ff_eu_baggage_complaint"
+  ]
+ },
+ {
+  "id": "c010",
+  "split": "dev",
+  "q": "can I bring my cat on the plane",
+  "expected": [
+   "ff_eu_pets"
+  ]
+ },
+ {
+  "id": "c011",
+  "split": "dev",
+  "q": "my flight got scrapped, can I get my money back",
+  "expected": [
+   "ff_eu_cancel_options"
+  ]
+ },
+ {
+  "id": "c012",
+  "split": "dev",
+  "q": "they bumped me off the flight",
+  "expected": [
+   "ff_eu_denied_boarding",
+   "rights-delay"
+  ]
+ },
+ {
+  "id": "c013",
+  "split": "dev",
+  "q": "I need a wheelchair at the airport",
+  "expected": [
+   "ff_eu_prm_free",
+   "ff_eu_prm_48h",
+   "ff_eu_prm_mobility_equipment"
+  ]
+ },
+ {
+  "id": "c014",
+  "split": "dev",
+  "q": "can I carry scissors in my carry-on",
+  "expected": [
+   "ff_eu_sharp_objects"
+  ]
+ },
+ {
+  "id": "c015",
+  "split": "dev",
+  "q": "what do I do if I lose my passport abroad",
+  "expected": [
+   "ff_eu_lost_passport",
+   "docs-lost"
+  ]
+ },
+ {
+  "id": "c016",
+  "split": "dev",
+  "q": "toddler travelling with grandma, what paperwork is needed",
+  "expected": [
+   "ff_eu_minors_authorisation",
+   "ff_eu_minors_documents"
+  ]
+ },
+ {
+  "id": "c017",
+  "split": "dev",
+  "q": "how much water can I take through security",
+  "expected": [
+   "ff_eu_liquids_100ml",
+   "security-liquids"
+  ]
+ },
+ {
+  "id": "c018",
+  "split": "dev",
+  "q": "can I take a bottle of wine bought at duty free",
+  "expected": [
+   "ff_eu_dutyfree_liquids"
+  ]
+ },
+ {
+  "id": "c019",
+  "split": "dev",
+  "q": "avionul are 4 ore întârziere, ce primesc",
+  "expected": [
+   "ff_eu_delay_arrival",
+   "rights-delay",
+   "ff_eu_assistance_waiting"
+  ]
+ },
+ {
+  "id": "c020",
+  "split": "dev",
+  "q": "am pierdut avionul, ce fac",
+  "expected": [
+   "missed-flight"
+  ]
+ },
+ {
+  "id": "c021",
+  "split": "dev",
+  "q": "ce număr sun dacă mi se face rău",
+  "expected": [
+   "ff_eu_emergency_112",
+   "emergency"
+  ]
+ },
+ {
+  "id": "c022",
+  "split": "dev",
+  "q": "cât poate cântări trolerul de cabină",
+  "expected": [
+   "ff_eu_cabin_sizes",
+   "baggage-allowance"
+  ]
+ },
+ {
+  "id": "c023",
+  "split": "dev",
+  "q": "is it ok to bring fireworks",
+  "expected": [
+   "ff_eu_explosives"
+  ]
+ },
+ {
+  "id": "c024",
+  "split": "dev",
+  "q": "laptele pentru bebeluș trece de control?",
+  "expected": [
+   "ff_eu_liquid_exemptions"
+  ]
+ },
+ {
+  "id": "c025",
+  "split": "dev",
+  "q": "I have insulin, is it allowed in the cabin",
+  "expected": [
+   "ff_eu_liquid_exemptions"
+  ]
+ },
+ {
+  "id": "c026",
+  "split": "dev",
+  "q": "mi-a fost furat pașaportul",
+  "expected": [
+   "ff_eu_lost_passport",
+   "docs-lost"
+  ]
+ },
+ {
+  "id": "c027",
+  "split": "dev",
+  "q": "do I need a passport inside Schengen",
+  "expected": [
+   "ff_eu_id_schengen",
+   "ff_eu_schengen_checks"
+  ]
+ },
+ {
+  "id": "c028",
+  "split": "dev",
+  "q": "vreau despăgubiri, zborul a fost anulat cu o zi înainte",
+  "expected": [
+   "ff_eu_cancel_compensation",
+   "rights-delay"
+  ]
+ },
+ {
+  "id": "c029",
+  "split": "dev",
+  "q": "my flight is delayed, who pays for my hotel",
+  "expected": [
+   "ff_eu_assistance_waiting",
+   "rights-delay"
+  ]
+ },
+ {
+  "id": "c030",
+  "split": "dev",
+  "q": "storm cancelled the flight, am I still owed money",
+  "expected": [
+   "ff_eu_extraordinary",
+   "ff_eu_cancel_compensation"
+  ]
+ },
+ {
+  "id": "c031",
+  "split": "dev",
+  "q": "valiza mea a venit ruptă",
+  "expected": [
+   "ff_eu_baggage_complaint"
+  ]
+ },
+ {
+  "id": "c032",
+  "split": "dev",
+  "q": "how early must I be at the gate",
+  "expected": [
+   "boarding",
+   "term-gate"
+  ]
+ },
+ {
+  "id": "c033",
+  "split": "dev",
+  "q": "ce înseamnă final call",
+  "expected": [
+   "term-gate"
+  ]
+ },
+ {
+  "id": "c034",
+  "split": "dev",
+  "q": "my bag came back with a broken wheel",
+  "expected": [
+   "ff_eu_baggage_complaint"
+  ]
+ },
+ {
+  "id": "c035",
+  "split": "dev",
+  "q": "cât de mari pot fi bagajele la ryanair",
+  "expected": [
+   "ff_eu_cabin_sizes",
+   "baggage-allowance"
+  ]
+ },
+ {
+  "id": "c036",
+  "split": "dev",
+  "q": "cu cât timp înainte se închide poarta de îmbarcare",
+  "expected": [
+   "boarding",
+   "term-gate"
+  ]
+ },
+ {
+  "id": "c037",
+  "split": "dev",
+  "q": "is a guide dog allowed on the plane",
+  "expected": [
+   "ff_eu_prm_mobility_equipment",
+   "ff_eu_pets"
+  ]
+ },
+ {
+  "id": "c038",
+  "split": "dev",
+  "q": "am nevoie de o ambulanță",
+  "expected": [
+   "ff_eu_emergency_112",
+   "emergency"
+  ]
+ },
+ {
+  "id": "c039",
+  "split": "test",
+  "q": "bagajul meu nu a apărut la ridicare",
+  "expected": [
+   "baggage-lost",
+   "ff_eu_baggage_complaint"
+  ]
+ },
+ {
+  "id": "c040",
+  "split": "test",
+  "q": "mi s-a pierdut bagajul de cală",
+  "expected": [
+   "baggage-lost",
+   "ff_eu_baggage_complaint"
+  ]
+ },
+ {
+  "id": "c041",
+  "split": "test",
+  "q": "the airline lost my luggage, where do I complain",
+  "expected": [
+   "baggage-lost",
+   "ff_eu_baggage_complaint"
+  ]
+ },
+ {
+  "id": "c042",
+  "split": "test",
+  "q": "troleul mi-a venit stricat după zbor",
+  "expected": [
+   "ff_eu_baggage_complaint"
+  ]
+ },
+ {
+  "id": "c043",
+  "split": "test",
+  "q": "zborul meu a fost anulat, vreau rambursarea",
+  "expected": [
+   "ff_eu_cancel_options",
+   "rights-delay"
+  ]
+ },
+ {
+  "id": "c044",
+  "split": "test",
+  "q": "flight cancelled, can I get a refund",
+  "expected": [
+   "ff_eu_cancel_options",
+   "rights-delay"
+  ]
+ },
+ {
+  "id": "c045",
+  "split": "test",
+  "q": "avion anulat, ce compensație primesc",
+  "expected": [
+   "ff_eu_cancel_compensation",
+   "rights-delay"
+  ]
+ },
+ {
+  "id": "c046",
+  "split": "test",
+  "q": "nu m-au lăsat să urc pentru că vânduseră prea multe locuri",
+  "expected": [
+   "ff_eu_denied_boarding",
+   "rights-delay"
+  ]
+ },
+ {
+  "id": "c047",
+  "split": "test",
+  "q": "airline sold too many seats and I was not allowed on",
+  "expected": [
+   "ff_eu_denied_boarding",
+   "rights-delay"
+  ]
+ },
+ {
+  "id": "c048",
+  "split": "test",
+  "q": "pot lua căţelul în cabină?",
+  "expected": [
+   "ff_eu_pets"
+  ]
+ },
+ {
+  "id": "c049",
+  "split": "test",
+  "q": "taking my puppy abroad, which vaccines does he need",
+  "expected": [
+   "ff_eu_pets"
+  ]
+ },
+ {
+  "id": "c050",
+  "split": "test",
+  "q": "pisica mea are nevoie de microcip?",
+  "expected": [
+   "ff_eu_pets"
+  ]
+ },
+ {
+  "id": "c051",
+  "split": "test",
+  "q": "am un pasager în scaun rulant, cum anunț aeroportul",
+  "expected": [
+   "ff_eu_prm_free",
+   "ff_eu_prm_48h",
+   "ff_eu_prm_mobility_equipment"
+  ]
+ },
+ {
+  "id": "c052",
+  "split": "test",
+  "q": "my mom cannot walk far, is airport help free",
+  "expected": [
+   "ff_eu_prm_free",
+   "ff_eu_prm_48h"
+  ]
+ },
+ {
+  "id": "c053",
+  "split": "test",
+  "q": "bateria scaunului electric în avion",
+  "expected": [
+   "ff_eu_prm_mobility_equipment"
+  ]
+ },
+ {
+  "id": "c054",
+  "split": "test",
+  "q": "can I carry a pocket knife in hand luggage",
+  "expected": [
+   "ff_eu_sharp_objects"
+  ]
+ },
+ {
+  "id": "c055",
+  "split": "test",
+  "q": "pot lua foarfecă de unghii la bord?",
+  "expected": [
+   "ff_eu_sharp_objects"
+  ]
+ },
+ {
+  "id": "c056",
+  "split": "test",
+  "q": "copilul meu de 10 ani călătorește cu bunica, ce hârtii trebuie",
+  "expected": [
+   "ff_eu_minors_authorisation",
+   "ff_eu_minors_documents"
+  ]
+ },
+ {
+  "id": "c057",
+  "split": "test",
+  "q": "does my baby need their own passport",
+  "expected": [
+   "ff_eu_minors_documents"
+  ]
+ },
+ {
+  "id": "c058",
+  "split": "test",
+  "q": "my kid is flying alone, what do I sign",
+  "expected": [
+   "ff_eu_minors_authorisation"
+  ]
+ },
+ {
+  "id": "c059",
+  "split": "test",
+  "q": "mi-am uitat actele acasă",
+  "expected": [
+   "docs-lost",
+   "ff_eu_lost_passport"
+  ]
+ },
+ {
+  "id": "c060",
+  "split": "test",
+  "q": "I lost my ID card at the airport",
+  "expected": [
+   "docs-lost",
+   "ff_eu_lost_passport"
+  ]
+ },
+ {
+  "id": "c061",
+  "split": "test",
+  "q": "pot călători cu buletinul prin Europa?",
+  "expected": [
+   "ff_eu_id_schengen",
+   "docs-lost"
+  ]
+ },
+ {
+  "id": "c062",
+  "split": "test",
+  "q": "is there border control between Germany and France",
+  "expected": [
+   "ff_eu_schengen_checks",
+   "ff_eu_id_schengen"
+  ]
+ },
+ {
+  "id": "c063",
+  "split": "test",
+  "q": "întârziere de 6 ore la plecare, ce drepturi am",
+  "expected": [
+   "ff_eu_delay_five_hours",
+   "rights-delay",
+   "ff_eu_assistance_waiting"
+  ]
+ },
+ {
+  "id": "c064",
+  "split": "test",
+  "q": "we landed three hours late, can I claim anything",
+  "expected": [
+   "ff_eu_delay_arrival",
+   "rights-delay"
+  ]
+ },
+ {
+  "id": "c065",
+  "split": "test",
+  "q": "stuck at the airport for hours, do they owe me food",
+  "expected": [
+   "ff_eu_assistance_waiting",
+   "rights-delay"
+  ]
+ },
+ {
+  "id": "c066",
+  "split": "test",
+  "q": "zborul a fost anulat din cauza vremii proaste, primesc ceva",
+  "expected": [
+   "ff_eu_extraordinary",
+   "ff_eu_cancel_compensation"
+  ]
+ },
+ {
+  "id": "c067",
+  "split": "test",
+  "q": "pot trece cu o sticlă de apă de control",
+  "expected": [
+   "ff_eu_liquids_100ml",
+   "security-liquids"
+  ]
+ },
+ {
+  "id": "c068",
+  "split": "test",
+  "q": "perfume bought in the shop after security, can I keep it",
+  "expected": [
+   "ff_eu_dutyfree_liquids"
+  ]
+ },
+ {
+  "id": "c069",
+  "split": "test",
+  "q": "pot lua medicamente lichide în avion?",
+  "expected": [
+   "ff_eu_liquid_exemptions"
+  ]
+ },
+ {
+  "id": "c070",
+  "split": "test",
+  "q": "e voie cu petarde în valiză?",
+  "expected": [
+   "ff_eu_explosives"
+  ]
+ },
+ {
+  "id": "c071",
+  "split": "test",
+  "q": "how heavy can my carry-on be",
+  "expected": [
+   "ff_eu_cabin_sizes",
+   "baggage-allowance"
+  ]
+ },
+ {
+  "id": "c072",
+  "split": "test",
+  "q": "pe unde trec prin scanner și ce scot din geantă",
+  "expected": [
+   "ff_eu_screening",
+   "security-liquids"
+  ]
+ },
+ {
+  "id": "c073",
+  "split": "test",
+  "q": "someone collapsed, we need a doctor",
+  "expected": [
+   "ff_eu_emergency_112",
+   "emergency"
+  ]
+ },
+ {
+  "id": "c074",
+  "split": "test",
+  "q": "am nevoie de poliție în aeroport",
+  "expected": [
+   "ff_eu_emergency_112",
+   "emergency"
+  ]
+ },
+ {
+  "id": "c075",
+  "split": "test",
+  "q": "la ce oră se închide poarta",
+  "expected": [
+   "boarding",
+   "term-gate"
+  ]
+ },
+ {
+  "id": "c076",
+  "split": "test",
+  "q": "what is a boarding pass and when do I get it",
+  "expected": [
+   "boarding"
+  ]
+ },
+ {
+  "id": "c077",
+  "split": "dev",
+  "q": "recomandă-mi un restaurant bun în oraș",
+  "expected": []
+ },
+ {
+  "id": "c078",
+  "split": "dev",
+  "q": "numărul de telefon al unei firme de taxi",
+  "expected": []
+ },
+ {
+  "id": "c079",
+  "split": "dev",
+  "q": "what is the weather in Paris tomorrow",
+  "expected": []
+ },
+ {
+  "id": "c080",
+  "split": "dev",
+  "q": "rețetă de sarmale",
+  "expected": []
+ },
+ {
+  "id": "c081",
+  "split": "dev",
+  "q": "who won the football match last night",
+  "expected": []
+ },
+ {
+  "id": "c082",
+  "split": "dev",
+  "q": "how do I learn python quickly",
+  "expected": []
+ },
+ {
+  "id": "c083",
+  "split": "dev",
+  "q": "cât costă un iPhone nou",
+  "expected": []
+ },
+ {
+  "id": "c084",
+  "split": "dev",
+  "q": "tell me a joke",
+  "expected": []
+ },
+ {
+  "id": "c085",
+  "split": "dev",
+  "q": "cum se numește capitala Franței",
+  "expected": []
+ },
+ {
+  "id": "c086",
+  "split": "dev",
+  "q": "bitcoin price today",
+  "expected": []
+ },
+ {
+  "id": "c087",
+  "split": "test",
+  "q": "ce film să văd diseară",
+  "expected": []
+ },
+ {
+  "id": "c088",
+  "split": "test",
+  "q": "phone number for pizza delivery",
+  "expected": []
+ },
+ {
+  "id": "c089",
+  "split": "test",
+  "q": "cum fac o supă de pui",
+  "expected": []
+ },
+ {
+  "id": "c090",
+  "split": "test",
+  "q": "where can I buy a sim card for my phone",
+  "expected": []
+ },
+ {
+  "id": "c091",
+  "split": "test",
+  "q": "how to bake sourdough bread",
+  "expected": []
+ },
+ {
+  "id": "c092",
+  "split": "test",
+  "q": "scrie-mi o poezie despre toamnă",
+  "expected": []
+ },
+ {
+  "id": "c093",
+  "split": "test",
+  "q": "translate good morning into Spanish",
+  "expected": []
+ },
+ {
+  "id": "c094",
+  "split": "test",
+  "q": "cine a scris Ion",
+  "expected": []
+ },
+ {
+  "id": "c095",
+  "split": "test",
+  "q": "best way to lose weight fast",
+  "expected": []
+ },
+ {
+  "id": "c096",
+  "split": "test",
+  "q": "ce curs are euro azi",
+  "expected": []
+ }
+]

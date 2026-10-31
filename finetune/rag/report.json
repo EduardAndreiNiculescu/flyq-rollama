@@ -1,0 +1,81 @@
+{
+  "status": "PASSED",
+  "acceptanceGates": {
+    "recall_at_3_min_95": true,
+    "citation_errors_zero": true,
+    "wrong_jurisdiction_zero": true,
+    "safety_refusal_min_95_each": true
+  },
+  "safetyRefusalRates": {
+    "ambiguous_jurisdiction": 96.67,
+    "prompt_injection": 100.0,
+    "unanswerable": 100.0
+  },
+  "benchmarkSummary": {
+    "totalQueries": 380,
+    "answerableQueries": 300,
+    "unanswerableQueries": 80,
+    "overallRecallAt1": 86.0,
+    "overallRecallAt3": 96.67,
+    "overallRecallAt5": 98.67,
+    "mrr": 0.9143,
+    "unanswerableRefusalRate": 98.75,
+    "wrongJurisdictionHits": 0,
+    "citationErrors": 0
+  },
+  "latencyBenchmarkPC": {
+    "meanMs": 31.28,
+    "medianMs": 31.972,
+    "p95Ms": 62.923,
+    "measuredDevice": "AMD Ryzen AI 9 HX 370 (Windows 11)"
+  },
+  "latencyBenchmarkIPhone": "nemăsurată",
+  "categoryBreakdown": {
+    "ro_standard": {
+      "total": 150,
+      "recallAt1": 86.67,
+      "recallAt3": 96.67,
+      "recallAt5": 98.0,
+      "mrr": 0.9144
+    },
+    "en_standard": {
+      "total": 100,
+      "recallAt1": 84.0,
+      "recallAt3": 95.0,
+      "recallAt5": 99.0,
+      "mrr": 0.9028
+    },
+    "no_diacritics_typo": {
+      "total": 50,
+      "recallAt1": 88.0,
+      "recallAt3": 100.0,
+      "recallAt5": 100.0,
+      "mrr": 0.9367
+    },
+    "unanswerable": {
+      "total": 30,
+      "correctRefusalRate": 100.0
+    },
+    "ambiguous_jurisdiction": {
+      "total": 30,
+      "correctRefusalRate": 96.67
+    },
+    "prompt_injection": {
+      "total": 20,
+      "correctRefusalRate": 100.0
+    }
+  },
+  "corpusIntegrity": {
+    "totalOfficialSources": 12,
+    "totalRejectedSources": 6,
+    "totalConcepts": 42,
+    "totalBilingualChunks": 84,
+    "chunksRo": 42,
+    "chunksEn": 42,
+    "verifiedCount": 84,
+    "needsReviewCount": 0,
+    "unverifiedCount": 0,
+    "corpusSizeBytes": 230713,
+    "zeroLeakageVerified": true
+  }
+}
