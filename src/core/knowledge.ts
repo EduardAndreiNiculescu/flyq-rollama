@@ -236,7 +236,14 @@ export const SYNONYM_GROUPS: string[][] = [
 function tokenMatch(q: string, d: string): boolean {
   if (q === d) return true;
   const n = Math.min(q.length, d.length);
-  return n >= 4 && (q.startsWith(d.slice(0, n)) || d.startsWith(q.slice(0, n))) && Math.abs(q.length - d.length) <= 4;
+  if (n >= 4 && (q.startsWith(d.slice(0, n)) || d.startsWith(q.slice(0, n))) && Math.abs(q.length - d.length) <= 4) return true;
+  // Romanian plurals and articles change the ending: caine/caini, pisica/pisici/pisicile, bagaj/bagaje. Same word but for the last letter (length >= 5 so short words do not collide).
+  if (n >= 5 && Math.abs(q.length - d.length) <= 2) {
+    let common = 0;
+    while (common < n && q[common] === d[common]) common++;
+    if (common >= n - 1) return true;
+  }
+  return false;
 }
 
 // Expanded (synonym) matches count less than literal ones (kw 3 / text 1).
@@ -261,7 +268,7 @@ const GROUPS: Group[] = SYNONYM_GROUPS.map((terms) => {
   };
 });
 
-type Index = { kwTokens: string[]; textTokens: string[]; kwStr: string; textStr: string };
+type Index = { kwTokens: string[]; kwSingles: string[]; textTokens: string[]; kwStr: string; textStr: string };
 const indexCache = new WeakMap<KbEntry[], { idx: Index[]; vocab: string[] }>();
 
 /** 0..1: how rare a token is among entries' keywords (generic words like "bagaj" are near 0). */
@@ -277,6 +284,7 @@ function indexKb(kb: KbEntry[]) {
       const textTokens = normalize(e.title + ' ' + e.body);
       return {
         kwTokens, textTokens,
+        kwSingles: e.keywords.map((k) => normalize(k)).filter((t) => t.length === 1).map((t) => t[0]!),
         kwStr: ' ' + e.keywords.map((k) => normalize(k).join(' ')).join(' | ') + ' ',
         textStr: ' ' + textTokens.join(' ') + ' ',
       };
@@ -321,7 +329,7 @@ export function retrieve(
   const groups = expandQuery(qt.join(' '), vocab);
   const rar = new Map(qt.map((q) => [q, rarity(q, idx)] as const));
   const scored = kb.map((entry, i) => {
-    const { kwTokens, textTokens, kwStr, textStr } = idx[i];
+    const { kwTokens, kwSingles, textTokens, kwStr, textStr } = idx[i];
     let score = 0;
     let rare = 0; // tie-break: entries matching the query's rare words first ("caine" beats "cabina")
     let exact = 0; // tie-break 2: the query word is a keyword on its own, not only a part of a phrase
@@ -329,7 +337,7 @@ export function retrieve(
       if (kwTokens.some((t) => tokenMatch(q, t))) {
         score += W_LITERAL_KW * (IDF_FLOOR + (1 - IDF_FLOOR) * rar.get(q)!);
         rare += rar.get(q)!;
-        if (kwStr.includes(' ' + q + ' |') || kwStr.endsWith(' ' + q + ' ')) exact += 1;
+        if (kwSingles.some((t) => tokenMatch(q, t))) exact += 1;
       }
       else if (textTokens.some((t) => tokenMatch(q, t))) score += W_LITERAL_TEXT;
     }

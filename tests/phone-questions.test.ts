@@ -16,6 +16,10 @@ export const PHONE_QUESTIONS: { q: string; text?: RegExp; tool?: string }[] = [
   // reguli
   { q: 'Am voie cu câine?', text: /câinii|pisicile/ },
   { q: 'Pot lua pisica cu mine', text: /pisicile/ },
+  { q: 'Am voie cu câini?', text: /câinii|pisicile/ },
+  { q: 'am voie cu caini?', text: /câinii|pisicile/ },
+  { q: 'Pot lua pisicile cu mine?', text: /pisicile/ },
+  { q: 'Am voie cu animale de companie?', text: /câinii|pisicile/ },
   { q: 'Pot lua cuțite?', text: /ascuțite/ },
   { q: 'Pot lua foarfecă în bagajul de mână?', text: /ascuțite|foarfece/ },
   { q: 'Pot lua medicamente la mine?', text: /Medicamentele/ },
