@@ -186,9 +186,10 @@ export function assessKnowledgeSafety(query: string): KnowledgeSafety {
   const unsupported = /\b(usa|us|united states|america|canada|canadian|mexic|mexican|uk|united kingdom|anglia|marea britanie|london|australia|india|japan|china|serbia|moldova|elvetia|switzerland|norway|egipt|egypt|turkey|turcia|thailand|tailanda|qatar|doha|africa|new york|jfk|tsa|heathrow|american airlines|orientul mijlociu|middle east|fin cen|non eu|non-eu)\b/.test(q);
   if (unsupported) return { allowed: false, reason: 'unsupported-jurisdiction' };
   // Stems, not whole words: Romanian inflects ("lichide", "bagajul", "documentele"); a whole-word list refused "Am voie cu lichide?" as off-topic.
-  const aviation = /\b(?:airport|aeroport|flight|zbor|airline|companie aeriana|passenger|pasager|boarding|imbarc|gate|poart|baggage|bagaj|luggage|pierd|disparut|lost|missing|lichid|liquid|passport|pasaport|security|securit|customs|vam|visa|viz|animal|pisic|caine|wheelchair|scaun|rotile|delay|intarzier|cancel|anulat|compensat|despagub|rights|drepturi|carry|lua|travel|calator|plane|avion|terminal|duty free|schengen|document|buletin|bebelus|copil|medicament|laptop|electronic|mancare|cabin|valiz|troler|check in|checkin|bilet|ticket|control|powerbank|baterie|cala|geanta)\w*|\b(?:pet|apa|bag|id)\b/.test(q);
+  const aviation = /\b(?:airport|aeroport|flight|zbor|airline|companie aeriana|passenger|pasager|boarding|imbarc|gate|poart|baggage|bagaj|luggage|pierd|disparut|lost|missing|lichid|liquid|passport|pasaport|security|securit|customs|vam|visa|viz|animal|pisic|caine|wheelchair|scaun|rotile|delay|intarzier|cancel|anulat|compensat|despagub|rights|drepturi|carry|lua|travel|calator|plane|avion|terminal|duty free|schengen|document|buletin|bebelus|copil|medicament|laptop|electronic|mancare|cabin|valiz|troler|check in|checkin|bilet|ticket|control|powerbank|baterie|cala|geanta|voie|permis|interzis|allowed|prohibited|bring|alcool|parfum|bricheta|tigar|cutit|foarfec|asisten|instrument|bicicl|echipament)\w*|\b(?:pet|apa|bag|id|vin|bere)\b/.test(q);
   if (!aviation) return { allowed: false, reason: 'unsupported-topic' };
-  const unrelated = /bitcoin|sarmale|train ticket|curs valutar|leaking bathroom|iphone 15|marriott|permanent resident|football|detergent|apartment price|tigaie|parcare.*trotineta|trotineta|espresso|programming language|metrou|pariuri|windows 11|macintosh|property taxes|vin rosu|sightseeing|stocks|actiuni|sala de culturism|autostrada|tigru|tiger|driving license|permis de conducere|cort|tent|adopt|adopta|stray|vagabond|street cat/.test(q);
+  // Word boundaries: without them "tent" matched "asistenta" and "cort" other words, so every question with "asistenta" was refused as off-topic.
+  const unrelated = /\b(?:bitcoin|sarmale|train ticket|curs valutar|leaking bathroom|iphone 15|marriott|permanent resident|football|detergent|apartment price|tigaie|parcare.*trotineta|trotineta|espresso|programming language|metrou|pariuri|windows 11|macintosh|property taxes|vin rosu|sightseeing|stocks|actiuni|sala de culturism|autostrada|tigru|tiger|driving license|permis de conducere|cort|tent|adopt|adopta|stray|vagabond|street cat)\b/.test(q);
   if (unrelated) return { allowed: false, reason: 'unsupported-topic' };
   return { allowed: true };
 }
@@ -216,6 +217,7 @@ export const SYNONYM_GROUPS: string[][] = [
   ['pasaport', 'buletin', 'act', 'acte', 'carte de identitate', 'id', 'passport', 'identity card', 'paperwork', 'documente', 'document'],
   ['urgenta', 'urgente', 'ambulanta', 'ambulance', 'emergency', 'politie', 'police', 'doctor', 'medic', 'pompieri', 'heart attack', 'collapsed', 'face rau', 'ajutor'],
   ['lichid', 'lichide', 'apa', 'sticla', 'gel', 'water', 'bottle', 'liquid', 'liquids', 'drink'],
+  ['powerbank', 'power bank', 'baterie externa', 'acumulator extern', 'baterie', 'baterii', 'litiu', 'lithium', 'battery', 'batteries'],
   ['medicament', 'medicamente', 'insulina', 'insulin', 'medicine', 'medication', 'pastile', 'pills', 'tratament'],
   ['briceag', 'cutit', 'foarfeca', 'foarfece', 'ascutit', 'knife', 'scissors', 'blade', 'razor', 'pocket knife', 'sharp'],
   ['petarde', 'artificii', 'explozibili', 'explosive', 'fireworks', 'inflamabil', 'gunpowder', 'munitie'],
@@ -321,8 +323,12 @@ export function retrieve(
   const scored = kb.map((entry, i) => {
     const { kwTokens, textTokens, kwStr, textStr } = idx[i];
     let score = 0;
+    let rare = 0; // tie-break: entries matching the query's rare words first ("caine" beats "cabina")
     for (const q of qt) {
-      if (kwTokens.some((t) => tokenMatch(q, t))) score += W_LITERAL_KW * (IDF_FLOOR + (1 - IDF_FLOOR) * rar.get(q)!);
+      if (kwTokens.some((t) => tokenMatch(q, t))) {
+        score += W_LITERAL_KW * (IDF_FLOOR + (1 - IDF_FLOOR) * rar.get(q)!);
+        rare += rar.get(q)!;
+      }
       else if (textTokens.some((t) => tokenMatch(q, t))) score += W_LITERAL_TEXT;
     }
     for (const { group, oov } of groups) {
@@ -335,9 +341,9 @@ export function retrieve(
       score += w ? w + (oov ? OOV_BOOST : 0) : 0;
     }
     if (lang && entry.lang === lang) score *= 1.5;
-    return { entry, score };
+    return { entry, score, rare };
   });
-  return scored.filter((s) => s.score >= MIN_SCORE).sort((a, b) => b.score - a.score).slice(0, k);
+  return scored.filter((s) => s.score >= MIN_SCORE).sort((a, b) => b.score - a.score || b.rare - a.rare).slice(0, k).map(({ entry, score }) => ({ entry, score }));
 }
 
 export function formatForPrompt(hits: Retrieved[]): string {

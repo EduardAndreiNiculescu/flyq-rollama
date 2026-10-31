@@ -101,6 +101,21 @@ describe('RollamaEngine in the tool loop', () => {
     expect((await askRouted(fake('{"name":"none","arguments":{}}'), 'Mulțumesc')).text).toMatch(/Cu plăcere/);
     expect((await askRouted(fake('{"name":"none","arguments":{}}'), 'Cine ești tu?')).text).toMatch(/asistentul tău/);
   });
+  it('"pot lua X" questions are rules questions whatever X is (what the phone got wrong)', async () => {
+    const cases: [string, RegExp][] = [
+      ['pot lua cutite?', /ascuțite|cuțite/],
+      ['Pot lua medicamente la mine?', /Medicamentele/],
+      ['pot lua un powerbank', /powerbank/i],
+      ['am nevoie de asistenta sunt in scaunul cu rotile', /mobilitate redusă/],
+      ['pot lua pisica cu mine', /pisicile/],
+      ['am voie cu alcool', /duty-free/],
+    ];
+    for (const [q, re] of cases) {
+      const r = await askRouted(fake('{"name":"none","arguments":{}}'), q);
+      expect(r.trace.map((t) => t.name)).toEqual(['search_knowledge']);
+      expect(r.text, q).toMatch(re);
+    }
+  });
   it('a flight number the model changed is overwritten by the one the passenger typed', async () => {
     const r = await ask(fake('{"name":"get_gate","arguments":{"flightNumber":"XX999"}}'), 'poarta pentru DEMO123?');
     expect(r.trace[0].args).toContain('DEMO123');

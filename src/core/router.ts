@@ -194,6 +194,8 @@ const GATE_DATA = /\b(la ce|care|ce|which|what) (?:numar(?:ul)? )?(?:poart|gate)
 const EXCLUDE_GATE = /\b(?:nu ma intereseaza|fara|exceptand) (?:poarta|gate)\b|\b(?:not|anything but) (?:the )?gate\b/;
 const EXCLUDE_TRACKING = /\b(?:nu ma intereseaza|fara) (?:pozitia|unde e avionul)\b|\bnot (?:the )?(?:position|tracking)\b/;
 const FOLLOW_UP = /^(?:si|și|and|dar|but|what about|iar)\b/;
+/** "Pot lua X in avion?", "am voie cu X", "can I bring X": a rules question whatever X is; the knowledge base decides if it has an answer. */
+const CARRY_RULE = /\b(?:pot|putem|poti|am voie|ai voie|avem voie|se poate|e voie|este permis|se permite|can i|may i|am i allowed|is it allowed|are we allowed)\b[^?]{0,40}\b(?:lua|duce|aduce|transporta|cu mine|cu noi|in avion|in cabina|in cala|in bagaj|la bord|bring|take|carry|pack)\b|\bam voie cu\b|\b(?:ce|care)\b[^?]{0,20}\b(?:documente|acte|reguli|restrictii)\b/;
 const KNOWLEDGE_FORCE = /\b(compens|despagub|entitled|drepturi|rights|ce urmeaza|what do i do|how early|cat de devreme|bebelu|infant|pisic|pet|wheelchair|scaun cu rotile|pregnan|restrictions?|miss(?:ed)? (?:my |the )?flight|pierdut legatura|lost (?:my )?connection)\b/;
 const DURATION_FORCE = /\bhow many hours (?:is|does) (?:the )?(?:trip|flight)|\bcat(?:e)? ore (?:face|dureaza|este) (?:drumul|zborul)/;
 
@@ -238,7 +240,7 @@ export function routeDecision(question: string, context: RouteContext = {}): Rou
   let intents = routeIntents(question);
   const evidence: string[] = [];
   if (injected) evidence.push('possible-injection');
-  if (KNOWLEDGE_FORCE.test(text)) {
+  if (KNOWLEDGE_FORCE.test(text) || CARRY_RULE.test(text)) {
     intents = [{ intent: 'LOOKUP_AIRPORT_PROCEDURE', args: {} }];
     evidence.push('policy-question');
   } else if (DURATION_FORCE.test(text)) {

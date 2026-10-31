@@ -81,6 +81,11 @@
       "name": "European Commission - 112, the European emergency number",
       "url": "https://digital-strategy.ec.europa.eu/en/policies/112",
       "jurisdiction": "EU"
+    },
+    "IATA_BATT": {
+      "name": "IATA - Lithium batteries guidance",
+      "url": "https://www.iata.org/",
+      "jurisdiction": "INT"
     }
   },
   "entries": [
@@ -328,7 +333,10 @@
         "medicines",
         "milk",
         "security",
-        "lichide"
+        "lichide",
+        "mancare",
+        "alimente",
+        "food"
       ],
       "ro": {
         "title": "Medicamente și hrană pentru copii",
@@ -690,7 +698,11 @@
         "pasaport european animale",
         "pet passport",
         "tenie",
-        "tapeworm"
+        "tapeworm",
+        "cabina",
+        "cabin",
+        "cusca",
+        "bord"
       ],
       "ro": {
         "title": "Călătoria cu câini, pisici și dihori",
@@ -839,6 +851,33 @@
       "en": {
         "title": "Reduced mobility at Craiova Airport",
         "body": "Ask for special assistance when you book your ticket; boarding staff are told in advance. Craiova Airport has reserved spaces in its public car parks, a lift to the upper floor of the terminal and toilets for wheelchair users. The airport page does not say how to request assistance or how to contact the service."
+      }
+    },
+    {
+      "id": "ff_iata_powerbank",
+      "topic": "security",
+      "source": "IATA_BATT",
+      "checked": false,
+      "mayBeOutdated": true,
+      "keywords": [
+        "powerbank",
+        "power bank",
+        "baterie externa",
+        "baterie",
+        "acumulator",
+        "litiu",
+        "lithium",
+        "battery",
+        "baterii de rezerva",
+        "cala"
+      ],
+      "ro": {
+        "title": "Baterii externe (powerbank) și baterii cu litiu",
+        "body": "Bateriile externe (powerbank) și bateriile de rezervă cu litiu se transportă doar în bagajul de mână, nu în cel de cală. În general sunt permise până la 100 Wh; între 100 și 160 Wh cu aprobarea companiei aeriene, iar peste 160 Wh nu se transportă. Verifică regulile companiei tale înainte de zbor."
+      },
+      "en": {
+        "title": "Power banks and lithium batteries",
+        "body": "Power banks and spare lithium batteries go in your carry-on bag only, not in checked baggage. In general they are allowed up to 100 Wh; between 100 and 160 Wh with the airline's approval, and above 160 Wh they cannot be carried. Check your airline's rules before you fly."
       }
     }
   ]

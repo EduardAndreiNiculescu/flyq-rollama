@@ -44,7 +44,9 @@ export const useLive = create<LiveState>()(
     set => ({
       baseUrl: DEFAULT_URL,
       token: '',
-      assistantSource: 'mock',
+      // The real assistant (on-device RoLlama + tools) is the default. 'mock' (canned answers) is for the emulator without a model; it looks identical
+      // in the chat and answers with fixed sentences, so it must never be what a normal install uses.
+      assistantSource: 'deviceTools',
       trackerSource: 'mock',
       modelTier: 'rollama',
       linkEnabled: true,
@@ -63,6 +65,15 @@ export const useLive = create<LiveState>()(
       setFlyqSession: flyqSession => set({ flyqSession }),
       pushRecent: n => set(s => ({ recent: [n, ...s.recent.filter(x => x !== n)].slice(0, 6) })),
     }),
-    { name: 'live', storage: zustandStorage },
+    {
+      name: 'live',
+      storage: zustandStorage,
+      // v1: installs that had stored the old default ('mock') move to the real assistant.
+      version: 1,
+      migrate: (stored, version) => {
+        const s = stored as Partial<LiveState>;
+        return (version < 1 && s.assistantSource === 'mock' ? { ...s, assistantSource: 'deviceTools' } : s) as LiveState;
+      },
+    },
   ),
 );
