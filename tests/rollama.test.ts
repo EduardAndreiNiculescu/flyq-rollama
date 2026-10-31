@@ -118,3 +118,42 @@ describe('capability boundary: money exchange is a place, not an action', () => 
     expect(capabilityBoundary('rezerva-mi un taxi')).toBe('unsupported-capability');
   });
 });
+
+import { seatAnswer } from '../src/tools/seat';
+describe('router candidates, tracking guard and the seat', () => {
+  const spec = (...names: string[]) => names.map((n) => ({ type: 'function', function: { name: n } }));
+  const msgs = (q: string) => [{ role: 'system', content: '' }, { role: 'user', content: q }] as never;
+  const run = (json: string, q: string, tools: unknown[] = []) => new RollamaEngine(fake(json)).generate(msgs(q), () => {}, { tools });
+
+  it('a tool outside the router candidates is replaced by a candidate, not trusted', async () => {
+    const r = await run('{"name":"get_live_tracking","arguments":{}}', 'La ce ora e imbarcarea?', spec('search_knowledge'));
+    expect(r.toolCalls?.[0].name).toBe('search_knowledge');
+  });
+  it('a "flight details" guess without flight words goes to the knowledge base when it is a candidate; with flight words it stays', async () => {
+    const both = spec('search_knowledge', 'get_flight_details');
+    expect((await run('{"name":"get_flight_details","arguments":{}}', 'Cat dureaza securitatea?', both)).toolCalls?.[0].name).toBe('search_knowledge');
+    expect((await run('{"name":"get_flight_details","arguments":{}}', 'La ce ora decolam?', both)).toolCalls?.[0].name).toBe('get_flight_details');
+  });
+  it('a blocked tracking choice with no candidates gets a pointer, not "I cannot do that"', async () => {
+    const r = await run('{"name":"get_live_tracking","arguments":{}}', 'Ce loc am?');
+    expect(r.toolCalls).toEqual([]);
+    expect(r.text).toMatch(/Nu am găsit un răspuns sigur/);
+    expect(r.text).not.toMatch(/Nu pot efectua/);
+  });
+  it('tracking still runs when the passenger asks about position', async () => {
+    const r = await run('{"name":"get_live_tracking","arguments":{}}', 'Unde este avionul acum?');
+    expect(r.toolCalls?.[0].name).toBe('get_live_tracking');
+  });
+  it('the seat comes from the boarding pass', () => {
+    expect(seatAnswer('Ce loc am?', '14C')).toBe('Locul tău este 14C.');
+    expect(seatAnswer('what seat am I in', '14C')).toBe('Your seat is 14C.');
+    expect(seatAnswer('Ce loc am?', undefined)).toBeNull();
+    expect(seatAnswer('Ce poarta am?', '14C')).toBeNull();
+  });
+  it('through the loop the seat is answered without a model call', async () => {
+    const raw = fake('{"name":"get_live_tracking","arguments":{}}');
+    const r = await runToolLoop(new RollamaEngine(raw), msgs('Ce loc am?') as never, { ...deps(), context: { flightNumber: 'DEMO123', seat: '14C' } as never }, () => {}, { tools: createTools(), fastPath: true, maxSteps: 3, allowSideEffects: false });
+    expect(r.text).toBe('Locul tău este 14C.');
+    expect(raw.prompts).toHaveLength(0);
+  });
+});

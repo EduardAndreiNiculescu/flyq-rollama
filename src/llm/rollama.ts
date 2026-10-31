@@ -67,11 +67,13 @@ export function parseRouterJson(raw: string): RouterCall | null {
   }
 }
 
-const plain = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+export const plain = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 const GREETING = /^(?:salut|buna|hei|hey|hello|hi|noroc|servus|good (?:morning|evening|day))\b/;
 /** detectLang calls diacritic-free Romanian ("salut", "trimite 100 euro") English; one Romanian word settles it. */
 const RO_HINT = /\b(salut|buna|noroc|servus|trimite|vreau|cumpar|rezerv|pot|cum|ce|unde|cand|sunt|mersi|multumesc|te rog|zbor\w*|poarta|avion\w*|bagaj\w*)\b/;
-export const isRomanian = (q: string) => detectLang(q) === 'ro' || RO_HINT.test(plain(q));
+/** Clear English words beat detectLang, which calls short English questions Romanian. */
+const EN_HINT = /\b(what|which|where|how|when|my|the|is|are|do|does|can|seat|gate|flight|time)\b/;
+export const isRomanian = (q: string) => RO_HINT.test(plain(q)) || (detectLang(q) === 'ro' && !EN_HINT.test(plain(q)));
 
 /** `none`: a greeting gets a greeting, everything else the capability message (unsupported request, injection, gibberish). */
 export function noneReply(question: string): string {
@@ -134,4 +136,11 @@ export function answerFromTool(tool: string, content: string, question: string):
     return /not available|unavailable/i.test(facts) ? (ro ? 'Poziția live nu este disponibilă offline.' : 'Live position is not available offline.') : ro ? 'Poziția avionului e disponibilă; o vezi pe harta de urmărire din aplicație.' : 'The aircraft position is available; see the tracking map in the app.';
   }
   return ro ? 'Nu am o formulare sigură pentru asta. Întreabă separat: ora de decolare, aterizare, poarta sau durata.' : 'I have no safe wording for that. Ask separately: departure, arrival, gate or duration.';
+}
+
+/** The model gave no usable answer (invalid JSON) or a guard blocked its choice: a helpful pointer, not a refusal. */
+export function unsureReply(question: string): string {
+  return isRomanian(question)
+    ? 'Nu am găsit un răspuns sigur la asta. Te pot ajuta cu ora de decolare sau aterizare, poarta, timpul rămas, durata zborului, locul în avion, harta aeroportului și regulile de călătorie.'
+    : 'I could not find a safe answer to that. I can help with departure or arrival time, your gate, time remaining, flight duration, your seat, the airport map and travel rules.';
 }

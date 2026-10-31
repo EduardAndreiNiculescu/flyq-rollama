@@ -12,6 +12,8 @@ export type PassengerContext = {
   flightNumber?: string;
   airportCode?: string;
   journeyStage?: JourneyStage;
+  /** From the passenger's boarding pass, so "what is my seat?" is answered from data the app holds. */
+  seat?: string;
   currentZone?: string;
   positionConfidence?: number;
   connectionAvailable: boolean;

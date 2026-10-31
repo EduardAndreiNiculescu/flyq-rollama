@@ -95,13 +95,14 @@ export function recordFor(flight: Flight): FlightRecord {
   };
 }
 
-function passengerContext(deps: DeviceDeps, flight: Flight, record: FlightRecord): PassengerContext {
+function passengerContext(deps: DeviceDeps, flight: Flight, record: FlightRecord, seat?: string): PassengerContext {
   const phase = deps.phase();
   return {
     flightNumber: record.flightNumber,
     airportCode: flight.from,
     journeyStage: phase === 'inAir' ? 'in_flight' : phase === 'landed' ? 'arrival' : 'airside',
     connectionAvailable: false,
+    seat,
   };
 }
 
@@ -233,7 +234,7 @@ export class DeviceToolsAssistantService implements AssistantService {
       this.forFlight = context.flight.id;
     }
     const record = recordFor(context.flight);
-    const pctx = passengerContext(this.deps, context.flight, record);
+    const pctx = passengerContext(this.deps, context.flight, record, context.ticket?.pass?.seat);
     const now = this.deps.now();
     const toolDeps: ToolDeps = {
       now: () => now,

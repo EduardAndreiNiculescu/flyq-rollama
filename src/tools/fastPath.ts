@@ -1,6 +1,7 @@
 import { tier1FastTool } from '../core/tier1';
 import { answerFromTool, normalizePassengerQuery } from '../llm/rollama';
 import { composeAnswer } from './composer';
+import { seatAnswer } from './seat';
 import { executeToolCall, type ToolDef, type ToolDeps } from './registry';
 
 const plain = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[?!.,]+$/g, '').replace(/\s+/g, ' ').trim();
@@ -21,6 +22,8 @@ export function toolFor(question: string): string | null {
 }
 
 export async function tryFastPath(question: string, tools: ToolDef[], deps: ToolDeps, onTool?: (e: { name: string; phase: 'start' | 'done'; ok?: boolean }) => void, nowMs: () => number = performance.now.bind(performance), onTiming?: (ms: number) => void): Promise<{ name: string; data: unknown; text: string } | null> {
+  const seat = seatAnswer(question, deps.context.seat);
+  if (seat) return { name: 'seat', data: { seat: deps.context.seat }, text: seat };
   const name = toolFor(question);
   if (!name || !tools.some((t) => t.name === name && !t.sideEffect)) return null;
   if (name !== 'search_knowledge' && !deps.context.flightNumber) return null; // flight tools need a selected flight; the rules need none
