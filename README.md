@@ -1,67 +1,101 @@
-# FlightFlow – offline on-device AI copilot (Craiova Airport Hackathon 2026)
+# FlightFlow — asistent de aeroport care rulează offline pe iPhone
 
-Qwen3-4B (GGUF Q4_K_M) running on the iPhone through `llama.rn` (llama.cpp + Metal). No inference server. Stack: Expo SDK 58, RN 0.88, `llama.rn` 0.13.0-rc.8 (pinned; 0.12.9 does not compile on RN 0.88 iOS: it uses the removed RCTCxxBridge).
+Proiect pentru Craiova Airport Hackathon 2026. Aplicația îl însoțește pe pasager de la intrarea în aeroport până la aterizare. Un model de limbaj mic rulează **direct pe telefon** (fără server de inferență) și înțelege întrebările în română de zi cu zi, cu greșeli și argou. Faptele despre zbor (ore, poartă, întârzieri, timp rămas) și regulile de călătorie vin din cod determinist și dintr-o bază de cunoștințe locală, nu din modelul de limbaj.
 
-## Status (honest)
+> **English, in short.** FlightFlow is an offline airport companion for iPhone (Expo / React Native). A 1B-parameter Llama 3.2 model (RoLlama, SFT + DPO) runs on-device through llama.rn and only *routes* the passenger's question to one of seven tools; every fact comes from deterministic code or a local knowledge base. A FlyQ backend client provides flights, a LiDAR-scanned indoor map module is in development, and iOS push is prepared but not enabled. See "Starea proiectului" for what is verified and what is not.
 
-| State | Items |
+## Ce face aplicația
+
+Cinci taburi: **Călătorie · Zbor · Hartă · Asistent · Profil**.
+
+- **Biletul:** se adaugă prin cod de bord lipit (format IATA BCBP), scanare simulată sau bilet demo. Zborul demo este fictiv și e etichetat ca atare.
+- **Călătorie:** pașii prin aeroport (check-in, securitate, pașapoarte, poartă, îmbarcare) și timpul rămas până la închiderea porții.
+- **Zbor:** starea zborului, orele programate și estimate, poziția avionului în aer (când există date).
+- **Asistent (Flo):** chat în română sau engleză, 100% offline pe telefon. Pasagerul întreabă „am voie cu lichide?", „la ce oră decolăm?", „ce poartă am?", iar răspunsul este construit din date verificate, cu avertismentele cuvenite („după orar", „estimare a furnizorului").
+- **Hartă:** vezi mai jos, modulul hărții interactive.
+- **Profil, Mod test:** limbă, bilete, remindere, accesibilitate; „Mod test" conține sursa zborurilor, notificările și opțiunile de dezvoltare.
+
+## Modulul AI
+
+Principiul: **modelul nu scrie fapte**. Modelul alege doar unealta potrivită, iar codul scrie răspunsul.
+
+```
+întrebarea pasagerului
+  → normalizator (scoate fillerul, repară tastarea grăbită; păstrează numere de zbor și negații)
+  → limită de capabilități (refuză: cumpărat, rezervat, taxi, cultură generală)
+  → cale rapidă (reguli pentru întrebări evidente, fără model)
+  → router RoLlama on-device: un singur JSON {"name": unealtă, "arguments": {...}}
+       decodare constrânsă cu gramatică GBNF: doar cele 7 unelte permise (scrisă, încă neverificată pe dispozitiv)
+  → sanitizer (numărul de zbor se extrage din textul pasagerului, nu din model; interogarea de reguli rămâne cea originală;
+       poziția live nu rulează dacă pasagerul nu a cerut-o)
+  → unelte deterministe: get_flight_details, get_gate, get_time_remaining, get_live_tracking, search_knowledge, open_airport_map
+  → compozitor: propoziția se construiește din rezultatul uneltei (ore copiate, nimic calculat de model)
+```
+
+- **Modelul:** RoLlama 3.2 1B (Llama 3.2 adaptat pentru română), fine-tuning SFT + DPO, cuantizat Q4_0 (~812 MB), rulat prin `llama.rn` (llama.cpp + Metal). Detalii despre fișier, reparații și verificări: `docs/REPRODUCE.md`.
+- **Baza de cunoștințe:** `src/core/knowledge.ts` și `src/data/`, căutare cu tolerare de greșeli și rădăcini românești (bagaj, lichide, animale, documente, drepturile pasagerilor).
+- **Siguranță:** urgențele (medical, foc) primesc un răspuns fix cu 112; regulile nu pot fi ocolite de un mesaj care imită o instrucțiune.
+
+## Modulul hărții interactive (Denis) — în dezvoltare
+
+Harta interioară a aeroportului este realizată din **scanare LiDAR** de către Denis și va permite vizualizarea punctelor de interes (toalete, restaurante, case de schimb, porți, securitate) și **ghidarea pasagerului** către ele.
+
+Starea actuală: tabul „Hartă" are un înlocuitor (`MapPlaceholder`); **modulul LiDAR nu este integrat în acest repo**. Punctul de integrare este deja definit:
+- asistentul poate cere harta prin unealta `open_airport_map`, care apelează `NavigationHandler.openAirportMap({ destination, fromZone })` (`src/core/assistant.ts`, `src/core/types.ts`);
+- întrebări ca „unde e toaleta?" sau „unde pot schimba bani?" ajung deja la această unealtă; modulul hărții primește destinația și face ghidarea;
+- backend-ul FlyQ are un endpoint pentru pachetele de hartă (`/v1/venues`), pe care modulul îl poate folosi.
+
+## Backend FlyQ
+
+Serverul echipei (repo separat, `FlyQ-backend`) oferă sesiuni, zboruri de la aeroportul Craiova, ETA calculat pe server, pachete de conținut și notificări push. Aplicația are un client pentru **sesiune și zbor** (`src/services/live/gatewayClient.ts`). Cheia aplicației FlyQ nu face parte din repo: se introduce în „Mod test → Sursa zborurilor". Fără cheie, aplicația rulează cu zborul demo.
+
+## Starea proiectului (verificat și neverificat)
+
+| Parte | Stare |
 |---|---|
-| Done, unit-tested on Windows | Flight maths and ETA with refusal guards; typo-tolerant multi-intent router; domain spell-corrector (routing/retrieval only); lexical KB retrieval; deterministic flight-answer templates; answer guard (rejects invented numbers, gates, live-status claims) and clarification questions, both wired into `FlightFlowAssistant.ask`; synonym-expanded retrieval; tool registry, argument validation and tool-calling loop; AirLabs client + parser and OpenSky decoder/client (simulated responses only); eval/compare/tool runners (tested against a fake server); OpenAI-compatible eval endpoint parser |
-| Written, never run on a device | Chat UI, streaming, stop, model download/validation (`App.tsx`, `src/llm/`) |
-| Written, not wired / not finished | Tool loop is not called from `App.tsx` (the app uses `FlightFlowAssistant.ask`); `NavigationHandler` is a console mock; no `eas.json`; no HTTP server in `server/` (only the two clients) |
-| Not started | SQLite FTS, voice, download progress/resume, real map, AirLabs-to-hex mapping, cache/rate limit/auth |
+| Frontend (5 taburi, design Liquid Glass & Sky), teste | integrat; typecheck și 675 de teste trec; compilat și instalat pe iPhone |
+| Model pe iPhone | **se încarcă și rulează**: o măsurătoare pe iPhone 15 a arătat ~30,7 tokeni/s, primul token în 0,1 s |
+| Calitatea routării pe telefon | **în verificare**. Pe laptop (llama.cpp prin Ollama), pe 70 de întrebări stratificate, doar modelul: 69 JSON valide, 54 corecte (77,1%) |
+| Reguli deterministe | pe setul de 1000 de întrebări de stres decid 611 (61,1%), toate corecte; **regulile au fost scrise uitându-se la acel set**, deci cifra nu spune cum se comportă pe întrebări noi |
+| „98,2% acuratețe" din benchmark-ul Python | **nu se reproduce din repo** (cere GPU, adaptor și implementarea Python) și nu e acuratețea de pe telefon |
+| Backend FlyQ | client testat doar cu apeluri simulate; zboruri demo și panoul CRA neconectate |
+| Notificări iOS | cod scris, **dezactivate în build** (profilul de semnare nu include Push) |
+| Hartă LiDAR (Denis) | în dezvoltare, neintegrată |
 
-Tests: `npx vitest run` → **267 passed in 14 files** (run at the time of writing; counts change as files are added).
+## Cum compilezi și rulezi
 
-## What is NOT verified
-
-- No run on an iPhone, no Airplane Mode test, no Metal inference.
-- No benchmark numbers: `docs/BENCHMARK.md` is an empty template.
-- No live AirLabs or OpenSky call: response shapes are assumed from docs and simulated in tests.
-- Fine-tuning: `finetune/out/status.json` last showed step 254/284 of the v2 run; adapter not yet compared to base (`docs/EVAL.md` procedure not run). The only file in `eval/results/` has 153 rows but just 15 with non-empty text – not a usable result.
-- Spell-correction numbers in `docs/EVAL.md` use synthetic typos, not real passenger text; the common-word lexicon is built from project corpora only.
-- Knowledge base: 68 passages (EN/RO), **28 with `verifiedOn` set, 40 with `verifiedOn: null`**. The 28 are 14 bilingual EU entries a person re-read on 2026-10-29 (`src/data/eu-knowledge.json`, `checked: true`); the 40 are the built-in seed entries (18) and 11 EU entries (22) not yet checked. No Craiova-airport-specific facts are verified.
-
-## Architecture
-
-`question → router (intents, multi-intent) → spell correction (routing/retrieval only; the model sees the original text) → retrieval from the offline KB → tools / deterministic flight code → LLM (Qwen3-4B) → answer guard → safe fallback`.
-`src/core` pure TS, no native deps · `src/tools` registry + loop · `src/tracking` AirLabs/OpenSky parsing, ETA · `server/` API clients (keys from env only) · `src/llm` llama.rn engine + provisioning · `eval/` · `finetune/` · `docs/`.
-
-## Commands
+Pașii exacți, cu timpii măsurați: **`docs/REPRODUCE.md`**.
 
 ```bash
-npm run check                       # tsc --noEmit + vitest
-npx tsx eval/run-eval.ts --model qwen3:4b          # needs Ollama + model
-npx tsx eval/run-compare.ts --models base,adapter --sets v2,qs51   # needs python finetune/chat_server.py (GPU)
-npx tsx eval/run-tools.ts --models base,adapter
-npx tsx eval/noise-test.ts --seed 7                # typo robustness, no model
-npx tsx eval/build-lexicon.ts                      # regenerate src/data/common-words.json
-npx tsx finetune/make_dataset_v2.ts                # dataset generator (v2)
-python -I finetune/validate_dataset.py finetune/data/*.jsonl
-python finetune/train_qlora.py --help              # QLoRA training (8 GB VRAM laptop GPU)
+git clone https://github.com/EduardAndreiNiculescu/flightflow-rollama.git && cd flightflow-rollama
+npm ci --ignore-scripts      # pe Windows; pe macOS poți rula `npm ci` fără opțiune
+node scripts/verify.mjs      # typecheck + teste + benchmark determinist (~8 s)
 ```
-Details: `docs/EVAL.md`, `docs/INTEGRATION.md`.
 
-## Build for iPhone
+**iPhone (cere un Mac cu Xcode și un cont Apple Developer):** `npm run mac:build` (vezi `docs/REPRODUCE.md`, secțiunea 2).
 
-The app uses native code (`llama.rn`): Expo Go will not work, and there is no Metal in the Simulator. Set `ios.bundleIdentifier` in `app.json` if it clashes with your team. Use a Release build (Debug is far slower).
+**Modelul** nu e în repo (851.469.152 de octeți). Se obține de la proprietarii proiectului și se verifică:
 
-**Option 1 – Mac with Xcode**
 ```bash
-npm install
-npx expo prebuild --platform ios
-npx expo run:ios --device --configuration Release
+MODEL_URL=<link> node scripts/fetch-model.mjs models
+scripts/mac/push-model.sh <UDID-iPhone> models/rollama-1b-dpo-q4.gguf
 ```
-Set your Team in Xcode (Signing & Capabilities) via the official sign-in.
 
-**Option 2 – EAS cloud (no Mac)**: `eas.json` does not exist yet (open task in `docs/TEAM.md`). Plan: `npx eas-cli@latest login`, `eas device:create`, an `eas.json` with a `preview` profile, then `eas build --platform ios --profile preview`. Not tried.
+Dacă pornești de la un GGUF produs de `finetune/merge_and_quantize.py`, el trebuie reparat înainte de folosire (`python scripts/fix_gguf_rollama.py in.gguf out.gguf`): exportatorul scrie normele în `f16` (aplicația se închide la încărcare), nu permută matricile Q/K și nu scrie setările RoPE (modelul răspunde cu zgomot).
 
-First launch: tap **Download model** on Wi-Fi (~2.5 GB). Size and GGUF header are validated, then it loads.
+## Structura repo-ului
 
-## Demo script
-1. Open FlightFlow; wait for "Loading model on device…".
-2. Enable Airplane Mode.
-3. Ask in Romanian: "Ce înseamnă ultimul apel?"
-4. "Cât mai durează până aterizează DEMO123?" (deterministic code; data labelled demo).
-5. "Mi-a dispărut bagajul, ce fac?" and "Am uitat pașaportul, pot arăta o poză?"
-6. Each reply shows TTFT and tok/s in the bubble. Do not claim any figure before it is measured.
+| Cale | Conținut |
+|---|---|
+| `src/screens`, `src/components`, `src/theme`, `src/i18n` | interfața |
+| `src/core` | reguli, router, bază de cunoștințe, calcule de zbor |
+| `src/llm` | modelul RoLlama: prompt, router, motor llama.rn, verificarea fișierului |
+| `src/tools` | uneltele, sanitizer, cale rapidă, compozitor, bucla de unelte |
+| `src/services/live` | client FlyQ, legătura cu laptopul de test, notificări |
+| `finetune/` | scripturi de antrenare și evaluare (date și modele nu sunt în repo) |
+| `scripts/` | verificare, benchmark-uri, repararea GGUF, build pe Mac |
+| `docs/` | documentație, `REPRODUCE.md` |
+
+## Licență
+
+`LICENSE` este încă cel din șablonul Expo (MIT); proprietarii proiectului îl vor înlocui. Modelul de bază și RoLlama au licențele lor, care trebuie verificate înainte de redistribuire.
