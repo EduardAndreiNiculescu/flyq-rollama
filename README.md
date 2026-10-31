@@ -2,18 +2,18 @@
 
 Proiect pentru Craiova Airport Hackathon 2026. Aplicația îl însoțește pe pasager de la intrarea în aeroport până la aterizare. Un model de limbaj mic rulează **direct pe telefon** (fără server de inferență) și înțelege întrebările în română de zi cu zi, cu greșeli și argou. Faptele despre zbor (ore, poartă, întârzieri, timp rămas) și regulile de călătorie vin din cod determinist și dintr-o bază de cunoștințe locală, nu din modelul de limbaj.
 
-> **English, in short.** FlyQ is an offline airport companion for iPhone (Expo / React Native). A 1B-parameter Llama 3.2 model (RoLlama, SFT + DPO) runs on-device through llama.rn and only *routes* the passenger's question to one of seven tools; every fact comes from deterministic code or a local knowledge base. A FlyQ backend client provides flights, a LiDAR-scanned indoor map module is in development, and iOS push is prepared but not enabled. See "Starea proiectului" for what is verified and what is not.
+> **English, in short.** FlyQ is an offline airport companion for iPhone (Expo / React Native). A 1B-parameter Llama 3.2 model (RoLlama, SFT + DPO) runs on-device through llama.rn and only *routes* the passenger's question to one of seven tools; every fact comes from deterministic code or a local knowledge base. A FlyQ backend client provides flights, push notifications and an iOS Live Activity (lock screen / Dynamic Island card); a LiDAR-scanned indoor map module is in development. See "Starea proiectului" for what is verified and what is not, and `docs/ARHITECTURA.md` for the whole system.
 
 ## Ce face aplicația
 
-Cinci taburi: **Călătorie · Zbor · Hartă · Asistent · Profil**.
+Trei taburi: **Zbor · Hartă · Asistent**. Profilul se deschide din butonul din antetul fiecărui tab.
 
 - **Biletul:** se adaugă prin cod de bord lipit (format IATA BCBP), scanare simulată sau bilet demo. Zborul demo este fictiv și e etichetat ca atare.
-- **Călătorie:** pașii prin aeroport (check-in, securitate, pașapoarte, poartă, îmbarcare) și timpul rămas până la închiderea porții.
-- **Zbor:** starea zborului, orele programate și estimate, poziția avionului în aer (când există date).
+- **Zbor:** pașii prin aeroport (check-in, securitate, pașapoarte, poartă, îmbarcare) cu timpul rămas până la închiderea porții; la final, „Informații zbor": starea zborului, orele programate și estimate, poziția avionului în aer (când există date).
+- **Zbor live** (`flyq://live`): ecranul pe care îl deschide atingerea cardului Live Activity: countdown, poartă, ore, estimarea de aterizare din poziția live și scurtături către hartă și asistent.
 - **Asistent (Flo):** chat în română sau engleză, 100% offline pe telefon. Pasagerul întreabă „am voie cu lichide?", „la ce oră decolăm?", „ce poartă am?", iar răspunsul este construit din date verificate, cu avertismentele cuvenite („după orar", „estimare a furnizorului").
 - **Hartă:** vezi mai jos, modulul hărții interactive.
-- **Profil, Mod test:** limbă, bilete, remindere, accesibilitate; „Mod test" conține sursa zborurilor, notificările și opțiunile de dezvoltare.
+- **Profil, Mod test:** limbă, bilete, remindere, accesibilitate, numere de urgență; „Mod test" conține sursa zborurilor, notificările, cardul Live Activity și opțiunile de dezvoltare.
 
 ## Modulul AI
 
@@ -47,19 +47,25 @@ Starea actuală: tabul „Hartă" are un înlocuitor (`MapPlaceholder`); **modul
 
 ## Backend FlyQ
 
-Serverul echipei (repo separat, `FlyQ-backend`) oferă sesiuni, zboruri de la aeroportul Craiova, ETA calculat pe server, pachete de conținut și notificări push. Aplicația are un client pentru **sesiune și zbor** (`src/services/live/gatewayClient.ts`). Cheia aplicației FlyQ nu face parte din repo: se introduce în „Mod test → Sursa zborurilor". Fără cheie, aplicația rulează cu zborul demo.
+Serverul echipei (repo separat, `FlyQ-backend`) oferă sesiuni, zboruri de la aeroportul Craiova, ETA calculat pe server, pachete de conținut și notificări push. Aplicația are un client pentru **sesiune și zbor** (`src/services/live/gatewayClient.ts`), pentru **abonarea la notificări** și pentru **tokenul cardului Live Activity** (`src/services/live/push.ts`). Cheia aplicației FlyQ nu face parte din repo: se introduce în „Mod test → Sursa zborurilor". Fără cheie, aplicația rulează cu zborul demo.
+
+## Notificări și Live Activity
+
+- **Notificări obișnuite:** aplicația cere permisiunea, citește tokenul APNs și îl trimite serverului; serverul trimite alertele (poartă, întârziere, îmbarcare). Detalii: `docs/NOTIFICARI.md`.
+- **Live Activity** (cardul de pe ecranul blocat și din Dynamic Island): extensie de widget generată de `expo-widgets`, cu aspectul descris în JS (`src/services/live/flightActivity.tsx`). Serverul îl actualizează prin push; cât aplicația e deschisă, ea însăși îl reîmprospătează cu estimarea de aterizare. Detalii și contractul de date: `docs/LIVE_ACTIVITIES.md`.
 
 ## Starea proiectului (verificat și neverificat)
 
 | Parte | Stare |
 |---|---|
-| Frontend (5 taburi, design Liquid Glass & Sky), teste | integrat; typecheck și 675 de teste trec; compilat și instalat pe iPhone |
+| Frontend (3 taburi, design Liquid Glass & Sky), teste | integrat; typecheck și 696 de teste trec; compilat și instalat pe iPhone (la un build anterior, nu la ultimul) |
 | Model pe iPhone | **se încarcă și rulează**: o măsurătoare pe iPhone 15 a arătat ~30,7 tokeni/s, primul token în 0,1 s |
 | Calitatea routării pe telefon | **în verificare**. Pe laptop (llama.cpp prin Ollama), pe 70 de întrebări stratificate, doar modelul: 69 JSON valide, 54 corecte (77,1%) |
 | Reguli deterministe | pe setul de 1000 de întrebări de stres decid 611 (61,1%), toate corecte; **regulile au fost scrise uitându-se la acel set**, deci cifra nu spune cum se comportă pe întrebări noi |
 | „98,2% acuratețe" din benchmark-ul Python | **nu se reproduce din repo** (cere GPU, adaptor și implementarea Python) și nu e acuratețea de pe telefon |
 | Backend FlyQ | client testat doar cu apeluri simulate; zboruri demo și panoul CRA neconectate |
-| Notificări iOS | cod scris, **dezactivate în build** (profilul de semnare nu include Push) |
+| Notificări iOS | build cu `PUSH=1` și profil cu Push; serverul a primit **200 de la Apple** la două notificări de test către telefon (31.10). Neconfirmat de noi: apariția efectivă a bannerului la fiecare test |
+| Live Activity | cardul pornește pe iPhone (observat în Dynamic Island și pe ecranul blocat, la un build anterior). **Neverificat:** actualizările de la server cu formatul final, noul design, countdown-ul și estimarea de aterizare |
 | Hartă LiDAR (Denis) | în dezvoltare, neintegrată |
 
 ## Cum compilezi și rulezi
@@ -91,10 +97,10 @@ Dacă pornești de la un GGUF produs de `finetune/merge_and_quantize.py`, el tre
 | `src/core` | reguli, router, bază de cunoștințe, calcule de zbor |
 | `src/llm` | modelul RoLlama: prompt, router, motor llama.rn, verificarea fișierului |
 | `src/tools` | uneltele, sanitizer, cale rapidă, compozitor, bucla de unelte |
-| `src/services/live` | client FlyQ, legătura cu laptopul de test, notificări |
+| `src/services/live` | client FlyQ, legătura cu laptopul de test, notificări, Live Activity, estimarea de aterizare |
 | `finetune/` | scripturi de antrenare și evaluare (date și modele nu sunt în repo) |
 | `scripts/` | verificare, benchmark-uri, repararea GGUF, build pe Mac |
-| `docs/` | documentație, `REPRODUCE.md` |
+| `docs/` | documentație; începe cu `docs/INDEX.md` și `docs/ARHITECTURA.md` |
 
 ## Licență
 
