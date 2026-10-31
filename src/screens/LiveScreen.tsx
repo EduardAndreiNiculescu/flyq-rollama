@@ -14,7 +14,7 @@ import { flightData } from '../services';
 import { useLanguage } from '../i18n';
 import { addDemoFlight, addLiveFlight } from '../services/live/addLive';
 import { recordFor } from '../services/live/DeviceAssistantService';
-import { deviceToken, registerForFlight } from '../services/live/push';
+import { deviceToken, registerForFlight, testFlyqKey } from '../services/live/push';
 import { pingGateway, sendBench } from '../services/live/gatewayClient';
 import { checkModel, specForTier } from '../llm/modelProvision';
 import { useLive, type AssistantSource, type ModelTier, type TrackerSource } from '../store/live';
@@ -194,6 +194,7 @@ export function LiveScreen() {
 
       <View style={styles.section}>
         <AppText variant="label">Notificări iOS (APNs, prin serverul FlyQ)</AppText>
+        <Button label="Testează cheia FlyQ" variant="glass" size="sm" onPress={async () => setPushStatus(await testFlyqKey())} />
         <Button label="Activează notificările" variant="glass" size="sm" onPress={enablePush} />
         {pushStatus ? <AppText variant="caption" color={colors.text3}>{pushStatus}</AppText> : null}
         {pushToken ? (

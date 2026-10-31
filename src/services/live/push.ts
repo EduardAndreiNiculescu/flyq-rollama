@@ -41,6 +41,27 @@ export async function deviceToken(): Promise<string | null> {
   return typeof t.data === 'string' ? t.data : null;
 }
 
+/** The server's own error code (APP_KEY_INVALID, APP_KEY_MISSING, FLIGHT_NOT_FOUND, ...), so a bare "401" is not all the test screen shows. */
+async function errorCode(res: Response): Promise<string> {
+  try {
+    return ((await res.json()) as { error?: { code?: string } }).error?.code ?? '';
+  } catch {
+    return '';
+  }
+}
+
+/** Asks a free demo endpoint with the stored app key, and says what the server answered. Shows the key's length, never the key. */
+export async function testFlyqKey(): Promise<string> {
+  const { flyqKey } = useLive.getState();
+  if (!flyqKey) return 'Nu e nicio cheie setată.';
+  try {
+    const res = await fetch(`${FLYQ_BASE}/v1/demo/scenarios`, { headers: { 'X-FlyQ-App-Key': flyqKey } });
+    return res.ok ? `Cheia e acceptată (HTTP ${res.status}, ${flyqKey.length} caractere).` : `Respinsă: HTTP ${res.status} ${await errorCode(res)} (cheia salvată are ${flyqKey.length} caractere).`;
+  } catch {
+    return 'Serverul nu răspunde (rețea?).';
+  }
+}
+
 export async function registerForFlight(record: FlightRecord, locale: 'ro' | 'en'): Promise<PushResult> {
   const { flyqKey } = useLive.getState();
   if (!flyqKey) return { state: 'no_key' };
@@ -60,7 +81,7 @@ export async function registerForFlight(record: FlightRecord, locale: 'ro' | 'en
       body: JSON.stringify({ deviceToken: token, environment: pushEnvironment(), flightId, locale }),
     });
     if (res.status === 422) return { state: 'server_off', token };
-    if (!res.ok) return { state: 'error', reason: `server answered ${res.status}` };
+    if (!res.ok) return { state: 'error', reason: `server answered ${res.status} ${await errorCode(res)}`.trim() };
     const j = (await res.json()) as { subscriptionId?: unknown; ownerToken?: unknown };
     if (typeof j.subscriptionId !== 'string' || typeof j.ownerToken !== 'string') return { state: 'error', reason: 'unexpected server answer' };
     await SecureStore.setItemAsync(OWNER_KEY, JSON.stringify({ id: j.subscriptionId, owner: j.ownerToken })); // the only way to change or delete it later
