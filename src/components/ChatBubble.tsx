@@ -2,7 +2,7 @@ import { Sparkles } from 'lucide-react-native';
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeInUp, useAnimatedStyle, useReducedMotion, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
-import { colors, radii, spacing } from '../theme/tokens';
+import { colors, radii, spacing, chatGradient } from '../theme/tokens';
 import { AppText } from './AppText';
 import { Glass } from './Glass';
 import { GradientFill } from './GradientFill';
@@ -21,8 +21,8 @@ export function ChatBubble({ role, text, author, streaming, time }: Props) {
   if (role === 'user') {
     return (
       <Animated.View entering={FadeInUp.duration(220)} style={[styles.bubble, styles.user]} accessible accessibilityLabel={`${author}: ${text}`}>
-        <GradientFill />
-        <AppText variant="body" color={colors.onAccent} weight="700">
+        <GradientFill colors={chatGradient} />
+        <AppText variant="body" color={colors.onGradient} weight="700">
           {text}
         </AppText>
       </Animated.View>
@@ -51,8 +51,8 @@ export function FloAvatar({ size, live }: { size: number; live?: boolean }) {
   return (
     <View style={{ width: size, height: size }}>
       <View style={[styles.avatar, { width: size, height: size, borderRadius: size / 2 }]}>
-        <GradientFill />
-        <Sparkles size={size * 0.48} color={colors.onAccent} strokeWidth={2.2} />
+        <GradientFill colors={chatGradient} />
+        <Sparkles size={size * 0.48} color={colors.onGradient} strokeWidth={2.2} />
       </View>
       {live ? <View style={[styles.liveDot, { width: size * 0.28, height: size * 0.28, borderRadius: size * 0.14 }]} /> : null}
     </View>

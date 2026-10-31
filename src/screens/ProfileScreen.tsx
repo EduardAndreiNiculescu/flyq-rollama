@@ -19,7 +19,7 @@ import { useSplash } from '../store/splash';
 import { appStorage } from '../store/storage';
 import { useTickets } from '../store/tickets';
 import { useLayout } from '../theme/responsive';
-import { colors, radii, spacing } from '../theme/tokens';
+import { colors, radii, spacing, chatGradient } from '../theme/tokens';
 import { syncReminders } from '../services/live/localReminders';
 
 export function ProfileScreen() {
@@ -142,8 +142,8 @@ export function ProfileScreen() {
       <Glass tone="strong" radius={radii.hero} style={styles.hero}>
         <View style={styles.heroRow}>
           <View style={styles.avatar}>
-            <GradientFill />
-            <AppText variant="title" color={colors.onAccent}>
+            <GradientFill colors={chatGradient} />
+            <AppText variant="title" color={colors.onGradient}>
               {initials(activeTicket?.pass.passengerName)}
             </AppText>
           </View>

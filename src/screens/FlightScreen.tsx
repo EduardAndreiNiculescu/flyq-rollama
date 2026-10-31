@@ -321,7 +321,7 @@ const FlightProgress = memo(function FlightProgressView({ progress, estimated, f
         </View>
         <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, planeStyle]}>
           <View style={styles.planeOnTrack}>
-            <Plane size={14} color={colors.onAccent} strokeWidth={2.4} />
+            <Plane size={14} color={colors.onGradient} strokeWidth={2.4} />
           </View>
         </Animated.View>
       </View>

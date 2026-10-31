@@ -34,7 +34,7 @@ import { useFlightMode } from '../store/flightMode';
 import { useSettings } from '../store/settings';
 import { useActiveTicket } from '../store/tickets';
 import { useLayout } from '../theme/responsive';
-import { colors, radii, spacing } from '../theme/tokens';
+import { colors, radii, spacing, chatGradient } from '../theme/tokens';
 import { useFlightStatusVersion } from '../store/flightStatus';
 import { ROUTER_DEBUG } from '../llm/rollamaEngine';
 
@@ -238,8 +238,8 @@ export function AssistantScreen() {
             accessibilityRole="button"
             accessibilityLabel={t('assistant.send')}
           >
-            <GradientFill />
-            <Send size={19} color={colors.onAccent} />
+            <GradientFill colors={chatGradient} />
+            <Send size={19} color={colors.onGradient} />
           </Pressable>
         </Glass>
         <AppText variant="caption" weight="400" color={colors.textMuted} align="center" style={styles.disclaimer}>
