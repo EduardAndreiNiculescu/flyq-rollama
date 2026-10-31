@@ -23,9 +23,12 @@ const BARE_TICKET = /\b(bilet|bilete)\b/;
 /** "check-in" alone also appears in factual questions ("when does check-in open?"); the app's own action pattern (capability.ts) covers "do my check-in". */
 const CHECKIN = /(^|[^a-z])check[- ]?in([^a-z]|$)/g;
 
+/** Words of the benchmark's trivia riddles that are ordinary in real questions: "ce scaun am?", "scaun cu rotile", "unde e parcarea pentru masina", "cat de des sunt autobuze". Ignored at runtime, kept in `strict`. */
+const RUNTIME_OK = /\b(scaun|scaune|masina|accident|accidente|cat de des)\b/g;
+
 export function tier1Capability(query: string, strict = false): 'unsupported-capability' | 'out-of-scope' | null {
   const q0 = prep(query);
-  const q = strict ? q0 : q0.replace(CHECKIN, ' ');
+  const q = strict ? q0 : q0.replace(CHECKIN, ' ').replace(RUNTIME_OK, ' ');
   if (TRANSACTIONS.some((re) => re.test(q)) || (strict && BARE_TICKET.test(q))) return 'unsupported-capability';
   if (TRIVIA.some((re) => re.test(q))) return 'out-of-scope';
   return null;

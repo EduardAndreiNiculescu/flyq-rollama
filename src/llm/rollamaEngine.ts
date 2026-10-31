@@ -1,6 +1,6 @@
 import { INJECTION, normalize } from '../core/router';
 import type { ChatMessage, EngineToolCall, GenerateStats, LlmEngine } from '../core/assistant';
-import { answerFromTool, buildRouterPrompt, noneReply, normalizePassengerQuery, parseRouterJson, plain, ROLLAMA_GRAMMAR, unsureReply } from './rollama';
+import { answerFromTool, buildRouterPrompt, isSocial, noneReply, normalizePassengerQuery, parseRouterJson, plain, ROLLAMA_GRAMMAR, unsureReply } from './rollama';
 
 /** Words that justify the tracking tool (the training pipeline's list, plus the English ones). */
 export const LIVE_ASKED = /(unde|pozitie|radar|aeronava|avion|in aer|altitudine|harta|zbor|live|urmareste|where|position|altitude|tracking|track|map|how high|how fast|viteza)/;
@@ -71,7 +71,7 @@ export class RollamaEngine implements LlmEngine {
     // A "none" from a 1B model is a guess, not a verdict: when the deterministic router found a plausible tool and nothing looks like a
     // steering attempt, run that tool instead of refusing.
     const steering = INJECTION.test(normalize(question));
-    const greeting = /^(?:salut|buna|hei|hey|hello|hi|noroc|servus|good)\b/.test(q.trim());
+    const greeting = isSocial(question);
     if (!name && modelSaidNone && allowed.length && !steering && !greeting) {
       name = allowed[0];
       why += `->${name}(router-overrides-none)`;

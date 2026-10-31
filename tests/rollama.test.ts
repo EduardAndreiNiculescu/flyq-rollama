@@ -80,6 +80,27 @@ describe('RollamaEngine in the tool loop', () => {
     expect(r.trace).toEqual([]);
     expect(r.text).toMatch(/Nu pot efectua/);
   });
+  it('an inflected rules question reaches the knowledge base ("lichide", "bagajul de mână")', async () => {
+    for (const q of ['Am voie cu lichide?', 'Ce dimensiuni are bagajul de mână?']) {
+      const r = await askRouted(fake('{"name":"none","arguments":{}}'), q);
+      expect(r.trace.map((t) => t.name)).toEqual(['search_knowledge']);
+      expect(r.text).not.toMatch(/Nu am această informație offline/);
+    }
+  });
+  it('everyday words of the trivia list ("scaun", "mașina") are not refused', async () => {
+    const r = await askRouted(fake('{"name":"none","arguments":{}}'), 'Am nevoie de asistență, sunt în scaun cu rotile');
+    expect(r.text).not.toMatch(/Nu pot efectua/);
+  });
+  it('a map question runs the map tool with the destination from the router, without relying on the model', async () => {
+    const raw = fake('{"name":"none","arguments":{}}');
+    const r = await runToolLoop(new RollamaEngine(raw), [{ role: 'system', content: '' }, { role: 'user', content: 'Unde e toaleta?' }], deps(), () => {}, { tools: createTools(), maxSteps: 3, fastPath: false, intentRouting: true, allowSideEffects: true });
+    expect(r.trace.map((t) => t.name)).toEqual(['open_airport_map']);
+    expect(raw.prompts).toHaveLength(0);
+  });
+  it('thanks and "who are you" get a friendly answer from the assistant', async () => {
+    expect((await askRouted(fake('{"name":"none","arguments":{}}'), 'Mulțumesc')).text).toMatch(/Cu plăcere/);
+    expect((await askRouted(fake('{"name":"none","arguments":{}}'), 'Cine ești tu?')).text).toMatch(/asistentul tău/);
+  });
   it('a flight number the model changed is overwritten by the one the passenger typed', async () => {
     const r = await ask(fake('{"name":"get_gate","arguments":{"flightNumber":"XX999"}}'), 'poarta pentru DEMO123?');
     expect(r.trace[0].args).toContain('DEMO123');

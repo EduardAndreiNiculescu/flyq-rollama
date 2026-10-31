@@ -64,10 +64,16 @@ export async function runToolLoop(
     const modelStart = nowMs();
     let firstToken: number | null = null;
     const modelSpecs = last ? undefined : opts.intentRouting && step === 1 ? routedSpecs : specs;
-    const res = await engine.generate(convo, (partial) => {
-      if (firstToken === null) firstToken = nowMs();
-      onToken(partial);
-    }, { maxTokens: opts.maxTokens, tools: modelSpecs });
+    // "Unde e toaleta?": the router already has the tool and the place (score 0.98), so the model is not asked to repeat them (a 1B model
+    // often drops the destination, and the map then refuses). The tool call still goes through the sanitizer and the normal loop.
+    const only = decision?.candidates.length === 1 ? decision.candidates[0] : null;
+    const direct = step === 1 && !last && opts.allowSideEffects && decision?.action === 'execute' && only?.tool === 'open_airport_map' && only.args.destination ? only : null;
+    const res = direct
+      ? { text: '', stats: { timeToFirstTokenMs: null, tokensPerSecond: null, totalMs: 0, tokens: 0 } as GenerateStats, toolCalls: [{ id: 'direct_1', name: 'open_airport_map', arguments: JSON.stringify({ destination: direct.args.destination }) }] }
+      : await engine.generate(convo, (partial) => {
+          if (firstToken === null) firstToken = nowMs();
+          onToken(partial);
+        }, { maxTokens: opts.maxTokens, tools: modelSpecs });
     const modelEnd = nowMs();
     timing.modelMs.push({ totalMs: modelEnd - modelStart, firstTokenMs: firstToken === null ? null : firstToken - modelStart, decodeMs: firstToken === null ? null : modelEnd - firstToken });
     const calls = (res.toolCalls ?? []).slice(0, maxCalls);

@@ -76,10 +76,20 @@ const RO_HINT = /\b(salut|buna|noroc|servus|trimite|vreau|cumpar|rezerv|pot|cum|
 const EN_HINT = /\b(what|which|where|how|when|my|the|is|are|do|does|can|seat|gate|flight|time)\b/;
 export const isRomanian = (q: string) => RO_HINT.test(plain(q)) || (detectLang(q) === 'ro' && !EN_HINT.test(plain(q)));
 
+const THANKS = /^(?:multumesc|mersi|merci|ms|thanks|thank you|thx|mul[tț]umesc)\b/;
+const IDENTITY = /^(?:cine esti|ce esti|cum te cheama|ce poti face|cu ce ma poti ajuta|ce stii|who are you|what can you do|what are you|help me)\b/;
+/** Greetings, thanks and "who are you / what can you do": answered by the assistant itself, never refused. */
+export const isSocial = (q: string) => {
+  const p = plain(q).trim().replace(/[?!.,]+$/g, '');
+  return GREETING.test(p) || THANKS.test(p) || IDENTITY.test(p);
+};
+
 /** `none`: a greeting gets a greeting, everything else the capability message (unsupported request, injection, gibberish). */
 export function noneReply(question: string): string {
   const ro = isRomanian(question);
-  if (GREETING.test(plain(question).trim())) {
+  const p = plain(question).trim().replace(/[?!.,]+$/g, '');
+  if (THANKS.test(p)) return ro ? 'Cu plăcere! Dacă mai ai întrebări despre zbor, poartă sau reguli, sunt aici.' : 'You are welcome! If you have more questions about your flight, gate or rules, I am here.';
+  if (GREETING.test(p) || IDENTITY.test(p)) {
     return ro ? 'Salut! Sunt asistentul tău de aeroport. Te pot ajuta cu zborul, poarta, timpul rămas, harta aeroportului sau regulile de călătorie.' : 'Hi! I am your airport assistant. I can help with your flight, gate, time remaining, the airport map or travel rules.';
   }
   return ro
