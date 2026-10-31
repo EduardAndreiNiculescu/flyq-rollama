@@ -14,6 +14,7 @@ import { flightData } from '../services';
 import { useLanguage } from '../i18n';
 import { addDemoFlight, addLiveFlight } from '../services/live/addLive';
 import { recordFor } from '../services/live/DeviceAssistantService';
+import { endFlightActivity, startFlightActivity } from '../services/live/liveActivity';
 import { deviceToken, registerForFlight, testFlyqKey } from '../services/live/push';
 import { pingGateway, sendBench } from '../services/live/gatewayClient';
 import { checkModel, specForTier } from '../llm/modelProvision';
@@ -71,6 +72,14 @@ export function LiveScreen() {
     setPushStatus(
       r.state === 'registered' ? `Abonat la ${r.flightId}.` : r.state === 'server_off' ? 'Serverul FlyQ are push-ul oprit (FEATURE_DISABLED). Token-ul e citit; notificările pleacă după ce serverul e configurat.' : r.state === 'no_key' ? 'Lipsește cheia FlyQ (secțiunea Sursa zborurilor).' : r.state === 'denied' ? 'Notificările nu sunt permise în Setări.' : `Eroare: ${r.reason}`,
     );
+  };
+
+  /** Needs the push subscription first (the activity token is sent to it): tap "Activează notificările", then this. */
+  const startActivity = async () => {
+    const flight = ticket ? flightData.getFlight(ticket.flightId) : null;
+    if (!flight) return setPushStatus('Nu e niciun bilet activ: adaugă un bilet ca să pornesc cardul.');
+    setPushStatus('Pornesc cardul…');
+    setPushStatus((await startFlightActivity(recordFor(flight))).message);
   };
 
   useEffect(() => {
@@ -196,6 +205,8 @@ export function LiveScreen() {
         <AppText variant="label">Notificări iOS (APNs, prin serverul FlyQ)</AppText>
         <Button label="Testează cheia FlyQ" variant="glass" size="sm" onPress={async () => setPushStatus(await testFlyqKey())} />
         <Button label="Activează notificările" variant="glass" size="sm" onPress={enablePush} />
+        <Button label="Pornește cardul Live Activity" variant="glass" size="sm" onPress={startActivity} />
+        <Button label="Oprește cardul" variant="glass" size="sm" onPress={async () => setPushStatus((await endFlightActivity()).message)} />
         {pushStatus ? <AppText variant="caption" color={colors.text3}>{pushStatus}</AppText> : null}
         {pushToken ? (
           <>

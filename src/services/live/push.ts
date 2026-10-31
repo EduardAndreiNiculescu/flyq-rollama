@@ -95,6 +95,27 @@ export async function registerForFlight(record: FlightRecord, locale: 'ro' | 'en
   }
 }
 
+/**
+ * Tells the server the Live Activity's own push token (hex), or null when the activity ended: PATCH /v1/push/subscriptions/{id}.
+ * Needs the subscription made by registerForFlight (its ownerToken is in SecureStore). Returns a short status for the test screen.
+ */
+export async function patchLiveActivityToken(token: string | null): Promise<string> {
+  const { flyqKey } = useLive.getState();
+  const stored = await SecureStore.getItemAsync(OWNER_KEY).catch(() => null);
+  if (!flyqKey || !stored) return 'Nu există abonament push: apasă întâi „Activează notificările”.';
+  try {
+    const { id, owner } = JSON.parse(stored) as { id: string; owner: string };
+    const res = await fetch(`${FLYQ_BASE}/v1/push/subscriptions/${id}`, {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json', 'X-FlyQ-App-Key': flyqKey, 'X-Owner-Token': owner },
+      body: JSON.stringify({ liveActivityToken: token }),
+    });
+    return res.ok ? (token ? 'Serverul are token-ul activității.' : 'Token-ul activității a fost șters de pe server.') : `Serverul a răspuns ${res.status} ${await errorCode(res)}`.trim();
+  } catch {
+    return 'Serverul nu răspunde.';
+  }
+}
+
 /** Show notifications that arrive while the app is open (iOS hides them by default). Call once at start. */
 export function initNotifications() {
   Notifications.setNotificationHandler({
