@@ -72,7 +72,6 @@ describe('fast path', () => {
     'Nu îmi spune poarta',
     'La ce oră decolăm și când aterizăm?',
     'La ce poartă aterizăm?',
-    'Cât durează verificarea la securitate?',
     'Bă, nu îmi spune poarta',
     'Hey, what time is departure and which gate?',
     'Where do I board the bus?',

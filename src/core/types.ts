@@ -14,6 +14,8 @@ export type PassengerContext = {
   journeyStage?: JourneyStage;
   /** From the passenger's boarding pass, so "what is my seat?" is answered from data the app holds. */
   seat?: string;
+  /** Local time boarding starts ("08:10"), from the ticket flight, so "when is boarding?" is answered from data the app holds. */
+  boarding?: string;
   currentZone?: string;
   positionConfidence?: number;
   connectionAvailable: boolean;

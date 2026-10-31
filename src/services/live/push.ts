@@ -18,6 +18,8 @@ export type PushResult =
   | { state: 'error'; reason: string };
 
 const OWNER_KEY = 'flyq.push.owner';
+/** A flight the FlyQ server always has (its demo scenarios), documented in the backend's RUNBOOK and tests. */
+export const FLYQ_DEMO_FLIGHT_ID = 'DEMO-gate_change-D-W69901';
 
 /** Flight ids in the FlyQ panel look like CRA-D-W43763-20261030 (airport, D/A, number, date); built here from the record. */
 export function flyqFlightId(record: FlightRecord): string | null {
@@ -65,7 +67,9 @@ export async function testFlyqKey(): Promise<string> {
 export async function registerForFlight(record: FlightRecord, locale: 'ro' | 'en'): Promise<PushResult> {
   const { flyqKey } = useLive.getState();
   if (!flyqKey) return { state: 'no_key' };
-  const flightId = flyqFlightId(record);
+  // The ticket's own flight is fictional (demo data), so the server has no such flight: subscribe to one of the server's demo flights instead,
+  // which also lets the admin send it demo events (gate change, delay) for testing.
+  const flightId = record.dataSource === 'demo' ? FLYQ_DEMO_FLIGHT_ID : flyqFlightId(record);
   if (!flightId) return { state: 'error', reason: 'this flight is not at Craiova, the server has no id for it' };
   let token: string | null;
   try {

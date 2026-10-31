@@ -2,6 +2,7 @@
 // și folosește interfețele din ./types. Modul test (ecranul „Mod test”) alege la fiecare apel între mock,
 // laptop (gateway) și telefon, fără să repornești aplicația.
 import { openMapFor } from '../app/navRef';
+import { formatLocalTime } from '../lib/time';
 import { Mutex } from '../bench/lock';
 import { urgentSafetyAnswer } from '../core/emergency';
 import { useProgress } from '../store/assistantUi';
@@ -92,6 +93,10 @@ const deviceDeps = {
   now: () => clock.now(),
   phase: () => useFlightMode.getState().phase,
   openMap: ({ destination }: { destination: string }) => void openMapFor(destination),
+  localTime: (utcIso: string, code: string) => {
+    const a = flightData.getAirport(code);
+    return a ? formatLocalTime(utcIso, a.utcOffsetMin) : null;
+  },
 };
 const deviceAssistant = new DeviceAssistantService(deviceDeps);
 const deviceToolsAssistant = new DeviceToolsAssistantService(deviceDeps);

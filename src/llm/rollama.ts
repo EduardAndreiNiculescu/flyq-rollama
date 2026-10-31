@@ -1,5 +1,6 @@
 import { capabilityBoundaryReply } from '../core/capability';
 import { detectLang } from '../core/prompt';
+import { flightSummary } from './flightSummary';
 
 /**
  * RoLlama (Llama 3.2 1B, SFT + DPO) is an intent router, not a chat model: it gets one fixed prompt and returns one small JSON
@@ -134,6 +135,10 @@ export function answerFromTool(tool: string, content: string, question: string):
   if (tool === 'get_live_tracking') {
     const facts = String(r.facts ?? '');
     return /not available|unavailable/i.test(facts) ? (ro ? 'Poziția live nu este disponibilă offline.' : 'Live position is not available offline.') : ro ? 'Poziția avionului e disponibilă; o vezi pe harta de urmărire din aplicație.' : 'The aircraft position is available; see the tracking map in the app.';
+  }
+  if (tool === 'get_flight_details') {
+    const summary = flightSummary(r, ro);
+    if (summary) return summary;
   }
   return ro ? 'Nu am o formulare sigură pentru asta. Întreabă separat: ora de decolare, aterizare, poarta sau durata.' : 'I have no safe wording for that. Ask separately: departure, arrival, gate or duration.';
 }

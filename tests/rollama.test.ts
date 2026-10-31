@@ -157,3 +157,54 @@ describe('router candidates, tracking guard and the seat', () => {
     expect(raw.prompts).toHaveLength(0);
   });
 });
+
+import { boardingAnswer } from '../src/tools/seat';
+import { flightSummary } from '../src/llm/flightSummary';
+describe('boarding time, flight summary, and the router candidates reaching the engine', () => {
+  it('boarding is answered from the ticket flight, only when a time is asked', () => {
+    expect(boardingAnswer('La ce oră e îmbarcarea?', '08:10')).toBe('Îmbarcarea începe la 08:10 (ora locală).');
+    expect(boardingAnswer('What time is boarding?', '08:10')).toBe('Boarding starts at 08:10 (local time).');
+    expect(boardingAnswer('Cât durează îmbarcarea?', '08:10')).toBeNull();
+    expect(boardingAnswer('La ce oră e îmbarcarea?', undefined)).toBeNull();
+  });
+  it('through the loop: "when is boarding" needs no model call', async () => {
+    const raw = fake('{"name":"get_flight_details","arguments":{}}');
+    const r = await runToolLoop(new RollamaEngine(raw), [{ role: 'user', content: 'La ce oră e îmbarcarea?' }] as never, { ...deps(), context: { flightNumber: 'DEMO123', boarding: '08:10' } as never }, () => {}, { tools: createTools(), fastPath: true, maxSteps: 3, allowSideEffects: false });
+    expect(r.text).toBe('Îmbarcarea începe la 08:10 (ora locală).');
+    expect(raw.prompts).toHaveLength(0);
+  });
+  it('a flight question without a single sentence gets a summary, not "ask separately"', async () => {
+    const r = await ask(fake('{"name":"get_flight_details","arguments":{}}'), 'cum e zborul meu?');
+    expect(r.text).toMatch(/Zborul DEMO123: decolare 12:45, aterizare 14:10/);
+    expect(r.text).not.toMatch(/Întreabă separat/);
+  });
+  it('flightSummary copies the times and says when the gate is unconfirmed', () => {
+    const facts = 'flight: RO1 CRA->BGY' + String.fromCharCode(10) + 'scheduled departure: 2026-10-31T12:45:00+02:00' + String.fromCharCode(10) + 'scheduled arrival: 2026-10-31T14:10:00+01:00' + String.fromCharCode(10) + 'gate: UNKNOWN (unconfirmed)';
+    expect(flightSummary({ facts, dataSource: 'airlabs' }, true)).toBe('Zborul RO1: decolare 12:45, aterizare 14:10 (ore locale, după orar). Poarta nu este confirmată încă.');
+    expect(flightSummary({ facts: 'nothing' }, true)).toBeNull();
+  });
+  it('the engine uses the router candidates it is given (the bug: they were never passed on)', async () => {
+    const e = new RollamaEngine(fake('{"name":"get_flight_details","arguments":{}}'));
+    const r = await e.generate([{ role: 'user', content: 'La ce ora e imbarcarea?' }] as never, () => {}, { tools: [{ type: 'function', function: { name: 'search_knowledge' } }] });
+    expect(r.toolCalls?.[0].name).toBe('search_knowledge');
+  });
+});
+
+import { securityDurationAnswer } from '../src/tools/seat';
+describe('security duration', () => {
+  it('says honestly that there is no exact duration, and does not invent one', () => {
+    const a = securityDurationAnswer('Cât durează securitatea?')!;
+    expect(a).toMatch(/Nu am o durată exactă/);
+    expect(a).not.toMatch(/[0-9]/);
+    expect(securityDurationAnswer('Cat dureaza controlul de securitate')).not.toBeNull();
+    expect(securityDurationAnswer('am voie cu lichide la securitate')).toBeNull();
+  });
+});
+
+describe('security question never gets the flight duration', () => {
+  it('"Cât durează verificarea la securitate?" gets the security answer, not flight facts', async () => {
+    const r = await runToolLoop(new RollamaEngine(fake('{"name":"get_flight_details","arguments":{}}')), [{ role: 'user', content: 'Cât durează verificarea la securitate?' }] as never, deps(), () => {}, { tools: createTools(), fastPath: true, maxSteps: 3, allowSideEffects: false });
+    expect(r.text).toMatch(/controlul de securitate/);
+    expect(r.text).not.toMatch(/Durata programată|decolare/);
+  });
+});

@@ -24,6 +24,8 @@ export type DeviceDeps = {
   now: () => Date;
   phase: () => 'ground' | 'inAir' | 'landed';
   openMap: NavigationHandler['openAirportMap'];
+  /** Local clock time of an instant at an airport ("08:10"), from the airport UTC offset; null when the airport is unknown. */
+  localTime?: (utcIso: string, airportCode: string) => string | null;
 };
 
 /** Marker: a streamed chunk that starts with this replaces the whole text so far (the answer guard can swap a rejected answer). */
@@ -95,7 +97,7 @@ export function recordFor(flight: Flight): FlightRecord {
   };
 }
 
-function passengerContext(deps: DeviceDeps, flight: Flight, record: FlightRecord, seat?: string): PassengerContext {
+function passengerContext(deps: DeviceDeps, flight: Flight, record: FlightRecord, seat?: string, boarding?: string): PassengerContext {
   const phase = deps.phase();
   return {
     flightNumber: record.flightNumber,
@@ -103,6 +105,7 @@ function passengerContext(deps: DeviceDeps, flight: Flight, record: FlightRecord
     journeyStage: phase === 'inAir' ? 'in_flight' : phase === 'landed' ? 'arrival' : 'airside',
     connectionAvailable: false,
     seat,
+    boarding,
   };
 }
 
@@ -234,7 +237,7 @@ export class DeviceToolsAssistantService implements AssistantService {
       this.forFlight = context.flight.id;
     }
     const record = recordFor(context.flight);
-    const pctx = passengerContext(this.deps, context.flight, record, context.ticket?.pass?.seat);
+    const pctx = passengerContext(this.deps, context.flight, record, context.ticket?.pass?.seat, this.deps.localTime?.(context.flight.boardingUtc, context.flight.from) ?? undefined);
     const now = this.deps.now();
     const toolDeps: ToolDeps = {
       now: () => now,
@@ -260,7 +263,7 @@ export class DeviceToolsAssistantService implements AssistantService {
           modelMissing = true;
           throw new Error('device model missing');
         }
-        return rollama.generate(messages, onToken);
+        return rollama.generate(messages, onToken, opts); // the router candidates (opts.tools) reach the engine
       },
       stop: () => engine.stop(),
     };
