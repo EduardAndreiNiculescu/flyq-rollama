@@ -35,6 +35,7 @@ import { useActiveTicket, useTickets } from '../store/tickets';
 import { useLayout } from '../theme/responsive';
 import { colors, radii, spacing } from '../theme/tokens';
 import type { Airport, Flight } from '../types';
+import { useFlightStatusVersion } from '../store/flightStatus';
 
 const STEP_ICONS: Record<JourneyStep['id'], LucideIcon> = {
   arrive: Building2,
@@ -65,6 +66,7 @@ export function JourneyScreen({ onShowFlightDetails }: { onShowFlightDetails?: (
   const now = useNow();
   const { columns, sideNav } = useLayout();
 
+  useFlightStatusVersion(); // re-render when the server changes the gate or a delay
   const flight = ticket ? flightData.getFlight(ticket.flightId) : null;
   const from = flight ? flightData.getAirport(flight.from) : null;
   const to = flight ? flightData.getAirport(flight.to) : null;

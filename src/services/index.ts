@@ -8,6 +8,7 @@ import { urgentSafetyAnswer } from '../core/emergency';
 import { useProgress } from '../store/assistantUi';
 import { useAnswerStats } from '../store/stats';
 import { useFlightMode } from '../store/flightMode';
+import { useFlightStatus } from '../store/flightStatus';
 import { useLive } from '../store/live';
 import { useTickets } from '../store/tickets';
 import type { Airport, BoardingPass, Flight, FlightContext, FlightPosition, Landmark } from '../types';
@@ -50,7 +51,14 @@ export const clock: ClockService = {
 const mockData = new MockFlightDataService();
 export const flightData: FlightDataService = {
   findFlight: (pass: BoardingPass, now: Date): Flight | null => mockData.findFlight(pass, now),
-  getFlight: (id: string) => getLiveEntry(id)?.flight ?? mockData.getFlight(id),
+  // A live flight is refreshed in its registry entry by the sync; the demo flight is merged here with what the server last said (gate).
+  getFlight: (id: string) => {
+    const live = getLiveEntry(id)?.flight;
+    if (live) return live;
+    const base = mockData.getFlight(id);
+    const o = useFlightStatus.getState().overlays[id];
+    return base && o?.gate && o.gateStatus === 'confirmed' ? { ...base, gate: o.gate } : base;
+  },
   getAirport: (code: string): Airport | null => getLiveAirport(code) ?? mockData.getAirport(code),
   getLandmarks: (): Landmark[] => mockData.getLandmarks(),
 };

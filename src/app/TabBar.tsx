@@ -13,6 +13,7 @@ import { colors, spacing } from '../theme/tokens';
 import { formatLocalTime } from '../lib/time';
 import { TAB_BAR_HEIGHT, TAB_BAR_LIFT, TAB_BAR_MARGIN } from './tabBarInset';
 import { BrandLogo } from '../components/BrandLogo';
+import { useFlightStatusVersion } from '../store/flightStatus';
 
 const TABS: Record<string, { icon: LucideIcon; label: TranslationKey }> = {
   Flight: { icon: Plane, label: 'tabs.flight' },
@@ -32,6 +33,7 @@ export function TabBar({ state, navigation }: BottomTabBarProps) {
   };
 
   if (sideNav) {
+    useFlightStatusVersion(); // re-render when the server changes the gate or a delay
     const flight = ticket ? flightData.getFlight(ticket.flightId) : null;
     const origin = flight ? flightData.getAirport(flight.from) : null;
     return (

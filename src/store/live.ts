@@ -50,7 +50,7 @@ export const useLive = create<LiveState>()(
       trackerSource: 'mock',
       modelTier: 'rollama',
       linkEnabled: true,
-      backend: 'gateway',
+      backend: 'flyq', // the team's FlyQ server; 'gateway' is the laptop test gateway (Mod test)
       flyqKey: '',
       flyqSession: null,
       recent: [],
@@ -68,11 +68,13 @@ export const useLive = create<LiveState>()(
     {
       name: 'live',
       storage: zustandStorage,
-      // v1: installs that had stored the old default ('mock') move to the real assistant.
-      version: 1,
+      // v1: installs that had stored the old default ('mock') move to the real assistant. v2: the default flight source is the FlyQ server.
+      version: 2,
       migrate: (stored, version) => {
-        const s = stored as Partial<LiveState>;
-        return (version < 1 && s.assistantSource === 'mock' ? { ...s, assistantSource: 'deviceTools' } : s) as LiveState;
+        let s = stored as Partial<LiveState>;
+        if (version < 1 && s.assistantSource === 'mock') s = { ...s, assistantSource: 'deviceTools' };
+        if (version < 2 && s.backend === 'gateway') s = { ...s, backend: 'flyq' }; // v2: flights come from the FlyQ server by default
+        return s as LiveState;
       },
     },
   ),

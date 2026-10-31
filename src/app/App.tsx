@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useEffect } from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
 import { FlyQSplashIntro } from '../components/brand/FlyQSplashIntro';
+import { FlightChangeBanner } from '../components/FlightChangeBanner';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Screen } from '../components/Layout';
@@ -22,6 +23,7 @@ import { LiveScreen } from '../screens/LiveScreen';
 import { ScanScreen } from '../screens/ScanScreen';
 import { startDeviceLink } from '../services/live/deviceLink';
 import { startMemoryGuard } from '../services/live/memoryGuard';
+import { startFlightSync } from '../services/live/flightSync';
 import { initNotifications } from '../services/live/push';
 import { clock, flightData } from '../services';
 import { useSplash } from '../store/splash';
@@ -115,6 +117,7 @@ export default function App() {
     startDeviceLink(); // lets the laptop drive this app for tests (needs the gateway token in Test mode)
     initNotifications(); // show pushes that arrive while the app is open
     startMemoryGuard(); // frees the model when the app goes to the background or iOS warns about memory
+    return startFlightSync(); // the screens follow what the FlyQ server says (gate, delay)
   }, []);
   return (
     <GestureHandlerRootView style={styles.fill}>
@@ -124,6 +127,7 @@ export default function App() {
         <NavigationContainer ref={navRef} theme={navTheme} linking={linking}>
           <RootNavigator />
         </NavigationContainer>
+        <FlightChangeBanner />
         {showSplash ? <FlyQSplashIntro key={runId} onDone={hide} /> : null}
       </SafeAreaProvider>
     </GestureHandlerRootView>

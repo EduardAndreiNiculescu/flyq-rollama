@@ -16,6 +16,7 @@ import { flightData } from '../services';
 import { useTickets } from '../store/tickets';
 import { useLayout } from '../theme/responsive';
 import { colors, radii, spacing } from '../theme/tokens';
+import { useFlightStatusVersion } from '../store/flightStatus';
 
 // Biletul în stil Wallet: compania, ruta mare, rândul principal (poartă, îmbarcare, loc),
 // pasagerul, linia perforată cu decupaje și codul de bare (schița 02_BiletulTauSketch).
@@ -27,6 +28,7 @@ export function PassScreen() {
   const ticket = useTickets(s => s.tickets.find(x => x.id === params.ticketId));
   const { type, sizeClass } = useLayout();
 
+  useFlightStatusVersion(); // re-render when the server changes the gate or a delay
   const flight = ticket ? flightData.getFlight(ticket.flightId) : null;
   const from = flight ? flightData.getAirport(flight.from) : null;
   const to = flight ? flightData.getAirport(flight.to) : null;

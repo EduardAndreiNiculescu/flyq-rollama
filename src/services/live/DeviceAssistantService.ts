@@ -7,6 +7,7 @@ import { DEFAULT_CONFIG, LlamaEngine } from '../../llm/llamaEngine';
 import { checkModel, provisionModel, type ModelStatus } from '../../llm/modelProvision';
 import { buildRouterPrompt } from '../../llm/rollama';
 import { RollamaEngine } from '../../llm/rollamaEngine';
+import { useFlightStatus } from '../../store/flightStatus';
 import { useModelUi, useProgress } from '../../store/assistantUi';
 import { useLive, type ModelTier } from '../../store/live';
 import { useAnswerStats } from '../../store/stats';
@@ -84,7 +85,13 @@ export const adapterLoaded = () => engine.loraPath !== null;
 export function recordFor(flight: Flight): FlightRecord {
   const live = getLiveEntry(flight.id)?.record;
   if (live) return live;
+  const o = useFlightStatus.getState().overlays[flight.id];
   return {
+    estimatedDeparture: o?.estimatedDeparture ?? null,
+    estimatedArrival: o?.estimatedArrival ?? null,
+    departureDelayMin: o?.departureDelayMin ?? null,
+    arrivalDelayMin: o?.arrivalDelayMin ?? null,
+    providerStatus: o?.providerStatus ?? null,
     flightNumber: flightKey(flight),
     departureAirport: flight.from,
     arrivalAirport: flight.to,

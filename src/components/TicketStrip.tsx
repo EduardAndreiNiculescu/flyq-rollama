@@ -9,6 +9,7 @@ import { ProfileButton } from './Layout';
 import { PressableScale } from './press';
 import { StyleSheet, View } from 'react-native';
 import { spacing } from '../theme/tokens';
+import { useFlightStatusVersion } from '../store/flightStatus';
 
 // Biletul în formă mică, fixat sus pe Călătorie, Hartă și Asistent: pastila cu ruta, zborul,
 // poarta și ora de plecare. Atingerea deschide boarding pass-ul complet.
@@ -18,6 +19,7 @@ export function TicketStrip() {
   const ticket = useActiveTicket();
   const { sideNav } = useLayout();
 
+  useFlightStatusVersion(); // re-render when the server changes the gate or a delay
   const flight = ticket ? flightData.getFlight(ticket.flightId) : null;
   const from = flight ? flightData.getAirport(flight.from) : null;
   // Pe tableta în landscape biletul e deja în meniul lateral

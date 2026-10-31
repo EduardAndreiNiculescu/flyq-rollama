@@ -39,6 +39,7 @@ import { useActiveTicket } from '../store/tickets';
 import { useLayout } from '../theme/responsive';
 import { colors, progressGradient, spacing } from '../theme/tokens';
 import type { Airport, Flight, FlightPosition, Ticket as TicketT } from '../types';
+import { useFlightStatusVersion } from '../store/flightStatus';
 
 export function FlightScreen({ onBackToJourney }: { onBackToJourney?: () => void } = {}) {
   const t = useT();
@@ -49,6 +50,7 @@ export function FlightScreen({ onBackToJourney }: { onBackToJourney?: () => void
   const takeOff = useFlightMode(state => state.takeOff);
   const backToGround = useFlightMode(state => state.backToGround);
 
+  useFlightStatusVersion(); // re-render when the server changes the gate or a delay
   const flight = ticket ? flightData.getFlight(ticket.flightId) : null;
   const from = flight ? flightData.getAirport(flight.from) : null;
   const to = flight ? flightData.getAirport(flight.to) : null;

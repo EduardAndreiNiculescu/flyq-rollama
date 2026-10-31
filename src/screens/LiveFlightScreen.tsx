@@ -16,6 +16,7 @@ import { endFlightActivity, refreshFlightActivity } from '../services/live/liveA
 import type { ArrivalEstimate } from '../services/live/arrival';
 import { useActiveTicket } from '../store/tickets';
 import { colors, radii, spacing } from '../theme/tokens';
+import { useFlightStatusVersion } from '../store/flightStatus';
 
 const pad = (n: number) => String(n).padStart(2, '0');
 function countdown(sec: number): string {
@@ -32,6 +33,7 @@ export function LiveFlightScreen() {
   const ro = useLanguage() === 'ro';
   const navigation = useNavigation();
   const ticket = useActiveTicket();
+  useFlightStatusVersion(); // re-render when the server changes the gate or a delay
   const flight = ticket ? flightData.getFlight(ticket.flightId) : null;
   const from = flight ? flightData.getAirport(flight.from) : null;
   const to = flight ? flightData.getAirport(flight.to) : null;

@@ -35,6 +35,7 @@ import { useSettings } from '../store/settings';
 import { useActiveTicket } from '../store/tickets';
 import { useLayout } from '../theme/responsive';
 import { colors, radii, spacing } from '../theme/tokens';
+import { useFlightStatusVersion } from '../store/flightStatus';
 
 interface Message {
   id: number;
@@ -73,6 +74,7 @@ export function AssistantScreen() {
   const assistantSource = useLive(s => s.assistantSource);
   const lastStats = useAnswerStats(s => s.last);
 
+  useFlightStatusVersion(); // re-render when the server changes the gate or a delay
   const flight = ticket ? flightData.getFlight(ticket.flightId) : null;
   const from = flight ? flightData.getAirport(flight.from) : null;
   const to = flight ? flightData.getAirport(flight.to) : null;
