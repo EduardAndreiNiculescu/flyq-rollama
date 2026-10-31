@@ -36,6 +36,8 @@ import { useLayout } from '../theme/responsive';
 import { colors, radii, spacing } from '../theme/tokens';
 import type { Airport, Flight } from '../types';
 import { useFlightStatusVersion } from '../store/flightStatus';
+import { gateNodeId } from '../lib/gateNode';
+import { FlightStatusChip } from '../components/FlightStatusChip';
 
 const STEP_ICONS: Record<JourneyStep['id'], LucideIcon> = {
   arrive: Building2,
@@ -80,6 +82,7 @@ export function JourneyScreen({ onShowFlightDetails }: { onShowFlightDetails?: (
     );
   }
 
+  const statusChip = <FlightStatusChip flight={flight} offsetMin={from.utcOffsetMin} />;
   const steps = buildSteps(ticket, flight, from, to);
   const states = stepStates(steps, completed);
   const current = steps.find((_, i) => states[i] === 'current');
@@ -132,7 +135,7 @@ export function JourneyScreen({ onShowFlightDetails }: { onShowFlightDetails?: (
           <Glass style={styles.allDone}>
             <AppText variant="headline" align="center">{t('journey.allDone')}</AppText>
             <View style={styles.completeActions}>
-              <Button label={t('journey.openMap')} icon={MapIcon} variant="glass" size="sm" onPress={() => showOnMap(`f1_gate${flight.gate}`)} />
+              <Button label={t('journey.openMap')} icon={MapIcon} variant="glass" size="sm" onPress={() => showOnMap(gateNodeId(flight.gate))} />
               <Button label={t('journey.flightDetails')} icon={Plane} size="sm" onPress={onShowFlightDetails} />
             </View>
             <Button label={t('journey.restart')} icon={RotateCcw} variant="glass" size="sm" onPress={() => resetSteps(ticket.id)} />
@@ -147,12 +150,13 @@ export function JourneyScreen({ onShowFlightDetails }: { onShowFlightDetails?: (
     return (
       <Screen contentStyle={styles.tabletContent} top={<TicketStrip />}>
         {header}
+        {statusChip}
         <View style={styles.columns}>
           <ScrollView style={styles.leftColumn} contentContainerStyle={styles.leftContent} showsVerticalScrollIndicator={false}>
             {timeline}
           </ScrollView>
           <View style={styles.mapColumn}>
-            <MapPanel targetNodeId={current?.targetNodeId ?? `f1_gate${flight.gate}`} showDebug={false} />
+            <MapPanel targetNodeId={current?.targetNodeId ?? gateNodeId(flight.gate)} showDebug={false} />
           </View>
         </View>
       </Screen>
@@ -162,6 +166,7 @@ export function JourneyScreen({ onShowFlightDetails }: { onShowFlightDetails?: (
   return (
     <ScrollScreen top={<TicketStrip />}>
       {header}
+      {statusChip}
       {timeline}
     </ScrollScreen>
   );

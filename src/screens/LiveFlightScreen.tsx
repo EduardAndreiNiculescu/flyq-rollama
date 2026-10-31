@@ -78,6 +78,7 @@ export function LiveFlightScreen() {
   const boardingMs = Date.parse(flight.boardingUtc);
   const departureMs = Date.parse(flight.departureUtc);
   const inAir = !!arrival;
+  const serverStatus = flight.status;
   let label: string;
   let seconds: number;
   let tone: BadgeTone;
@@ -87,6 +88,11 @@ export function LiveFlightScreen() {
     seconds = arrival.arrivalEpoch - now / 1000;
     tone = 'success';
     status = ro ? 'În zbor' : 'In the air';
+  } else if (serverStatus === 'cancelled' || serverStatus === 'diverted' || serverStatus === 'landed') {
+    label = ro ? 'Starea zborului' : 'Flight status';
+    seconds = 0;
+    tone = serverStatus === 'landed' ? 'success' : 'danger';
+    status = serverStatus === 'cancelled' ? (ro ? 'Anulat' : 'Cancelled') : serverStatus === 'diverted' ? (ro ? 'Deviat' : 'Diverted') : ro ? 'A aterizat' : 'Landed';
   } else if (now < boardingMs) {
     label = ro ? 'Îmbarcare în' : 'Boarding in';
     seconds = (boardingMs - now) / 1000;
@@ -155,6 +161,7 @@ export function LiveFlightScreen() {
             <Metric label={ro ? 'Poartă' : 'Gate'} value={flight.gate} hero />
             <Metric label={ro ? 'Îmbarcare' : 'Boarding'} value={formatLocalTime(flight.boardingUtc, from.utcOffsetMin)} />
             <Metric label={ro ? 'Decolare' : 'Departure'} value={formatLocalTime(flight.departureUtc, from.utcOffsetMin)} />
+            {flight.baggageBelt ? <Metric label={ro ? 'Banda' : 'Belt'} value={flight.baggageBelt} /> : null}
             <Metric label={inAir ? (ro ? 'Aterizare (est.)' : 'Landing (est.)') : ro ? 'Aterizare' : 'Landing'} value={arrivalTime} />
           </View>
         </Glass>

@@ -6,7 +6,17 @@ export function gateFromNotificationText(text: string): string | null {
   return tokens && tokens.length ? tokens[tokens.length - 1].toUpperCase() : null;
 }
 
-export type NotificationChange = { gate?: string; oldGate?: string; delayMinutes?: number; source: 'data' | 'text' | 'none' };
+export type NotificationChange = { gate?: string; oldGate?: string; delayMinutes?: number; status?: string; belt?: string; source: 'data' | 'text' | 'none' };
+
+/** The server's event names -> the status the screens show. gate_assigned / gate_changed / delay_changed are not statuses. */
+export const EVENT_STATUS: Record<string, string> = {
+  checkin_open: 'checkin',
+  boarding_started: 'boarding',
+  gate_closing_soon: 'gate_closing',
+  cancelled: 'cancelled',
+  diverted: 'diverted',
+  landed: 'landed',
+};
 
 /**
  * What a flight notification says changed. The FlyQ server puts flightId, event, gate, newGate, oldGate and delayMinutes in the push body (content.data) and
@@ -17,7 +27,10 @@ export function readNotificationChange(data: Record<string, unknown> | null | un
   const str = (v: unknown) => (typeof v === 'string' && v.trim() ? v.trim().toUpperCase() : typeof v === 'number' ? String(v) : undefined);
   const gate = str(flat.newGate) ?? str(flat.gate);
   const delay = typeof flat.delayMinutes === 'number' ? flat.delayMinutes : typeof flat.delayMinutes === 'string' && /^\d+$/.test(flat.delayMinutes) ? Number(flat.delayMinutes) : undefined;
-  if (gate || delay !== undefined) return { gate, oldGate: str(flat.oldGate), delayMinutes: delay, source: 'data' };
+  const event = typeof flat.event === 'string' ? flat.event : undefined;
+  const status = event ? EVENT_STATUS[event] : undefined;
+  const belt = str(flat.baggageBelt) ?? str(flat.belt);
+  if (gate || delay !== undefined || status || belt) return { gate, oldGate: str(flat.oldGate), delayMinutes: delay, status, belt, source: 'data' };
   const fromText = /poart|gate/i.test(text) ? gateFromNotificationText(text) : null;
   return fromText ? { gate: fromText, source: 'text' } : { source: 'none' };
 }

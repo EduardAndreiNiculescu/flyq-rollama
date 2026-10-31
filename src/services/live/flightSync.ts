@@ -40,6 +40,8 @@ const overlayFrom = (r: FlightRecord): FlightOverlay => ({
   departureDelayMin: r.departureDelayMin ?? null,
   arrivalDelayMin: r.arrivalDelayMin ?? null,
   providerStatus: r.providerStatus ?? null,
+  status: r.providerStatus === 'landed' ? 'landed' : r.providerStatus === 'en-route' ? 'in_air' : null,
+  belt: null,
   receivedAt: Date.now(),
 });
 
@@ -51,7 +53,10 @@ export function applyRecord(flightId: string, record: FlightRecord): void {
     const built = buildLiveEntry(record); // a real flight: refresh the registry entry the screens read
     if (built.ok) registerLive(built.entry);
   }
-  store.apply(flightId, overlayFrom(record), previousGate === '—' ? null : previousGate);
+  const prev = store.overlays[flightId];
+  const fresh = overlayFrom(record);
+  // A push can know more than the record for a moment (an event status, the belt): keep it until the record says something else.
+  store.apply(flightId, { ...fresh, status: fresh.status ?? prev?.status ?? null, belt: prev?.belt ?? null }, previousGate === '—' ? null : previousGate);
 }
 
 let running = false;
@@ -99,7 +104,7 @@ function onNotification(n: Notifications.Notification) {
   const content = n.request.content;
   const change = readNotificationChange(content.data as Record<string, unknown> | undefined, `${content.title ?? ''} ${content.body ?? ''}`);
   const target = syncTarget();
-  if (target && change.source !== 'none' && (change.gate || change.delayMinutes !== undefined)) {
+  if (target && change.source !== 'none' && (change.gate || change.delayMinutes !== undefined || change.status || change.belt)) {
     // The push already says what changed: show it at once, then read the server to confirm.
     const store = useFlightStatus.getState();
     const old = store.overlays[target.flightId];
@@ -115,6 +120,8 @@ function onNotification(n: Notifications.Notification) {
         departureDelayMin: delay,
         arrivalDelayMin: old?.arrivalDelayMin ?? null,
         providerStatus: old?.providerStatus ?? null,
+        status: change.status ?? old?.status ?? null,
+        belt: change.belt ?? old?.belt ?? null,
         receivedAt: Date.now(),
       },
       change.oldGate ?? old?.gate ?? base?.gate ?? null,

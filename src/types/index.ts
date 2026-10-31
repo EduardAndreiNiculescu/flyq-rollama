@@ -56,6 +56,14 @@ export interface Flight {
   aircraft: string;
   cruiseAltitudeM: number;
   cruiseSpeedKmh: number;
+  /** Filled from what the FlyQ server says (see lib/serverState.ts): the times above are then the ESTIMATED ones */
+  scheduledDepartureUtc?: string;
+  scheduledArrivalUtc?: string;
+  /** Minutes of delay at departure (0 or absent: on time) */
+  delayMin?: number;
+  /** boarding | gate_closing | checkin | cancelled | diverted | landed | in_air ... from the server's events and provider status */
+  status?: string;
+  baggageBelt?: string;
 }
 
 export interface Ticket {

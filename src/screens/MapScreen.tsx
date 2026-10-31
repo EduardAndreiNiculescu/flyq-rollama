@@ -12,6 +12,7 @@ import { useActiveTicket } from '../store/tickets';
 import { spacing } from '../theme/tokens';
 import { useLayout } from '../theme/responsive';
 import { useFlightStatusVersion } from '../store/flightStatus';
+import { gateNodeId } from '../lib/gateNode';
 
 export function MapScreen() {
   const t = useT();
@@ -27,7 +28,7 @@ export function MapScreen() {
 
   useFlightStatusVersion(); // re-render when the server changes the gate or a delay
   const flight = ticket ? flightData.getFlight(ticket.flightId) : null;
-  const target = params?.targetNodeId ?? (flight ? `f1_gate${flight.gate}` : 'f1_gate3');
+  const target = params?.targetNodeId ?? (flight ? gateNodeId(flight.gate) : 'f1_gate3');
   const targetNode = terminalService.getTerminal().nodes.find(n => n.id === target);
 
   if (!ticket) {

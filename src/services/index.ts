@@ -2,6 +2,7 @@
 // și folosește interfețele din ./types. Modul test (ecranul „Mod test”) alege la fiecare apel între mock,
 // laptop (gateway) și telefon, fără să repornești aplicația.
 import { openMapFor } from '../app/navRef';
+import { applyServerState } from '../lib/serverState';
 import { formatLocalTime } from '../lib/time';
 import { Mutex } from '../bench/lock';
 import { urgentSafetyAnswer } from '../core/emergency';
@@ -49,15 +50,22 @@ export const clock: ClockService = {
 };
 
 const mockData = new MockFlightDataService();
+const mergedCache = new Map<string, { base: Flight; o: unknown; e: unknown; result: Flight }>();
 export const flightData: FlightDataService = {
   findFlight: (pass: BoardingPass, now: Date): Flight | null => mockData.findFlight(pass, now),
-  // A live flight is refreshed in its registry entry by the sync; the demo flight is merged here with what the server last said (gate).
+  // The flight with what the FlyQ server last said merged in (gate, delay, estimated times, status, ETA). Cached by the identity of its inputs, so the same
+  // object comes back until something changes: screens that keep it in a useMemo/useEffect dependency do not loop.
   getFlight: (id: string) => {
-    const live = getLiveEntry(id)?.flight;
-    if (live) return live;
-    const base = mockData.getFlight(id);
-    const o = useFlightStatus.getState().overlays[id];
-    return base && o?.gate && o.gateStatus === 'confirmed' ? { ...base, gate: o.gate } : base;
+    const base = getLiveEntry(id)?.flight ?? mockData.getFlight(id);
+    if (!base) return base;
+    const st = useFlightStatus.getState();
+    const o = st.overlays[id];
+    const e = st.etas[id];
+    const hit = mergedCache.get(id);
+    if (hit && hit.base === base && hit.o === o && hit.e === e) return hit.result;
+    const result = applyServerState(base, o ? { gate: o.gate, gateStatus: o.gateStatus, estimatedDeparture: o.estimatedDeparture, estimatedArrival: o.estimatedArrival, departureDelayMin: o.departureDelayMin, arrivalDelayMin: o.arrivalDelayMin, status: o.status, belt: o.belt } : undefined, e ? { arrivalEpoch: e.arrivalEpoch, source: e.source } : undefined);
+    mergedCache.set(id, { base, o, e, result });
+    return result;
   },
   getAirport: (code: string): Airport | null => getLiveAirport(code) ?? mockData.getAirport(code),
   getLandmarks: (): Landmark[] => mockData.getLandmarks(),

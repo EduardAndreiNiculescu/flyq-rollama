@@ -41,9 +41,10 @@ import { useActiveTicket } from '../store/tickets';
 import { useLayout } from '../theme/responsive';
 import { colors, progressGradient, spacing } from '../theme/tokens';
 import type { Airport, Flight, FlightPosition, Ticket as TicketT } from '../types';
-import { useFlightStatus, useFlightStatusVersion } from '../store/flightStatus';
+import { useFlightStatusVersion } from '../store/flightStatus';
 import { recordFor } from '../services/live/DeviceAssistantService';
 import { shareWithFamily } from '../services/live/shareFlow';
+import { FlightStatusChip } from '../components/FlightStatusChip';
 
 export function FlightScreen({ onBackToJourney }: { onBackToJourney?: () => void } = {}) {
   const t = useT();
@@ -56,10 +57,7 @@ export function FlightScreen({ onBackToJourney }: { onBackToJourney?: () => void
   const backToGround = useFlightMode(state => state.backToGround);
 
   useFlightStatusVersion(); // re-render when the server changes the gate or a delay
-  const eta = useFlightStatus(st => (ticket ? st.etas[ticket.flightId] : undefined));
-  const baseFlight = ticket ? flightData.getFlight(ticket.flightId) : null;
-  // The arrival shown is the server's estimate when there is one; the schedule stays in the data, only the display changes.
-  const flight = baseFlight && eta ? { ...baseFlight, arrivalUtc: new Date(eta.arrivalEpoch * 1000).toISOString() } : baseFlight;
+  const flight = ticket ? flightData.getFlight(ticket.flightId) : null; // already merged with what the server says (delay, estimates, ETA)
   const from = flight ? flightData.getAirport(flight.from) : null;
   const to = flight ? flightData.getAirport(flight.to) : null;
 
@@ -88,6 +86,7 @@ export function FlightScreen({ onBackToJourney }: { onBackToJourney?: () => void
         subtitle={`${flight.carrier} ${flight.flightNumber} · ${from.code} → ${to.code}`}
         right={<View style={styles.headerActions}>{onBackToJourney ? <RoundButton icon={Route} label={t('flight.backToJourney')} onPress={onBackToJourney} /> : null}<ProfileButton /></View>}
       />
+      <FlightStatusChip flight={flight} offsetMin={from.utcOffsetMin} />
       {!inAir && <FlightTimes flight={flight} from={from} to={to} ticket={ticket} />}
       <View style={styles.liveActions}>
         <Button label={language === 'ro' ? 'Zbor live' : 'Live flight'} icon={Radio} size="sm" variant="tinted" onPress={() => navigation.navigate('LiveFlight')} style={styles.flex} />

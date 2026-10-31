@@ -1,6 +1,5 @@
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
-import { useFlightStatus } from '../../store/flightStatus';
 import { useSettings } from '../../store/settings';
 import { useTickets } from '../../store/tickets';
 import { clock, flightData } from '../index';
@@ -38,7 +37,6 @@ export async function syncReminders(): Promise<number> {
       lastKey = '';
       return 0;
     }
-    const delay = useFlightStatus.getState().overlays[ticket.flightId]?.departureDelayMin ?? 0;
     const plan = planReminders({
       flightNumber: `${flight.carrier} ${flight.flightNumber}`,
       from: flight.from,
@@ -47,7 +45,7 @@ export async function syncReminders(): Promise<number> {
       gateCloseUtc: flight.gateCloseUtc,
       departureUtc: flight.departureUtc,
       gate: flight.gate,
-      delayMin: delay,
+      delayMin: 0, // the flight the screens hold is already shifted by the server's delay
       language,
       nowMs: clock.now().getTime(),
     });

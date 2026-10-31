@@ -14,10 +14,13 @@ export type FlightOverlay = {
   departureDelayMin: number | null;
   arrivalDelayMin: number | null;
   providerStatus: FlightRecord['providerStatus'] | null;
+  /** From the server's events (boarding, gate closing, cancelled, diverted, landed) or the provider status */
+  status: string | null;
+  belt: string | null;
   receivedAt: number;
 };
 
-export type FlightChange = { id: number; flightId: string; kind: 'gate' | 'delay'; from: string | null; to: string | null; at: number };
+export type FlightChange = { id: number; flightId: string; kind: 'gate' | 'delay' | 'status'; from: string | null; to: string | null; at: number };
 
 type State = {
   overlays: Record<string, FlightOverlay>;
@@ -50,6 +53,8 @@ export const useFlightStatus = create<State>(set => ({
       let lastChange = s.lastChange;
       if (overlay.gate && overlay.gateStatus === 'confirmed' && previousGate !== overlay.gate) {
         lastChange = { id: ++changeId, flightId, kind: 'gate', from: previousGate, to: overlay.gate, at: overlay.receivedAt };
+      } else if (overlay.status && overlay.status !== old?.status && ['cancelled', 'diverted', 'landed', 'boarding', 'gate_closing'].includes(overlay.status)) {
+        lastChange = { id: ++changeId, flightId, kind: 'status', from: old?.status ?? null, to: overlay.status, at: overlay.receivedAt };
       } else if ((overlay.departureDelayMin ?? 0) !== (old?.departureDelayMin ?? 0) && overlay.departureDelayMin !== null) {
         lastChange = { id: ++changeId, flightId, kind: 'delay', from: String(old?.departureDelayMin ?? 0), to: String(overlay.departureDelayMin), at: overlay.receivedAt };
       }

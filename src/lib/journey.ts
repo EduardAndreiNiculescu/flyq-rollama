@@ -1,4 +1,5 @@
 import type { Airport, Flight, Ticket } from '../types';
+import { gateNodeId } from './gateNode';
 
 export type StepId = 'arrive' | 'checkin' | 'security' | 'passport' | 'gate' | 'boarding';
 export type PrepKey = 'liquids' | 'laptop' | 'document' | 'pass' | 'bag' | 'toilet';
@@ -17,7 +18,7 @@ export interface JourneyStep {
 export function buildSteps(ticket: Ticket, flight: Flight, from: Airport, to: Airport): JourneyStep[] {
   const skipCheckin = ticket.checkedInOnline && !ticket.hasCheckedBag;
   const needsPassport = from.schengen && !to.schengen;
-  const gateNode = `f1_gate${flight.gate}`;
+  const gateNode = gateNodeId(flight.gate);
   const steps: JourneyStep[] = [
     { id: 'arrive', etaMin: 2, targetNodeId: 'f0_entrance', prep: ['pass'], skipped: false },
     { id: 'checkin', etaMin: 15, targetNodeId: 'f0_bagdrop', prep: ['bag', 'document'], skipped: skipCheckin },
