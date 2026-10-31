@@ -106,3 +106,15 @@ describe('constrained decoding grammar and the tracking guard', () => {
     expect(en.trace.map((t) => t.name)).toEqual(['get_live_tracking']);
   });
 });
+
+import { capabilityBoundary } from '../src/core/capability';
+describe('capability boundary: money exchange is a place, not an action', () => {
+  it('"where can I exchange money" is not an unsupported request', () => {
+    expect(capabilityBoundary('unde pot schimba bani casa de schimb valutar')).toBeNull();
+    expect(capabilityBoundary('where is the currency exchange')).toBeNull();
+  });
+  it('real change/book requests stay blocked', () => {
+    expect(capabilityBoundary('schimba-mi locul la fereastra')).toBe('unsupported-capability');
+    expect(capabilityBoundary('rezerva-mi un taxi')).toBe('unsupported-capability');
+  });
+});

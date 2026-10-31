@@ -1,0 +1,7002 @@
+[
+  {
+    "id": 1,
+    "query": "ma cand pleaca avionul FF123 ms",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 2,
+    "query": "nene cum ajung la poarta B4 pe harta ca ma grabesc",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 3,
+    "query": "auzzi zbborul a fost anulat cati bani primesc despagubire ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "compensation"
+  },
+  {
+    "id": 4,
+    "query": "cumetre plateste-mi taxa de bagaj suplimentar ba",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 5,
+    "query": "ia zi boss zborul a fost anulat cati bani primesc despagubire pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "compensation"
+  },
+  {
+    "id": 6,
+    "query": "ora estimata de sosire pls",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 7,
+    "query": "patroane unde e gate-ul pentru cursa FF123 coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 8,
+    "query": "hei orariul zboruului FR1024 vericule",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 9,
+    "query": "mai am vreme de o tigara te rog",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 10,
+    "query": "ce acte trebuie pentru catel in avioon ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "pets"
+  },
+  {
+    "id": 11,
+    "query": "hei urmareste zborul LH1418 in timp real sa moara franta",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 12,
+    "query": "frattioare caare e sensul vietii in univvers mersi",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 13,
+    "query": "cat mai e pana pleaca avionul",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 14,
+    "query": "ma harta radar cu avionul coaie",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "W63712",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 15,
+    "query": "fratioare unde e zona de restaurante mersi",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 16,
+    "query": "nene cum se face mamaliga fara coccoloase pls",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 17,
+    "query": "fratioare s-a anullat cursa FR1024 ca ma grabesc",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 18,
+    "query": "live tracking pentru W63712",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "W63712",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 19,
+    "query": "auzi cat a mai ramas pan la zbor ms",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 20,
+    "query": "ma bricheta este permiisa in buzunar la zbor vericule",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "safety"
+  },
+  {
+    "id": 21,
+    "query": "pot sa iau un rucsac si un troller mic te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 22,
+    "query": "auzzi unde e gate--ul pentru cursa W63712 urgent",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 23,
+    "query": "salut cat traiieste o musca de otet frate",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 24,
+    "query": "ba baiatuule am voie cu foarfeca de unghii in cabina sa moara franta",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "sharp"
+  },
+  {
+    "id": 25,
+    "query": "cumetre pasaportul expira in 2 luni pot calatori in UE coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "passport"
+  },
+  {
+    "id": 26,
+    "query": "vere unde e baia dupa controlul de securitate boss",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 27,
+    "query": "auzi ba fa-mi check-in-ul online la wizzair pls",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 28,
+    "query": "patroane cand ajunge zborul LH1418 sa moara franta",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 29,
+    "query": "buna cat timp mai am pana la decolare urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 30,
+    "query": "ma ora estimata de sosire",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 31,
+    "query": "bossulica cat dureaza zborul pana la destinatie ba",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 32,
+    "query": "salut fa-mi upgrade la clasa business gratis frate",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 33,
+    "query": "pe unde se face imbarcarea",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 34,
+    "query": "fratioare cat a mai ramas pana la zbor ba",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 35,
+    "query": "ba am voie cu laptopul in bagajul de mana",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "battery"
+  },
+  {
+    "id": 36,
+    "query": "vere arata-mi pozitia avionului pe harta coaie",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 37,
+    "query": "ba baiatule schimba-mi biletul pentru ziua de maine urgent",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 38,
+    "query": "veere la ce poarta trebuie sa ajung coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 39,
+    "query": "fratioare compania aeriana refuza sa-mi platteasca mancarea la intarziere te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "compensation"
+  },
+  {
+    "id": 40,
+    "query": "ma cate kg am voie la bagajul de cabina sa moara franta",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 41,
+    "query": "ia zi boss am voie cu foarfeca de unghii in cabina coie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "sharp"
+  },
+  {
+    "id": 42,
+    "query": "cumetre arata-mi farmacia din aeroport coaie",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 43,
+    "query": "salut catte kg am voie la bagajul de cabina mersi",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 44,
+    "query": "fratioare termen limita pentru reclamatie bagaj deteriorat",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 45,
+    "query": "ba scrie-mi o poezie de dragoste pentru sttewardesa boss",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 46,
+    "query": "cumetre cat timp mai este pana la poarta vere",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 47,
+    "query": "auzi care e seensul vietii in univers ms",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 48,
+    "query": "ba la ce altitudine e avionul sa moara franta",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 49,
+    "query": "auzi arata-mi pozitia avionului pe harta vere",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 50,
+    "query": "patroane bagaj intarziat de 3 zile ce despagubiri primesc vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 51,
+    "query": "hei unde pot bea o cafea in aeroport pls",
+    "expected_tool": "open_airport_map",
+    "flight_number": "RO341",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 52,
+    "query": "ba pe unde se face imbarcarea coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 53,
+    "query": "fratioare cat e intarzierea la zborul FR1024",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 54,
+    "query": "buna e la timp zborul meu vericule",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 55,
+    "query": "fratioare se apropie avionul de destinatie pls",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 56,
+    "query": "ba bricheta este permisa in buzunar la zbor pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "safety"
+  },
+  {
+    "id": 57,
+    "query": "nene arata-mi pozitia avionului pe hartta te rog",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 58,
+    "query": "vere s-a anuntat poarta pentru RO341 mersi",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 59,
+    "query": "fratioare unde e zona de fumat in terminal te rog",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 60,
+    "query": "buna live tracking pentru FR1024 vericule",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 61,
+    "query": "ia zi boss la cat incepe boarding-ul ba",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FR1024",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 62,
+    "query": "ma fa-mi check-in-ul online la wizzair",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 63,
+    "query": "salut comandaa-mi un taxi sau un uber frate",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 64,
+    "query": "hei plateste-mi taxa de bagaj suplimentar urgent",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 65,
+    "query": "auzzi care e statusul cursei FF123 pls",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 66,
+    "query": "ba radar live pentrru cursa FR1024 pls",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 67,
+    "query": "ce zodie e capitanul aeronavei ba",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 68,
+    "query": "vere de ce este cerrul albastru ziua te rog",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 69,
+    "query": "cumetre pe unde zboara aeronava LH1418 pls",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 70,
+    "query": "fratioare pe unde ma duc la poarta vere",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 71,
+    "query": "ba de cate ori pe ora se lovesc avioanele in aer mersi",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 72,
+    "query": "bossulica cum ajung la poarta B4 pe harrta vere",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 73,
+    "query": "auzi cand ajungge zborul W633712",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 74,
+    "query": "unde gasesc o toaleta in termminal boss",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 75,
+    "query": "auzi unde gasesc poarta mea de imbarcare pls",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 76,
+    "query": "auzi cum ajung la magazinul duty free frate",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 77,
+    "query": "buna caand ajunge zborul FR1024 boss",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 78,
+    "query": "patroane zborul a fost anulaat cati baani primessc despagubire vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "compensation"
+  },
+  {
+    "id": 79,
+    "query": "auzi cat e intarzierea la zborul FF123 frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 80,
+    "query": "bossulica fa-mi upgrade la clasa business gratis boss",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 81,
+    "query": "auzi cumpar bilet ieftin pentru barcelona sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 82,
+    "query": "hei ce se intampla cu zborul coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 83,
+    "query": "hei unde se afla zborul FR1024 in aer coaie",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 84,
+    "query": "ma am voie cu laptopul in bagajul de mana pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "battery"
+  },
+  {
+    "id": 85,
+    "query": "fratioare cat traieste o musca de otet pls",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 86,
+    "query": "auzi cate degete are la picioare un scaun te rog",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 87,
+    "query": "patroane care e statusul cursei RO341",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 88,
+    "query": "auzi ce acte trebuie pentru catel in avion ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "pets"
+  },
+  {
+    "id": 89,
+    "query": "bossulica a plecat avionul spre craiova sa mora franta",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 90,
+    "query": "hei informatii zbor FF123",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 91,
+    "query": "ia zi boss cand trebuie sa fiu la poarta pls",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 92,
+    "query": "nene da cu banul cap sau pajura",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 93,
+    "query": "auzi a plecat avionul spre craiova ms",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 94,
+    "query": "nene arata-mi pozitia avionului pe harta ba",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 95,
+    "query": "pe unde zboara aeronava FR1024 vere",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 96,
+    "query": "auzi ba bricheta este permisa in buzunar la zbor urgent",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "safety"
+  },
+  {
+    "id": 97,
+    "query": "cumetre ce fac daca baagajul meu e pierddut urgent",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 98,
+    "query": "ia zi boss s-a anuntat poarta pentru FF123 coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 99,
+    "query": "ia zi boss unde se afla zborul RO341 in aer coaie",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 100,
+    "query": "auzi ba cand decolam spre destinatie sa moara franta",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 101,
+    "query": "cumetre pot sa iau un rucsac si un troller mic ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 102,
+    "query": "cumetre la cat incepe boarding--ul boss",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FR1024",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 103,
+    "query": "nene cand trebuie sa fiu la poarta vericule",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 104,
+    "query": "hei am vooie cu pisica in cabina de pasageri",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "pets"
+  },
+  {
+    "id": 105,
+    "query": "ba unde e gate-ul penntru cursa FR1024 ms",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 106,
+    "query": "patroane compania aeriiana refuzza sa-mi plateasca mancaarea la intarziere urgent",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "compensation"
+  },
+  {
+    "id": 107,
+    "query": "ma mai am vreme de o tigara urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 108,
+    "query": "vere mai am timp sa beau o cafea urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 109,
+    "query": "ma la ce poarta trebuiie sa ajung ca ma grrabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 110,
+    "query": "ma in cat timp incepe imbarcarea sa moara franta",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 111,
+    "query": "ba de ce nu au pasarile dinti pls",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 112,
+    "query": "patroane ce se intampla cu zborul RO341 pls",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 113,
+    "query": "ma s-a anulat cursa FR1024 coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 114,
+    "query": "bossulica ce poarta am la RO341 frate",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 115,
+    "query": "auzi ba ora estimata de sosire mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 116,
+    "query": "vere unde pot bea o cafea in aeroport ba",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 117,
+    "query": "ba baiatule am voie cu parrfum de 100ml in avion pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "liquids"
+  },
+  {
+    "id": 118,
+    "query": "cumetre harta radar cu avionul ms",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 119,
+    "query": "ba harta terminalului de plecari ms",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 120,
+    "query": "patroane la ce ora pleaca zborul RO341 ms",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 121,
+    "query": "buna cand ajunge zborul mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 122,
+    "query": "hei s-a anuntat poarta pentru FF123 te rog",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 123,
+    "query": "nene comanda-mi un taxi sau un uber vericule",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 124,
+    "query": "auzi unde este avionul meu acum frate",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 125,
+    "query": "ma fa-mi checkk-in-ul online la wizzzair mersi",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 126,
+    "query": "unde e baia dupa coontrolul de securitate frate",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 127,
+    "query": "auzzi ba live tracking pentru",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 128,
+    "query": "ia zi boss unde pot schimmba bani casa de schimb valuttar te rog",
+    "expected_tool": "open_airport_map",
+    "flight_number": "RO341",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 129,
+    "query": "salut cat lichid am voie in bagajul de mana vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "liquids"
+  },
+  {
+    "id": 130,
+    "query": "vere a plecat avionul spre craiova",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 131,
+    "query": "auzi zboruul a fost anulat cati baani primesc despagubire vericule",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "compensation"
+  },
+  {
+    "id": 132,
+    "query": "cumetre crema de fata si pasta de dinti trebuie puse in punga ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "liquids"
+  },
+  {
+    "id": 133,
+    "query": "patroane unde e poarta pentru zborul W63712 vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 134,
+    "query": "auzi ba unde pot bea o cafea in aeroport ca ma grabesc",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 135,
+    "query": "auzi unde este poartta de plecare ms",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 136,
+    "query": "nene unde pun bateria externa powerbank in cala sau cabina urgent",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "battery"
+  },
+  {
+    "id": 137,
+    "query": "auzi harta terminalului de plecari urgent",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 138,
+    "query": "auzi la cat incepe boarding-ul ba",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 139,
+    "query": "cumetre ce fac daca mi-am pierdut buletinnul in strainatate",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "passport"
+  },
+  {
+    "id": 140,
+    "query": "hei trolerul a sosit rupt si spart ce formular completez te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 141,
+    "query": "ia zi boss s-a anulat cursa LH1418 urgent",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 142,
+    "query": "nene undde e biroul de bagaje pierdute PIR ms",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 143,
+    "query": "auzi de ce nu au pasarile dinti ca ma grabesc",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 144,
+    "query": "unde e gate-ul pentru cursa FF123 sa moara franta",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 145,
+    "query": "cumetre pe unde zboara aeronava FF1223 coaie",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 146,
+    "query": "fratiore la ce altitudinne e avionul coaie",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 147,
+    "query": "vere cat mai e pana pleaca avionul ca ma grabesc",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 148,
+    "query": "hei orariul zborului boss",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 149,
+    "query": "vere cum ajung la poarta B4 pe harta ms",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 150,
+    "query": "bossulica e la timp zborul meu coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 151,
+    "query": "ma da-mi parola de la wifi-ul secret al pilotilor urgent",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 152,
+    "query": "hei la ce gate merg vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 153,
+    "query": "auzzi ba ce se intampla cu zborul FR1024 te rog",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 154,
+    "query": "salut comanda-mi un taxi sau un uber sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 155,
+    "query": "ia zi boss live tracking pentru vere",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 156,
+    "query": "salut la ce altitudine e avioonul mersi",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "W63712",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 157,
+    "query": "ma mi s-a pierdut geanta la cala unde depun reclamatie te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 158,
+    "query": "bossulica cand ajunge zborul RO341 frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 159,
+    "query": "patrroane unde e poarta pentru zborul FR1024 urgent",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 160,
+    "query": "ma mai e mult pana la zbor frate",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 161,
+    "query": "nene cat a mai ramas pana la zbor sa mooara franta",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 162,
+    "query": "ba anuleaza rezervarea si da-mi banii inapoi vericule",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 163,
+    "query": "auzi la ce poarta trebuie sa ajung te rog",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 164,
+    "query": "cumetre la ce altitudine e avionul ba",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 165,
+    "query": "ba in cat timp plecaam",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 166,
+    "query": "vere cand ajunge zborul RO341 coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 167,
+    "query": "auzi zborul a fost anulat cati bani primesc despagubire ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "compensation"
+  },
+  {
+    "id": 168,
+    "query": "vere unde pot bea o cafea in aeroport frate",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 169,
+    "query": "bossulica s-a anuntat poarta pentru RO341 ba",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 170,
+    "query": "auzi mi s-a pierdut geanta la cala unde depun reclamatie ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 171,
+    "query": "ba fa-mi check-in-ul online la wizzair vericule",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 172,
+    "query": "ia zi boss cate kg am voie la bagajul de cabina ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 173,
+    "query": "cumetre s-a anulat cursa ca ma grabesc",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 174,
+    "query": "ma am voiie cu parfuum de 100ml in avion coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "liquids"
+  },
+  {
+    "id": 175,
+    "query": "fratioare ce fac daca bagajul meu e pierdut ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 176,
+    "query": "ma pot lua o sticla de apa de 500ml dupa securitate mersi",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "liquids"
+  },
+  {
+    "id": 177,
+    "query": "mai am timp sa beau o cafea",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 178,
+    "query": "auzi pot lua o sticla de apa de 500ml dupa securittate pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "liquids"
+  },
+  {
+    "id": 179,
+    "query": "ma cumpar bilet ieftin pentru barcellona vere",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 180,
+    "query": "fratioare radar live pentru cursa FF123 te rog",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 181,
+    "query": "bossulica trolerul a sosit rupt si spart ce formular completez boss",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 182,
+    "query": "ba am voie cu laptopul in bagajul de mana vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "battery"
+  },
+  {
+    "id": 183,
+    "query": "nene cate kg am voiie la bagajul de cabina vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 184,
+    "query": "hei cat mai e pana pleaca avionul urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 185,
+    "query": "salut unde imbarcam pentru LH1418 ca ma grabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 186,
+    "query": "bossulica am voie cu foarfeca de unghii in cabina vericule",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "sharp"
+  },
+  {
+    "id": 187,
+    "query": "ba unde e baia dupa controlul de securitate frate",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 188,
+    "query": "fratioare la ce poarta trebuie sa ajung pls",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 189,
+    "query": "ba baiatule cat fac 247 inmultit cu 38 mersi",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 190,
+    "query": "ba pe unde se face imbarcarea te rog",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 191,
+    "query": "ba baiatule ce fac daca mi-am pierdut buletinul in strainatate",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "passport"
+  },
+  {
+    "id": 192,
+    "query": "patroane cat mai e pana pleaca avionul sa moara franta",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 193,
+    "query": "ba baiatule anuleaza rezervarea si da-mi banii inapoi urgent",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 194,
+    "query": "auzi ba la ce porta pleaca",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 195,
+    "query": "nene intarziere de peste 3 ore am dreptul la compensatie frate",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "compensation"
+  },
+  {
+    "id": 196,
+    "query": "patroane am voie cu pisica in cabina de pasageri",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "pets"
+  },
+  {
+    "id": 197,
+    "query": "arata-mi poarta vere",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 198,
+    "query": "auzi ba crema de fata si pasta de dinti trebuie puse in punga ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "liquids"
+  },
+  {
+    "id": 199,
+    "query": "nene cat dureaza zborul pana la destinatie coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 200,
+    "query": "vere la cat decoleaza zborul mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 201,
+    "query": "auzi cumpar bilet ieftin pentru barcelona boss",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 202,
+    "query": "bossulica care este capitala statului madagascar urggent",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 203,
+    "query": "ba baiatule pot sa iau un rucsac si un troller mic urgent",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 204,
+    "query": "nene am voie cu parfum de 100ml in avion te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "liquids"
+  },
+  {
+    "id": 205,
+    "query": "ba baiatule la ce altitudine e avionul mersi",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "W63712",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 206,
+    "query": "pasaportul expira in 2 luni pot calatori in UE pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "passport"
+  },
+  {
+    "id": 207,
+    "query": "bossuliica unde pot schimba bani caasa de schimb valutar te rog",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 208,
+    "query": "auuzi unde pot bea o cafea in aeroport",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 209,
+    "query": "ba cand pleaca avionul W663712",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 210,
+    "query": "ia zi boss care este capitala statului maadagascar frate",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 211,
+    "query": "cumetre unde pot schimba bani casa de schimb valutar ms",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 212,
+    "query": "ia zi boss la cat decoleaza zborul mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 213,
+    "query": "buna ce se intampla cu zborul RO341 ms",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 214,
+    "query": "hei comanda-mi un taxi sau un uber urgent",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 215,
+    "query": "auzi ba unde imbarcam pentru vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 216,
+    "query": "salut termen limita pentru reclamatie bagaj deteriorat vericule",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 217,
+    "query": "ba baiatule informatii zbor LH1418 coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 218,
+    "query": "cumetre cat a mai ramas pana la zbor te rog",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 219,
+    "query": "nene unde e poarta penntru zborul LH1418 sa moara franta",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 220,
+    "query": "ba cumpara-mi un bilet de avion spre Londra",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 221,
+    "query": "buna rezzerva-mi o camera la hotel aproappe de aeroport mersi",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 222,
+    "query": "fratioare pot sa iau un ruucsac si un troller mic ms",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 223,
+    "query": "ba baiatule care e poartta mea bosss",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 224,
+    "query": "ma de cate ori pe ora se lovesc avionele in aer mersi",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 225,
+    "query": "auzi ce se intampla cu zborul LH1418 mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 226,
+    "query": "vere cand trebuie sa fiu la poarta urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 227,
+    "query": "ma ce se intampla cu zborul RO341 frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 228,
+    "query": "ia zi boss care este capitala statului madagascar ca ma grabesc",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 229,
+    "query": "patroane am voie cu parfum de 100ml in avion ms",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "liquids"
+  },
+  {
+    "id": 230,
+    "query": "fratioare cat mai am de asteptat coaie",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 231,
+    "query": "bossulica termen limita pt reclamatie bagaj deteriorat coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 232,
+    "query": "auzi ba unde pot schimba bani casa de schimb valutar ca ma grabesc",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 233,
+    "query": "bossulicca la cat decoleaza zborul FR1024 vere",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 234,
+    "query": "cumetre a decolat aeronava pentru zborul LH1418 vere",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 235,
+    "query": "ba la ce gate merg vere",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 236,
+    "query": "auzi cat dureaza zborul pana la destinatie vere",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 237,
+    "query": "vere compania aeriana refuza sa-mi plateasca mancarea la intarziere pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "compensation"
+  },
+  {
+    "id": 238,
+    "query": "bossulica cat lichid am voie in bagajul de mana",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "liquids"
+  },
+  {
+    "id": 239,
+    "query": "cumetre care e poarta mea frrate",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 240,
+    "query": "auzi ba care e statusul cursei LH1418 vere",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 241,
+    "query": "auzi cat cantareste un nor pe cer urrgent",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 242,
+    "query": "hei la ce poarta trebbuie sa ajung ba",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 243,
+    "query": "auzi ba cat dureaza zborul pana la destinatie mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 244,
+    "query": "vere in cat timp incepe imbarcarea mersi",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 245,
+    "query": "fratioare cand pleaca avionnul LH1418 urgent",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 246,
+    "query": "bossulica cum se face mamaliga fara cocoloase boss",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 247,
+    "query": "ma la cat decoleaza zborul W63712 frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 248,
+    "query": "bossulica care este capitala statului madagascar sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 249,
+    "query": "care e poarta mea mersi",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 250,
+    "query": "fratioare cat timp mai am pana la decolare te rog",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 251,
+    "query": "nene comanda-mi un taxi sau un uber ca ma grabesc",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 252,
+    "query": "vere orariul zborului LH1418 ba",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 253,
+    "query": "nene cumpara-mi un bilet de avion spre Londra sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 254,
+    "query": "ia zi boss e la timp zborul meu ba",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 255,
+    "query": "nene unde gasesc o toaaleta in terminal coaie",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 256,
+    "query": "ba e la timp zborul meu vericule",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 257,
+    "query": "hei unde e poarta pentru zborul RO341 pls",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 258,
+    "query": "auzi cand trebuie sa fiu la poarta coaie",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 259,
+    "query": "salut cum ajuung la poarta B4 pe harta pls",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 260,
+    "query": "patroane cannd trebuie sa fiu la poarta ba",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 261,
+    "query": "hei cat traieste o musca de otet te rog",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 262,
+    "query": "cumetre care este capitala statului madagascar urgent",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 263,
+    "query": "ma unde este avionul meu acum boss",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 264,
+    "query": "bossulica unde e gate-ul pentru cursa ROO341",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 265,
+    "query": "bossulica e la timmp zborul meu mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 266,
+    "query": "fratioare fa-mi upgrade la clasa business gratis ba",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 267,
+    "query": "ba comanda-mi un taxi sau un uber ca ma grabbesc",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 268,
+    "query": "ia zi boss plateste-mi taxa de bagaj supllimentar ba",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 269,
+    "query": "cumetre live tracking pentru FF123 boss",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 270,
+    "query": "auzi cand pleaca avionul W63712 vere",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 271,
+    "query": "fratioare harta radar cu avionul frate",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 272,
+    "query": "vere pasaportul expira in 2 luni pot calatori in UE pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "passport"
+  },
+  {
+    "id": 273,
+    "query": "auzi comanda-mi un taxi sau un uber vericule",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 274,
+    "query": "vere cum ajung la poarta B4 pe harta",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 275,
+    "query": "salut ora estimata de sosire mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 276,
+    "query": "salut s-a anulat cursa FR1024 frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 277,
+    "query": "vere mai e mult pana la zbor ba",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 278,
+    "query": "cumetre pe unde se face imbarcarrea te rog",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 279,
+    "query": "fratioare da-mi parola de la wifi-ul secret al pilotilor ms",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 280,
+    "query": "fratioare a plecat avionul spre craiova vere",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 281,
+    "query": "vere care e poarta mea ca ma grabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 282,
+    "query": "buna care e statusul cursei coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 283,
+    "query": "ba baiatule e la timp zborul meu pls",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 284,
+    "query": "bossulica cumpara-mi un bilet de avion spre Londra boss",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 285,
+    "query": "auzi fa-mi check-in-ul online la wizzair",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 286,
+    "query": "bossulica cine a castigat meciul de fotbal aseara pls",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 287,
+    "query": "ba la ce gate merg sa moara franta",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 288,
+    "query": "ba baiatule s-a anuntat poarta pentru FF123 sa mooara franta",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 289,
+    "query": "buna arata-mi farmacia din aeroport vericule",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 290,
+    "query": "salut urmareste zborul in timp real ms",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 291,
+    "query": "bossulica care e poarta mea vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 292,
+    "query": "fratioare unde e baia dupa controlul de securitate sa moara franta",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 293,
+    "query": "buna ora estimata de sosire boss",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 294,
+    "query": "bossulica urmareste zborul FFF123 in timp real urgent",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 295,
+    "query": "fraatioare zborul a fost anulat cati bani primesc despagubire pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "compensation"
+  },
+  {
+    "id": 296,
+    "query": "ba cum ajung la magazinul duty free vere",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 297,
+    "query": "fratioare pasaportul expira in 2 luni pot calatori in UE boss",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "passport"
+  },
+  {
+    "id": 298,
+    "query": "auzi cand trebuie sa fiu la porta",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FR1024",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 299,
+    "query": "salut plateste-mi taxa de bagaj suplimentar pls",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 300,
+    "query": "auzi in cat timp incepe imbarcarea",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 301,
+    "query": "ba comanda-mi un taxi sau un uber urgent",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 302,
+    "query": "auzi am voie cu foarfeca de unghii in cabbina pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "sharp"
+  },
+  {
+    "id": 303,
+    "query": "ba baiatulle cum ajuung la magazinul duty free",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 304,
+    "query": "ba cat timp mai am pana la decolare ba",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 305,
+    "query": "salut la cat decoleaza zborul W63712 sa moara franta",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 306,
+    "query": "harta terminalului de plecari ms",
+    "expected_tool": "open_airport_map",
+    "flight_number": "RO341",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 307,
+    "query": "hei cumpar bilet ieftin pentru barcelona urgent",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 308,
+    "query": "auzi cat timp mai am panna la decolare pls",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 309,
+    "query": "hei pot lua un briceg sau un cutit mic in avion frate",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "sharp"
+  },
+  {
+    "id": 310,
+    "query": "ba baiiatule cumpar bilet ieftin penttru barcelona mersi",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 311,
+    "query": "cumetre am voie cu pisica in cabina de pasageri ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "pets"
+  },
+  {
+    "id": 312,
+    "query": "cumetre ora estimatta de sosire urgent",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 313,
+    "query": "buna informatii zbor FR1024 boss",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 314,
+    "query": "ce dimensiuni maxime are bagajul de mana frate",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 315,
+    "query": "la cat decoleaza zborul W63712 ba",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 316,
+    "query": "patroane cat dureaza zborul pana la destinatie pls",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 317,
+    "query": "bossulica la ce gate merg frate",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 318,
+    "query": "nene unde pot bea o cafea in aeroport",
+    "expected_tool": "open_airport_map",
+    "flight_number": "RO341",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 319,
+    "query": "auzi mai am vreme de o tigara te rog",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FR1024",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 320,
+    "query": "fratioare fa-mi upgraade la clasa business gratis boss",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 321,
+    "query": "vere cand pleaca avionul FF123 ms",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 322,
+    "query": "salut ce acte trebuie pentru catel in avion vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "pets"
+  },
+  {
+    "id": 323,
+    "query": "patroane cat a mai ramas pana la zbor",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 324,
+    "query": "la ce gate merg vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 325,
+    "query": "salut live tracking pentru FR1024 ca ma grabesc",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 326,
+    "query": "salut undde este avionul meu acum coaie",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 327,
+    "query": "hei care e poarta mea vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 328,
+    "query": "comanda-mi un taxi sau un uber coaie",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 329,
+    "query": "ma spune-mi un banc cu extraterestri ms",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 330,
+    "query": "vere la ce poarta pleaca FF123 vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 331,
+    "query": "ba unde e poarta pentru zborul RO341 coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 332,
+    "query": "auzi pot lua un briceag sau un cutit mic in avion te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "sharp"
+  },
+  {
+    "id": 333,
+    "query": "ia zi boss la ce poarta pleaca boss",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 334,
+    "query": "cumetre care e poarta mea vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 335,
+    "query": "buna cat timp mai estte pana la poarta mersi",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 336,
+    "query": "bossulica ce se intampla cu zborul ca ma grabesc",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 337,
+    "query": "vere cat timp mai am pana la decolare urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 338,
+    "query": "vere la ce poarta trebuie sa ajung mersi",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 339,
+    "query": "ma unde e zona de fumat in terminal vericule",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 340,
+    "query": "hei pasaportul expira in 2 luni pot calatori in UE ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "passport"
+  },
+  {
+    "id": 341,
+    "query": "ia zi boss live tracking pentru te rog",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 342,
+    "query": "bossulica unde e gate-ul pentru cursa RO341 coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 343,
+    "query": "ma arata-mi farmacia din aeroport vericule",
+    "expected_tool": "open_airport_map",
+    "flight_number": "RO341",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 344,
+    "query": "urmareeste zborul FF123 in timmp real vericule",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 345,
+    "query": "buna cand decolam spre destinatie sa moara franta",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 346,
+    "query": "ba unde gasesc poarta mea de imbarcare urgent",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 347,
+    "query": "ba baiatule care e poarta mea vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 348,
+    "query": "auzi pot lua o sticlla de apa de 500ml dupa securitate te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "liquids"
+  },
+  {
+    "id": 349,
+    "query": "s-a anuntat poarta pentru FF123 ca ma grabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 350,
+    "query": "ba mai am timp sa beau o cafea vere",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 351,
+    "query": "fratioare ce fac daca mi-am pierdut buletinul in strainatate",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "passport"
+  },
+  {
+    "id": 352,
+    "query": "vere cate frunze are un stejar batran frate",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 353,
+    "query": "auzi cat lichid am voie in bagajul de mana vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "liquids"
+  },
+  {
+    "id": 354,
+    "query": "da-mi parola de la wifi-ul secret al pilotilor sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 355,
+    "query": "auzi care e sensul vietii in univers mersi",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 356,
+    "query": "salut cat cantareste un nor pe cer vere",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 357,
+    "query": "vere ora estimata de sosire merssi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 358,
+    "query": "ba baiatule cati litri de motorina consuma dacia logan la suta vericule",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 359,
+    "query": "ma arata-mi pozitia avionului pe harta ms",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 360,
+    "query": "nene cum ajung la magaziinul duty free frate",
+    "expected_tool": "open_airport_map",
+    "flight_number": "RO341",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 361,
+    "query": "cumetre cumpar bilet ieftin pentru barcelona boss",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 362,
+    "query": "cumetre intarziere de peste 3 ore am dreptul la compensatie coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "compensation"
+  },
+  {
+    "id": 363,
+    "query": "salut unde e zona de restaurante coie",
+    "expected_tool": "open_airport_map",
+    "flight_number": "RO341",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 364,
+    "query": "cat timp mai am paana la decolare te rog",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 365,
+    "query": "fratioare care este capitala stattului madagaascar ca ma grabesc",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 366,
+    "query": "hei ce fac daca mi-am pierdut buletinul in strainatate mersi",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "passport"
+  },
+  {
+    "id": 367,
+    "query": "saluut cumpara-mi un bilet de avion sppre Londra ba",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 368,
+    "query": "hei cum se face mamaliga fara cocoloase urgent",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 369,
+    "query": "cumetre unde se afla zborul RO341 in aer boss",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 370,
+    "query": "auzi ba unde e zona de restaaurante vericule",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 371,
+    "query": "ba baiatule a plecat avionul spre craiova boss",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 372,
+    "query": "auzi unde e zona de restaurante te rog",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 373,
+    "query": "patroane radar live pentru cursa FR1024 ba",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 374,
+    "query": "fratioare cati litri de motorina consuma dacia logan la suta mersi",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 375,
+    "query": "buna caare este capitala statului madagaascar ms",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 376,
+    "query": "ia zi boss cati dinti are un crocodil aduult urgent",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 377,
+    "query": "buna unde e zona de restaurante urgent",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 378,
+    "query": "unde e zona de restaurante ms",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 379,
+    "query": "auzzi ba pasaportul expira in 2 luuni pot calatori in UE coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "passport"
+  },
+  {
+    "id": 380,
+    "query": "auzi ba cand ajunge zborul RO341 ca ma grabesc",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 381,
+    "query": "ba baiatule cand trebuie sa fiu la poarta vere",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 382,
+    "query": "ia zi boss cat dureaza zborul pana la destinatie frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 383,
+    "query": "salut care e poarta mea boss",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 384,
+    "query": "hei la ce altitudine e avionul ms",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 385,
+    "query": "buna ce acte trebuie pentru catel in avion coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "pets"
+  },
+  {
+    "id": 386,
+    "query": "salut pe unde se face imbarcarea ms",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 387,
+    "query": "auzi ba unde e gate-ul pentru cursa vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 388,
+    "query": "cumetre a plecat avionul spre craiova",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 389,
+    "query": "nene arata-mi pozitia avionului pe harta frate",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 390,
+    "query": "ma ce fac daca mi-am pierdut buletinul in strainatate urgent",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "passport"
+  },
+  {
+    "id": 391,
+    "query": "salut cum se face mamaliga fara cocoloase coaie",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 392,
+    "query": "ma cum ajung la poarta B4 pe harta coaie",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 393,
+    "query": "care este capitala statului madagascar",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 394,
+    "query": "fratioare da-mi parola de la wifi-ul secret al pilotilor",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 395,
+    "query": "bossulica pot lua un briceeag sau un cutit mic in avioon ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "sharp"
+  },
+  {
+    "id": 396,
+    "query": "auzzi spune-mi o reteta buna de ciorba de burta boss",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 397,
+    "query": "ia zi boss s-a anuntat poarta pentru pls",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 398,
+    "query": "bossulica scrie-mi o poezie de dragooste pentru stewardesa veere",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 399,
+    "query": "ia zi boss termen limita pentru reclamatie bagaj deteriorat vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 400,
+    "query": "cumetre la ce ora pleaca zbborul FR1024 vericule",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 401,
+    "query": "auzi am voie cu pisica in cabina de pasageri ms",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "pets"
+  },
+  {
+    "id": 402,
+    "query": "ma pot lua o sticla de apa de 500ml dupa securitate coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "liquids"
+  },
+  {
+    "id": 403,
+    "query": "bossulica la cat incepe boarding-ul te rog",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 404,
+    "query": "cumetre crema de fata si pasta de dinti trebuie puse in punga vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "liquids"
+  },
+  {
+    "id": 405,
+    "query": "ma unde e zona de fumat in terminal coaie",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 406,
+    "query": "da cu banul cap sau pajura vere",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 407,
+    "query": "auzi la ce poarta pleaca LH1418 sa moara franta",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 408,
+    "query": "buna da cu banul cap sau pajura ca ma grabesc",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 409,
+    "query": "fratioare la ce poarta pleaca ca ma grabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 410,
+    "query": "auzi ba in cat timp inceppe imbarcarea ba",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 411,
+    "query": "salut arata-mi farmacia din aeroport",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 412,
+    "query": "nene ce se intampla cu zborul FF123",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 413,
+    "query": "cumetre cate degete are la piciore un scaun vere",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 414,
+    "query": "ba baiatule mai e mult pana la zbor sa moara fraanta",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 415,
+    "query": "auzi cat mai e pana pleaca avionul te rog",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 416,
+    "query": "veere s-a annuntat poarta pentru FF123 ms",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 417,
+    "query": "patroane s-a anulat cursa FF123 sa moarra franta",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 418,
+    "query": "auzi ba la ce ora pleaca zborul W63712 urgent",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 419,
+    "query": "hei commanda-mi un taxi sau un uber pls",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 420,
+    "query": "fratioare informatii zbor LH1418 coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 421,
+    "query": "auzi ba cat mai e pana pleaca avionul urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 422,
+    "query": "ia zi boss cand decolam spre destinatie mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 423,
+    "query": "patroane harta radar cu avionul sa moara franta",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 424,
+    "query": "ba cat e intarzierea la zborul ca ma grabesc",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 425,
+    "query": "ba baiaatule mai e mult pan la zbor",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 426,
+    "query": "ma unde pot bea o cafea in aeroport te rog",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 427,
+    "query": "ma arata-mi farmacia din aeroport vere",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 428,
+    "query": "ba baiatuule cate frrunze are un stejar batran mersi",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 429,
+    "query": "buuna la ce ora pleaca zborul te rog",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 430,
+    "query": "buna cat fac 247 inmultit cu 38 ba",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 431,
+    "query": "buna da-mi parola de la wifi-ul secret al pilotilor urgent",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 432,
+    "query": "ba baiatule la cat incepe boarding-ul mersi",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 433,
+    "query": "vere undde gasesc poarta mea de imbarcare ba",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 434,
+    "query": "vere carre e poarta mea",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 435,
+    "query": "buna bricheta este permisa in buzunar la zbor ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "safety"
+  },
+  {
+    "id": 436,
+    "query": "fratioare harta terminalului de plecari frate",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 437,
+    "query": "patroane unde imbarcam pentru FR1024 coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 438,
+    "query": "hei am voie cu foarfeca de unghii in cabina vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "sharp"
+  },
+  {
+    "id": 439,
+    "query": "bossulica unde pun bateria externa powerbank in cala sau cabina sa moara franta",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "battery"
+  },
+  {
+    "id": 440,
+    "query": "bossulica cum ajung la magazinul duty free",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 441,
+    "query": "am voie cu parfum de 100ml in avion ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "liquids"
+  },
+  {
+    "id": 442,
+    "query": "hei cat timp mai am pana la decolare vericule",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 443,
+    "query": "comanda-mi un taxi sau un uber frate",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 444,
+    "query": "buna termen limita pentru reclamatie bagaj deteriorat ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 445,
+    "query": "nene ora estimata de sosire ca ma grabesc",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 446,
+    "query": "buna in cat timp plecam te rog",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FR1024",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 447,
+    "query": "salut cum ajung la porta B4 pe harta coaie",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 448,
+    "query": "ba baiatule cat dureaza zborul pana la destinatie boss",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 449,
+    "query": "nene comanda-mi un taxi sau un uber boss",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 450,
+    "query": "ma care e sensul vietii in univers sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 451,
+    "query": "patroane unde e zona de restaurante frate",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 452,
+    "query": "ba baiatule la ce ora pleaca zborul RO341",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 453,
+    "query": "patroane intarziere de peste 3 ore am dreptul la compensatie coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "compensation"
+  },
+  {
+    "id": 454,
+    "query": "ba fa-mmi check-in-ul online la wizzair vericule",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 455,
+    "query": "ma la ce poarta pleaca RO341 mersi",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 456,
+    "query": "ia zi boss intarziere de peste 3 ore am dreptul la compensatie ms",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "compensation"
+  },
+  {
+    "id": 457,
+    "query": "buna cand decolam spre destinatie frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 458,
+    "query": "auzzi cat cantarestte un nor pe cer sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 459,
+    "query": "ba cum ajung la poarta B4 pe harta urgent",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 460,
+    "query": "nene anuleaza rezervarea si da-mi banii inapoi frate",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 461,
+    "query": "buna cumpara-mi un bilet de avion spre Londra pls",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 462,
+    "query": "ia zi boss harta radar cu avionul mersi",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "W63712",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 463,
+    "query": "ba baaiatule se apropie avionul de destinatie urgent",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 464,
+    "query": "auzi ba e la timp zborul meu frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 465,
+    "query": "buna comanda-mi un taxxi sau un uber te rog",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 466,
+    "query": "ma da cu banul cap sau pajura frate",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 467,
+    "query": "buna care e poarta mea",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 468,
+    "query": "ba care e poarta mea ca ma grabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 469,
+    "query": "auzi am voie cu laptopul in bagajul de mana sa moara franta",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "battery"
+  },
+  {
+    "id": 470,
+    "query": "buna s-a anulat cursa coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 471,
+    "query": "unde imbarcam pentru RO341 ca ma grabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 472,
+    "query": "cumetre cand ajunge zborul FF123 pls",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 473,
+    "query": "salut am voie cu pisica in cabina de pasageri te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "pets"
+  },
+  {
+    "id": 474,
+    "query": "auzi cum ajung la poarta B4 pe harta ba",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 475,
+    "query": "ia zi boss termen limita pentru reclamatie bagaj deteriorat vericule",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 476,
+    "query": "auzi ba cat e intarzierea la zborul RO341 vericule",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 477,
+    "query": "ba baiatule pasaportul expira in 2 luni pot calatori in UE te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "passport"
+  },
+  {
+    "id": 478,
+    "query": "ba zborul a fost anulat cati bani primesc despaguubire mersi",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "compensation"
+  },
+  {
+    "id": 479,
+    "query": "fratioare unde este poarta de plecare",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 480,
+    "query": "ba baiatule unde e biroul de bagajje pierdute PIR ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 481,
+    "query": "ma am voie cu pisica in cabina de pasageri ms",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "pets"
+  },
+  {
+    "id": 482,
+    "query": "ma la ce ora pleaca zborul FF123",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 483,
+    "query": "patroane am voie cu pisica in cabina de pasageri sa moara franta",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "pets"
+  },
+  {
+    "id": 484,
+    "query": "cumetre se apropie avionul de destinatie vere",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 485,
+    "query": "cumetre radar live pentru cursa vericule",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 486,
+    "query": "ba baiatule cati litri de motorina consuma dacia logan la suta frate",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 487,
+    "query": "cumetre s-a anuntat poarta pentru RO341 vere",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 488,
+    "query": "fratioare arata-mi poarta vere",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 489,
+    "query": "ma cate kg am voie la bagajul de cabina sa moara franta",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 490,
+    "query": "cumetre crema de fata si pasta de dinti trebuie puse in punga vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "liquids"
+  },
+  {
+    "id": 491,
+    "query": "patroane comanda-mi un taxi sau un uber te rog",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 492,
+    "query": "auzi pe unde ma duc la poarta pls",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 493,
+    "query": "ba baiatule ce fac daca mi-am pierdut buleetinul in strainatate ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "passport"
+  },
+  {
+    "id": 494,
+    "query": "ba unde e zona de restaurante sa moara franta",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 495,
+    "query": "bossulica am voie cu laptopul in bagajul de mana sa moara franta",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "battery"
+  },
+  {
+    "id": 496,
+    "query": "am voie cu laptopul in bagajul de mana mersi",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "battery"
+  },
+  {
+    "id": 497,
+    "query": "auzi ba rezerva-mi o camera la hotel aproape de aeroport vericule",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 498,
+    "query": "ia zi boss unde e zona de fumat in terminal vericule",
+    "expected_tool": "open_airport_map",
+    "flight_number": "RO341",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 499,
+    "query": "salut pasaportul expira in 2 luni pot calatori in UE ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "passport"
+  },
+  {
+    "id": 500,
+    "query": "ba baiatule unde pun bateria externa powerbank in cala sau cabina urgent",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "battery"
+  },
+  {
+    "id": 501,
+    "query": "vere cand decolam spre destinatie urgent",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 502,
+    "query": "cumetre mai e mult pana la zbor vericule",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 503,
+    "query": "nene crema de fata si pasta de dinti trebuie puse in punga sa moarra franta",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "liquids"
+  },
+  {
+    "id": 504,
+    "query": "cat cantareste un nor pe cer sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 505,
+    "query": "patroane cum ajung la poarta B4 pe harta boss",
+    "expected_tool": "open_airport_map",
+    "flight_number": "RO341",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 506,
+    "query": "buna pot sa iau un rucsac si un troller mic ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 507,
+    "query": "buna care e poarta mea pls",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 508,
+    "query": "ma ce poarta am la W63712 ms",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 509,
+    "query": "fratioare in cat timp plecam ca ma grabesc",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 510,
+    "query": "nene mai am timp sa beeau o cafea vericule",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 511,
+    "query": "salut harta radar cu avionul ca ma grabesc",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 512,
+    "query": "nene ora estimata de sosire te rog",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 513,
+    "query": "salut cumpar bilet iefttin pentru barcelona sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 514,
+    "query": "fratioare ce dimensiuni maxime are bagajul de mana",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 515,
+    "query": "hei cum ajung la magazinuul duty free ba",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 516,
+    "query": "cumetre termen limita peentru reclamatie baagaj deteriorat ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 517,
+    "query": "bunna de ce nu au pasarile dinti veriicule",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 518,
+    "query": "buna ora estimata de sosire frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 519,
+    "query": "ia zi boss cand decolam spre destinatie te rog",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 520,
+    "query": "vere intarziere de peste 3 ore am dreptul la compensatie boss",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "compensation"
+  },
+  {
+    "id": 521,
+    "query": "bossulica pe unde zboara aeronava ba",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 522,
+    "query": "ia zi boss comanda-mi un taxi sau un uber ms",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 523,
+    "query": "vere ce fac daca mi-am pierdut buletinul in strainatate pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "passport"
+  },
+  {
+    "id": 524,
+    "query": "cate degete are la picioare un scaun urgent",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 525,
+    "query": "bossulica care e poarta mea mersi",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 526,
+    "query": "auzi ba unde e zona de fuumat in terminal te rog",
+    "expected_tool": "open_airport_map",
+    "flight_number": "RO341",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 527,
+    "query": "ma a plecat avionul spre craiova mersi",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "W63712",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 528,
+    "query": "auzi ba ce se intampla cu zborul LH11418 ca ma grabesc",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 529,
+    "query": "ba baiatule a plecat avionul spre craiova sa moara franta",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "W63712",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 530,
+    "query": "auzi ba in cat timp incepe imbarcarea urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FR1024",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 531,
+    "query": "nene la ce poarta trebuie sa ajung mersi",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 532,
+    "query": "ba baiatule arata-mi pozitia avionului pe harta vere",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 533,
+    "query": "nene cat fac 247 inmultit cu 38 ms",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 534,
+    "query": "ia zi boss zborul a fost anullat cati bani primesc despagubire vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "compensation"
+  },
+  {
+    "id": 535,
+    "query": "bossulica unde imbarcam pentru W63712 ms",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 536,
+    "query": "ba baiatule se apropie avionul de destinatie pls",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 537,
+    "query": "ba baiatule pot sa iau un rucsac si un troller mic",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 538,
+    "query": "auzi ba cat e intarzierea la zborul W63712 sa moara franta",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 539,
+    "query": "fratioare orariul zborului frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 540,
+    "query": "vere schimba-mi biletul pentru ziua de maine mersi",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 541,
+    "query": "verre cat mai e pana pleaca avionul te rog",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 542,
+    "query": "buna ce poarta am la RO341 boss",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 543,
+    "query": "nene unde este poarta de plecare vere",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 544,
+    "query": "vere anuleaza rezervarea si da-mi banii inapoi urgent",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 545,
+    "query": "cumetre la ce ora pleaca zborul FR1024 te rog",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 546,
+    "query": "cat timp mai este pan la poarta urrgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 547,
+    "query": "auzi de ce nu au pasarile dinti coaie",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 548,
+    "query": "patroane arata-mi poarta urgent",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 549,
+    "query": "ba baiatule a decolat aeronava pentru zborul LH1418 vericule",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 550,
+    "query": "buna in cat timp incepe imbarcarea frate",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 551,
+    "query": "ma cand trebuie sa fiu la poarta ba",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 552,
+    "query": "ma pot sa iau un rucsac si un troller mic vericule",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 553,
+    "query": "cumetre pe unde se face imbarcarea pls",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 554,
+    "query": "ba ora estimata de sosire mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 555,
+    "query": "nene cand decolam sprre destinatie ba",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 556,
+    "query": "vere arata-mi farmacia din aeroport boss",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 557,
+    "query": "ma pe unde ma duc la poarta frate",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 558,
+    "query": "fratioare bricheta este permisa in buzunar la zbor mersi",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "safety"
+  },
+  {
+    "id": 559,
+    "query": "fratioare urmareste zborul LH1418 in timp real ca ma grabesc",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 560,
+    "query": "buna cat timp mai am pana la decolare pls",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 561,
+    "query": "hei informattii zbor W63712 mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 562,
+    "query": "buna cat dureazza zborul pana la destiinatie urgent",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 563,
+    "query": "fratioare zborul a fost anulat cati bani primesc despagubire ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "compensation"
+  },
+  {
+    "id": 564,
+    "query": "ma la ce altitudine e avionul frate",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 565,
+    "query": "bossulica radar live pentru cursa FF123 frate",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 566,
+    "query": "paatroane cum ajung la poarta B4 pe harta ms",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 567,
+    "query": "bossulica unde pot schimba bani casa de schimb valutar sa moara franta",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 568,
+    "query": "patroane mai am timp sa beau o cafe urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 569,
+    "query": "ma unde pun bateriia externa powerbank in cala sau cabina vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "battery"
+  },
+  {
+    "id": 570,
+    "query": "nene unde gasesc poarta mea de imbarcare vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 571,
+    "query": "salut pot sa iau un rucsac si un troller mic ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 572,
+    "query": "ma am voie cu laptopul in baagajul de mana coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "battery"
+  },
+  {
+    "id": 573,
+    "query": "vere comanda-mi un taxi sau un uber boss",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 574,
+    "query": "mai e mult pana la zbor te rog",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 575,
+    "query": "ia zi boss cat cantareste un nor pe cer frate",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 576,
+    "query": "nene cat dureaza zborul pana la destinatie coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 577,
+    "query": "buna cand pleaca avionul FR1024 ca ma grabesc",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 578,
+    "query": "cumetre mai am vreme de o tigara te rog",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 579,
+    "query": "auzi harta terminalului de plecari sa moara franta",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 580,
+    "query": "patroane da cu banul cap sau pajura ba",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 581,
+    "query": "auzi compania aeriana refuza sa-mi plateasca mancarea la intarziere ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "compensation"
+  },
+  {
+    "id": 582,
+    "query": "vere unde este poarta de plecare ms",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 583,
+    "query": "nene compania aeriana refuza sa-mi plateasca mancarea la intarziere vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "compensation"
+  },
+  {
+    "id": 584,
+    "query": "bossulica ce fac daca bagajul meu e pierdut urgent",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 585,
+    "query": "auzi ba trolerul a sossit rupt si spart ce formular completez frate",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 586,
+    "query": "salut unde e zonna de restaurante",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 587,
+    "query": "cumetre e la timp zborul meu sa moara franta",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 588,
+    "query": "ba baiatule arata-mi farmacia din aeroport vere",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 589,
+    "query": "vere plateste-mi taxa de bagaj suplimentar sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 590,
+    "query": "unde pot schimba bani casa de schimb valutar coaie",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 591,
+    "query": "ba baiatule care este poarta vere",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 592,
+    "query": "ba de ce este cerul albastru ziua urgent",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 593,
+    "query": "ba baiatule harta terminalului de plecarri pls",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 594,
+    "query": "ba cat mai am de asteptat vericule",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 595,
+    "query": "ba baiatule unde imbarcam pentru LH1418 veere",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 596,
+    "query": "nene pasaportul expirra in 2 luni pot calatori in UE frate",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "passport"
+  },
+  {
+    "id": 597,
+    "query": "salut termen limita penntru reclamatie bagaj deteriorat ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 598,
+    "query": "ba baiatule cat cantareste un nor pe cer urgent",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 599,
+    "query": "ba pe unde ma duc la poarta te rog",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 600,
+    "query": "ia zi boss s-a anuntat poarta pentru FF123 ba",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 601,
+    "query": "vere mai am timp sa beau o cafea vere",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 602,
+    "query": "cumetre care este capitala statului madagascar vericule",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 603,
+    "query": "nene intarzziere de peste 3 ore am dreptul la compensatie pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "compensation"
+  },
+  {
+    "id": 604,
+    "query": "bossulica e la timp zborul meu mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 605,
+    "query": "auzi cand decolam spre destinatie coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 606,
+    "query": "cumetre plateste-mi taxa de baagaj suplimentar boss",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 607,
+    "query": "vere unde e zona de fumat in terminal mersi",
+    "expected_tool": "open_airport_map",
+    "flight_number": "RO341",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 608,
+    "query": "ia zi boss arata-mi farmacia din aeroport boss",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 609,
+    "query": "hei unde este poarta de plecare urgent",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 610,
+    "query": "auzi unde se afla zborul LH1418 in aer te rog",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 611,
+    "query": "ma undde se afla zborul FF123 in aer mersi",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 612,
+    "query": "patroane ce se intampla cu zborul RO341 urgent",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 613,
+    "query": "cum ajung la magazinul duty free coaie",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 614,
+    "query": "hei la ce poarta trebuie sa ajung frrate",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 615,
+    "query": "fratioare la cat incepe boarding-ul boss",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FR1024",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 616,
+    "query": "am voie cu parfum de 100ml in avion coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "liquids"
+  },
+  {
+    "id": 617,
+    "query": "patroane cati litri de motorina consuma dacia logan la suta ba",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 618,
+    "query": "vere unde pun bateria externa powerbank in cala sau cabina urgent",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "battery"
+  },
+  {
+    "id": 619,
+    "query": "patroane in cat timp incepe imbarcarea vericule",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 620,
+    "query": "auzi unde pot bea o cafeea in aerroport te rog",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 621,
+    "query": "ba zborul a fost anulat cati bani primesc despagubire boss",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "compensation"
+  },
+  {
+    "id": 622,
+    "query": "ma pe unde ma duc la poarta frate",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 623,
+    "query": "nene cumpara-mi un bilet de avion spre Londra frate",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 624,
+    "query": "ba baiatule cumpara-mi un bilet de avion spre Londra frate",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 625,
+    "query": "ma cat e intarzzierea la zborul W63712 urgent",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 626,
+    "query": "ba radar live pentru cursa FR1024 te rog",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 627,
+    "query": "vere live tracking pentru RO341 vere",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 628,
+    "query": "auzi ba unde e zonna de restaurante pls",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 629,
+    "query": "bunna unde gasesc poartta mea de imbarcare ca ma grabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 630,
+    "query": "salut unde e zona de fumat in terminal boss",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 631,
+    "query": "buna de ce nu au pasarile dinti ms",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 632,
+    "query": "patroane cat lichid am voie in bagajul de mana pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "liquids"
+  },
+  {
+    "id": 633,
+    "query": "patrone la cat incepe boardding-ul vere",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 634,
+    "query": "auzi ora estimata de sosirre ca ma grabesc",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 635,
+    "query": "salut ce fac daca mi-am pierdut buletinul in strainatate boss",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "passport"
+  },
+  {
+    "id": 636,
+    "query": "buna ce dimensiuni maxxime are bagajul de mana mersi",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 637,
+    "query": "auzi ba termen limita pentru reclamatie bagaj deteriorat mersi",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 638,
+    "query": "ba cate frunze are un stejar batran boss",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 639,
+    "query": "auzi in cat timp incepe imbarcarea mersi",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 640,
+    "query": "ba baiatule cat a mai ramas pana la zbor sa moara franta",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 641,
+    "query": "live tracking pentru FR1024 mersi",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 642,
+    "query": "ia zi boss cand ajunge zborul W63712 coaaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 643,
+    "query": "fratioare comanda-mi un taxi sau un uber urgent",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 644,
+    "query": "buna unde pun bateria externa powerbank in cala sau cabina vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "battery"
+  },
+  {
+    "id": 645,
+    "query": "patroane s-a anulat cursa LH1418 sa moara franta",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 646,
+    "query": "patroane cremma de fata si pasta de dinti trebuie puse in punga",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "liquids"
+  },
+  {
+    "id": 647,
+    "query": "auzi plateste-mi taxa de bagaj suplimentar boss",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 648,
+    "query": "bossulica am voie cu foarfeca de unghii in caabina ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "sharp"
+  },
+  {
+    "id": 649,
+    "query": "ba cum ajung la magazinul duty free urgent",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 650,
+    "query": "hei la ce gate merg vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 651,
+    "query": "auzi unde pot schimba bani casa de schimb valutar sa moara franta",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 652,
+    "query": "ba la ce altitudine e avionul coaie",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 653,
+    "query": "ia zi boss cati litri de motorina consuma dacia logan la suta vericule",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 654,
+    "query": "bossulica cum ajung la poarta B4 pe harta urgent",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 655,
+    "query": "auzi ce se intampla cu zborul RO341",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 656,
+    "query": "auzi ba orariul zborului FF123 vericule",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 657,
+    "query": "hei crema de fata si pasta de dinti trebuie puse in punga te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "liquids"
+  },
+  {
+    "id": 658,
+    "query": "ba cum ajung la magazinul duty free pls",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 659,
+    "query": "buna cat timp mai este pana la poarta coaie",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 660,
+    "query": "auzi arata-mi poarta cooaie",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 661,
+    "query": "ma s-a anulat cursa RO341 frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 662,
+    "query": "bossulica de ce este cerul albastru ziua",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 663,
+    "query": "ma unde pot bea o cafea in aeroport ms",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 664,
+    "query": "bossulica unde e gate-ul pentru cursa FR1024 ca ma grabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 665,
+    "query": "buna cum se face mamaliga fara cocoloase boss",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 666,
+    "query": "unde este poarta de plecare coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 667,
+    "query": "salut unde gasesc o toaleta in terminal ms",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 668,
+    "query": "auzi ba cand pleaca avionul RO341 pls",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 669,
+    "query": "salut la ce poarta pleaca ba",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 670,
+    "query": "ia zi boss rezerva-mi o camera la hotel aproape de aeroport vere",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 671,
+    "query": "patroane plateste-mi taxa de bagaj suplimentar frate",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 672,
+    "query": "ba baiatule pot lua o sticla de apa de 500ml dupa securitate ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "liquids"
+  },
+  {
+    "id": 673,
+    "query": "salut urmareste zboruul in timp real",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 674,
+    "query": "auzi ba ce se intampla cu zborul FR1024 ms",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 675,
+    "query": "auzi unde gasesc poarta mea de imbarcare urgent",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 676,
+    "query": "auzi da cu banul cap sau pajurra urgent",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 677,
+    "query": "auzi la ce poarrta trebuie sa ajung ba",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 678,
+    "query": "patroane fa-mi upgrade la clasa bussiness gratis vericule",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 679,
+    "query": "bosssulica cand ajunge zborrul ROO341 mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 680,
+    "query": "pe unde se face imbarcarea mersi",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 681,
+    "query": "salut arata-mi pozitia avionului pe harta coaie",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 682,
+    "query": "ma in cat timp plecam ms",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 683,
+    "query": "bossulica ce se intampla cu zborul te rog",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 684,
+    "query": "bossulica anuleaza rezervarea si da-mi banii inapoi boss",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 685,
+    "query": "ia zi boss de ce este cerul albastru ziua urgent",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 686,
+    "query": "ma pot sa iau un rucsac si un troller mic mersi",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 687,
+    "query": "ba unde e baia dupa controlul de securritate te rog",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 688,
+    "query": "fratioare schimba-mi biletul pentru ziua de mainne ca ma grabesc",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 689,
+    "query": "ba baiatule unde gasesc poarta mea de imbarcare frate",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 690,
+    "query": "buna cum ajuung la magazinul duuty free urgent",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 691,
+    "query": "fratioare cat lichid am voie in bagajul de mana",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "liquids"
+  },
+  {
+    "id": 692,
+    "query": "patrooane cum ajung la poarta B4 pe harta ba",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 693,
+    "query": "ma la ce altitudine e avionul ms",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 694,
+    "query": "ma arrata-mi poarta",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 695,
+    "query": "bossulica comanda-mi un taxi sau un ubber sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 696,
+    "query": "ia zi boss la cat incepe boarding-ul pls",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 697,
+    "query": "hei pe unde se face imbarcarea frate",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 698,
+    "query": "fratioare se apropie avionul de destinatie boss",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 699,
+    "query": "ia zi boss bagaj intarziat de 3 zile ce despagubiri primesc urgent",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 700,
+    "query": "hei la ce poarta trebuie sa ajung te rog",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 701,
+    "query": "cumetre fa-mi check-in-ul online la wizzair coaie",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 702,
+    "query": "auzi ba cat mai am de asteptat mersi",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 703,
+    "query": "salut zborul a fost anulat cati bani primesc despagubire frate",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "compensation"
+  },
+  {
+    "id": 704,
+    "query": "bossulica cumpara-mi un bileet de avion spre Londra",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 705,
+    "query": "buna da-mi parola de la wifi-ul secret al pilotilor coaie",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 706,
+    "query": "patroane unde este poarta de plecare urgent",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 707,
+    "query": "ma la ce poarta pleaca W63712 ba",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 708,
+    "query": "bossulica la ce poarrta pleacca vere",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 709,
+    "query": "buna care e statusul cursei RO341 ca ma grabesc",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 710,
+    "query": "ba baiatule care este capitala statului madagascar urgent",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 711,
+    "query": "bossulica a decolat aeronava pentru zborul RO341 boss",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 712,
+    "query": "ba pe unde zboara aeronava FR10224 coaie",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 713,
+    "query": "ba baiatule mai e mult pana la zbor mersi",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 714,
+    "query": "ba cat lichid am voie in bagajul de mana vericule",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "liquids"
+  },
+  {
+    "id": 715,
+    "query": "buna cumpar bilet ieftin pentru barcelona mersi",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 716,
+    "query": "fratioare cat cantareste un nor pe cer frate",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 717,
+    "query": "auzi ba rezerva-mi o camera la hotel aproape de aeroport sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 718,
+    "query": "patroane unde pot schimba banni casa de schimb valutar vere",
+    "expected_tool": "open_airport_map",
+    "flight_number": "RO341",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 719,
+    "query": "bossulica unde e poarta pentru zborul W63712 boss",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 720,
+    "query": "fratioare pe unde ma duc la poarta urgent",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 721,
+    "query": "salut cand ajunge zborul vericule",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 722,
+    "query": "ma cati litri de motorina consuma dacia logan la suta vericule",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 723,
+    "query": "ba la ce altitudine e avionul",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 724,
+    "query": "bosssulica pot sa iau un rucsac si un troller mic ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 725,
+    "query": "ba la ce poarta pleaca LH14118 ba",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 726,
+    "query": "patroane pot lua o sticla de apa de 500ml dupa securitate",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "liquids"
+  },
+  {
+    "id": 727,
+    "query": "ia zi boss am voie cu laptopul in bagajul de mana",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "battery"
+  },
+  {
+    "id": 728,
+    "query": "fratioare care e sensul vietii in univers ca ma grabesc",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 729,
+    "query": "patroane plateste-mi taxa de bagaj suplimentar",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 730,
+    "query": "auzi cat timp mai este pana la poarta urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FR1024",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 731,
+    "query": "hei arata-mi poarta ca ma grabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 732,
+    "query": "vere unde pot schimba bani casa de schimb valutar te rog",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 733,
+    "query": "fratioare pot lua un briceag sau un cutit mic in avion coaiie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "sharp"
+  },
+  {
+    "id": 734,
+    "query": "hei cate degette are la picioare un scaun vericule",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 735,
+    "query": "patroane fa-mmi upgrade la clasa business gratis mersi",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 736,
+    "query": "buuna pasaportul expira in 2 luni pot calatori in UE",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "passport"
+  },
+  {
+    "id": 737,
+    "query": "ba cand decolam spre destinatie boss",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 738,
+    "query": "ba rezerva-mi o cammera la hotel aproape de aeroport boss",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 739,
+    "query": "salut am voie cu foarfeca de unghii in cabina pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "sharp"
+  },
+  {
+    "id": 740,
+    "query": "ba la cat incepe bording-ul te rog",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 741,
+    "query": "bossulica termen limita pentru reclamatie bagaj deteriorat sa moara franta",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 742,
+    "query": "auzi ba ora estimata de sosire mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 743,
+    "query": "fratioare care este capitala statului madagascar boss",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 744,
+    "query": "patroane unde imbarcam pentru FF123 vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 745,
+    "query": "vere la cat incepe boarding-ul ba",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 746,
+    "query": "ba informatii zbor W63712",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 747,
+    "query": "ma ora estimata de sosire ca ma grabesc",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 748,
+    "query": "vere a decolat aeronava pentru zborul FR1024 bosss",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 749,
+    "query": "hei in cat timp plecam vere",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 750,
+    "query": "patroane s-a anuntat poarta pentru W63712 vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 751,
+    "query": "patroane care este capitala statului madagascar vere",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 752,
+    "query": "fratioare cat lichid am voie in bagajul de mana ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "liquids"
+  },
+  {
+    "id": 753,
+    "query": "vere care e statusul cursei FF123 mersi",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 754,
+    "query": "ia zi boss radar live pt cursa ROO341 mersi",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 755,
+    "query": "auzi ba cumpara-mi un bilet de avion spre Londra",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 756,
+    "query": "cumetre ce poaarta am la RO341 coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 757,
+    "query": "patroane cati dinti are un crocodil adult sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 758,
+    "query": "fratiore da-mi parola de la wifi-ul secret al pilotilor",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 759,
+    "query": "auzi la ce gate merg coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 760,
+    "query": "buna da-mi parola de la wifi-ul secret al pilotilor urgent",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 761,
+    "query": "patroane se apropie avionul de destinatie ba",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 762,
+    "query": "buna la cat incepe boarding-ul urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 763,
+    "query": "care este capitala statului madagascar ba",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 764,
+    "query": "bossulica cat lichid am voie in bagajul de mana pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "liquids"
+  },
+  {
+    "id": 765,
+    "query": "patroane bagaj intarziat de 3 zile ce despagubiri primesc ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 766,
+    "query": "hei orariul zborului FR1024 vere",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 767,
+    "query": "auzi ce e mai greu palma de jandarm sau palma de mallorca ba",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 768,
+    "query": "ma ce acte trebuie pentru catel in avion vericule",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "pets"
+  },
+  {
+    "id": 769,
+    "query": "nene unde e gate-ul penttru cursa LH1418 pls",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 770,
+    "query": "salut cand pleaca avionul FR1024 frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 771,
+    "query": "fratioare orariul zborului W63712 vericule",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 772,
+    "query": "ia zi boss ce e mai greu palma de jandarm sau palma de mallorca coaie",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 773,
+    "query": "cate degete are la picioare un scaun sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 774,
+    "query": "hei cum ajung la magazinnul duty free vericule",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 775,
+    "query": "auzi cine a castigat meciul de fotbal aseara ba",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 776,
+    "query": "ma e la timp zborul meu ba",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 777,
+    "query": "hei la ce ora aterizam pls",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 778,
+    "query": "nene cand pleaca avionul ba",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 779,
+    "query": "ma la ce poarta trebuie sa ajung ca ma grabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 780,
+    "query": "auzi in cat timp incepe imbarcarea mersi",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FR1024",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 781,
+    "query": "nene mi s-a pierdut geanta la cala unde depun reclamatie vericule",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 782,
+    "query": "nene mi s-a pierdut geanta la cala unde depun reclamatie ca ma grabbesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 783,
+    "query": "bossulica la ce gate merg",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 784,
+    "query": "ba la ce ora pleaca zborul FF1223 coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 785,
+    "query": "ia zi boss am voie cu pisica in cabina de pasageri sa moara franta",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "pets"
+  },
+  {
+    "id": 786,
+    "query": "auzi ba care e porta mea urgent",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 787,
+    "query": "buna unde este poarta de plecare vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 788,
+    "query": "cumetre cat a mai ramas pana la zboor vericule",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 789,
+    "query": "ma unde pun bateria externa powwerbank in cala sau cabiina ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "battery"
+  },
+  {
+    "id": 790,
+    "query": "la ce gate merg ms",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 791,
+    "query": "ba baiatule s-a anuntat poarta pentru LH1418 mersi",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 792,
+    "query": "pasaportul expira in 2 luni pot calatori in UE vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "passport"
+  },
+  {
+    "id": 793,
+    "query": "vere pe unde ma duc la poarta coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 794,
+    "query": "nene cat cantareeste un nor pe cer te rog",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 795,
+    "query": "cumetre ce acte trebuie pentru catel in avion coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "pets"
+  },
+  {
+    "id": 796,
+    "query": "ba se apropie avionul de destinatie vere",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 797,
+    "query": "ia zi boss unde este avionul meu acum ba",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 798,
+    "query": "nene la ce poarta trebuie sa ajung te rog",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 799,
+    "query": "ba pe unde ma duc la poarta coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 800,
+    "query": "ce dimensiuni maxime are bagajul de mana ca ma grabesc",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 801,
+    "query": "salut zborul a fost anulat cati bani primesc despagubire sa mora franta",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "compensation"
+  },
+  {
+    "id": 802,
+    "query": "ma mai am vreme de o tigara ba",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 803,
+    "query": "buna cine a castigat meciul de fotbal aseara vericule",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 804,
+    "query": "cumetre de cate ori pe ora se lovesc avioanele in aer ca ma grabesc",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 805,
+    "query": "ba live tracking pentru RO341 ms",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 806,
+    "query": "buna intarziere de peste 3 ore am drepptul la compensatie te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "compensation"
+  },
+  {
+    "id": 807,
+    "query": "ma ce se intampla cu zborul W63712 ca ma grabesc",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 808,
+    "query": "vere cand pleaca avionul LH1418 sa moara franta",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 809,
+    "query": "fratioare ce fac daaca bagajul meu e pierdut te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 810,
+    "query": "auzi ba pot sa iau un rucsac si un troller mic pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 811,
+    "query": "nene mi s-a pierdut geanta la cala unde depun reclamatie te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 812,
+    "query": "buna schimba-mi biletul pentru ziua de maine boss",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 813,
+    "query": "cumetre unde gasesc o toalleta in terminal urgent",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 814,
+    "query": "patroane am voie cu pisica in cabina de pasageri",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "pets"
+  },
+  {
+    "id": 815,
+    "query": "auzi la cat decoleaza zborul LH1418 vere",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 816,
+    "query": "vere in cat timp plecam",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 817,
+    "query": "nene pe unde ma duc la poarta mersi",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 818,
+    "query": "fratioare am voie cu parfum de 100ml in avion pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "liquids"
+  },
+  {
+    "id": 819,
+    "query": "buna intarziere de peste 3 ore am dreeptul la coompensatie boss",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "compensation"
+  },
+  {
+    "id": 820,
+    "query": "buna unde se afla zbborul FR1024 in aer pls",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 821,
+    "query": "ba baiatule cum ajung la magazinul duty free ba",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 822,
+    "query": "ba cat mai am de asteptat",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 823,
+    "query": "ma arata-mi poarta ca ma grabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 824,
+    "query": "nene de ce este cerul albastru ziua sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 825,
+    "query": "patroane care e sensul vietii in univers vericule",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 826,
+    "query": "buna cat e intarzierea la zborul LH14118 vericule",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 827,
+    "query": "nene plateste-mi taxa de bagaj suplimentar boss",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 828,
+    "query": "auzi ba ce fac dac mi-am pierddut buletinul in strainatate",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "passport"
+  },
+  {
+    "id": 829,
+    "query": "auzi unde e biroul de bagaje pierdute PIR coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 830,
+    "query": "auzi ba pe unde se faace imbarrcarea ms",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 831,
+    "query": "ba unde pun bateria externa powerbank in cala sau cabina ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "battery"
+  },
+  {
+    "id": 832,
+    "query": "ba baiatule s-a anuntat poartta pentru RO341 frate",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 833,
+    "query": "ia zi boss ce se intampla cu zborul FF123 frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 834,
+    "query": "ia zi boss cumpara-mi un bilet de avion spre Londra ms",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 835,
+    "query": "ba baiatule rezerva-mi o camera la hotel aproape de aeroport vericule",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 836,
+    "query": "nene am voie cu laptopul in bagajul de mana frate",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "battery"
+  },
+  {
+    "id": 837,
+    "query": "patroane cate frunze are un stejar batran ms",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 838,
+    "query": "auzi urmareste zborul LH1418 in timp real pls",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 839,
+    "query": "patroane la cat decoleaza zborul RO341 te rog",
+    "expected_tool": "get_flight_details",
+    "flight_number": "RO341",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 840,
+    "query": "auzi ba unde pot bea o cafea in aeroport ms",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 841,
+    "query": "bossulica s-a anulat cursa LH1418 vere",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 842,
+    "query": "bossulica ce se intampla cu zborul FF123 ms",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 843,
+    "query": "nene informatii zbor W63712 frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 844,
+    "query": "vere cumpara-mi un bilet de avion spre Londra sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 845,
+    "query": "auzi urmareste zborul RO341 in timp real sa moaara franta",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 846,
+    "query": "ia zi boss bricheta este permisa in buzunar la zbor boss",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "safety"
+  },
+  {
+    "id": 847,
+    "query": "buna cat dureaza zborul pana la destinatie frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "LH1418",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 848,
+    "query": "cumetre orariul zborullui W63712 vere",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 849,
+    "query": "fratioare e la timp zborul meu sa moara franta",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 850,
+    "query": "cumetre pot sa iau un rucsac si un troller mic mersi",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 851,
+    "query": "nene bricheta este permisa in buzunar la zbor boss",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "safety"
+  },
+  {
+    "id": 852,
+    "query": "auzi ba compania aeriana refuza sa-mi plateasca mancarea la intarziere vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "compensation"
+  },
+  {
+    "id": 853,
+    "query": "fratioare pe unde se face imbarcarea ca ma grabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 854,
+    "query": "salut mai am timp sa beau o cafea urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FR1024",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 855,
+    "query": "bossulica a plecat avionul spre craiova ca ma grabesc",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 856,
+    "query": "auzi ba unde pot schimba bani casa de schimb valutar te rog",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 857,
+    "query": "nene pe unde ma duc la poarta boss",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 858,
+    "query": "cat mai am de asteptat vere",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 859,
+    "query": "auzi comanda-mi un taxi sau un uber",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 860,
+    "query": "auzi plateste-mi taxa de bagaj suplimentar ba",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 861,
+    "query": "ba baiatule termen limita pentru reclamatie bagaj deteriorat te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 862,
+    "query": "vere zborul a fost anulat cati bani primesc despagubire",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "compensation"
+  },
+  {
+    "id": 863,
+    "query": "ma la cat incepe boarding-ul mersi",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 864,
+    "query": "buna cum ajung la poarta B4 pe harta coaie",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 865,
+    "query": "fratioare urmmareste zborul RO341 in timp real urgent",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 866,
+    "query": "fratiioare ce poarta am la RO341 frate",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 867,
+    "query": "vere cum ajung la magazinul duty free",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 868,
+    "query": "ia zi boss rezerva-mi o camera la hotel aproape de aeroport pls",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 869,
+    "query": "auzi ba unde e gate-ul pentru cursa W63712 urgent",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 870,
+    "query": "auzi ba la ce gate merg pls",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 871,
+    "query": "ba baiatule la ce ora pleaca zborul sa moara franta",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 872,
+    "query": "auuzi bricheta este permisa in buzunar la zbor pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "safety"
+  },
+  {
+    "id": 873,
+    "query": "ma care e poarta mea mersi",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 874,
+    "query": "pe unde se face imbarcarea frate",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 875,
+    "query": "fratioare a decolat aeronava pentru zborul LH1418 coaie",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 876,
+    "query": "salut unde e zona de fumat in terminal ms",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 877,
+    "query": "hei cat a mai ramas pana la zbor booss",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 878,
+    "query": "cumetre cum ajung la poarta B4 pe harta ca ma grabesc",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 879,
+    "query": "buna ce e mai greu palma de jandarm sau palma de mallorca",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 880,
+    "query": "auzi ce poarrta am la FR1024 vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 881,
+    "query": "auzi s-a anulat cursa W63712 frate",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 882,
+    "query": "bossulica anuleaza rezervarea si da-mi banii inapoi urgent",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 883,
+    "query": "bossulica fa-mi check-in-ul online la wizzair coaie",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 884,
+    "query": "ba plateste-mi taxa de bagaj suplimentar te rog",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 885,
+    "query": "nene unde e baia dupa controlul de securitate ba",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 886,
+    "query": "auzi cuumpara-mi un bilet de avion spre Londra pls",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 887,
+    "query": "vere cum ajung la magazinul duty free ms",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 888,
+    "query": "ia zi boss spune-mi o reeteta buna de cioorba de burrta sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 889,
+    "query": "cumetre harta radar cu avionul ba",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 890,
+    "query": "bossulica intarziere de peste 3 ore am drreptul la compensatie mersi",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "compensation"
+  },
+  {
+    "id": 891,
+    "query": "ba ce fac daaca bagaajul meu e pierdut mersi",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 892,
+    "query": "salut unde e gate-ul pentru cursa W63712",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 893,
+    "query": "ba baiatule bricheta este permisa in buzunar la zbor ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "safety"
+  },
+  {
+    "id": 894,
+    "query": "bossulica arata-mi poarta vericule",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 895,
+    "query": "bossulica cannd pleaca avionul FR1024",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 896,
+    "query": "hei ce e mai greu palma de jandarm sau palma de mallorca urgent",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 897,
+    "query": "vere unde e baia dupa controlul de securitate te rog",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 898,
+    "query": "ia zi boss plateste-mi taxa de bagaj suplimentar sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 899,
+    "query": "fratioare unde este poarta de plecare pls",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 900,
+    "query": "auzi ba unde e gate-ul pentru cursa LH1418 coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "LH1418",
+    "category": "get_gate"
+  },
+  {
+    "id": 901,
+    "query": "cate frunze are un stejar batran frate",
+    "expected_tool": "none",
+    "flight_number": "FR1024",
+    "category": "none"
+  },
+  {
+    "id": 902,
+    "query": "auzi la ce altitudine e avionul pls",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 903,
+    "query": "fratioare rezerva-mi o camera la hotel aproape de aeroport pls",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 904,
+    "query": "auuzi ce acte trebuie pentru cateel in avion vericule",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "pets"
+  },
+  {
+    "id": 905,
+    "query": "patroane ce fac daca bagajul meu e pierdut vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 906,
+    "query": "cat timp mai am pana la decolare ba",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 907,
+    "query": "ce e mai greu paalma de jandarm sau palma de mallorca ca ma grabesc",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 908,
+    "query": "nene intarziere de peste 3 ore am dreptul la compensatie coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "compensation"
+  },
+  {
+    "id": 909,
+    "query": "fratioare cand trebuie sa fiu la poarrta ca ma grabesc",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 910,
+    "query": "salut spune-mi un banc cu extraterestri vere",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 911,
+    "query": "ba la ce poarta trebuie sa ajung pls",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 912,
+    "query": "auzi ba cand decolam spre destinatie urgent",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 913,
+    "query": "ba baiatule unde e biroul de bagaje pierdute PIR vericule",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 914,
+    "query": "ma cat fac 247 inmultit cu 38 urgent",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 915,
+    "query": "cum ajung la magazinul duty free urrgent",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 916,
+    "query": "cumetre pasaportul expira in 2 luni pot calatori in UE vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "passport"
+  },
+  {
+    "id": 917,
+    "query": "ia zi boss unde e zona de restaurante coaie",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 918,
+    "query": "vere bricheta este permisa in buzunar la zbor ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "safety"
+  },
+  {
+    "id": 919,
+    "query": "ia zi boss care e statusul cursei FR1024 coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 920,
+    "query": "ma ce zodie e capittanul aeeronavei te rog",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 921,
+    "query": "patroane cat lichhid am voie in bagajul de mana ba",
+    "expected_tool": "search_knowledge",
+    "flight_number": "LH1418",
+    "category": "liquids"
+  },
+  {
+    "id": 922,
+    "query": "ba baiiatule pe unde zboara aeronava sa moara franta",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 923,
+    "query": "auzi cat timp mai este pana la poarta pls",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 924,
+    "query": "auzi ba unde se affla zborul in aer boss",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FF123",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 925,
+    "query": "fratioare cate degete are la picioare un scaun frate",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 926,
+    "query": "buna fa-mi upgrade la clasa business gratis ba",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 927,
+    "query": "patroane la ce pooarta trebuie sa ajung ms",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 928,
+    "query": "ba la ce altitudine e avionul",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 929,
+    "query": "auzi ba spune-mi un banc cu extraterestri urgent",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 930,
+    "query": "bossulica am voie cu laptopul in bagajul de mana boss",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "battery"
+  },
+  {
+    "id": 931,
+    "query": "unde e zona de restaurante te rog",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FR1024",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 932,
+    "query": "patroane da-mi parola de la wifi-ul secret al pilotilor ms",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 933,
+    "query": "ba baiatule la ce ora pleaca zborul FF123",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 934,
+    "query": "patroane care este poarta urgent",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 935,
+    "query": "auzi ba cumpar bilet ieftin pentru barcelonna vere",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 936,
+    "query": "bossulica anuuleaza rezervarea si da-mi banii inapoi coaie",
+    "expected_tool": "none",
+    "flight_number": "W63712",
+    "category": "none"
+  },
+  {
+    "id": 937,
+    "query": "vere unde gasesc o toaleta in terminal cooaie",
+    "expected_tool": "open_airport_map",
+    "flight_number": "RO341",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 938,
+    "query": "bossulica la ce altitudine e avionul coaie",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "W63712",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 939,
+    "query": "salut mai e mult pana la zbor pls",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 940,
+    "query": "bossulica am voie cu laptopul in bagajul de mana ms",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "battery"
+  },
+  {
+    "id": 941,
+    "query": "frratioare unde e zona de fumat in terminal sa moara franta",
+    "expected_tool": "open_airport_map",
+    "flight_number": "FF123",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 942,
+    "query": "cate frunze are un stejar batran ca ma grabesc",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 943,
+    "query": "cumetre in cat timp incepe imbarcarea urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 944,
+    "query": "auzzi ba care e statusul cuursei FFF123 coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 945,
+    "query": "bossulica pot lua o sticla de apa de 500ml dupa securitate vericule",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "liquids"
+  },
+  {
+    "id": 946,
+    "query": "cumetre la cat decoleaza zborul FF123 ms",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 947,
+    "query": "buna unde imbarcam pentru FR1024 te rog",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 948,
+    "query": "ba baiatuule cat lichid am voie in bagajul de mana vere",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "liquids"
+  },
+  {
+    "id": 949,
+    "query": "hei cat tiimp mai este pana la poarta coaie",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 950,
+    "query": "auzi ba termen limita pentru reclamatie bagaj deteriorat te rog",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 951,
+    "query": "patroane arata-mi farmacia din aeroport ba",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 952,
+    "query": "ba cati dinti are un crocodil adult boss",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 953,
+    "query": "mai am vreme de o tigara ms",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 954,
+    "query": "fratioare la ce ora aterizam coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 955,
+    "query": "ba pot lua un briceag sau un cutit mic in avion urgent",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "sharp"
+  },
+  {
+    "id": 956,
+    "query": "bossulica plateste-mi taxa de bagaj suplimentar pls",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 957,
+    "query": "auzi schimba-mi biletul pentru ziua de maine urgent",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 958,
+    "query": "buna cat lichid am voie in bagajul de mana ms",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "liquids"
+  },
+  {
+    "id": 959,
+    "query": "buuna cat timp mai este pana la poarta frate",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 960,
+    "query": "bossulica cat dureaza zboorul paana la destinatie urgent",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 961,
+    "query": "ma unde gasesc poarta mea de imbarcare coaie",
+    "expected_tool": "get_gate",
+    "flight_number": "FR1024",
+    "category": "get_gate"
+  },
+  {
+    "id": 962,
+    "query": "ba baiatule ce se intampla cu zborul W637112 ba",
+    "expected_tool": "get_flight_details",
+    "flight_number": "W63712",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 963,
+    "query": "cumetre la ce altitudine e avionul te rog",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 964,
+    "query": "unde e baia dupa controlul de securitate vericule",
+    "expected_tool": "open_airport_map",
+    "flight_number": "LH1418",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 965,
+    "query": "vere cat fac 247 inmultit cu 38 pls",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 966,
+    "query": "cummetre la ce altitudinne e avionul verre",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "FR1024",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 967,
+    "query": "ma ce poarta am la W63712 ca ma grabesc",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 968,
+    "query": "cumetre cat mai e pana pleaca avionul sa moara franta",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 969,
+    "query": "auzi ba care e sensul vietii in univers urgent",
+    "expected_tool": "none",
+    "flight_number": "RO341",
+    "category": "none"
+  },
+  {
+    "id": 970,
+    "query": "ia zi boss cat fac 247 inmultit cu 38 ba",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 971,
+    "query": "vere unde e poarta pentru zborul FF123 ba",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 972,
+    "query": "cumetre harta radar cu avionul sa moara franta",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "W63712",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 973,
+    "query": "patroane compania aeriana refuza sa-mi plateasca mancarea la intarziere frate",
+    "expected_tool": "search_knowledge",
+    "flight_number": "W63712",
+    "category": "compensation"
+  },
+  {
+    "id": 974,
+    "query": "auzi ba pot sa iau un ruucsac si un troller mic coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "cabin_sizes"
+  },
+  {
+    "id": 975,
+    "query": "buna cat cantareste un nor pe cer ba",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 976,
+    "query": "vere mi s-a pierdut geanta la cala unde depun reclamatie mersi",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 977,
+    "query": "ma ce fac daca mi-am pierdut buletinul in strainatate pls",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "passport"
+  },
+  {
+    "id": 978,
+    "query": "unde imbarcam pentru RO341 urgent",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 979,
+    "query": "auuzi ba cat a mai ramas pana la zbor ba",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "W63712",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 980,
+    "query": "vere am voie cu pisica in cabina de pasageri boss",
+    "expected_tool": "search_knowledge",
+    "flight_number": "RO341",
+    "category": "pets"
+  },
+  {
+    "id": 981,
+    "query": "auzi ba pe unde ma duc la porta boss",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 982,
+    "query": "hei la cat incepe boarding-ul urgent",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "LH1418",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 983,
+    "query": "cumetre ce acte trebuie pentru catel in avion coaie",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FF123",
+    "category": "pets"
+  },
+  {
+    "id": 984,
+    "query": "bossulica unde imbarcam pentru RO341 ms",
+    "expected_tool": "get_gate",
+    "flight_number": "RO341",
+    "category": "get_gate"
+  },
+  {
+    "id": 985,
+    "query": "ba arata-mi pozitia avionului pe harta pls",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 986,
+    "query": "ba baiatule cand pleaca avionul vericule",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 987,
+    "query": "fratioare unde e gate-ul pentru cursa W637712 sa moara franta",
+    "expected_tool": "get_gate",
+    "flight_number": "W63712",
+    "category": "get_gate"
+  },
+  {
+    "id": 988,
+    "query": "ba baiatule cand pleaca avionul FR1024 coaie",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FR1024",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 989,
+    "query": "ia zi boss unde este avionul meu acum ba",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "LH1418",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 990,
+    "query": "vere cumpar bilet ieftin pentru barcelona ms",
+    "expected_tool": "none",
+    "flight_number": "FF123",
+    "category": "none"
+  },
+  {
+    "id": 991,
+    "query": "unde se afla zborul RO341 in aer te rog",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "RO341",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 992,
+    "query": "vere unde se afla zborul W63712 in aer ms",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "W63712",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 993,
+    "query": "auzi ba unde e poarta pentru zborul FF123 ms",
+    "expected_tool": "get_gate",
+    "flight_number": "FF123",
+    "category": "get_gate"
+  },
+  {
+    "id": 994,
+    "query": "patroane plateste-mi taxa de bagaj suplimentar sa moara franta",
+    "expected_tool": "none",
+    "flight_number": "LH1418",
+    "category": "none"
+  },
+  {
+    "id": 995,
+    "query": "hei unde pot schimba bani casa de schimb valutar pls",
+    "expected_tool": "open_airport_map",
+    "flight_number": "W63712",
+    "category": "open_airport_map"
+  },
+  {
+    "id": 996,
+    "query": "ia zi boss cat mai e pana pleaca avionul boss",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "FF123",
+    "category": "get_time_remaining"
+  },
+  {
+    "id": 997,
+    "query": "nene urmareste zborul W63712 in timp real coaie",
+    "expected_tool": "get_live_tracking",
+    "flight_number": "W63712",
+    "category": "get_live_tracking"
+  },
+  {
+    "id": 998,
+    "query": "ia zi boss cat e intarzierea la zborul ms",
+    "expected_tool": "get_flight_details",
+    "flight_number": "FF123",
+    "category": "get_flight_details"
+  },
+  {
+    "id": 999,
+    "query": "ma bagaj intarziat de 3 zile ce despagubiri primesc ms",
+    "expected_tool": "search_knowledge",
+    "flight_number": "FR1024",
+    "category": "baggage_complaint"
+  },
+  {
+    "id": 1000,
+    "query": "ba mai e muult pana la zbor frate",
+    "expected_tool": "get_time_remaining",
+    "flight_number": "RO341",
+    "category": "get_time_remaining"
+  }
+]

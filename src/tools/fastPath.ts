@@ -6,7 +6,7 @@ const UNSAFE = /\b(nu|fara|nici|not|no|without|ignore|ignora|instruc|instruction
 const LEAD = /^(?:ba|ma|bai|frate|nene|na|ia zi|ok deci|hey|quick|dude|bro|yo)[, ]+/;
 const TAIL = /[, ]+(?:ma|ba|frate|pe bune|sincer|mersi|pls|asap|thanks|bro|man|lol)$/;
 
-function toolFor(question: string): string | null {
+export function toolFor(question: string): string | null {
   const raw = plain(question);
   if (raw.length > 100 || UNSAFE.test(raw)) return null;
   const q = raw.replace(LEAD, '').replace(TAIL, '');

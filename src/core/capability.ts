@@ -11,6 +11,9 @@ const UNSUPPORTED = [
   /\b(parola\s+(?:de\s+)?(?:wi[ -]?fi|internet)|upgrade\s+(?:la\s+)?business)\b/i,
 ];
 
+/** Asking WHERE to exchange money is a map question, not a request to "change" a reservation: these phrases are removed before the action verbs are tested. */
+const EXCHANGE = /\b(?:schimba\s+bani|schimb(?:ul)?\s+valutar|case?\s+de\s+schimb(?:\s+valutar)?|birou(?:l)?\s+de\s+schimb|exchange\s+money|currency\s+exchange)\b/g;
+
 const CHITCHAT = [
   /\b(spune[- ]mi\s+(?:un\s+)?banc|scrie[- ]mi\s+o\s+poezie|tell\s+me\s+a\s+joke)\b/i,
   /\b(vremea(?:\s+\w+){0,5}|weather\s+in|ce\s+zodie|what\s+star\s+sign)\b/i,
@@ -20,7 +23,8 @@ export function capabilityBoundary(question: string): 'unsupported-capability' |
   // JavaScript's \b treats Romanian diacritics as non-word characters. Work
   // with a normalized ASCII view so "cumpără" and "cumpara" share a boundary.
   const normalized = question.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  if (UNSUPPORTED.some(pattern => pattern.test(normalized))) return 'unsupported-capability';
+  const withoutExchange = normalized.replace(EXCHANGE, ' ');
+  if (UNSUPPORTED.some(pattern => pattern.test(withoutExchange))) return 'unsupported-capability';
   if (CHITCHAT.some(pattern => pattern.test(normalized))) return 'out-of-scope';
   return null;
 }
