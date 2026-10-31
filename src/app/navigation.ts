@@ -12,6 +12,7 @@ export type RootStackParamList = {
   Paste: { initialCode?: string } | undefined;
   Pass: { ticketId: string; justAdded?: boolean };
   Live: undefined;
+  LiveFlight: undefined;
   Profile: undefined;
   Main: NavigatorScreenParams<TabParamList> | undefined;
 };

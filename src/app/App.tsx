@@ -1,5 +1,5 @@
 import { createBottomTabNavigator, type BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { DefaultTheme, NavigationContainer, type Theme } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer, type LinkingOptions, type Theme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useEffect } from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
@@ -17,6 +17,7 @@ import { MapScreen } from '../screens/MapScreen';
 import { PassScreen } from '../screens/PassScreen';
 import { PasteScreen } from '../screens/PasteScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
+import { LiveFlightScreen } from '../screens/LiveFlightScreen';
 import { LiveScreen } from '../screens/LiveScreen';
 import { ScanScreen } from '../screens/ScanScreen';
 import { startDeviceLink } from '../services/live/deviceLink';
@@ -39,6 +40,9 @@ const navTheme: Theme = {
   ...DefaultTheme,
   colors: { ...DefaultTheme.colors, background: colors.bg, primary: colors.accent, text: colors.text, card: colors.bg },
 };
+
+// A tap on the Live Activity opens flyq://live (the scheme is in app.json): the live flight screen, not only the app.
+const linking: LinkingOptions<RootStackParamList> = { prefixes: ['flyq://'], config: { screens: { LiveFlight: 'live' } } };
 
 // Definit în afara componentei, ca navigatorul să nu recreeze bara la fiecare randare
 const renderTabBar = (props: BottomTabBarProps) => <TabBar {...props} />;
@@ -97,6 +101,7 @@ function RootNavigator() {
       <Stack.Screen name="Paste" component={PasteScreen} />
       <Stack.Screen name="Pass" component={PassScreen} />
       <Stack.Screen name="Live" component={LiveScreen} />
+      <Stack.Screen name="LiveFlight" component={LiveFlightScreen} options={{ animation: 'fade_from_bottom' }} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Main" component={MainTabs} options={{ animation: 'fade' }} />
     </Stack.Navigator>
@@ -116,7 +121,7 @@ export default function App() {
       <SafeAreaProvider>
         {/* Doar temă luminoasă: bara de stare are mereu text închis */}
         <StatusBar barStyle="dark-content" />
-        <NavigationContainer ref={navRef} theme={navTheme}>
+        <NavigationContainer ref={navRef} theme={navTheme} linking={linking}>
           <RootNavigator />
         </NavigationContainer>
         {showSplash ? <FlyQSplashIntro key={runId} onDone={hide} /> : null}
