@@ -1,0 +1,3 @@
+# Netlify: the share page is static. /v1/public/shares/* is proxied to the FlyQ server (same origin for the browser, so no CORS needed) and /s/<token> serves the page.
+/v1/public/shares/*  https://flyq-cra.duckdns.org/v1/public/shares/:splat  200!
+/s/*  /index.html  200

@@ -122,7 +122,7 @@ function getLandDots() {
       const pt = { x, y };
       const sea = SEA_PX.some(poly => inside(pt, poly)) && !ISLAND_PX.some(poly => inside(pt, poly));
       if (sea) continue;
-      (MOUNTAIN_PX.some(poly => inside(pt, poly)) ? mountain : land).push(pt);
+      land.push(pt); // relief is not drawn: the purple mountain dots made the map hard to read
     }
   }
   landDots = { land, mountain };
@@ -164,12 +164,12 @@ export const FlightRouteMap = memo(function FlightRouteMap({ from, to, landmarks
   // Ruta pe arc de cerc mare, eșantionată ca o curbă netedă
   const route = useMemo(() => Array.from({ length: SAMPLES + 1 }, (_, i) => interpolateGreatCircle(from, to, i / SAMPLES)), [from, to]);
   const routePx = useMemo(() => route.map(project), [route]);
-  const { baseD, litD, mountainD } = useMemo(() => {
+  const { baseD, litD } = useMemo(() => {
     const base: Pt[] = [];
     const lit: Pt[] = [];
-    const { land, mountain } = getLandDots();
+    const { land } = getLandDots();
     for (const d of land) (distToPolyline(d, routePx) < CORRIDOR ? lit : base).push(d);
-    return { baseD: dotsPath(base, 1.05), litD: dotsPath(lit, 1.35), mountainD: dotsPath(mountain, 1.7) };
+    return { baseD: dotsPath(base, 1.15), litD: dotsPath(lit, 1.5) };
   }, [routePx]);
 
   const progress = position?.progress ?? 0;
@@ -198,7 +198,7 @@ export const FlightRouteMap = memo(function FlightRouteMap({ from, to, landmarks
   const pulseProps = useAnimatedProps(() => ({ r: 9 + pulse.value * 16, opacity: 0.5 * (1 - pulse.value) }));
 
   // Etichetele orașelor stau de partea opusă rutei, ca linia să nu le taie
-  const labels = landmarks.map(l => {
+  const labels = landmarks.filter(l => l.kind === 'city').map(l => {
     const pin = project(l);
     let nearest = routePx[0]!;
     let best = Infinity;
@@ -237,14 +237,12 @@ export const FlightRouteMap = memo(function FlightRouteMap({ from, to, landmarks
             </LinearGradient>
           </Defs>
 
-          {/* Uscatul deschis, mările albastre, munții în violet și punctele de pe uscat */}
+          {/* Uscatul deschis, mările albastre și punctele de pe uscat (fără relief) */}
           <Rect width={W} height={H} fill={colors.mapLand} />
-          <Path d={MOUNTAIN_D} fill={colors.mapMountainFill} />
           <Path d={SEA_D} fill={colors.mapSea} stroke={colors.mapCoast} strokeWidth={0.8} />
           <Path d={ISLAND_D} fill={colors.mapLand} stroke={colors.mapCoast} strokeWidth={0.8} />
           <Path d={baseD} fill={colors.mapDot} />
           <Path d={litD} fill={colors.mapDotLit} />
-          <Path d={mountainD} fill={colors.mapMountain} />
 
           {/* Luminile orașelor de pe traseu; munții au doar eticheta */}
           {labels.map(({ l, pin, above }) => (
@@ -260,11 +258,11 @@ export const FlightRouteMap = memo(function FlightRouteMap({ from, to, landmarks
               <SvgText
                 x={pin.x}
                 y={above ? pin.y - 9 : pin.y + 16}
-                fontSize={8.5}
-                fontWeight="700"
-                letterSpacing={1}
+                fontSize={10}
+                fontWeight="800"
+                letterSpacing={0.8}
                 fill={colors.mapLabelNight}
-                fillOpacity={0.85}
+                fillOpacity={0.95}
                 textAnchor="middle"
               >
                 {l.name.toUpperCase()}
@@ -273,11 +271,11 @@ export const FlightRouteMap = memo(function FlightRouteMap({ from, to, landmarks
           ))}
 
           {/* Ruta: rămasă (punctată, animată) și parcursă (gradient violet → albastru, cu strălucire) */}
-          <AnimatedPath d={remainingD} fill="none" stroke={colors.mapDotLit} strokeOpacity={0.7} strokeWidth={1.6} strokeDasharray="4 5" strokeLinecap="round" animatedProps={dashProps} />
+          <AnimatedPath d={remainingD} fill="none" stroke={colors.mapDotLit} strokeOpacity={0.95} strokeWidth={2.4} strokeDasharray="5 5" strokeLinecap="round" animatedProps={dashProps} />
           {position ? (
             <G opacity={estimate ? 0.55 : 1}>
-              <Path d={flownD} fill="none" stroke={colors.accentGlow} strokeOpacity={0.25} strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" />
-              <Path d={flownD} fill="none" stroke="url(#flown)" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
+              <Path d={flownD} fill="none" stroke={colors.accentGlow} strokeOpacity={0.3} strokeWidth={12} strokeLinecap="round" strokeLinejoin="round" />
+              <Path d={flownD} fill="none" stroke="url(#flown)" strokeWidth={4.2} strokeLinecap="round" strokeLinejoin="round" />
             </G>
           ) : null}
 
@@ -292,10 +290,10 @@ export const FlightRouteMap = memo(function FlightRouteMap({ from, to, landmarks
               <G key={a.code}>
                 <Circle cx={q.x} cy={q.y} r={18} fill="url(#airportLight)" />
                 <Circle cx={q.x} cy={q.y} r={4} fill={colors.accent} stroke={colors.white} strokeWidth={1.4} />
-                <SvgText x={tx} y={below ? q.y + 22 : q.y - 14} fontSize={11} fontWeight="800" letterSpacing={1.2} fill={colors.text} textAnchor={anchor}>
+                <SvgText x={tx} y={below ? q.y + 22 : q.y - 14} fontSize={13} fontWeight="900" letterSpacing={1.2} fill={colors.text} textAnchor={anchor}>
                   {a.code}
                 </SvgText>
-                <SvgText x={tx} y={below ? q.y + 33 : q.y - 26} fontSize={7.5} fontWeight="700" letterSpacing={1} fill={colors.accentText} textAnchor={anchor}>
+                <SvgText x={tx} y={below ? q.y + 33 : q.y - 26} fontSize={9} fontWeight="800" letterSpacing={0.8} fill={colors.accentText} textAnchor={anchor}>
                   {a.city.toUpperCase()}
                 </SvgText>
               </G>
@@ -325,7 +323,7 @@ export const FlightRouteMap = memo(function FlightRouteMap({ from, to, landmarks
               <AnimatedCircle cx={hp.x} cy={hp.y} fill="none" stroke={colors.accentGlow} strokeWidth={1.4} animatedProps={pulseProps} />
             </G>
           ) : null}
-          <G transform={`translate(${hp.x} ${hp.y}) rotate(${rotation}) scale(1.15)`} opacity={estimate ? 0.7 : 1}>
+          <G transform={`translate(${hp.x} ${hp.y}) rotate(${rotation}) scale(1.4)`} opacity={estimate ? 0.7 : 1}>
             <Path d="M11 0 4-2-1-10h-3l2 8h-8l-2-3h-2l1 5-1 5h2l2-3h8l-2 8h3l5-8z" fill={colors.accent} stroke={colors.white} strokeWidth={1.2} />
           </G>
         </Svg>

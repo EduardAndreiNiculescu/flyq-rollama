@@ -1,0 +1,3 @@
+# Deploy the share page (web/share) on Netlify: see docs/SHARE_FLIGHT.md, section "Netlify".
+[build]
+  publish = "web/share"

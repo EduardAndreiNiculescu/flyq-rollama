@@ -59,6 +59,7 @@ export async function loadDeviceModel(): Promise<boolean> {
   const st = await checkModel(tier);
   if (st.state !== 'ready') {
     ui.set('missing');
+    console.error('[FlyQ] on-device model is not usable:', st.state);
     return false;
   }
   ui.set('preparing');
@@ -66,6 +67,7 @@ export async function loadDeviceModel(): Promise<boolean> {
     await engine.load(st.path, { ...DEFAULT_CONFIG, nCtx: deviceOpts.nCtx, kv: deviceOpts.kv }, undefined, null); // RoLlama is merged: no LoRA to attach
   } catch (e) {
     ui.set('failed');
+    console.error('[FlyQ] on-device model failed to load:', String(e)); // reaches the native console in release builds
     throw e;
   }
   ui.set('ready');

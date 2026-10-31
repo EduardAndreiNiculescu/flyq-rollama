@@ -2,7 +2,7 @@
 
 Un link către o pagină web care arată **zborul** pasagerului (poziția avionului, starea, poarta, ora estimată de aterizare), fără cont și fără aplicație. Pagina nu arată nimic despre persoană.
 
-Stare (31.10.2026): pagina și butonul din aplicație sunt scrise; **endpoint-urile serverului nu există încă** (se adaugă în repo-ul `FlyQ-backend`). Până atunci, butonul răspunde „Serverul FlyQ nu are încă partajarea de zbor", iar pagina funcționează în mod demo.
+Stare (1.11.2026): pagina, publicarea pe Netlify (configurată, nepublicată) și butonul din aplicație sunt scrise; **endpoint-urile serverului nu există încă** (se adaugă în repo-ul `FlyQ-backend`). Până atunci, butonul răspunde „Serverul FlyQ nu are încă partajarea de zbor", iar pagina funcționează în mod demo.
 
 ## 1. Piese
 
@@ -88,3 +88,24 @@ Raport: planul aprobat, commit-uri, rezultatul `npm run check`, costul estimat �
 - Comportamentul MapLibre pe telefoane vechi și cu rețea slabă.
 - Condițiile de utilizare OpenFreeMap pentru o lansare comercială.
 - Textul juridic (GDPR) al partajării.
+
+## 7. Netlify (site în picioare pentru rude)
+
+Pagina e statică, deci se publică pe Netlify fără build. În repo există: `web/share/index.html` (pagina), `web/share/_redirects` și `web/share/_headers` (proxy și antete), `netlify.toml` (directorul de publicare). **Nu am putut publica eu**: cere contul tău Netlify.
+
+**Varianta rapidă (trage și lasă):** deschide `https://app.netlify.com/drop` și trage folderul `web/share` (cu `_redirects` și `_headers` în el). Primești o adresă `https://<nume>.netlify.app`. Poți schimba numele din Site configuration → Change site name.
+
+**Varianta cu modificări automate:** Netlify → Add new site → Import from Git → repo-ul `flyq-rollama` (după ce ai împins pe GitHub), Build command gol, Publish directory `web/share` (e deja în `netlify.toml`). Fiecare push pe `main` republică site-ul; pagina e un singur fișier HTML, deci se modifică direct în `web/share/index.html`.
+
+**Cum funcționează:** browserul rudei deschide `https://<site>/s/<token>`; Netlify servește `index.html`; pagina cere `/v1/public/shares/<token>` pe același domeniu, iar Netlify retrimite cererea către `https://flyq-cra.duckdns.org/v1/public/shares/<token>` (regula din `_redirects`). Pentru browser e același domeniu, deci **backend-ul nu are nevoie de CORS**.
+
+**Test fără backend:** `https://<site>/?demo=1` arată un zbor simulat (CRA → LTN). Dacă harta apare și avionul se mișcă, site-ul e în picioare.
+
+## 8. Cum trebuie configurat backend-ul pentru rude
+
+1. **Endpoint-urile** din secțiunea 3 (`POST /v1/shares`, `DELETE /v1/shares/{id}`, `GET /v1/public/shares/{token}`). `GET /v1/public/shares/*` trebuie să fie **public**: fără `X-FlyQ-App-Key`, fără sesiune. Acum o rută necunoscută răspunde `401` (de aceea aplicația a primit 401 la „Trimite familiei"): rutele `/v1/shares` nu există încă, iar `/v1/public/*` trebuie scoasă din autentificare.
+2. **Adresa din link:** variabilă de mediu `SHARE_BASE_URL=https://<site>.netlify.app`; `url` din răspunsul lui `POST /v1/shares` = `${SHARE_BASE_URL}/s/${token}`, ca rudele să deschidă pagina de pe Netlify, nu serverul.
+3. **Limitarea pe IP:** cererile ajung la backend prin Netlify, deci IP-ul vizibil e al Netlify. Limitează după `X-Nf-Client-Connection-Ip` sau primul IP din `X-Forwarded-For`, nu după IP-ul conexiunii, altfel toate rudele împart aceeași limită.
+4. **Antete pe răspunsul public:** `Cache-Control: no-store`, `X-Robots-Tag: noindex`, `X-Content-Type-Options: nosniff`.
+5. **Încrederea în proxy:** Fastify trebuie să aibă `trustProxy` doar dacă citești IP-ul din antet, și doar pentru antetele Netlify.
+6. **Test de acceptare:** `curl -i https://<site>/v1/public/shares/<token>` întoarce `200` cu corpul din secțiunea 3, iar după `DELETE` întoarce `404`. Dacă întoarce `401`, ruta e încă în spatele autentificării.

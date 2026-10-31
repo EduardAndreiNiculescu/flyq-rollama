@@ -69,11 +69,14 @@ export const useLive = create<LiveState>()(
       name: 'live',
       storage: zustandStorage,
       // v1: installs that had stored the old default ('mock') move to the real assistant. v2: the default flight source is the FlyQ server.
-      version: 2,
+      version: 3,
+      // The "Fara AI" switch is a test lever: it is not stored, so the assistant never starts in the router-only mode by accident.
+      partialize: state => Object.fromEntries(Object.entries(state).filter(([k]) => k !== 'modelTier')) as unknown as LiveState,
       migrate: (stored, version) => {
         let s = stored as Partial<LiveState>;
         if (version < 1 && s.assistantSource === 'mock') s = { ...s, assistantSource: 'deviceTools' };
         if (version < 2 && s.backend === 'gateway') s = { ...s, backend: 'flyq' }; // v2: flights come from the FlyQ server by default
+        if (version < 3 && s.modelTier === 'no-ai') s = { ...s, modelTier: 'rollama' }; // v3: an old "no AI" test choice no longer sticks
         return s as LiveState;
       },
     },

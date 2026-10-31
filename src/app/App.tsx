@@ -12,6 +12,7 @@ import { SharedBackground, SharedBackgroundContext } from '../components/SharedB
 import { SkeletonScreen } from '../components/Skeleton';
 import { hasUpcomingTicket } from '../lib/tickets';
 import { AddTicketScreen } from '../screens/AddTicketScreen';
+import { FlightNumberScreen } from '../screens/FlightNumberScreen';
 import { AssistantScreen } from '../screens/AssistantScreen';
 import { FlightTabScreen } from '../screens/FlightTabScreen';
 import { MapScreen } from '../screens/MapScreen';
@@ -101,6 +102,7 @@ function RootNavigator() {
       <Stack.Screen name="AddTicket" component={AddTicketScreen} />
       <Stack.Screen name="Scan" component={ScanScreen} />
       <Stack.Screen name="Paste" component={PasteScreen} />
+      <Stack.Screen name="FlightNumber" component={FlightNumberScreen} />
       <Stack.Screen name="Pass" component={PassScreen} />
       <Stack.Screen name="Live" component={LiveScreen} />
       <Stack.Screen name="LiveFlight" component={LiveFlightScreen} options={{ animation: 'fade_from_bottom' }} />

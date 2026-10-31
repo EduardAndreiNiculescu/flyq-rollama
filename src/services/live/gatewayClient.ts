@@ -63,8 +63,8 @@ export async function flyqToken(force = false): Promise<string> {
   return j.token;
 }
 
-export async function flyqFlight(flightNumber: string, now: Date = new Date()): Promise<unknown> {
-  const path = `/v1/flights/${encodeURIComponent(flightNumber.replace(/\s+/g, ''))}?date=${localDate(now)}`;
+export async function flyqFlight(flightNumber: string, now: Date = new Date(), date?: string): Promise<unknown> {
+  const path = `/v1/flights/${encodeURIComponent(flightNumber.replace(/\s+/g, ''))}?date=${date ?? localDate(now)}`;
   const call = async (force: boolean) => flyqFetch(path, { headers: { authorization: `Bearer ${await flyqToken(force)}` } });
   try {
     return await call(false);
@@ -94,8 +94,8 @@ export async function fetchServerEta(flightNumber: string, date: string): Promis
   }
 }
 
-export async function fetchFlight(flightNumber: string): Promise<FlightLookup> {
-  const j = (useLive.getState().backend === 'flyq' ? await flyqFlight(flightNumber) : await gatewayCall(`/v1/flight/${encodeURIComponent(flightNumber.replace(/\s+/g, ''))}`)) as { record?: FlightRecord | null; tracking?: unknown };
+export async function fetchFlight(flightNumber: string, date?: string): Promise<FlightLookup> {
+  const j = (useLive.getState().backend === 'flyq' ? await flyqFlight(flightNumber, new Date(), date) : await gatewayCall(`/v1/flight/${encodeURIComponent(flightNumber.replace(/\s+/g, ''))}`)) as { record?: FlightRecord | null; tracking?: unknown };
   let tracking: TrackingResult | null = null;
   try {
     tracking = j.tracking ? parseTrackingResult(j.tracking) : null;

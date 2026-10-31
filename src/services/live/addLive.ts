@@ -7,10 +7,10 @@ import { fetchFlight } from './gatewayClient';
 import { buildLiveEntry, registerLive } from './liveFlights';
 
 const ERRORS: Record<string, string> = {
-  unreachable: 'Gateway-ul nu răspunde. Pornește-l pe laptop și verifică adresa.',
-  unauthorized: 'Token greșit.',
-  not_found: 'Furnizorul nu cunoaște zborul (sau nu e în aer/programat azi).',
-  upstream: 'Gateway-ul a dat o eroare (poate s-a terminat bugetul de apeluri sau cererea a fost respinsă).',
+  unreachable: 'Nu pot contacta serverul FlyQ (rețea sau adresă).',
+  unauthorized: 'Serverul FlyQ a refuzat cererea: cheia aplicației lipsește sau nu e validă.',
+  not_found: 'Serverul nu găsește zborul pentru această dată. Verifică numărul (ex. W43772 sau WZZ3101) și data.',
+  upstream: 'Serverul FlyQ a dat o eroare la furnizor (poate s-a terminat cota de apeluri). Încearcă mai târziu.',
 };
 
 const dayOfYear = (d: Date) => Math.floor((Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) - Date.UTC(d.getUTCFullYear(), 0, 0)) / 86_400_000);
@@ -18,12 +18,14 @@ const dayOfYear = (d: Date) => Math.floor((Date.UTC(d.getUTCFullYear(), d.getUTC
 export type AddResult = { ok: boolean; message: string; flightId?: string };
 
 /** A real flight from the gateway becomes the active ticket (used by the Test mode screen and by the remote command). */
-export async function addLiveFlight(raw: string): Promise<AddResult> {
-  const number = raw.replace(/\s+/g, '').toUpperCase();
+export async function addLiveFlight(raw: string, date?: string): Promise<AddResult> {
+  // "w6 3541", "W6-3541", "wzz 3101": spaces, dashes and case do not matter
+  const number = raw.replace(/[\s\-_.]/g, '').toUpperCase();
+  if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) return { ok: false, message: 'Data trebuie să fie de forma AAAA-LL-ZZ (ex. 2026-11-01).' };
   if (!/^[A-Z0-9]{2,3}\d{1,4}[A-Z]?$/.test(number)) return { ok: false, message: 'Format de zbor invalid (ex. RO311, W63541).' };
   try {
-    const { record } = await fetchFlight(number);
-    if (!record) return { ok: false, message: 'Furnizorul a găsit zborul, dar fără orar complet; nu inventez ore.' };
+    const { record } = await fetchFlight(number, date);
+    if (!record) return { ok: false, message: 'Serverul a găsit zborul, dar fără orar complet; nu inventez ore.' };
     const built = buildLiveEntry(record);
     if (!built.ok) return { ok: false, message: `Nu pot adăuga zborul: ${built.error}.` };
     registerLive(built.entry);
@@ -37,7 +39,7 @@ export async function addLiveFlight(raw: string): Promise<AddResult> {
     useLive.getState().setTrackerSource('live');
     return { ok: true, message: `Adăugat ${number}: ${f.from} → ${f.to}.`, flightId: f.id };
   } catch (e) {
-    return { ok: false, message: ERRORS[e instanceof Error ? e.message : ''] ?? 'Eroare necunoscută.' };
+    return { ok: false, message: ERRORS[e instanceof Error ? e.message : ''] ?? `Eroare: ${e instanceof Error ? e.message : 'necunoscută'}.` };
   }
 }
 

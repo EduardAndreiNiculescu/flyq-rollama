@@ -34,7 +34,8 @@ async function authed(path: string, init: RequestInit): Promise<Response> {
 export async function createShare(record: FlightRecord): Promise<ShareResult> {
   try {
     const res = await authed('/v1/shares', { method: 'POST', body: JSON.stringify({ flightNumber: record.flightNumber, date: localDate(record.scheduledDeparture) }) });
-    if (res.status === 404 || res.status === 405) return { ok: false, message: 'Serverul FlyQ nu are încă partajarea de zbor.' };
+    if (res.status === 404 || res.status === 405) return { ok: false, message: 'Serverul FlyQ nu are încă partajarea de zbor (ruta /v1/shares lipsește).' };
+    if (res.status === 401 || res.status === 403) return { ok: false, message: `Serverul a răspuns ${res.status} chiar și cu o sesiune nouă: ruta /v1/shares nu există încă pe server (o rută necunoscută primește 401) sau cheia FlyQ nu e validă. Verifică cu „Testează cheia FlyQ” din Mod test.` };
     if (!res.ok) return { ok: false, message: `Serverul a răspuns ${res.status}.` };
     const j = (await res.json()) as { shareId?: unknown; url?: unknown; expiresAt?: unknown };
     if (typeof j.shareId !== 'string' || typeof j.url !== 'string' || typeof j.expiresAt !== 'string' || !/^https:\/\//.test(j.url)) return { ok: false, message: 'Răspuns neașteptat de la server.' };

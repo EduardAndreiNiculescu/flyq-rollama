@@ -10,6 +10,7 @@ export type RootStackParamList = {
   AddTicket: undefined;
   Scan: undefined;
   Paste: { initialCode?: string } | undefined;
+  FlightNumber: undefined;
   Pass: { ticketId: string; justAdded?: boolean };
   Live: undefined;
   LiveFlight: undefined;

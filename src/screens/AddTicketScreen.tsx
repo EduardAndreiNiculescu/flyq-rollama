@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { ChevronRight, ClipboardPaste, Globe, Lock, Plane, ScanLine, Ticket, type LucideIcon } from 'lucide-react-native';
+import { ChevronRight, ClipboardPaste, Globe, Hash, Lock, Plane, ScanLine, Ticket, type LucideIcon } from 'lucide-react-native';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
@@ -55,9 +55,10 @@ export function AddTicketScreen() {
         </AppText>
       </View>
 
-      <Option index={0} icon={ScanLine} title={t('add.scan')} hint={t('add.scanHint')} highlighted onPress={() => navigation.navigate('Scan')} />
-      <Option index={1} icon={ClipboardPaste} tone="indigo" title={t('add.paste')} hint={t('add.pasteHint')} onPress={() => navigation.navigate('Paste')} />
-      <Option index={2} icon={Ticket} tone="violet" title={t('add.demo')} hint={t('add.demoHint')} badge={t('add.demoBadge')} onPress={addDemo} />
+      <Option index={0} icon={Hash} title={language === 'ro' ? 'Număr de zbor' : 'Flight number'} hint={language === 'ro' ? 'Cauți un zbor real prin serverul FlyQ (ex. W43772)' : 'Look up a real flight through the FlyQ server (e.g. W43772)'} highlighted onPress={() => navigation.navigate('FlightNumber')} />
+      <Option index={1} icon={ScanLine} tone="indigo" title={t('add.scan')} hint={t('add.scanHint')} onPress={() => navigation.navigate('Scan')} />
+      <Option index={2} icon={ClipboardPaste} tone="indigo" title={t('add.paste')} hint={t('add.pasteHint')} onPress={() => navigation.navigate('Paste')} />
+      <Option index={3} icon={Ticket} tone="violet" title={t('add.demo')} hint={t('add.demoHint')} badge={t('add.demoBadge')} onPress={addDemo} />
 
       {error ? <ErrorBanner message={error} /> : null}
 
