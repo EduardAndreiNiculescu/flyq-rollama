@@ -87,3 +87,6 @@ scripts/apify-*.ts
 .env.*
 
 .claude/
+
+verify-report.json
+verify-bench.json
