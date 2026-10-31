@@ -16,7 +16,7 @@ if (cmd === 'bootstrap') { run('git', ['push', '--force', 'mac', 'HEAD:main']); 
 else if (cmd === 'build') {
   if (!device) { console.error('set MAC_DEVICE to the iPhone UDID'); process.exit(1); }
   run('git', ['push', '--force', 'mac', 'HEAD:main']);
-  ssh(`${sync} && rm -f ~/build.log && printf '#!/bin/bash\ncd ${dir} && bash scripts/mac/build-ios.sh ${device} 2>&1 | tee ~/build.log\necho BUILD-FINISHED >> ~/build.log\n' > ~/ff-build.command && chmod +x ~/ff-build.command && open -a Terminal ~/ff-build.command`);
+  ssh(`${sync} && rm -f ~/build.log && printf '#!/bin/bash\ncd ${dir} && PUSH=${process.env.PUSH ?? 0} bash scripts/mac/build-ios.sh ${device} 2>&1 | tee ~/build.log\necho BUILD-FINISHED >> ~/build.log\n' > ~/ff-build.command && chmod +x ~/ff-build.command && open -a Terminal ~/ff-build.command`);
   let seen = 0;
   for (;;) {
     await sleep(10_000);
