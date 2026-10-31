@@ -58,7 +58,7 @@ if (cmd === 'test') {
   const [title = 'FlightFlow', body = 'Test notification'] = rest;
   const r = await call('/v1/admin/push/test', { deviceToken: device, environment, title, body });
   console.log(JSON.stringify(r));
-  process.exit(r.http === 200 ? 0 : 1);
+  process.exitCode = r.http === 200 ? 0 : 1;
 } else if (cmd === 'event') {
   const name = rest[0];
   if (!name) {
@@ -70,7 +70,7 @@ if (cmd === 'test') {
   if (flag('old')) data.oldGate = flag('old');
   if (flag('belt')) data.baggageBelt = flag('belt');
   if (flag('delay')) data.delayMinutes = Number(flag('delay'));
-  process.exit((await event(name, data)) ? 0 : 1);
+  process.exitCode = (await event(name, data)) ? 0 : 1;
 } else if (cmd === 'demo') {
   const steps: Array<[string, Record<string, unknown>]> = [['boarding_started', {}], ['gate_changed', { gate: '3', oldGate: '2' }], ['delay_changed', { delayMinutes: 25 }], ['gate_closing_soon', {}]];
   for (const [name, data] of steps) {
