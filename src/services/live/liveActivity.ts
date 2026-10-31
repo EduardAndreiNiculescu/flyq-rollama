@@ -7,15 +7,20 @@ import { patchLiveActivityToken } from './push';
 const clock = (iso: string | null | undefined) => (iso && /T(\d{2}:\d{2})/.exec(iso)?.[1]) || null;
 
 /** The card's first state, from the flight the app holds; the server sends the next ones (same keys). */
-export function activityProps(record: FlightRecord, boardingTime?: string | null): FlightActivityProps {
+export type Boarding = { time: string; epoch: number };
+
+export function activityProps(record: FlightRecord, boarding?: Boarding | null): FlightActivityProps {
   const delay = record.departureDelayMin ?? 0;
+  const departure = Date.parse(record.scheduledDeparture);
   return {
     flightNumber: record.flightNumber,
     from: record.departureAirport,
     to: record.arrivalAirport,
     status: record.providerStatus === 'landed' ? 'landed' : delay > 0 ? 'delayed' : 'scheduled',
     gate: record.gate,
-    boardingTime: boardingTime ?? null,
+    boardingTime: boarding?.time ?? null,
+    boardingEpoch: boarding?.epoch ?? null,
+    departureEpoch: Number.isFinite(departure) ? Math.floor(departure / 1000) : null,
     departureTime: clock(record.scheduledDeparture) ?? '--:--',
     estimatedDeparture: clock(record.estimatedDeparture),
     delayMinutes: Math.max(0, delay),
@@ -29,11 +34,11 @@ export type ActivityResult = { ok: boolean; message: string };
  * Starts the Live Activity and hands its push token to the FlyQ server (needs the push subscription first). Every new activity has its own token,
  * so the listener sends each one. iOS only; throws nothing: the result says what happened.
  */
-export async function startFlightActivity(record: FlightRecord, boardingTime?: string | null): Promise<ActivityResult> {
+export async function startFlightActivity(record: FlightRecord, boarding?: Boarding | null): Promise<ActivityResult> {
   if (Platform.OS !== 'ios') return { ok: false, message: 'Live Activities există doar pe iPhone.' };
   try {
     for (const old of FlightActivity.getInstances()) await old.end('immediate'); // one card at a time
-    const activity = FlightActivity.start(activityProps(record, boardingTime));
+    const activity = FlightActivity.start(activityProps(record, boarding));
     activity.addPushTokenListener(e => void patchLiveActivityToken(e.pushToken));
     const token = await activity.getPushToken();
     const sent = token ? await patchLiveActivityToken(token) : 'Token-ul activității nu e gata încă; îl trimit când apare.';

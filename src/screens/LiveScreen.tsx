@@ -14,6 +14,7 @@ import { flightData } from '../services';
 import { useLanguage } from '../i18n';
 import { addDemoFlight, addLiveFlight } from '../services/live/addLive';
 import { recordFor } from '../services/live/DeviceAssistantService';
+import { formatLocalTime } from '../lib/time';
 import { endFlightActivity, startFlightActivity } from '../services/live/liveActivity';
 import { deviceToken, registerForFlight, testFlyqKey } from '../services/live/push';
 import { pingGateway, sendBench } from '../services/live/gatewayClient';
@@ -79,7 +80,9 @@ export function LiveScreen() {
     const flight = ticket ? flightData.getFlight(ticket.flightId) : null;
     if (!flight) return setPushStatus('Nu e niciun bilet activ: adaugă un bilet ca să pornesc cardul.');
     setPushStatus('Pornesc cardul…');
-    setPushStatus((await startFlightActivity(recordFor(flight))).message);
+    const from = flightData.getAirport(flight.from);
+    const boarding = from && flight.boardingUtc ? { time: formatLocalTime(flight.boardingUtc, from.utcOffsetMin), epoch: Math.floor(new Date(flight.boardingUtc).getTime() / 1000) } : null;
+    setPushStatus((await startFlightActivity(recordFor(flight), boarding)).message);
   };
 
   useEffect(() => {
