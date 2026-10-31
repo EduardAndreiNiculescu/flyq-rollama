@@ -17,7 +17,8 @@ npm ci
 # Incremental by default (a clean prebuild recompiles React Native from source). CLEAN=1 forces it.
 if [ "${CLEAN:-0}" = 1 ] || [ ! -d ios ]; then npx expo prebuild --platform ios --clean; else npx expo prebuild --platform ios; fi
 
-ENT=$(find ios -name '*.entitlements' | head -1)
+# The app's own entitlements, not the widget extension's (ios/ExpoWidgetsTarget/*.entitlements has only the app group).
+ENT=$(find ios -name '*.entitlements' -not -path '*/Pods/*' -not -path '*ExpoWidgetsTarget*' | head -1)
 for key in com.apple.developer.kernel.increased-memory-limit com.apple.developer.kernel.extended-virtual-addressing; do
   grep -q "$key" "$ENT" || { echo "MISSING entitlement $key in $ENT: refusing to build without it"; exit 2; }
 done
