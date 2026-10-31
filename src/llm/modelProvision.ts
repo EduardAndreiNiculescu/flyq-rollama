@@ -18,7 +18,7 @@ export const MODEL_SPECS: Record<Exclude<ModelTier, 'no-ai'>, ModelSpec> = {
     tier: 'rollama',
     name: 'rollama-1b-dpo-q4.gguf',
     bytes: 851469152,
-    sha256: '54e17f65a03176a017167e04361d51e8b81d49ab1016f870370d691276e2e961', // repaired file (scripts/fix_gguf_rollama.py): F32 norms + RoPE settings
+    sha256: 'a7689c17e6d249be241d14969e7bcc2b82863a9d1000f98edc898cfbdf66e9d7', // repaired file (scripts/fix_gguf_rollama.py): F32 norms, RoPE settings, permuted Q/K
     label: 'RoLlama 1B (router, transfer manual, ~812 MB)',
   },
 };

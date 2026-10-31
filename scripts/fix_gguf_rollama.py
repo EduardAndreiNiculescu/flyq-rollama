@@ -3,6 +3,8 @@
 What was wrong with finetune/merge_and_quantize.py's output, found from the iPhone's console and Ollama's load log:
   1. The 33 normalisation weights (attn_norm, ffn_norm, output_norm) are stored as F16. llama.cpp multiplies them with F32 activations and
      aborts: "binary_op: unsupported types: dst: f32, src0: f32, src1: f16" -> SIGABRT when the model loads.
+  3. The Q and K projection matrices are not permuted the way llama.cpp expects (the standard converter does it; this exporter writes its own
+     GGUF). Without it attention is wrong and the model answers with noise (0 valid JSON of 70 questions in a llama.cpp run).
   2. The Llama 3.2 RoPE settings are missing: llama.rope.freq_base (500000), llama.rope.dimension_count, and the rope_freqs.weight tensor
      (llama3 scaling). Without them llama.cpp falls back to freq_base 10000 and the model answers badly.
 
@@ -19,6 +21,7 @@ from gguf import GGUFReader, GGUFWriter, GGMLQuantizationType, GGUFValueType
 # Llama 3.2 1B: rope_theta 500000, rope_scaling = llama3 (factor 32, low 1, high 4, original 8192), head_dim 64.
 ROPE_BASE, FACTOR, LOW, HIGH, ORIG = 500000.0, 32.0, 1.0, 4.0, 8192
 HEAD_DIM = 64
+N_HEAD, N_HEAD_KV = 32, 8  # Llama 3.2 1B
 
 
 def rope_factors() -> np.ndarray:
@@ -71,6 +74,7 @@ def main(src: str, dst: str) -> None:
             added.append(k)
 
     converted = 0
+    permuted = 0
     names = set()
     for t in r.tensors:
         names.add(t.name)
@@ -80,7 +84,15 @@ def main(src: str, dst: str) -> None:
         elif t.tensor_type in (GGMLQuantizationType.F32, GGMLQuantizationType.F16):
             w.add_tensor(t.name, np.asarray(t.data))
         else:
-            w.add_tensor(t.name, t.data, raw_dtype=t.tensor_type)  # the writer turns the byte shape of the reader's data into the element shape
+            data = t.data
+            nh = N_HEAD if t.name.endswith("attn_q.weight") else N_HEAD_KV if t.name.endswith("attn_k.weight") else 0
+            if nh:
+                # llama.cpp stores Q and K with the rotary pairs interleaved; Hugging Face weights use rotate_half. convert_hf_to_gguf.py permutes them.
+                # Rows of a quantised matrix are independent blocks, so permuting the rows of the Q4_0 bytes is the same as permuting the weights.
+                d = np.asarray(data)
+                data = d.reshape(nh, 2, d.shape[0] // nh // 2, d.shape[1]).swapaxes(1, 2).reshape(d.shape)
+                permuted += 1
+            w.add_tensor(t.name, data, raw_dtype=t.tensor_type)  # the writer turns the byte shape of the reader's data into the element shape
     if "rope_freqs.weight" not in names:
         w.add_tensor("rope_freqs.weight", rope_factors())
         added.append("rope_freqs.weight")
@@ -89,7 +101,7 @@ def main(src: str, dst: str) -> None:
     w.write_kv_data_to_file()
     w.write_tensors_to_file(progress=False)
     w.close()
-    print(f"norm tensors converted F16->F32: {converted}; added: {', '.join(added) or 'nothing'}")
+    print(f"norm tensors converted F16->F32: {converted}; Q/K matrices permuted: {permuted}; added: {', '.join(added) or 'nothing'}")
 
     # Check what was written.
     r2 = GGUFReader(dst)

@@ -18,6 +18,10 @@ const ZERO: GenerateStats = { timeToFirstTokenMs: 0, tokensPerSecond: null, tota
  *  - call after a tool ran: the answer is built from the tool result by code (answerFromTool), so no second model call.
  */
 export class RollamaEngine implements LlmEngine {
+  /** For the dev line under each answer: what the model wrote and what the engine did with it. */
+  lastRaw = '';
+  lastDecision = '';
+
   constructor(private raw: RawCompleter) {}
 
   async generate(messages: ChatMessage[], _onToken: (partial: string) => void): Promise<{ text: string; stats: GenerateStats; toolCalls?: EngineToolCall[] }> {
@@ -30,9 +34,12 @@ export class RollamaEngine implements LlmEngine {
     }
     const r = await this.raw.completeRaw(buildRouterPrompt(normalizePassengerQuery(question)), { grammar: ROLLAMA_GRAMMAR });
     const call = parseRouterJson(r.text);
+    this.lastRaw = r.text;
+    this.lastDecision = !call ? 'json-invalid' : call.name === 'none' ? 'none' : `tool:${call.name}`;
     if (!call || call.name === 'none') return { text: noneReply(question), stats: r.stats, toolCalls: [] };
     // Live position only when the passenger asked about position; a curiosity-driven router guess never runs the tracking tool.
     if (call.name === 'get_live_tracking' && !LIVE_ASKED.test(question.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''))) {
+      this.lastDecision = 'blocked:live-tracking-not-asked';
       return { text: noneReply(question), stats: r.stats, toolCalls: [] };
     }
     return { text: '', stats: r.stats, toolCalls: [{ id: 'rollama_1', name: call.name, arguments: JSON.stringify(call.arguments) }] };

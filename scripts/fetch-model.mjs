@@ -10,7 +10,7 @@ import { join } from 'node:path';
 
 const NAME = 'rollama-1b-dpo-q4.gguf';
 const BYTES = 851469152;
-const SHA256 = '54e17f65a03176a017167e04361d51e8b81d49ab1016f870370d691276e2e961';
+const SHA256 = 'a7689c17e6d249be241d14969e7bcc2b82863a9d1000f98edc898cfbdf66e9d7';
 
 const url = process.env.MODEL_URL;
 if (!url) {

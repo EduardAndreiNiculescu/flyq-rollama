@@ -286,6 +286,7 @@ export class DeviceToolsAssistantService implements AssistantService {
       const g = out.path !== 'model' ? { text: out.text, violations: [] as { kind: string }[] } : guardToolAnswer(out.messages, out.text, question, [record.flightNumber]);
       text = g.text;
       trace = out.trace.map(t => t.name);
+      trace.push('json:' + rollama.lastRaw.slice(0, 90) + ' => ' + rollama.lastDecision); // dev line: the model raw router output and what the engine did with it
       path = out.path;
       timing = out.timing;
       guardViolations = g.violations.map(v => v.kind);
