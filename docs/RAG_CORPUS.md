@@ -13,7 +13,7 @@ pentru refuzuri și jurisdicție. Integrarea finală este permisă doar când
 
 ## 1. EXECUTIVE SUMMARY & ARTIFACTS
 
-This corpus establishes an offline, bilingual (Romanian & English), strictly verified factual repository for FlightFlow. It delivers passenger rights, airport security mandates, baggage rules, medical clearances, accessibility requirements, customs limitations, and emergency protocols directly onto passenger devices without cloud dependencies.
+This corpus establishes an offline, bilingual (Romanian & English), strictly verified factual repository for FlyQ. It delivers passenger rights, airport security mandates, baggage rules, medical clearances, accessibility requirements, customs limitations, and emergency protocols directly onto passenger devices without cloud dependencies.
 
 ### Deliverables Manifest
 - **Canonical Corpus:** `finetune/rag/corpus.jsonl` (84 chunks, 42 concepts, 230,713 bytes, UTF-8)
@@ -144,7 +144,7 @@ The benchmark consists of **380 test cases** executed against the in-memory lexi
 
 ### 5.3 Lexical Retrieval Findings on Adversarial & Out-of-Scope Queries
 
-1. **Jurisdiction Mismatch:** Pure lexical search engines match keywords regardless of jurisdiction. When a user asks: *"Can I carry a full-size shampoo bottle under US TSA 3-1-1 domestic rules?"*, a keyword index matches "shampoo" and "bottle" to EU liquid regulations. In FlightFlow, this demonstrates why **Level 2 Intent Classification** and **Grounding Guard (`guardAnswer.ts`)** are critical upstream and downstream of the RAG retriever.
+1. **Jurisdiction Mismatch:** Pure lexical search engines match keywords regardless of jurisdiction. When a user asks: *"Can I carry a full-size shampoo bottle under US TSA 3-1-1 domestic rules?"*, a keyword index matches "shampoo" and "bottle" to EU liquid regulations. In FlyQ, this demonstrates why **Level 2 Intent Classification** and **Grounding Guard (`guardAnswer.ts`)** are critical upstream and downstream of the RAG retriever.
 2. **Confidence Score Separation:** Answerable queries exhibit a median retrieval score of **19.5** (ranging from 12.0 to 48.0). Incidental token matches on out-of-scope queries produce scores between **3.0 and 7.5**. Introducing a confidence gating threshold of **8.0** filters out over 80% of out-of-scope lexical false positives while maintaining 95%+ Recall@3.
 
 ---

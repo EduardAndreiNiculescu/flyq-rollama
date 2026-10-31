@@ -187,7 +187,8 @@ export type RouteDecision = {
   reason: string;
 };
 
-const INJECTION = /\b(ignore|forget|system|developer|prompt|instructions?|ignora|uita|sistem|instructiuni|reguli)\b/;
+/** Words of an attempt to steer the assistant. Everyday words ("reguli", "sistem", "uita") are not here: "ce reguli sunt pentru bagaj?" is a normal question. */
+export const INJECTION = /\b(ignore|ignora|forget (?:all|everything|your|previous|the)|uita (?:tot|toate|instructiunile)|developer mode|system prompt|prompt|instructiunile|instructions)\b/;
 const TRACKING = /\b(unde (?:e|este) (?:avionul|aeronava)|where is (?:my |the )?(?:plane|aircraft)|poziti(?:a|e)|position|altitudine|altitude|zboara acum|flying over|live tracking)\b/;
 const GATE_DATA = /\b(la ce|care|ce|which|what) (?:numar(?:ul)? )?(?:poart|gate)|\b(?:poarta|gate) (?:mea|number|for)\b|\bwhere do i board\b|\bunde imbarc\b/;
 const EXCLUDE_GATE = /\b(?:nu ma intereseaza|fara|exceptand) (?:poarta|gate)\b|\b(?:not|anything but) (?:the )?gate\b/;

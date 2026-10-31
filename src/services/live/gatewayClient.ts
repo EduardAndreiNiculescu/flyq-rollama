@@ -3,7 +3,7 @@ import { parseTrackingResult, type TrackingResult } from '../../tracking/result'
 import { useLive } from '../../store/live';
 import type { ToolTiming } from '../../tools/loop';
 
-// Client of the FlightFlow test gateway (server/gateway). The app never talks to AirLabs or OpenSky: keys stay on the server.
+// Client of the FlyQ test gateway (server/gateway). The app never talks to AirLabs or OpenSky: keys stay on the server.
 export type GatewayError = 'unreachable' | 'unauthorized' | 'not_found' | 'upstream' | 'bad_response';
 
 export async function gatewayCall(path: string, init: RequestInit = {}, timeoutMs = 10_000): Promise<unknown> {

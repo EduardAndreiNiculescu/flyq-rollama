@@ -1,4 +1,4 @@
-# Prompt de handoff pentru ChatGPT/Codex: Response Composer și fast path (FlightFlow)
+# Prompt de handoff pentru ChatGPT/Codex: Response Composer și fast path (FlyQ)
 
 Cum îl folosești: deschizi proiectul în Codex (repo-ul clonat, branch-ul de mai jos) și lipești tot ce e sub linia `=== PROMPT ===`. Nu pune chei sau tokene în el.
 
@@ -12,7 +12,7 @@ Cum îl folosești: deschizi proiectul în Codex (repo-ul clonat, branch-ul de m
 Ești inginerul care preia o componentă izolată dintr-un proiect de hackathon. Lucrezi doar pe lista de la „Sarcini". Nu extinzi domeniul. Dacă ai o idee în afara listei, o scrii la final, nu o implementezi. Calitatea contează mai mult decât viteza: citește codul înconjurător înainte să scrii și respectă stilul lui (comentarii rare, care explică „de ce"; nume scurte; fără abstracții în plus).
 
 # Proiectul, în 8 rânduri
-FlightFlow: asistent de călătorie pentru aeroport care rulează 100% offline pe iPhone 15 (Expo SDK 58, React Native 0.88, TypeScript). Un model Qwen3-4B (cuantizat, cu adaptor LoRA, prin llama.rn) folosit doar pentru conversație și pentru a alege unealta potrivită. Faptele (ore, porți, timp rămas, verdict de întârziere) vin dintr-un cod determinist, niciodată inventate de model. Limba utilizatorilor: română (cu sau fără diacritice, cu greșeli, argou) și engleză. Demo și prezentare: duminică 2026-11-01. Principii: numai cifre măsurate, nimic inventat, confidențialitate, prudență în afirmații despre starea zborului (sunt estimări terțe, nu declarații oficiale).
+FlyQ: asistent de călătorie pentru aeroport care rulează 100% offline pe iPhone 15 (Expo SDK 58, React Native 0.88, TypeScript). Un model Qwen3-4B (cuantizat, cu adaptor LoRA, prin llama.rn) folosit doar pentru conversație și pentru a alege unealta potrivită. Faptele (ore, porți, timp rămas, verdict de întârziere) vin dintr-un cod determinist, niciodată inventate de model. Limba utilizatorilor: română (cu sau fără diacritice, cu greșeli, argou) și engleză. Demo și prezentare: duminică 2026-11-01. Principii: numai cifre măsurate, nimic inventat, confidențialitate, prudență în afirmații despre starea zborului (sunt estimări terțe, nu declarații oficiale).
 
 # Problema pe care o rezolvi
 Un răspuns cu unelte are două apeluri de model: (1) modelul alege unealta (scurt, ~28 tokeni), (2) modelul scrie răspunsul (~100 tokeni, lent: ~8 tokeni/s pe iPhone, deci 12 secunde sau mai mult). Pentru întrebări simple despre zbor, al doilea apel e inutil: răspunsul se poate construi din rezultatul uneltei. Asta face „Response Composer": `src/tools/composer.ts`, conectat în `src/tools/loop.ts` (`runToolLoop`, opțiunea `compose`, câmpul `path: 'composed' | 'model'` în rezultat).

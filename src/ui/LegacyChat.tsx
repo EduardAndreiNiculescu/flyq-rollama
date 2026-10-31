@@ -93,7 +93,7 @@ export default function App() {
     return (
       <SafeAreaView style={s.center}>
         <StatusBar style="dark" />
-        <Text style={s.title}>FlightFlow AI</Text>
+        <Text style={s.title}>FlyQ AI</Text>
         {(status === 'checking' || status === 'loading' || status === 'downloading') && (
           <>
             <ActivityIndicator size="large" />
@@ -106,7 +106,7 @@ export default function App() {
           <>
             <Text style={s.sub}>
               {status.state === 'manual'
-                ? 'The distilled FlightFlow model must be copied manually; do not substitute the public base model.'
+                ? 'The distilled FlyQ model must be copied manually; do not substitute the public base model.'
                 : status.state === 'missing'
                 ? 'The offline model is not on this phone yet. Download it once (Wi-Fi), then Airplane Mode works.'
                 : `Model problem: ${status.reason}`}
@@ -122,7 +122,7 @@ export default function App() {
   return (
     <SafeAreaView style={s.root}>
       <StatusBar style="dark" />
-      <Text style={s.header}>FlightFlow · on-device AI</Text>
+      <Text style={s.header}>FlyQ · on-device AI</Text>
       <Text style={s.demo} accessibilityRole="text">date demo (fictive) · demo data is fictional</Text>
       <FlatList
         data={msgs}

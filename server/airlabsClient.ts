@@ -43,7 +43,7 @@ export class AirLabsClient {
     // Identify ourselves honestly: the provider's edge protection rejects the default library signatures (HTTP 403, error 1010).
     const res = await (this.deps.fetchImpl ?? fetch)(url, {
       signal: AbortSignal.timeout(this.deps.timeoutMs ?? 8000),
-      headers: { 'user-agent': 'FlightFlow-dev/0.1 (hackathon prototype)', accept: 'application/json' },
+      headers: { 'user-agent': 'FlyQ-dev/0.1 (hackathon prototype)', accept: 'application/json' },
     });
     if (res.status === 429) throw Object.assign(new Error('rate_limited'), { reason: 'rate_limited' });
     let json: unknown = null;

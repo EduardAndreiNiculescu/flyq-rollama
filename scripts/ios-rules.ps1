@@ -7,7 +7,7 @@ $mac = '<user>@<mac>.local'; $udid = '<UDID-iPhone>'; $bundle = 'com.flightflow.
 function Say($s) { Write-Host ("[{0}] {1}" -f (Get-Date -Format HH:mm:ss), $s) -ForegroundColor Cyan }
 function Dev { param([string[]]$a) & npx tsx scripts/device.ts @a 2>&1 }
 function MacCmd($c) { ssh -o BatchMode=yes $mac "export PATH=/opt/homebrew/bin:/usr/local/bin:`$PATH; $c" 2>&1 }
-function Reports { (MacCmd "xcrun devicectl device info files --device $udid --domain-type systemCrashLogs 2>&1 | grep -iE 'FlightFlow|panic|Jetsam' | grep -oE '[A-Za-z]+-2026-10-[0-9-]+\.ips' | sort -u") }
+function Reports { (MacCmd "xcrun devicectl device info files --device $udid --domain-type systemCrashLogs 2>&1 | grep -iE 'FlyQ|FlightFlow|panic|Jetsam' | grep -oE '[A-Za-z]+-2026-10-[0-9-]+\.ips' | sort -u") }
 $before = @(Reports)
 Say ("reports on the phone before the run: {0}" -f $before.Count)
 

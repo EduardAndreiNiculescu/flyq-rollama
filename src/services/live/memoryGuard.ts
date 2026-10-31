@@ -3,7 +3,7 @@ import { benchState } from '../../bench/state';
 import { useProgress } from '../../store/assistantUi';
 import { engine } from './DeviceAssistantService';
 
-// The Jetsam reports from the phone show FlightFlow at about 3.2 GB when iOS kills it, and the model's own buffers add up to about 3.1 GB of that
+// The Jetsam reports from the phone show FlyQ at about 3.2 GB when iOS kills it, and the model's own buffers add up to about 3.1 GB of that
 // (weights 2.68 GB, attention cache 0.3 GB, compute 0.09 GB, adapter 0.03 GB). The UI is a few percent. The app was "suspended" when it was killed:
 // iOS suspends a backgrounded app within seconds, so a timer started on "background" never fires. The model is therefore released the moment the app
 // goes to the background, and also when it has been idle in the foreground for a while. It is loaded again on the next question (about 3.5 s).

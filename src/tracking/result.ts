@@ -1,6 +1,6 @@
 import type { Observation } from './opensky';
 
-/** Backend -> app contract. The app only ever talks to the FlightFlow backend, never to OpenSky. */
+/** Backend -> app contract. The app only ever talks to the FlyQ backend, never to OpenSky. */
 export type TrackingResult =
   | {
       kind: 'observation';

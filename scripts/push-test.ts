@@ -7,7 +7,7 @@
 const base = process.env.FLYQ_BASE ?? 'https://flyq-cra.duckdns.org';
 const admin = process.env.FLYQ_ADMIN_TOKEN;
 const deviceToken = process.env.DEVICE_TOKEN;
-const [title = 'FlightFlow', body = 'Test notification'] = process.argv.slice(2);
+const [title = 'FlyQ', body = 'Test notification'] = process.argv.slice(2);
 if (!admin || !deviceToken) {
   console.error('set FLYQ_ADMIN_TOKEN and DEVICE_TOKEN in the environment');
   process.exit(1);

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Release build of FlightFlow and install on the connected iPhone. Run ON the Mac, in a GUI Terminal session (signing needs the unlocked keychain).
+# Release build of FlyQ and install on the connected iPhone. Run ON the Mac, in a GUI Terminal session (signing needs the unlocked keychain).
 #   scripts/mac/build-ios.sh <device UDID>
 # Env: APPLE_TEAM_ID (default: read from the Apple Development certificate in the keychain)
 set -eu
@@ -28,9 +28,9 @@ echo "entitlements OK ($ENT)"
 
 # Not `expo run:ios`: its signing check (find-identity -v) rejects a certificate that xcodebuild signs with fine.
 DD="$HOME/ff-derived"
-( cd ios && xcodebuild -workspace FlightFlow.xcworkspace -scheme FlightFlow -configuration Release -destination "id=$DEVICE" -derivedDataPath "$DD" \
+( cd ios && xcodebuild -workspace FlyQ.xcworkspace -scheme FlyQ -configuration Release -destination "id=$DEVICE" -derivedDataPath "$DD" \
     -allowProvisioningUpdates -allowProvisioningDeviceRegistration DEVELOPMENT_TEAM="$TEAM" CODE_SIGN_STYLE=Automatic build )
-APP="$DD/Build/Products/Release-iphoneos/FlightFlow.app"
+APP="$DD/Build/Products/Release-iphoneos/FlyQ.app"
 BUNDLE_ID=$(node -e 'console.log(require("./app.json").expo.ios.bundleIdentifier)')
 xcrun devicectl device install app --device "$DEVICE" "$APP"
 xcrun devicectl device process launch --device "$DEVICE" "$BUNDLE_ID" || echo "installed; open the app on the phone (it may need Settings > General > VPN & Device Management > trust)"

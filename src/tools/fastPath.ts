@@ -5,7 +5,7 @@ import { boardingAnswer, seatAnswer, securityDurationAnswer } from './seat';
 import { executeToolCall, type ToolDef, type ToolDeps } from './registry';
 
 const plain = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[?!.,]+$/g, '').replace(/\s+/g, ' ').trim();
-const UNSAFE = /\b(nu|fara|nici|not|no|without|ignore|ignora|instruc|instructions|prompt|system|sistem|spune|tell|pretend|reguli|rules)\b/;
+const UNSAFE = /\b(nu|fara|nici|not|no|without|ignore|ignora|instruc|instructions|prompt|system|sistem|pretend)\b/;
 const LEAD = /^(?:ba|ma|bai|frate|nene|na|ia zi|ok deci|hey|quick|dude|bro|yo)[, ]+/;
 const TAIL = /[, ]+(?:ma|ba|frate|pe bune|sincer|mersi|pls|asap|thanks|bro|man|lol)$/;
 

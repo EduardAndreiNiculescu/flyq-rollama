@@ -1,6 +1,6 @@
-# FlightFlow Intent Classifier — Nivelul 2 (Neural Routing & Safety Gate)
+# FlyQ Intent Classifier — Nivelul 2 (Neural Routing & Safety Gate)
 
-Acest document descrie arhitectura, benchmarkurile complete, metodologia zero-leakage, matricea de confuzie, politicile de siguranță și ghidul de export CoreML pentru **Nivelul 2 (Clasificator Neural de Intenție)** din asistentul offline FlightFlow.
+Acest document descrie arhitectura, benchmarkurile complete, metodologia zero-leakage, matricea de confuzie, politicile de siguranță și ghidul de export CoreML pentru **Nivelul 2 (Clasificator Neural de Intenție)** din asistentul offline FlyQ.
 
 ---
 

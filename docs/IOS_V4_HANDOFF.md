@@ -1,4 +1,4 @@
-# FlightFlow iOS V4 — compilare pornită de pe Windows
+# FlyQ iOS V4 — compilare pornită de pe Windows
 
 ## Windows PowerShell
 

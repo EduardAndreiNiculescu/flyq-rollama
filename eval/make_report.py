@@ -125,7 +125,7 @@ for name, s in sections.items():
 # ---- HTML --------------------------------------------------------------------------------------
 data = json.dumps(sections, ensure_ascii=False).replace("</", "<\\/")
 html = """<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FlightFlow - rezultate</title>
+<title>FlyQ - rezultate</title>
 <style>
 :root{--bg:#f6f7f9;--card:#fff;--fg:#14161c;--mut:#667;--line:#0001;--ok:#1a8f4d;--bad:#c62828;--acc:#2b62d9;--okbg:#1a8f4d1a;--badbg:#c628281a}
 @media (prefers-color-scheme:dark){:root{--bg:#0f1115;--card:#181b22;--fg:#e8eaf0;--mut:#8b91a1;--line:#fff2;--ok:#3ecf8e;--bad:#ff6b6b;--acc:#6ea0ff;--okbg:#3ecf8e22;--badbg:#ff6b6b22}}
@@ -146,7 +146,7 @@ td.id{white-space:nowrap;color:var(--mut)}td.q{max-width:260px}td.ans{max-width:
 tr.differ td:first-child{box-shadow:inset 3px 0 var(--acc)}
 .meta{color:var(--mut);font-size:12px}
 </style></head><body>
-<header><h1>FlightFlow - comparatie modele (fiecare caz)</h1>
+<header><h1>FlyQ - comparatie modele (fiecare caz)</h1>
 <div class="row" id="tabs"></div>
 <div class="row" style="margin-top:6px" id="filters"></div>
 <div class="row" style="margin-top:6px"><input id="q" placeholder="cauta in intrebari si raspunsuri..."><select id="cat"></select></div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FlightFlow V4 · Inspector local</title>
+  <title>FlyQ V4 · Inspector local</title>
   <style>
     :root{color-scheme:dark;--bg:#0b1019;--panel:#111a29;--panel2:#172338;--line:#2c3b52;--text:#e9effa;--muted:#9bb0ce;--a:#82a8ff;--good:#75dfb4;--warn:#f6c575}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
@@ -28,7 +28,7 @@
 <body>
 <div class="shell">
   <div class="head">
-    <div><div class="eyebrow">Laborator local / desktop</div><h1>FlightFlow V4 · Response Inspector</h1><p>Răspuns real al modelului local, apeluri de tool și traseul fiecărui răspuns.</p></div>
+    <div><div class="eyebrow">Laborator local / desktop</div><h1>FlyQ V4 · Response Inspector</h1><p>Răspuns real al modelului local, apeluri de tool și traseul fiecărui răspuns.</p></div>
     <div class="status"><div class="badge" id="serverBadge">Gateway: verific…</div><div class="badge" id="modelBadge">Model: verific…</div><div class="badge" id="dataBadge">Date: verific…</div></div>
   </div>
   <div class="layout">
@@ -36,7 +36,7 @@
       <div class="controls"><label class="field">Zbor selectat<input id="flight" value="FF123" spellcheck="false"></label><label class="field token">Token gateway<input id="token" type="password" autocomplete="off" placeholder="numai dacă e setat"></label><span class="flight-note" id="flightNote">FF123 este un zbor fictiv pentru test.</span></div>
       <div id="conversation" class="conversation"><div class="empty" id="empty"><b>Încearcă o întrebare</b>Poți urmări exact ce tool a fost apelat, ce rezultat a primit și dacă răspunsul a fost compus sau generat de model.</div></div>
       <div class="examples"><button data-q="Care e poarta mea?">Poarta mea</button><button data-q="Când pleacă avionul?">Ora plecării</button><button data-q="Pot lua un powerbank în avion?">Powerbank</button><button data-q="Unde e avionul acum?">Tracking</button></div>
-      <form id="form"><input id="question" placeholder="Întreabă FlightFlow…" maxlength="500" autocomplete="off" autofocus><button id="send">Trimite</button></form>
+      <form id="form"><input id="question" placeholder="Întreabă FlyQ…" maxlength="500" autocomplete="off" autofocus><button id="send">Trimite</button></form>
     </section>
     <aside class="inspect" aria-label="Inspector">
       <section class="card section"><h2>Model și layere</h2><div class="grid"><div class="metric"><div class="value" id="blocks">—</div><div class="label">blocuri Transformer</div></div><div class="metric"><div class="value" id="ctx">—</div><div class="label">context runtime</div></div><div class="metric"><div class="value" id="thinking">OFF</div><div class="label">thinking intern</div></div></div><p class="muted" id="modelNote">Metadatele și configurația apar după conectare. Activările interne ale layerelor nu sunt expuse de Ollama.</p></section>
@@ -56,7 +56,7 @@ const headers=()=>({'content-type':'application/json',...($('token').value?{auth
 const node=(tag,cls,text)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el};
 const clear=(el)=>{while(el.firstChild)el.firstChild.remove()};
 const ms=n=>Number.isFinite(n)?Math.round(n)+' ms':'—';
-function bubble(kind,text){$('empty')?.remove();const b=node('div','bubble '+kind);b.append(node('small','',kind==='user'?'Tu':'FlightFlow'));b.append(node('div','',text));$('conversation').append(b);b.scrollIntoView({block:'end',behavior:'smooth'});return b}
+function bubble(kind,text){$('empty')?.remove();const b=node('div','bubble '+kind);b.append(node('small','',kind==='user'?'Tu':'FlyQ'));b.append(node('div','',text));$('conversation').append(b);b.scrollIntoView({block:'end',behavior:'smooth'});return b}
 async function loadInfo(){
   try{const [h,m]=await Promise.all([fetch('/health'),fetch('/v1/model',{headers:headers()})]);const health=await h.json();const model=await m.json();
     $('serverBadge').textContent='Gateway: online';$('dataBadge').textContent='Date: '+(health.dataMode==='demo'?'fictive / FF123':'AirLabs live');

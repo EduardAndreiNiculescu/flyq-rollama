@@ -1,4 +1,4 @@
-# Echipa FlightFlow – 5 fluxuri, un proprietar fiecare
+# Echipa FlyQ – 5 fluxuri, un proprietar fiecare
 
 Completează numele în tabel. Ipoteza: flux E = harta/poziționarea (modulul separat din `docs/INTEGRATION.md`). Schimbați dacă nu e așa.
 

@@ -1,3 +1,4 @@
+import { INJECTION, normalize } from '../core/router';
 import type { ChatMessage, EngineToolCall, GenerateStats, LlmEngine } from '../core/assistant';
 import { answerFromTool, buildRouterPrompt, noneReply, normalizePassengerQuery, parseRouterJson, plain, ROLLAMA_GRAMMAR, unsureReply } from './rollama';
 
@@ -67,11 +68,20 @@ export class RollamaEngine implements LlmEngine {
         name = null;
       }
     }
+    // A "none" from a 1B model is a guess, not a verdict: when the deterministic router found a plausible tool and nothing looks like a
+    // steering attempt, run that tool instead of refusing.
+    const steering = INJECTION.test(normalize(question));
+    const greeting = /^(?:salut|buna|hei|hey|hello|hi|noroc|servus|good)\b/.test(q.trim());
+    if (!name && modelSaidNone && allowed.length && !steering && !greeting) {
+      name = allowed[0];
+      why += `->${name}(router-overrides-none)`;
+    }
     this.lastDecision = why;
     if (ROUTER_DEBUG) console.error(`[RL] q=${JSON.stringify(question)} raw=${JSON.stringify(r.text)} decision=${why} allowed=${allowed.join(',')} tokens=${r.stats.tokens}`);
     if (!name) {
-      // The model said "none" (greeting, unsupported request, injection, gibberish): the capability reply. An invalid or blocked choice: a pointer, not a refusal.
-      return { text: (modelSaidNone ? noneReply(question) : unsureReply(question)) + devNote(r.text, why), stats: r.stats, toolCalls: [] };
+      // The hard refusal is for greetings and steering attempts (and what the deterministic boundary already caught before the model).
+      // Everything else the model gave up on gets the helpful pointer, not "I can't do that".
+      return { text: (modelSaidNone && (greeting || steering) ? noneReply(question) : unsureReply(question)) + devNote(r.text, why), stats: r.stats, toolCalls: [] };
     }
     const args = call && name === call.name ? call.arguments : {};
     return { text: '', stats: r.stats, toolCalls: [{ id: 'rollama_1', name, arguments: JSON.stringify(args) }] };

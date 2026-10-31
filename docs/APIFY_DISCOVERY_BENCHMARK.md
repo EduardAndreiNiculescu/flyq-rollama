@@ -1,4 +1,4 @@
-# FlightFlow — Apify discovery benchmark
+# FlyQ — Apify discovery benchmark
 
 Data: 30 octombrie 2026
 

@@ -13,7 +13,7 @@ Ești inginerul care adaugă **suport server pentru iOS Live Activities** în Fl
 3. **Nu faci merge pe `main` fără aprobarea explicită a omului care te conduce**, după ce a făcut un backup al bazei de date (`scripts/` are un script de backup; vezi `RUNBOOK.md`).
 
 # Contextul
-Aplicația iPhone (FlightFlow/FlyQ) vrea un card Live Activity pe ecranul blocat și în Dynamic Island, care arată starea zborului și se actualizează când se schimbă ceva (poartă, întârziere, îmbarcare, anulare, aterizare). Acum serverul trimite **doar notificări obișnuite**: `apns-push-type: alert` în `server/src/modules/push/apns.ts` (`ApnsClient.send`). Există deja:
+Aplicația iPhone (FlyQ/FlyQ) vrea un card Live Activity pe ecranul blocat și în Dynamic Island, care arată starea zborului și se actualizează când se schimbă ceva (poartă, întârziere, îmbarcare, anulare, aterizare). Acum serverul trimite **doar notificări obișnuite**: `apns-push-type: alert` în `server/src/modules/push/apns.ts` (`ApnsClient.send`). Există deja:
 - coloana `live_activity_token` în `push_subscriptions` (`server/src/db/schema.ts`) și acceptarea ei la `PATCH /v1/push/subscriptions/{id}` (`modules/push/routes.ts`, câmpul `liveActivityToken`);
 - evenimentele de schimbare (`CHANGE_TYPES` în `modules/flights/changes.ts`: `gate_assigned`, `gate_changed`, `checkin_open`, `boarding_started`, `gate_closing_soon`, `delay_changed`, `cancelled`, `diverted`, `landed`, `baggage_belt_assigned`);
 - dispeceratul (`modules/push/dispatcher.ts`: `PushDispatcher`, `sendEvent`, `attempt`) care trimite o notificare per abonament la fiecare schimbare;

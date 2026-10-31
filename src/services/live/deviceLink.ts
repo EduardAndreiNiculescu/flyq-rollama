@@ -20,7 +20,7 @@ function appStatus() {
   const { assistantSource, trackerSource } = useLive.getState();
   const { tickets, activeTicketId } = useTickets.getState();
   const t = tickets.find(x => x.id === activeTicketId);
-  return { app: 'FlightFlow', backend: useLive.getState().backend, flyqKeySet: useLive.getState().flyqKey.length > 0, assistantSource, trackerSource, adapter: adapterLoaded(), model: modelState, nCtx: engine.nCtx, kv: deviceOpts.kv, contract: deviceOpts.contract, recoveries: engine.recoveries, trims: engine.trims, sampling: engine.sampling, promptMode: engine.promptMode, flight: t ? `${t.pass.carrier}${t.pass.flightNumber}` : null };
+  return { app: 'FlyQ', backend: useLive.getState().backend, flyqKeySet: useLive.getState().flyqKey.length > 0, assistantSource, trackerSource, adapter: adapterLoaded(), model: modelState, nCtx: engine.nCtx, kv: deviceOpts.kv, contract: deviceOpts.contract, recoveries: engine.recoveries, trims: engine.trims, sampling: engine.sampling, promptMode: engine.promptMode, flight: t ? `${t.pass.carrier}${t.pass.flightNumber}` : null };
 }
 
 const report = (cmdId: string, body: Record<string, unknown>) => gatewayCall('/v1/device/result', { method: 'POST', body: JSON.stringify({ cmdId, ...body }) }, 15_000);

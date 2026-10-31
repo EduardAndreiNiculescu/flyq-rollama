@@ -2,7 +2,7 @@
 
 ## Versiune scurtă (~120 de cuvinte)
 
-FlightFlow este un asistent de aeroport care rulează **complet offline pe iPhone**, pentru Aeroportul Internațional Craiova. Pasagerul întreabă în limbaj natural, cu greșeli și argou („am voie cu lichide?", „ce poartă am?", „la ce oră decolăm?"), iar un model de limbaj mic, RoLlama 3.2 1B, rulează direct pe telefon și alege unealta potrivită. Faptele despre zbor și regulile de călătorie vin din cod determinist și dintr-o bază de cunoștințe locală; modelul nu scrie fapte și nu poate inventa ore, porți sau reguli. Aplicația are un client pentru serverul FlyQ (zboruri, ETA), iar un modul de hartă interactivă din scanare LiDAR, realizat de Denis, urmează să fie integrat pentru ghidarea pasagerului către punctele de interes. Proiectul se compilează din repo-ul public, cu pași și timpi documentați.
+FlyQ este un asistent de aeroport care rulează **complet offline pe iPhone**, pentru Aeroportul Internațional Craiova. Pasagerul întreabă în limbaj natural, cu greșeli și argou („am voie cu lichide?", „ce poartă am?", „la ce oră decolăm?"), iar un model de limbaj mic, RoLlama 3.2 1B, rulează direct pe telefon și alege unealta potrivită. Faptele despre zbor și regulile de călătorie vin din cod determinist și dintr-o bază de cunoștințe locală; modelul nu scrie fapte și nu poate inventa ore, porți sau reguli. Aplicația are un client pentru serverul FlyQ (zboruri, ETA), iar un modul de hartă interactivă din scanare LiDAR, realizat de Denis, urmează să fie integrat pentru ghidarea pasagerului către punctele de interes. Proiectul se compilează din repo-ul public, cu pași și timpi documentați.
 
 ## Versiune lungă
 

@@ -55,7 +55,7 @@ if (cmd === 'test') {
     console.error('Lipseste DEVICE_TOKEN (il arata aplicatia dupa "Activeaza notificarile").');
     process.exit(2);
   }
-  const [title = 'FlightFlow', body = 'Test notification'] = rest;
+  const [title = 'FlyQ', body = 'Test notification'] = rest;
   const r = await call('/v1/admin/push/test', { deviceToken: device, environment, title, body });
   console.log(JSON.stringify(r));
   process.exitCode = r.http === 200 ? 0 : 1;

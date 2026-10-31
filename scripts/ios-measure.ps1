@@ -53,6 +53,6 @@ Say 'back to the shipping config (f16)'
 Dev @('reload', '--adapter', 'on', '--nctx', '2048', '--kv', 'f16') | Out-Null
 
 Say 'new crash, panic and memory reports on the phone since the start of this run:'
-MacCmd "xcrun devicectl device info files --device $udid --domain-type systemCrashLogs 2>&1 | grep -E '10/30/26' | grep -iE 'FlightFlow|panic|Jetsam' | cut -c1-150" | ForEach-Object { Write-Host "   $_" }
+MacCmd "xcrun devicectl device info files --device $udid --domain-type systemCrashLogs 2>&1 | grep -E '10/30/26' | grep -iE 'FlyQ|FlightFlow|panic|Jetsam' | cut -c1-150" | ForEach-Object { Write-Host "   $_" }
 Say ("done in {0:N0} s" -f ((Get-Date) - $t0).TotalSeconds)
 Write-Host 'MEASUREMENTS DONE' -ForegroundColor Green

@@ -63,7 +63,7 @@ only runtime paths until a candidate meets both safety and coverage gates.
 
 ### Deterministic capability boundary
 
-The classifier safety prefilter now refuses requests FlightFlow cannot perform:
+The classifier safety prefilter now refuses requests FlyQ cannot perform:
 performing check-in, purchases, bookings, cancellations, seat changes, payments,
 Wi-Fi passwords and upgrades. It does not reject factual questions about
 check-in or documents. It also rejects general chitchat (jokes, poems, weather)
@@ -87,4 +87,4 @@ frozen 500-case Romanian stress benchmark. They were not tested as chat/tool mod
 | RoBaseLM-M 260M Q5_K_M | 208.1 MiB | 62.8% | 17 | 38.56 ms |
 
 Neither meets the safety gate; M is also larger and slower than S. Neither is a
-mobile Tier-2 candidate for FlightFlow in its current form.
+mobile Tier-2 candidate for FlyQ in its current form.

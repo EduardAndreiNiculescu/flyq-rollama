@@ -2,7 +2,7 @@ import { detectLang } from './prompt';
 import { tier1Capability } from './tier1';
 
 /**
- * Requests outside FlightFlow's contract. These are handled before a model sees
+ * Requests outside FlyQ's contract. These are handled before a model sees
  * tools: the app can retrieve facts and guidance, never buy, book, check in,
  * change reservations or provide account credentials.
  */

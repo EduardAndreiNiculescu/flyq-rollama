@@ -7,7 +7,7 @@ Fiecare bloc se lipește ca atare în Claude Code (sau în alt asistent) deschis
 ## 1. Prompt pentru echipa de BACKEND
 
 ```
-Lucrezi în repo-ul FlightFlow (TypeScript, Node 22, vitest). Construiești backendul de zbor de PRODUCȚIE. Aplicația de pe iPhone vorbește doar cu el; nu vede niciodată chei de furnizor.
+Lucrezi în repo-ul FlyQ (TypeScript, Node 22, vitest). Construiești backendul de zbor de PRODUCȚIE. Aplicația de pe iPhone vorbește doar cu el; nu vede niciodată chei de furnizor.
 
 CITEȘTE ÎNTÂI (nu scrie cod până nu le-ai citit): docs/HANDOFF_TASKS.md (secțiunea 1, taskurile B1-B10), docs/BACKEND_CONTEXT.md, docs/GATEWAY.md, src/core/types.ts (FlightRecord), src/tracking/result.ts (TrackingResult, schemaVersion 1), server/airlabsClient.ts, server/gateway/providers.ts, server/gateway/gateway.ts, tests/gateway.test.ts, tests/airlabs.test.ts.
 
@@ -34,7 +34,7 @@ REGULI DE LUCRU:
 ## 2. Prompt pentru cei care FOLOSESC backendul (frontend și hartă)
 
 ```
-Lucrezi în repo-ul FlightFlow (Expo SDK 58, React Native 0.88, TypeScript). Aplicația rulează un asistent AI complet pe telefon (Qwen3-4B + adaptor), fără internet. Tu NU modifici modelul; îl integrezi.
+Lucrezi în repo-ul FlyQ (Expo SDK 58, React Native 0.88, TypeScript). Aplicația rulează un asistent AI complet pe telefon (Qwen3-4B + adaptor), fără internet. Tu NU modifici modelul; îl integrezi.
 
 CITEȘTE ÎNTÂI: docs/HANDOFF_TASKS.md (secțiunile 2 și 3), docs/TEST_MODE.md, docs/FRONTEND_*.md, src/services/types.ts, src/services/index.ts, src/tools/registry.ts, src/core/assistant.ts (NavigationHandler).
 

@@ -1,6 +1,6 @@
 # Arhitectura front-end-ului AirportApp
 
-Rădăcina analizată: `<cale-locala>`. Toate căile de mai jos sunt relative la această rădăcină, cu excepția celor care încep cu `flightflow/`, care sunt din repo-ul FlightFlow. Documentul e scris din citirea fișierelor. Nu s-a instalat nimic, nu s-a rulat aplicația și nu s-au făcut apeluri de rețea. Fișierele cu valori secrete nu sunt citate.
+Rădăcina analizată: `<cale-locala>`. Toate căile de mai jos sunt relative la această rădăcină, cu excepția celor care încep cu `flightflow/`, care sunt din repo-ul FlyQ. Documentul e scris din citirea fișierelor. Nu s-a instalat nimic, nu s-a rulat aplicația și nu s-au făcut apeluri de rețea. Fișierele cu valori secrete nu sunt citate.
 
 ## 1. Ce este aplicația
 
@@ -112,44 +112,44 @@ Tot ce urmează e citit din cod. Acolo unde vine din `HANDOFF.md`, e spus explic
 
 **Nu există:** GPS real, API real de zbor, server, model AI local.
 
-## 8. Puncte de integrare cu FlightFlow
+## 8. Puncte de integrare cu FlyQ
 
-Repo-ul FlightFlow este la `<cale-locala>`. Căile de mai jos sunt relative la el.
+Repo-ul FlyQ este la `<cale-locala>`. Căile de mai jos sunt relative la el.
 
 ### 8.1 Asistentul (ecranul de chat)
 
 - Front: `AssistantService.ask(question, context: FlightContext): AsyncIterable<string>` (`AirportApp/src/services/types.ts`). `AssistantScreen.tsx` consumă stream-ul token cu token. Interfața se potrivește unui model local care emite token-uri.
 - `FlightContext` din front (`AirportApp/src/types/index.ts`) conține `flight`, `ticket`, `position?`, `nowUtc`, `language`.
-- FlightFlow: `PassengerContext` (`flightflow/src/core/types.ts`, liniile 11–18) conține `flightNumber?`, `airportCode?`, `journeyStage?` (`pre_airport`, `check_in`, `security`, `airside`, `boarding`, `in_flight`, `arrival`), `currentZone?`, `positionConfidence?` și `connectionAvailable` (obligatoriu). Este folosit în `flightflow/src/core/prompt.ts` și `flightflow/src/core/assistant.ts`.
+- FlyQ: `PassengerContext` (`flightflow/src/core/types.ts`, liniile 11–18) conține `flightNumber?`, `airportCode?`, `journeyStage?` (`pre_airport`, `check_in`, `security`, `airside`, `boarding`, `in_flight`, `arrival`), `currentZone?`, `positionConfidence?` și `connectionAvailable` (obligatoriu). Este folosit în `flightflow/src/core/prompt.ts` și `flightflow/src/core/assistant.ts`.
 - Ce trebuie schimbat: o nouă implementare `AssistantService` care convertește `FlightContext` în `PassengerContext`.
   - `journeyStage` se poate deriva din pașii Călătoriei și din `phase` (`ground`, `inAir`, `landed`, în `flightMode.ts`).
-  - `currentZone` ar veni din poziția indoor, adică din zonele din `terminal.json`. Id-urile de acolo (de exemplu `f0_entrance`) nu corespund neapărat zonelor folosite de FlightFlow. Nu am determinat ce zone folosește FlightFlow.
+  - `currentZone` ar veni din poziția indoor, adică din zonele din `terminal.json`. Id-urile de acolo (de exemplu `f0_entrance`) nu corespund neapărat zonelor folosite de FlyQ. Nu am determinat ce zone folosește FlyQ.
   - `connectionAvailable` ar fi `false`, pentru că front-ul e offline.
-- Navigarea: FlightFlow apelează `nav.openAirportMap({ destination, fromZone })` (`flightflow/src/core/assistant.ts`, linia 152, și `flightflow/src/tools/registry.ts`, linia 109). Front-ul nu are această metodă. Cea mai apropiată este `navigate('Main', { screen: 'Map', params: { targetNodeId } })` (`AirportApp/src/app/navigation.ts`). Trebuie un adaptor care traduce destinația în id de nod din `terminal.json`.
+- Navigarea: FlyQ apelează `nav.openAirportMap({ destination, fromZone })` (`flightflow/src/core/assistant.ts`, linia 152, și `flightflow/src/tools/registry.ts`, linia 109). Front-ul nu are această metodă. Cea mai apropiată este `navigate('Main', { screen: 'Map', params: { targetNodeId } })` (`AirportApp/src/app/navigation.ts`). Trebuie un adaptor care traduce destinația în id de nod din `terminal.json`.
 
 ### 8.2 Datele de zbor
 
-- FlightFlow: `FlightRecord` (`flightflow/src/core/types.ts`, liniile 20–36) are `gate` nullabil, `gateStatus`, `dataSource` (`demo`, `airport_feed`, `user_entered`, `airlabs`), estimări și întârzieri. Comentariul de la linia 31 spune că estimările apar lângă orar, niciodată în locul lui. AirLabs e în `flightflow/src/tracking/airlabs.ts`.
+- FlyQ: `FlightRecord` (`flightflow/src/core/types.ts`, liniile 20–36) are `gate` nullabil, `gateStatus`, `dataSource` (`demo`, `airport_feed`, `user_entered`, `airlabs`), estimări și întârzieri. Comentariul de la linia 31 spune că estimările apar lângă orar, niciodată în locul lui. AirLabs e în `flightflow/src/tracking/airlabs.ts`.
 - Front: `FlightDataService` (`AirportApp/src/services/types.ts`) are `findFlight`, `getFlight`, `getAirport` și `getLandmarks`, toate **sincrone**. `Flight` (`AirportApp/src/types/index.ts`) nu are întârzieri, estimări sau `dataSource`.
 - Problema principală: datele reale vin de la server, deci asincron, iar interfețele sunt sincrone. Apelurile existente ar trebui refăcute: `hasUpcomingTicket` din `App.tsx`, `useAddTicket` (`store/addTicket.ts`) și componentele din `TabBar.tsx`, `JourneyScreen.tsx` și `FlightScreen.tsx`. O variantă ar fi să se țină datele de zbor într-un store, populat asincron.
 - Punctul de înlocuire rămâne `AirportApp/src/services/index.ts`.
-- Regula de „API aproximată” din `HANDOFF.md` (orarul sau traseul planificat până la GPS) trebuie aliniată cu regula FlightFlow de mai sus.
+- Regula de „API aproximată” din `HANDOFF.md` (orarul sau traseul planificat până la GPS) trebuie aliniată cu regula FlyQ de mai sus.
 
 ### 8.3 Harta
 
 - Harta indoor se integrează prin `IndoorMapProps` din `AirportApp/src/components/map/MapPlaceholder.tsx`: `floor`, `route`, `position`, `targetNodeId`, `showDebug`. Colegul trebuie să respecte aceste props, iar `MapPanel.tsx` nu trebuie schimbat.
 - `FlightRouteMap.tsx` este o hartă separată, schematică, a zborului. Nu se confundă cu harta indoor.
-- Harta indoor a colegului trebuie aliniată cu `terminal.json` (2 etaje) și cu zonele FlightFlow. Nu am determinat ce format de hartă folosește colegul.
+- Harta indoor a colegului trebuie aliniată cu `terminal.json` (2 etaje) și cu zonele FlyQ. Nu am determinat ce format de hartă folosește colegul.
 
 ### 8.4 Stack-ul
 
 - Front-ul folosește React Native CLI fără Expo, cu rutare prin `@react-navigation`.
-- FlightFlow declară în `flightflow/AGENTS.md` că aplicația e Expo, cu Expo Router și rute în `src/app/`. Front-ul are `src/app/App.tsx` ca fișier de shell, nu ca rută. Cele două convenții nu sunt compatibile direct.
-- Ambele proiecte sunt TypeScript. Nu am comparat versiunile de TypeScript și de React Native, pentru că nu am citit `package.json` din FlightFlow.
+- FlyQ declară în `flightflow/AGENTS.md` că aplicația e Expo, cu Expo Router și rute în `src/app/`. Front-ul are `src/app/App.tsx` ca fișier de shell, nu ca rută. Cele două convenții nu sunt compatibile direct.
+- Ambele proiecte sunt TypeScript. Nu am comparat versiunile de TypeScript și de React Native, pentru că nu am citit `package.json` din FlyQ.
 
 ## 9. Riscuri și întrebări deschise
 
-1. **Două shell-uri de aplicație.** `AirportApp/src/app/App.tsx` (React Navigation, RN CLI) și `App.tsx`-ul din FlightFlow (calea exactă nu am verificat), cu convențiile din `flightflow/AGENTS.md` (Expo, Expo Router). Trebuie ales unul.
+1. **Două shell-uri de aplicație.** `AirportApp/src/app/App.tsx` (React Navigation, RN CLI) și `App.tsx`-ul din FlyQ (calea exactă nu am verificat), cu convențiile din `flightflow/AGENTS.md` (Expo, Expo Router). Trebuie ales unul.
 2. **Secret hardcodat găsit.** `AirportApp/android/app/build.gradle`, liniile 90–93 (bloc `signingConfigs`): `storeFile`, `storePassword`, `keyAlias` și `keyPassword` sunt scrise direct în fișier. Valorile nu sunt copiate aici. Fișierul `AirportApp/android/app/debug.keystore` este în repo. Linia 103 semnează build-ul de **release** cu `signingConfigs.debug`, iar comentariul de la linia 101 recunoaște asta. Nu am citit `AirportApp/android/app/debug.keystore`.
 3. **Date personale în clar.** `AirportApp/src/store/tickets.ts` salvează `pass.raw`, numele pasagerului și PNR-ul în AsyncStorage, fără criptare.
 4. **Interfețe sincrone pentru date asincrone.** Vezi secțiunea 8.2. Este cea mai mare schimbare de arhitectură.

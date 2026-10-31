@@ -6,7 +6,7 @@ import { zustandStorage } from './storage';
 export type AssistantSource = 'mock' | 'laptop' | 'device' | 'deviceTools';
 export type TrackerSource = 'mock' | 'live';
 export type ModelTier = 'no-ai' | 'rollama';
-/** Where flights and live positions come from: the FlightFlow test gateway (laptop) or the team's FlyQ server. */
+/** Where flights and live positions come from: the FlyQ test gateway (laptop) or the team's FlyQ server. */
 export type Backend = 'gateway' | 'flyq';
 
 // Setările modului de test: de unde vin zborul, poziția și răspunsurile asistentului.

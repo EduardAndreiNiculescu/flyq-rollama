@@ -1,8 +1,8 @@
-# FlightFlow — asistent de aeroport care rulează offline pe iPhone
+# FlyQ — asistent de aeroport care rulează offline pe iPhone
 
 Proiect pentru Craiova Airport Hackathon 2026. Aplicația îl însoțește pe pasager de la intrarea în aeroport până la aterizare. Un model de limbaj mic rulează **direct pe telefon** (fără server de inferență) și înțelege întrebările în română de zi cu zi, cu greșeli și argou. Faptele despre zbor (ore, poartă, întârzieri, timp rămas) și regulile de călătorie vin din cod determinist și dintr-o bază de cunoștințe locală, nu din modelul de limbaj.
 
-> **English, in short.** FlightFlow is an offline airport companion for iPhone (Expo / React Native). A 1B-parameter Llama 3.2 model (RoLlama, SFT + DPO) runs on-device through llama.rn and only *routes* the passenger's question to one of seven tools; every fact comes from deterministic code or a local knowledge base. A FlyQ backend client provides flights, a LiDAR-scanned indoor map module is in development, and iOS push is prepared but not enabled. See "Starea proiectului" for what is verified and what is not.
+> **English, in short.** FlyQ is an offline airport companion for iPhone (Expo / React Native). A 1B-parameter Llama 3.2 model (RoLlama, SFT + DPO) runs on-device through llama.rn and only *routes* the passenger's question to one of seven tools; every fact comes from deterministic code or a local knowledge base. A FlyQ backend client provides flights, a LiDAR-scanned indoor map module is in development, and iOS push is prepared but not enabled. See "Starea proiectului" for what is verified and what is not.
 
 ## Ce face aplicația
 

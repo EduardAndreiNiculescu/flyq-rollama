@@ -1,4 +1,4 @@
-# Inspector local FlightFlow V4
+# Inspector local FlyQ V4
 
 Pe Windows, cu Ollama pornit și modelul `ff-adapter-v4:latest` instalat:
 

@@ -1,4 +1,4 @@
-# FlightFlow Qwen3-0.6B router — round V2
+# FlyQ Qwen3-0.6B router — round V2
 
 Date: 2026-10-30
 

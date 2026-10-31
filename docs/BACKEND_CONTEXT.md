@@ -1,13 +1,13 @@
-# Backend FlightFlow – context pentru cine îl construiește
+# Backend FlyQ – context pentru cine îl construiește
 
 Stare: la 2026-10-29. Tot ce scrie aici despre cod a fost verificat în repo; ce nu există e marcat **LIPSEȘTE**.
 
 ## 1. Rolul backendului
 
-Aplicația FlightFlow (React Native, Qwen3-4B local) funcționează **complet offline**. Backendul e opțional și adaugă un singur lucru: **poziția live a aeronavei** (OpenSky) și un ETA estimat. El nu rulează modelul AI și nu e necesar pentru întrebările despre proceduri, bagaje, documente sau orarul programat.
+Aplicația FlyQ (React Native, Qwen3-4B local) funcționează **complet offline**. Backendul e opțional și adaugă un singur lucru: **poziția live a aeronavei** (OpenSky) și un ETA estimat. El nu rulează modelul AI și nu e necesar pentru întrebările despre proceduri, bagaje, documente sau orarul programat.
 
 ```
-iPhone (RN + Qwen local) ──HTTPS──► Backend FlightFlow ──OAuth2──► OpenSky
+iPhone (RN + Qwen local) ──HTTPS──► Backend FlyQ ──OAuth2──► OpenSky
         ▲ offline: folosește ultimul snapshot datat            (secretul stă DOAR aici)
 ```
 
@@ -35,7 +35,7 @@ Teste: `npx vitest run` (33 de teste trec la ultima rulare). `npx tsc --noEmit` 
 
 ## 4. Contractul API
 
-`GET /v1/flights/{flightKey}/tracking` — antet `Authorization: Bearer <token de sesiune FlightFlow>` (distinct de tokenul OpenSky).
+`GET /v1/flights/{flightKey}/tracking` — antet `Authorization: Bearer <token de sesiune FlyQ>` (distinct de tokenul OpenSky).
 
 Răspuns = `TrackingResult` din `src/tracking/result.ts`, `schemaVersion: 1`:
 
@@ -64,7 +64,7 @@ Reguli de semantică (din documentația OpenSky):
 
 - **Secrete:** `OPENSKY_CLIENT_ID`, `OPENSKY_CLIENT_SECRET` din variabile de mediu / manager de secrete. Niciodată în cod, teste, git, loguri sau răspunsuri. `.gitignore` exclude deja `.env*`, `API.json`.
 - **⚠ Secretul OpenSky din arhiva primită a circulat prin chat și fișiere: trebuie rotit înainte de orice folosire.** Contul din arhivă e pe alt email decât al proprietarului proiectului: confirmă că ai dreptul să-l folosești. Nu a fost folosit în niciun apel.
-- **Termeni OpenSky:** pagina oficială indică utilizare pentru cercetare/necomercial; confirmă că distribuția FlightFlow e permisă.
+- **Termeni OpenSky:** pagina oficială indică utilizare pentru cercetare/necomercial; confirmă că distribuția FlyQ e permisă.
 - **Cote:** documentația indica 4.000 credite/zi/categorie (cont standard) și 400 (anonim); sunt valori de revalidat, nu SLA. Citește limita reală din antetele `X-Rate-Limit-*`. Cache comun pe `icao24`, TTL 60–120 s, single-flight pentru cereri simultane; **nu apela OpenSky la fiecare întrebare a utilizatorului**; poll adaptiv doar pentru zboruri active.
 - **Endpoint:** acceptă doar `flightKey` rezolvat pe server; nu proxy-ui URL-uri arbitrare; validează `icao24` (`^[0-9a-f]{6}$`).
 - **Loguri:** fără corpul răspunsului OAuth, fără `Authorization`, fără date de rezervare. Retenție limitată pentru observații.
@@ -102,7 +102,7 @@ Documentație: https://airlabs.co/docs/ (base URL `https://airlabs.co/api/v9/END
 ### Ce rezolvă (golurile din §3)
 AirLabs poate umple exact ce lipsea față de OpenSky: maparea număr de zbor → aeronavă (`hex` = icao24), aeroporturi de plecare/sosire, orar programat și estimat, poartă/terminal, status și întârzieri, plus poziție live.
 
-| Endpoint | Folosire în FlightFlow | Parametri documentați |
+| Endpoint | Folosire în FlyQ | Parametri documentați |
 |---|---|---|
 | `/flight` | Detalii zbor după număr: identitate, orar, poartă, status, întârzieri, poziție | `flight_iata` sau `flight_icao` |
 | `/flights` | Poziții live; filtrare după `hex`, `flight_iata`, `dep_iata`, `arr_iata`, `bbox` | `_fields`, `_view`, `zoom` |

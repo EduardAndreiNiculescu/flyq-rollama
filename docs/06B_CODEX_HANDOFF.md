@@ -1,4 +1,4 @@
-# FlightFlow 0.6B — Codex handoff
+# FlyQ 0.6B — Codex handoff
 
 ## Stare verificată
 
