@@ -14,9 +14,11 @@ import {
   TrainFront,
   ChevronRight,
   RotateCcw,
+  Radio,
+  Share2,
 } from 'lucide-react-native';
 import { memo, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import Animated, { Easing, FadeIn, useAnimatedStyle, useReducedMotion, useSharedValue, withTiming, ZoomIn } from 'react-native-reanimated';
 import { AppText } from '../components/AppText';
 import { Badge } from '../components/Badge';
@@ -40,10 +42,13 @@ import { useLayout } from '../theme/responsive';
 import { colors, progressGradient, spacing } from '../theme/tokens';
 import type { Airport, Flight, FlightPosition, Ticket as TicketT } from '../types';
 import { useFlightStatus, useFlightStatusVersion } from '../store/flightStatus';
+import { recordFor } from '../services/live/DeviceAssistantService';
+import { shareWithFamily } from '../services/live/shareFlow';
 
 export function FlightScreen({ onBackToJourney }: { onBackToJourney?: () => void } = {}) {
   const t = useT();
   const navigation = useNavigation();
+  const language = useLanguage();
   const ticket = useActiveTicket();
   // Selectori înguste: ecranul se re-randează doar când se schimbă faza, nu la fiecare poziție nouă
   const phase = useFlightMode(state => state.phase);
@@ -71,6 +76,10 @@ export function FlightScreen({ onBackToJourney }: { onBackToJourney?: () => void
 
   const inAir = phase === 'inAir';
   const toggle = (value: boolean) => (value ? takeOff(flight) : backToGround());
+  const sendToFamily = async () => {
+    const r = await shareWithFamily(recordFor(flight), language === 'ro');
+    if (r.kind === 'error') Alert.alert(language === 'ro' ? 'Partajarea nu a pornit' : 'Sharing did not start', r.message);
+  };
 
   return (
     <ScrollScreen background={inAir ? 'sky' : 'default'} column="columnWide">
@@ -80,6 +89,10 @@ export function FlightScreen({ onBackToJourney }: { onBackToJourney?: () => void
         right={<View style={styles.headerActions}>{onBackToJourney ? <RoundButton icon={Route} label={t('flight.backToJourney')} onPress={onBackToJourney} /> : null}<ProfileButton /></View>}
       />
       {!inAir && <FlightTimes flight={flight} from={from} to={to} ticket={ticket} />}
+      <View style={styles.liveActions}>
+        <Button label={language === 'ro' ? 'Zbor live' : 'Live flight'} icon={Radio} size="sm" variant="tinted" onPress={() => navigation.navigate('LiveFlight')} style={styles.flex} />
+        <Button label={language === 'ro' ? 'Trimite familiei' : 'Send to family'} icon={Share2} size="sm" variant="tinted" onPress={() => void sendToFamily()} style={styles.flex} />
+      </View>
       <Glass tone={inAir ? 'strong' : 'normal'} style={[styles.toggle, inAir && styles.toggleOn]}>
         <IconTile icon={Plane} tone={inAir ? 'accent' : 'soft'} />
         <View style={styles.flex}>
@@ -369,6 +382,7 @@ function LandingView({ flight, from, to, onReset }: { flight: Flight; from: Airp
 
 const styles = StyleSheet.create({
   flex: { flex: 1, gap: 2 },
+  liveActions: { flexDirection: 'row', gap: spacing.sm },
   headerActions: { flexDirection: 'row', gap: spacing.sm },
   loaderBox: { minHeight: 180, alignItems: 'center', justifyContent: 'center' },
   toggle: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.md },

@@ -67,6 +67,9 @@
   var demo = params.get('demo') === '1';
   var lang = (params.get('lang') || navigator.language || 'ro').toLowerCase().indexOf('ro') === 0 ? 'ro' : 'en';
   var token = params.get('t') || (location.pathname.match(/\/s\/([A-Za-z0-9_-]{16,128})\/?$/) || [])[1] || '';
+  // The API is the page's own origin; ?api= is honoured only for the FlyQ server itself (so the page can also be hosted elsewhere), never for an arbitrary host.
+  var API_BASES = ['', 'https://flyq-cra.duckdns.org'];
+  var apiBase = API_BASES.indexOf(params.get('api') || '') >= 0 ? (params.get('api') || '') : '';
   var POLL_MS = 20000;
   var T = {
     ro: { gate: 'Poartă', eta: 'Aterizare', noGate: 'neanunțată', in: 'în', min: 'min', h: 'h', ended: 'Partajarea s-a încheiat', endedBody: 'Linkul a expirat sau a fost oprit de persoana care l-a trimis.', badLink: 'Link invalid', badBody: 'Cere persoanei din avion să-ți trimită un link nou.',
@@ -187,7 +190,7 @@
     if (stop) return;
     if (demo) { render(demoData()); return; }
     if (!token) { ended(T.badLink, T.badBody); return; }
-    fetch('/v1/public/shares/' + encodeURIComponent(token), { headers: { accept: 'application/json' }, cache: 'no-store', credentials: 'omit', referrerPolicy: 'strict-origin-when-cross-origin' })
+    fetch(apiBase + '/v1/public/shares/' + encodeURIComponent(token), { headers: { accept: 'application/json' }, cache: 'no-store', credentials: 'omit', referrerPolicy: 'strict-origin-when-cross-origin' })
       .then(function (r) {
         if (r.status === 404 || r.status === 410) { ended(T.ended, T.endedBody); return null; }
         if (r.status === 429) return null; // slow down: next tick

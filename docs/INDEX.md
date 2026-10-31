@@ -16,6 +16,7 @@
 | Document | Ce găsești |
 |---|---|
 | `PROMPT_BACKEND_LIVE_ACTIVITIES.md` | Cererea inițială către backend pentru Live Activities |
+| `PROMPT_BACKEND_STATUS_2026-11-01.md` | Situația curentă a aplicației și testul de sincronizare cerut lui Mihai |
 | `BACKEND_CONTEXT.md`, `GATEWAY.md`, `INTEGRATION.md` | Contextul serverului FlyQ și al gateway-ului de test |
 
 ## Context istoric (decizii și rapoarte vechi)
