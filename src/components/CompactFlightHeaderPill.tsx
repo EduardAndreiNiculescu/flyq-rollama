@@ -29,10 +29,10 @@ export function CompactFlightHeaderPill({ from, to, flight, gate, departure, che
         <Plane size={22} color={colors.onAccent} strokeWidth={2.3} />
       </View> : null}
       <View style={styles.route}>
-        <AppText variant="title" numberOfLines={1} adjustsFontSizeToFit style={[styles.big, compact && styles.bigCompact]}>
+        <AppText variant="title" numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7} style={[styles.big, compact && styles.bigCompact]}>
           {from} → {to}
         </AppText>
-        <AppText variant="caption" color={colors.textMuted} numberOfLines={1}>
+        <AppText variant="caption" color={colors.textMuted} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>
           {flight}
         </AppText>
       </View>

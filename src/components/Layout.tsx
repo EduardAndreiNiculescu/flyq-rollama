@@ -245,7 +245,7 @@ export function ListRow({
   last?: boolean;
 }) {
   const body = (
-    <View style={[styles.row, !last && styles.rowBorder]}>
+    <View style={styles.row}>
       {Icon ? (
         <View style={styles.rowIcon} importantForAccessibility="no" accessibilityElementsHidden>
           <Icon size={22} strokeWidth={2} color={iconTone === 'accent' ? colors.accentText : colors.text2} />
@@ -262,6 +262,7 @@ export function ListRow({
         ) : null}
       </View>
       {right}
+      {!last && <View pointerEvents="none" style={[styles.rowDivider, Icon ? styles.rowDividerInset : null]} />}
     </View>
   );
   return onPress ? (
@@ -316,7 +317,9 @@ const styles = StyleSheet.create({
   round: { width: 46, height: 46, alignItems: 'center', justifyContent: 'center' },
   roundActive: { borderRadius: 23, backgroundColor: colors.accent },
   row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, minHeight: 56, paddingVertical: spacing.sm },
-  rowBorder: { borderBottomWidth: 1, borderBottomColor: colors.line },
+  // Linia de separare începe de la text, nu de la marginea cardului (ca la listele „inset grouped” din iOS)
+  rowDivider: { position: 'absolute', left: 0, right: 0, bottom: 0, height: StyleSheet.hairlineWidth, backgroundColor: colors.line },
+  rowDividerInset: { left: 28 + spacing.md },
   rowText: { flex: 1, gap: 1 },
   rowIcon: { width: 28, alignItems: 'center' },
   empty: { alignItems: 'center', gap: spacing.md, padding: spacing.xl },

@@ -1,8 +1,8 @@
 import type { LucideIcon } from 'lucide-react-native';
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import { colors, spacing } from '../theme/tokens';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
+import { colors, motion, spacing } from '../theme/tokens';
 import { AppText } from './AppText';
 import { Glass } from './Glass';
 import { PressableScale } from './press';
@@ -84,8 +84,20 @@ export function Segmented<T extends string>({
   value: T;
   onChange: (v: T) => void;
 }) {
+  const n = options.length;
+  const index = Math.max(0, options.findIndex(o => o.value === value));
+  const width = useSharedValue(0);
+  const pos = useSharedValue(index);
+  useEffect(() => {
+    pos.value = withSpring(index, motion.pressOut); // the white pill slides to the chosen option
+  }, [index, pos]);
+  const knob = useAnimatedStyle(() => {
+    const item = Math.max(0, (width.value - SEG_BORDER * 2 - SEG_PAD * 2 - SEG_GAP * (n - 1)) / n);
+    return { width: item, transform: [{ translateX: pos.value * (item + SEG_GAP) }] };
+  });
   return (
-    <Glass radius={22} style={styles.seg} accessibilityRole="radiogroup">
+    <Glass radius={22} style={styles.seg} accessibilityRole="radiogroup" onLayout={e => (width.value = e.nativeEvent.layout.width)}>
+      <Animated.View pointerEvents="none" style={[styles.segKnob, knob]} />
       {options.map(opt => {
         const on = opt.value === value;
         const Icon = opt.icon;
@@ -93,7 +105,7 @@ export function Segmented<T extends string>({
           <PressableScale
             key={opt.value}
             onPress={() => onChange(opt.value)}
-            style={[styles.segItem, on && styles.segOn]}
+            style={styles.segItem}
             accessibilityRole="radio"
             accessibilityState={{ selected: on }}
             accessibilityLabel={opt.label}
@@ -165,6 +177,10 @@ export function ProgressBar({ value, height = 8, dim }: { value: number; height?
   );
 }
 
+const SEG_BORDER = 1.5; // Glass border
+const SEG_PAD = 4;
+const SEG_GAP = 4;
+
 const styles = StyleSheet.create({
   chip: { minHeight: 38, paddingHorizontal: spacing.md, justifyContent: 'center' },
   chipOn: { backgroundColor: colors.accent, borderRadius: 19, borderWidth: 1, borderColor: colors.accent },
@@ -172,9 +188,9 @@ const styles = StyleSheet.create({
   track: { width: 52, height: 32, borderRadius: 16, backgroundColor: colors.trackOff, padding: 3 },
   trackOn: { backgroundColor: colors.accent },
   knob: { width: 26, height: 26, borderRadius: 13, backgroundColor: colors.white, boxShadow: `0 1px 3px ${colors.shadowKnob}` },
-  seg: { flexDirection: 'row', padding: 4, gap: 4 },
+  seg: { flexDirection: 'row', padding: SEG_PAD, gap: SEG_GAP },
+  segKnob: { position: 'absolute', top: SEG_PAD, bottom: SEG_PAD, left: SEG_PAD, borderRadius: 18, backgroundColor: colors.white, boxShadow: `0 1px 4px ${colors.shadowKnob}` },
   segItem: { flex: 1, minHeight: 44, borderRadius: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingHorizontal: spacing.sm },
-  segOn: { backgroundColor: colors.white },
   tile: { alignItems: 'center', justifyContent: 'center' },
   progress: { backgroundColor: colors.progressTrack, overflow: 'hidden', flex: 1, minHeight: 6 },
   progressFill: { width: '100%', height: '100%', backgroundColor: colors.accent },

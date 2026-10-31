@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   infoWide: { flex: 2, gap: 2 },
   info: { flex: 1, gap: 2 },
   perfRow: { flexDirection: 'row', alignItems: 'center', height: NOTCH },
-  perf: { flex: 1, borderTopWidth: 2, borderStyle: 'dotted', borderColor: colors.text3, marginHorizontal: spacing.xs },
+  perf: { flex: 1, borderTopWidth: 1.5, borderStyle: 'dashed', borderColor: colors.text3, marginHorizontal: spacing.xs },
   // Decupajele au culoarea cerului din spatele biletului, ca să pară găuri
   notch: { width: NOTCH, height: NOTCH, borderRadius: NOTCH / 2, backgroundColor: colors.horizonLav },
   notchLeft: { marginLeft: -NOTCH / 2 },

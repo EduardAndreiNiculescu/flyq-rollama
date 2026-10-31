@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     backgroundImage: `linear-gradient(to bottom, rgba(255,255,255,0.45), rgba(255,255,255,0))`,
   },
   // Cardurile au o umbră albastră difuză; elementele care plutesc (tab bar, sheet, banda cu biletul) una mai adâncă
-  resting: { boxShadow: `0 8px 20px ${colors.shadowCard}` },
-  floating: { boxShadow: `0 12px 28px ${colors.shadowFloat}` },
+  // Două straturi: umbra largă colorată (adâncime) și una scurtă neutră (contact cu suprafața), ca la materialele Apple
+  resting: { boxShadow: `0 10px 26px -4px ${colors.shadowCard}, 0 2px 8px -2px rgba(0,0,0,0.05)` },
+  floating: { boxShadow: `0 14px 32px -4px ${colors.shadowFloat}, 0 4px 12px -2px rgba(0,0,0,0.06)` },
 });

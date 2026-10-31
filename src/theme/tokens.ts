@@ -67,6 +67,8 @@ export const colors = {
   glassSubBorder: 'rgba(255,255,255,0.70)',
   /** Sticlă aproape opacă, pentru banda care plutește peste conținutul derulat */
   glassSolid: 'rgba(255,255,255,0.96)',
+  /** Umplutura butoanelor secundare (iOS „secondarySystemFill”): translucidă, fără contur de sticlă */
+  fillSecondary: 'rgba(11,20,48,0.06)',
   // Contur specular: lumina vine de sus-stânga, deci marginile de jos-dreapta sunt mai slabe
   glassEdgeLit: 'rgba(255,255,255,0.92)',
   glassEdgeShade: 'rgba(255,255,255,0.35)',

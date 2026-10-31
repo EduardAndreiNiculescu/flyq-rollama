@@ -118,7 +118,7 @@ export function JourneyScreen({ onShowFlightDetails }: { onShowFlightDetails?: (
                 <View style={styles.prepActions}>
                   {/* Acțiunea principală a pasului e să-l bifezi; harta e un ajutor, deci rămâne secundară */}
                   <Button label={t('journey.done')} icon={Check} size="sm" onPress={() => completeStep(ticket.id, step.id)} />
-                  {columns === 1 ? <Button label={t('journey.showOnMap')} icon={MapIcon} size="sm" variant="glass" onPress={() => showOnMap(step.targetNodeId)} /> : null}
+                  {columns === 1 ? <Button label={t('journey.showOnMap')} icon={MapIcon} size="sm" variant="tinted" onPress={() => showOnMap(step.targetNodeId)} /> : null}
                 </View>
               </View>
             )}
