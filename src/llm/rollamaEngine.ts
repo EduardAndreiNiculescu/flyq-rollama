@@ -19,7 +19,7 @@ const ZERO: GenerateStats = { timeToFirstTokenMs: 0, tokensPerSecond: null, tota
  * TEMPORARY while the on-device routing is being debugged: refusals carry the model's raw JSON, and every router call is written to the
  * native console (console.error reaches NSLog in release builds). Set to false before shipping.
  */
-export const ROUTER_DEBUG = true;
+export const ROUTER_DEBUG = false;
 const devNote = (raw: string, decision: string) => (ROUTER_DEBUG ? ` [dev: ${raw.slice(0, 70)} => ${decision}]` : '');
 
 /**

@@ -74,6 +74,26 @@ export async function flyqFlight(flightNumber: string, now: Date = new Date()): 
   }
 }
 
+/** The server's own arrival estimate (profile + wind model, provider estimate or actual time): GET /v1/flights/{n}/eta?date=. Null when this build does not use the FlyQ server. */
+export type ServerEta = {
+  flightNumber?: string;
+  eta?: { etaUtc?: string; kind?: string; source?: string; basisAgeSec?: number | null; uncertaintyMin?: number | null; calibrated?: boolean } | null;
+  timeRemaining?: { remainingMin?: number | null; kind?: string } | null;
+  delay?: { verdict?: string; delayMin?: number | null; source?: string } | null;
+  positionModel?: { distanceM?: number | null; windSource?: string | null } | null;
+};
+export async function fetchServerEta(flightNumber: string, date: string): Promise<ServerEta | null> {
+  if (useLive.getState().backend !== 'flyq') return null;
+  const path = `/v1/flights/${encodeURIComponent(flightNumber.replace(/\s+/g, ''))}/eta?date=${date}`;
+  const call = async (force: boolean) => flyqFetch(path, { headers: { authorization: `Bearer ${await flyqToken(force)}` } });
+  try {
+    return (await call(false)) as ServerEta;
+  } catch (e) {
+    if (e instanceof Error && e.message === 'unauthorized') return (await call(true)) as ServerEta;
+    throw e;
+  }
+}
+
 export async function fetchFlight(flightNumber: string): Promise<FlightLookup> {
   const j = (useLive.getState().backend === 'flyq' ? await flyqFlight(flightNumber) : await gatewayCall(`/v1/flight/${encodeURIComponent(flightNumber.replace(/\s+/g, ''))}`)) as { record?: FlightRecord | null; tracking?: unknown };
   let tracking: TrackingResult | null = null;

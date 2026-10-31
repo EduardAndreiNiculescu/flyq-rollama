@@ -6,6 +6,7 @@ import { useLive } from '../../store/live';
 import { useTickets } from '../../store/tickets';
 import { flightData } from '../index';
 import { fetchFlight } from './gatewayClient';
+import { refreshFlightActivity } from './liveActivity';
 import { buildLiveEntry, getLiveEntry, isLiveFlightId, registerLive } from './liveFlights';
 import { gateFromNotificationText } from './notificationGate';
 import { FLYQ_DEMO_FLIGHT_ID } from './push';
@@ -53,6 +54,17 @@ export function applyRecord(flightId: string, record: FlightRecord): void {
 }
 
 let running = false;
+let lastEtaAt = 0;
+const ETA_EVERY_MS = 60_000; // the server caches ~60 s and the provider quota is monthly: no need to ask more often
+
+/** The ETA is worth asking from 15 min before departure until the flight has landed. */
+function etaWindowOpen(record: FlightRecord, now = Date.now()): boolean {
+  const dep = Date.parse(record.scheduledDeparture);
+  const arr = Date.parse(record.scheduledArrival);
+  if (Number.isNaN(dep)) return false;
+  if (record.providerStatus === 'landed') return false;
+  return now >= dep - 15 * 60_000 && (Number.isNaN(arr) || now <= arr + 6 * 3_600_000);
+}
 
 /** One read of the server. Never throws; the outcome is in the store (`lastError`). */
 export async function syncNow(): Promise<boolean> {
@@ -68,6 +80,10 @@ export async function syncNow(): Promise<boolean> {
       return false;
     }
     applyRecord(target.flightId, record);
+    if (Date.now() - lastEtaAt >= ETA_EVERY_MS && etaWindowOpen(record)) {
+      lastEtaAt = Date.now();
+      await refreshFlightActivity(record, null, target.flightId); // server ETA into the store (and the card, if one is running)
+    }
     return true;
   } catch (e) {
     useFlightStatus.getState().setSyncResult(e instanceof Error ? e.message : 'error');

@@ -55,7 +55,7 @@ export function LiveFlightScreen() {
   useEffect(() => {
     if (!record) return;
     let alive = true;
-    const run = () => void refreshFlightActivity(record).then(a => alive && setArrival(a));
+    const run = () => void refreshFlightActivity(record, null, flight?.id).then(a => alive && setArrival(a));
     run();
     const t = setInterval(run, 30_000);
     return () => {

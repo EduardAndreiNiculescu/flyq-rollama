@@ -231,6 +231,10 @@ def main():
     print(f"\nExporting GGUF binary format to {args.out_gguf}...")
     gguf_path = Path(args.out_gguf)
     gguf_path.parent.mkdir(parents=True, exist_ok=True)
+    final_gguf_path = gguf_path
+    # This exporter writes a GGUF that llama.cpp cannot run (F16 norms abort at load, Q/K are not permuted, RoPE settings are missing). It is written
+    # to a raw file and repaired below, so the file at --out-gguf is always the repaired one.
+    gguf_path = gguf_path.with_name(gguf_path.stem + ".raw.gguf")
 
     writer = gguf.GGUFWriter(str(gguf_path), arch="llama")
     writer.add_architecture()
@@ -304,6 +308,15 @@ def main():
     writer.write_kv_data_to_file()
     writer.write_tensors_to_file()
     writer.close()
+
+    # Repair (F32 norms, Q/K permutation, RoPE keys and factors) and verify; the raw file is removed.
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from fix_gguf_rollama import repair  # noqa: E402
+
+    print("Repairing the GGUF for llama.cpp (scripts/fix_gguf_rollama.py)...")
+    repair(str(gguf_path), str(final_gguf_path))
+    gguf_path.unlink()
+    gguf_path = final_gguf_path
 
     gguf_size_bytes = gguf_path.stat().st_size
     gguf_size_mb = round(gguf_size_bytes / (1024 * 1024), 2)

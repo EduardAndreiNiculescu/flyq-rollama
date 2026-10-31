@@ -36,6 +36,7 @@ import { useActiveTicket } from '../store/tickets';
 import { useLayout } from '../theme/responsive';
 import { colors, radii, spacing } from '../theme/tokens';
 import { useFlightStatusVersion } from '../store/flightStatus';
+import { ROUTER_DEBUG } from '../llm/rollamaEngine';
 
 interface Message {
   id: number;
@@ -205,7 +206,7 @@ export function AssistantScreen() {
           {messages.map(m => (
             <ChatBubble key={m.id} role={m.role} author={m.role === 'user' ? t('assistant.you') : t('assistant.name')} text={m.text} time={m.role === 'assistant' && m.id !== streamingId ? m.time : undefined} streaming={m.id === streamingId} />
           ))}
-          {assistantSource !== 'mock' && lastStats ? (
+          {ROUTER_DEBUG && assistantSource !== 'mock' && lastStats ? (
             <AppText variant="caption" color={colors.textMuted}>
               {statsLine(lastStats)}
             </AppText>

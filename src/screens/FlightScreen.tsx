@@ -39,7 +39,7 @@ import { useActiveTicket } from '../store/tickets';
 import { useLayout } from '../theme/responsive';
 import { colors, progressGradient, spacing } from '../theme/tokens';
 import type { Airport, Flight, FlightPosition, Ticket as TicketT } from '../types';
-import { useFlightStatusVersion } from '../store/flightStatus';
+import { useFlightStatus, useFlightStatusVersion } from '../store/flightStatus';
 
 export function FlightScreen({ onBackToJourney }: { onBackToJourney?: () => void } = {}) {
   const t = useT();
@@ -51,7 +51,10 @@ export function FlightScreen({ onBackToJourney }: { onBackToJourney?: () => void
   const backToGround = useFlightMode(state => state.backToGround);
 
   useFlightStatusVersion(); // re-render when the server changes the gate or a delay
-  const flight = ticket ? flightData.getFlight(ticket.flightId) : null;
+  const eta = useFlightStatus(st => (ticket ? st.etas[ticket.flightId] : undefined));
+  const baseFlight = ticket ? flightData.getFlight(ticket.flightId) : null;
+  // The arrival shown is the server's estimate when there is one; the schedule stays in the data, only the display changes.
+  const flight = baseFlight && eta ? { ...baseFlight, arrivalUtc: new Date(eta.arrivalEpoch * 1000).toISOString() } : baseFlight;
   const from = flight ? flightData.getAirport(flight.from) : null;
   const to = flight ? flightData.getAirport(flight.to) : null;
 

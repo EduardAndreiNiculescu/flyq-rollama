@@ -11,6 +11,9 @@ What was wrong with finetune/merge_and_quantize.py's output, found from the iPho
 Usage:
   python scripts/fix_gguf_rollama.py <in.gguf> <out.gguf>
 It copies every key and tensor, converts the 1-D F16 norm tensors to F32, and adds what is missing. Quantised tensors are copied byte for byte.
+
+finetune/merge_and_quantize.py now runs this repair itself, so a fresh export is already correct. The repair is NOT idempotent (it permutes Q/K), so it
+marks its output with the key `flyq.gguf_repaired` and refuses a file that already has it.
 """
 import math
 import sys
@@ -45,10 +48,16 @@ def field_value(field):
     return field.contents() if hasattr(field, "contents") else None
 
 
-def main(src: str, dst: str) -> None:
+REPAIRED_KEY = "flyq.gguf_repaired"
+
+
+def repair(src: str, dst: str) -> None:
     r = GGUFReader(src)
+    if REPAIRED_KEY in r.fields:
+        raise ValueError(f"{src} was already repaired (key {REPAIRED_KEY}); repairing twice would permute Q/K again and break the model")
     arch = field_value(r.fields["general.architecture"])
     w = GGUFWriter(dst, arch)
+    w.add_uint32(REPAIRED_KEY, 1)
 
     have = set(r.fields.keys())
     for name, field in r.fields.items():
@@ -103,14 +112,23 @@ def main(src: str, dst: str) -> None:
     w.close()
     print(f"norm tensors converted F16->F32: {converted}; Q/K matrices permuted: {permuted}; added: {', '.join(added) or 'nothing'}")
 
-    # Check what was written.
-    r2 = GGUFReader(dst)
+    verify(dst)
+
+
+def verify(path: str) -> None:
+    """Fails loudly if the file would crash or confuse llama.cpp: an F16 norm tensor, no RoPE factors, no repair marker."""
+    r2 = GGUFReader(path)
     kinds = {}
     for t in r2.tensors:
         kinds[t.tensor_type.name] = kinds.get(t.tensor_type.name, 0) + 1
-    print("tensors in the new file:", dict(sorted(kinds.items())), "| total", len(r2.tensors))
+    print("tensors in the file:", dict(sorted(kinds.items())), "| total", len(r2.tensors))
     assert not any(len(t.shape) == 1 and t.tensor_type == GGMLQuantizationType.F16 for t in r2.tensors), "an F16 1-D tensor is left"
     assert any(t.name == "rope_freqs.weight" for t in r2.tensors), "rope_freqs.weight missing"
+    assert REPAIRED_KEY in r2.fields, f"{path} has no {REPAIRED_KEY} marker"
+
+
+def main(src: str, dst: str) -> None:
+    repair(src, dst)
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@ import type { FlightRecord } from '../../core/types';
 import { liveArrival, type ArrivalEstimate } from './arrival';
 import FlightActivity, { type FlightActivityProps } from './flightActivity';
 import { patchLiveActivityToken } from './push';
+import { useFlightStatus } from '../../store/flightStatus';
 
 /** "2026-10-31T08:40:00+02:00" -> "08:40": the clock time of the offset the string carries (airport time). */
 const clock = (iso: string | null | undefined) => (iso && /T(\d{2}:\d{2})/.exec(iso)?.[1]) || null;
@@ -46,9 +47,13 @@ const stopRefresh = () => {
   timer = null;
 };
 
-/** Asks the server for the live position and updates the card with the landing estimate. Only runs while the app is open (JS timers stop in the background). */
-async function refresh(record: FlightRecord, boarding: Boarding | null | undefined): Promise<ArrivalEstimate | null> {
+/**
+ * Asks for the landing estimate (server ETA first), keeps it in the store for the screens (when `flightId` is given) and updates the card.
+ * Only runs while the app is open (JS timers stop in the background).
+ */
+async function refresh(record: FlightRecord, boarding: Boarding | null | undefined, flightId?: string): Promise<ArrivalEstimate | null> {
   const arrival = await liveArrival(record);
+  if (flightId) useFlightStatus.getState().setEta(flightId, arrival);
   if (arrival) for (const a of FlightActivity.getInstances()) await a.update(activityProps(record, boarding, arrival));
   return arrival;
 }
@@ -86,8 +91,8 @@ export async function startFlightActivity(record: FlightRecord, boarding?: Board
 }
 
 /** One-off refresh for the live screen / a button: the estimate, or null (nothing live: not airborne, offline, stale). */
-export async function refreshFlightActivity(record: FlightRecord, boarding?: Boarding | null): Promise<ArrivalEstimate | null> {
-  return refresh(record, boarding);
+export async function refreshFlightActivity(record: FlightRecord, boarding?: Boarding | null, flightId?: string): Promise<ArrivalEstimate | null> {
+  return refresh(record, boarding, flightId);
 }
 
 export async function endFlightActivity(): Promise<ActivityResult> {
