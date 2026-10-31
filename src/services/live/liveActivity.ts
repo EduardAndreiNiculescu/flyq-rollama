@@ -67,12 +67,18 @@ export async function startFlightActivity(record: FlightRecord, boarding?: Board
     const activity = FlightActivity.start(activityProps(record, boarding, first), ACTIVITY_URL);
     activity.addPushTokenListener(e => {
       onToken?.(e.pushToken);
-      void patchLiveActivityToken(e.pushToken);
+      void patchLiveActivityToken(e.pushToken, record);
     });
     timer = setInterval(() => void refresh(record, boarding), REFRESH_MS);
-    const token = await activity.getPushToken();
+    // The token can arrive after start(): ask for it for a few seconds instead of relying only on the listener (an event fired before the
+    // listener was attached would be lost, and the server would never get the token).
+    let token = await activity.getPushToken();
+    for (let i = 0; !token && i < 15; i++) {
+      await new Promise(r => setTimeout(r, 1000));
+      token = await activity.getPushToken();
+    }
     if (token) onToken?.(token);
-    const sent = token ? await patchLiveActivityToken(token) : 'Token-ul activității nu e gata încă; îl trimit când apare.';
+    const sent = token ? await patchLiveActivityToken(token, record) : 'Token-ul cardului nu a apărut în 15 s (iOS nu l-a dat: verifică Setări → FlyQ → Live Activities și build-ul cu PUSH=1).';
     return { ok: true, message: `Card pornit${first ? ` (în zbor, aterizare estimată ${first.arrivalTime})` : ''}. ${sent}` };
   } catch (e) {
     return { ok: false, message: `Live Activity nu a pornit: ${String(e)}` };

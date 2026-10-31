@@ -3,6 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 import type { FlightRecord } from '../../core/types';
 import { useLive } from '../../store/live';
+import { useSettings } from '../../store/settings';
 import { FLYQ_BASE } from './gatewayClient';
 
 /**
@@ -97,23 +98,38 @@ export async function registerForFlight(record: FlightRecord, locale: 'ro' | 'en
 
 /**
  * Tells the server the Live Activity's own push token (hex), or null when the activity ended: PATCH /v1/push/subscriptions/{id}.
- * Needs the subscription made by registerForFlight (its ownerToken is in SecureStore). Returns a short status for the test screen.
+ * The subscription made by registerForFlight is needed (its ownerToken is in SecureStore). When `record` is given the subscription is created
+ * on the spot if it is missing, and recreated once if the server no longer knows it (401/403/404: the Keychain keeps the owner token across
+ * reinstalls, so an old install can leave an id the server has forgotten). Returns a short status for the test screen.
  */
-export async function patchLiveActivityToken(token: string | null): Promise<string> {
+export async function patchLiveActivityToken(token: string | null, record?: FlightRecord): Promise<string> {
   const { flyqKey } = useLive.getState();
-  const stored = await SecureStore.getItemAsync(OWNER_KEY).catch(() => null);
-  if (!flyqKey || !stored) return 'Nu există abonament push: apasă întâi „Activează notificările”.';
-  try {
-    const { id, owner } = JSON.parse(stored) as { id: string; owner: string };
-    const res = await fetch(`${FLYQ_BASE}/v1/push/subscriptions/${id}`, {
-      method: 'PATCH',
-      headers: { 'content-type': 'application/json', 'X-FlyQ-App-Key': flyqKey, 'X-Owner-Token': owner },
-      body: JSON.stringify({ liveActivityToken: token }),
-    });
-    return res.ok ? (token ? 'Serverul are token-ul activității.' : 'Token-ul activității a fost șters de pe server.') : `Serverul a răspuns ${res.status} ${await errorCode(res)}`.trim();
-  } catch {
-    return 'Serverul nu răspunde.';
+  if (!flyqKey) return 'Lipsește cheia FlyQ (Mod test → Sursa zborurilor).';
+  const locale = useSettings.getState().language;
+  const send = async (): Promise<Response | string> => {
+    const stored = await SecureStore.getItemAsync(OWNER_KEY).catch(() => null);
+    if (!stored) return 'Nu există abonament push.';
+    try {
+      const { id, owner } = JSON.parse(stored) as { id: string; owner: string };
+      return await fetch(`${FLYQ_BASE}/v1/push/subscriptions/${id}`, {
+        method: 'PATCH',
+        headers: { 'content-type': 'application/json', 'X-FlyQ-App-Key': flyqKey, 'X-Owner-Token': owner },
+        body: JSON.stringify({ liveActivityToken: token }),
+      });
+    } catch {
+      return 'Serverul nu răspunde.';
+    }
+  };
+  let res = await send();
+  const gone = typeof res === 'string' ? res === 'Nu există abonament push.' : [401, 403, 404].includes(res.status);
+  if (gone && record) {
+    await SecureStore.deleteItemAsync(OWNER_KEY).catch(() => {});
+    const reg = await registerForFlight(record, locale);
+    if (reg.state !== 'registered') return `Nu m-am putut abona la notificări (${reg.state}${'reason' in reg ? ': ' + reg.reason : ''}).`;
+    res = await send();
   }
+  if (typeof res === 'string') return res === 'Nu există abonament push.' ? 'Nu există abonament push: apasă întâi „Activează notificările”.' : res;
+  return res.ok ? (token ? 'Serverul are token-ul activității.' : 'Token-ul activității a fost șters de pe server.') : `Serverul a răspuns ${res.status} ${await errorCode(res)}`.trim();
 }
 
 /** Show notifications that arrive while the app is open (iOS hides them by default). Call once at start. */
