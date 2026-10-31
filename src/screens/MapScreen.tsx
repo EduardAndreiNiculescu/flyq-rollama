@@ -3,13 +3,14 @@ import { Ticket } from 'lucide-react-native';
 import { useCallback, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import type { TabParamList } from '../app/navigation';
-import { EmptyState, Screen, ScreenHeader } from '../components/Layout';
+import { EmptyState, ProfileButton, Screen, ScreenHeader } from '../components/Layout';
 import { MapPanel } from '../components/map/MapPanel';
 import { TicketStrip } from '../components/TicketStrip';
 import { useLocalized, useT } from '../i18n';
 import { flightData, terminalService } from '../services';
 import { useActiveTicket } from '../store/tickets';
 import { spacing } from '../theme/tokens';
+import { useLayout } from '../theme/responsive';
 
 export function MapScreen() {
   const t = useT();
@@ -17,6 +18,7 @@ export function MapScreen() {
   const navigation = useNavigation();
   const { params } = useRoute<RouteProp<TabParamList, 'Map'>>();
   const ticket = useActiveTicket();
+  const { sideNav } = useLayout();
 
   const [debug, setDebug] = useState(false);
   const [floorLabel, setFloorLabel] = useState('');
@@ -42,6 +44,7 @@ export function MapScreen() {
         subtitle={t('map.subtitle', { floor: floorLabel, target: localized(targetNode?.landmark) })}
         // Debug-ul (x, y, σ, status) se deschide doar cu apăsare lungă pe titlu, fără nimic vizibil în antet
         onTitleLongPress={() => setDebug(d => !d)}
+        right={sideNav ? <ProfileButton /> : undefined}
       />
       <MapPanel targetNodeId={target} showDebug={debug} onFloorLabel={onFloorLabel} />
     </Screen>

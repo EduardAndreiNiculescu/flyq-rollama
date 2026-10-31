@@ -21,7 +21,7 @@ import { AppText } from '../components/AppText';
 import { Badge } from '../components/Badge';
 import { Button } from '../components/Button';
 import { Glass } from '../components/Glass';
-import { EmptyState, Screen, ScrollScreen, ScreenHeader } from '../components/Layout';
+import { EmptyState, ProfileButton, Screen, ScrollScreen, ScreenHeader } from '../components/Layout';
 import { TicketStrip } from '../components/TicketStrip';
 import { MapPanel } from '../components/map/MapPanel';
 import { SkyArt } from '../components/SkyArt';
@@ -54,7 +54,7 @@ const PREP_ICONS: Record<PrepKey, LucideIcon> = {
   toilet: Toilet,
 };
 
-export function JourneyScreen() {
+export function JourneyScreen({ onShowFlightDetails }: { onShowFlightDetails?: () => void } = {}) {
   const t = useT();
   const language = useLanguage();
   const navigation = useNavigation();
@@ -83,7 +83,7 @@ export function JourneyScreen() {
   const current = steps.find((_, i) => states[i] === 'current');
   // Biletul stă fixat sus în locul titlului; pe tableta landscape e în meniul lateral, deci păstrăm doar titlul
   const header = sideNav ? (
-    <ScreenHeader title={t('journey.title')} subtitle={formatLongDate(flight.departureUtc, from.utcOffsetMin, language)} />
+    <ScreenHeader title={t('journey.title')} subtitle={formatLongDate(flight.departureUtc, from.utcOffsetMin, language)} right={<ProfileButton />} />
   ) : null;
   const showOnMap = (nodeId: string) => navigation.navigate('Main', { screen: 'Map', params: { targetNodeId: nodeId } });
 
@@ -129,6 +129,10 @@ export function JourneyScreen() {
         <Animated.View entering={FadeIn}>
           <Glass style={styles.allDone}>
             <AppText variant="headline" align="center">{t('journey.allDone')}</AppText>
+            <View style={styles.completeActions}>
+              <Button label={t('journey.openMap')} icon={MapIcon} variant="glass" size="sm" onPress={() => showOnMap(`f1_gate${flight.gate}`)} />
+              <Button label={t('journey.flightDetails')} icon={Plane} size="sm" onPress={onShowFlightDetails} />
+            </View>
             <Button label={t('journey.restart')} icon={RotateCcw} variant="glass" size="sm" onPress={() => resetSteps(ticket.id)} />
           </Glass>
         </Animated.View>
@@ -287,6 +291,7 @@ const styles = StyleSheet.create({
   // Unul sub altul, pe toată lățimea: încap și textele lungi, iar acțiunea principală e prima
   prepActions: { gap: spacing.sm, marginTop: spacing.xs },
   allDone: { padding: spacing.lg, gap: spacing.md, alignItems: 'center' },
+  completeActions: { width: '100%', gap: spacing.sm },
   tabletContent: { gap: spacing.md },
   columns: { flex: 1, flexDirection: 'row', gap: spacing.lg },
   leftColumn: { width: 380, flexGrow: 0 },

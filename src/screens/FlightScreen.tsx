@@ -7,6 +7,7 @@ import {
   Mountain,
   Plane,
   PlaneLanding,
+  Route,
   Satellite,
   Signal,
   Ticket,
@@ -25,7 +26,7 @@ import { FlightGlobeMap } from '../components/FlightGlobeMap';
 import { Glass } from '../components/Glass';
 import { GradientFill } from '../components/GradientFill';
 import { PressableScale } from '../components/press';
-import { EmptyState, ListRow, Screen, ScrollScreen, ScreenHeader } from '../components/Layout';
+import { EmptyState, ListRow, ProfileButton, RoundButton, Screen, ScrollScreen, ScreenHeader } from '../components/Layout';
 import { FlyQLoader } from '../components/brand/FlyQLoader';
 import { StatTile } from '../components/StatTile';
 import { useLanguage, useT } from '../i18n';
@@ -39,7 +40,7 @@ import { useLayout } from '../theme/responsive';
 import { colors, progressGradient, spacing } from '../theme/tokens';
 import type { Airport, Flight, FlightPosition, Ticket as TicketT } from '../types';
 
-export function FlightScreen() {
+export function FlightScreen({ onBackToJourney }: { onBackToJourney?: () => void } = {}) {
   const t = useT();
   const navigation = useNavigation();
   const ticket = useActiveTicket();
@@ -68,6 +69,11 @@ export function FlightScreen() {
 
   return (
     <ScrollScreen background={inAir ? 'sky' : 'default'} column="columnWide">
+      <ScreenHeader
+        title={t('flight.title')}
+        subtitle={`${flight.carrier} ${flight.flightNumber} · ${from.code} → ${to.code}`}
+        right={<View style={styles.headerActions}>{onBackToJourney ? <RoundButton icon={Route} label={t('flight.backToJourney')} onPress={onBackToJourney} /> : null}<ProfileButton /></View>}
+      />
       {!inAir && <FlightTimes flight={flight} from={from} to={to} ticket={ticket} />}
       <Glass tone={inAir ? 'strong' : 'normal'} style={[styles.toggle, inAir && styles.toggleOn]}>
         <IconTile icon={Plane} tone={inAir ? 'accent' : 'soft'} />
@@ -358,6 +364,7 @@ function LandingView({ flight, from, to, onReset }: { flight: Flight; from: Airp
 
 const styles = StyleSheet.create({
   flex: { flex: 1, gap: 2 },
+  headerActions: { flexDirection: 'row', gap: spacing.sm },
   loaderBox: { minHeight: 180, alignItems: 'center', justifyContent: 'center' },
   toggle: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.md },
   toggleOn: { borderColor: colors.accent, borderWidth: 1.5 },

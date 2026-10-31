@@ -21,7 +21,7 @@ import { Chip } from '../components/Controls';
 import { Glass } from '../components/Glass';
 import { GradientFill } from '../components/GradientFill';
 import { pressFeedback } from '../components/press';
-import { EmptyState, Screen, ScreenHeader } from '../components/Layout';
+import { EmptyState, ProfileButton, Screen, ScreenHeader } from '../components/Layout';
 import { SkyArt } from '../components/SkyArt';
 import { useLanguage, useT, type TranslationKey } from '../i18n';
 import { formatDuration, formatLocalTime, formatNumber, minutesBetween } from '../lib/time';
@@ -155,6 +155,7 @@ export function AssistantScreen() {
           </AppText>
           <ChevronDown size={14} color={colors.accentText} />
         </Pressable>
+        <ProfileButton />
       </View>
 
       <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -249,16 +250,16 @@ export function AssistantScreen() {
 function Metric({ icon: Icon, label, value, sub }: { icon: LucideIcon; label: string; value: string; sub?: string }) {
   return (
     <View style={styles.metric}>
-      <Icon size={18} color={colors.accentText} />
+      <Icon size={17} color={colors.accentText} />
       <View style={styles.metricText}>
-        <AppText variant="caption" color={colors.textMuted}>
+        <AppText variant="caption" color={colors.textMuted} align="center" numberOfLines={2}>
           {label}
         </AppText>
-        <AppText variant="headline" tabular numberOfLines={1}>
+        <AppText variant="headline" tabular numberOfLines={1} adjustsFontSizeToFit align="center">
           {value}
         </AppText>
         {sub ? (
-          <AppText variant="caption" color={colors.textMuted} numberOfLines={1}>
+          <AppText variant="caption" color={colors.textMuted} numberOfLines={1} adjustsFontSizeToFit align="center">
             {sub}
           </AppText>
         ) : null}
@@ -295,8 +296,8 @@ const styles = StyleSheet.create({
     borderColor: colors.glassSubBorder,
     backgroundColor: colors.glassSub,
   },
-  metric: { flex: 1, flexDirection: 'row', gap: 6, paddingHorizontal: 4 },
-  metricText: { flexShrink: 1 },
+  metric: { flex: 1, alignItems: 'center', gap: 4, paddingHorizontal: 4 },
+  metricText: { width: '100%', minWidth: 0 },
   vline: { width: 1, alignSelf: 'stretch', backgroundColor: colors.lineVertical },
   messages: { gap: spacing.md, paddingVertical: spacing.sm, flexGrow: 1 },
   sugsScroll: { flexGrow: 0, marginHorizontal: -spacing.lg },

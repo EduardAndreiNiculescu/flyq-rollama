@@ -24,12 +24,12 @@ export function CompactFlightHeaderPill({ from, to, flight, gate, departure, che
   const { sizeClass } = useLayout();
   const compact = sizeClass === 'compact';
   return (
-    <Glass tone="strong" floating radius={radii.pill} style={styles.pill}>
-      <View style={styles.plane}>
+    <Glass tone="strong" floating radius={radii.pill} style={[styles.pill, compact && styles.pillCompact]}>
+      {!compact ? <View style={styles.plane}>
         <Plane size={22} color={colors.onAccent} strokeWidth={2.3} />
-      </View>
+      </View> : null}
       <View style={styles.route}>
-        <AppText variant="title" numberOfLines={1} adjustsFontSizeToFit style={styles.big}>
+        <AppText variant="title" numberOfLines={1} adjustsFontSizeToFit style={[styles.big, compact && styles.bigCompact]}>
           {from} → {to}
         </AppText>
         <AppText variant="caption" color={colors.textMuted} numberOfLines={1}>
@@ -38,13 +38,13 @@ export function CompactFlightHeaderPill({ from, to, flight, gate, departure, che
       </View>
       <View style={styles.cell}>
         <AppText variant="label">{t('pass.gate')}</AppText>
-        <AppText variant="title" color={colors.accentText} style={styles.big}>
+        <AppText variant="title" color={colors.accentText} style={[styles.big, compact && styles.bigCompact]}>
           {gate}
         </AppText>
       </View>
-      <View style={[styles.cell, styles.divider]}>
+      <View style={[styles.cell, styles.divider, compact && styles.dividerCompact]}>
         <AppText variant="label">{t('flight.departure')}</AppText>
-        <AppText variant="title" tabular style={styles.big}>
+        <AppText variant="title" tabular style={[styles.big, compact && styles.bigCompact]}>
           {departure}
         </AppText>
       </View>
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
     backgroundColor: colors.glassSolid,
   },
+  pillCompact: { gap: spacing.xs, minHeight: 68, paddingLeft: spacing.sm, paddingRight: spacing.sm },
   plane: {
     width: 52,
     height: 52,
@@ -76,6 +77,8 @@ const styles = StyleSheet.create({
   },
   route: { flex: 1, minWidth: 0 },
   big: { lineHeight: 30 },
+  bigCompact: { fontSize: 16, lineHeight: 22 },
   cell: { alignItems: 'center' },
   divider: { paddingLeft: spacing.md, borderLeftWidth: 1, borderLeftColor: colors.lineVertical },
+  dividerCompact: { paddingLeft: spacing.sm },
 });

@@ -40,7 +40,7 @@ export function PassScreen() {
   }
 
   const start = () =>
-    navigation.dispatch(CommonActions.reset({ index: 0, routes: [{ name: 'Main', params: { screen: 'Journey' } }] }));
+    navigation.dispatch(CommonActions.reset({ index: 0, routes: [{ name: 'Main', params: { screen: 'Flight' } }] }));
   const codeSize = sizeClass === 'compact' ? 40 : type.display.fontSize;
 
   return (

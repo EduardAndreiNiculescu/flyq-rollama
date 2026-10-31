@@ -12,8 +12,7 @@ import { SkeletonScreen } from '../components/Skeleton';
 import { hasUpcomingTicket } from '../lib/tickets';
 import { AddTicketScreen } from '../screens/AddTicketScreen';
 import { AssistantScreen } from '../screens/AssistantScreen';
-import { FlightScreen } from '../screens/FlightScreen';
-import { JourneyScreen } from '../screens/JourneyScreen';
+import { FlightTabScreen } from '../screens/FlightTabScreen';
 import { MapScreen } from '../screens/MapScreen';
 import { PassScreen } from '../screens/PassScreen';
 import { PasteScreen } from '../screens/PasteScreen';
@@ -51,6 +50,7 @@ function MainTabs() {
       <View style={styles.root}>
         <SharedBackground />
         <Tabs.Navigator
+          initialRouteName="Map"
           tabBar={renderTabBar}
           screenOptions={{
             headerShown: false,
@@ -59,12 +59,9 @@ function MainTabs() {
             animation: 'fade',
           }}
         >
-          <Tabs.Screen name="Journey" component={JourneyScreen} />
-          <Tabs.Screen name="Flight" component={FlightScreen} />
-          {/* Harta stă în centru: e ecranul folosit cel mai des în aeroport */}
+          <Tabs.Screen name="Flight" component={FlightTabScreen} />
           <Tabs.Screen name="Map" component={MapScreen} />
           <Tabs.Screen name="Assistant" component={AssistantScreen} />
-          <Tabs.Screen name="Profile" component={ProfileScreen} />
         </Tabs.Navigator>
       </View>
     </SharedBackgroundContext.Provider>
@@ -100,6 +97,7 @@ function RootNavigator() {
       <Stack.Screen name="Paste" component={PasteScreen} />
       <Stack.Screen name="Pass" component={PassScreen} />
       <Stack.Screen name="Live" component={LiveScreen} />
+      <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Main" component={MainTabs} options={{ animation: 'fade' }} />
     </Stack.Navigator>
   );

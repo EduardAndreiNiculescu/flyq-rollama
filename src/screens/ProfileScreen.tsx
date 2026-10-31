@@ -1,7 +1,7 @@
 import { useNavigation, CommonActions } from '@react-navigation/native';
-import { ArrowUpDown, Bell, ChevronRight, Clock, FlaskConical, Layers, Play, Plus, RotateCcw, Ticket, Trash2 } from 'lucide-react-native';
+import { ArrowUpDown, Bell, ChevronRight, Clock, FlaskConical, Layers, Phone, Play, Plus, RotateCcw, ShieldAlert, Ticket, Trash2 } from 'lucide-react-native';
 import { useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, Linking, StyleSheet, View } from 'react-native';
 import { AppText } from '../components/AppText';
 import { Badge } from '../components/Badge';
 import { Button } from '../components/Button';
@@ -49,8 +49,19 @@ export function ProfileScreen() {
     ]);
 
   const demoNow = clock.now();
+  const dial = (number: string) => void Linking.openURL(`tel:${number}`).catch(() => Alert.alert(t('profile.emergency'), number));
   const sections = (
     <>
+      <View style={styles.section}>
+        <AppText variant="label">{t('profile.emergency')}</AppText>
+        <Glass style={styles.list}>
+          <ListRow icon={ShieldAlert} iconTone="accent" title={t('profile.emergency.eu')} subtitle="112" onPress={() => dial('112')} />
+          <ListRow icon={Phone} title={t('profile.emergency.airportSecurity')} subtitle="0754 022 508" onPress={() => dial('0754022508')} />
+          <ListRow icon={Phone} title={t('profile.emergency.airportOffice')} subtitle="0251 416 860" onPress={() => dial('0251416860')} />
+          <ListRow icon={Phone} title={t('profile.emergency.consular')} subtitle="+44 7738 716 335" onPress={() => dial('+447738716335')} last />
+        </Glass>
+        <AppText variant="caption" weight="400" color={colors.textMuted}>{t('profile.emergency.note')}</AppText>
+      </View>
       <View style={styles.section}>
         <AppText variant="label">{t('profile.tickets')}</AppText>
         <Glass style={styles.list}>
@@ -125,7 +136,7 @@ export function ProfileScreen() {
   const activeTicket = tickets.find(x => x.id === activeTicketId);
   const header = (
     <>
-      <ScreenHeader title={t('profile.title')} subtitle={t('profile.subtitle')} />
+      <ScreenHeader title={t('profile.title')} subtitle={t('profile.subtitle')} onBack={() => navigation.goBack()} />
       <Glass tone="strong" radius={radii.hero} style={styles.hero}>
         <View style={styles.heroRow}>
           <View style={styles.avatar}>
@@ -162,7 +173,7 @@ export function ProfileScreen() {
 
   if (columns === 2) {
     return (
-      <ScrollScreen>
+      <ScrollScreen bottomInset="safeArea">
         {header}
         <View style={styles.columns}>
           <View style={[styles.flex, styles.col]}>{sections}</View>
@@ -173,7 +184,7 @@ export function ProfileScreen() {
   }
 
   return (
-    <ScrollScreen>
+    <ScrollScreen bottomInset="safeArea">
       {header}
       {sections}
       {preferences}

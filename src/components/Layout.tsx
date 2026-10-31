@@ -1,6 +1,6 @@
 import type { LucideIcon } from 'lucide-react-native';
-import { ChevronLeft } from 'lucide-react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { ChevronLeft, UserRound } from 'lucide-react-native';
+import { useFocusEffect, useNavigation, type NavigationProp } from '@react-navigation/native';
 import { useCallback, useState, type ReactNode } from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import Animated, {
@@ -15,6 +15,7 @@ import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { scheduleOnRN } from 'react-native-worklets';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTabBarInset } from '../app/tabBarInset';
+import type { RootStackParamList } from '../app/navigation';
 import { useT } from '../i18n';
 import { useLayout } from '../theme/responsive';
 import { colors, layout, spacing } from '../theme/tokens';
@@ -215,6 +216,12 @@ export function RoundButton({ icon: Icon, label, onPress, active }: { icon: Luci
       )}
     </PressableScale>
   );
+}
+
+export function ProfileButton() {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const t = useT();
+  return <RoundButton icon={UserRound} label={t('tabs.profile')} onPress={() => navigation.navigate('Profile')} />;
 }
 
 // ───────── List row ─────────
