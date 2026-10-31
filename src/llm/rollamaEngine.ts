@@ -17,6 +17,13 @@ const ZERO: GenerateStats = { timeToFirstTokenMs: 0, tokensPerSecond: null, tota
  *  - first call of a turn: the model picks the tool as JSON (or `none`); it never writes text;
  *  - call after a tool ran: the answer is built from the tool result by code (answerFromTool), so no second model call.
  */
+/**
+ * TEMPORARY while the on-device routing is being debugged: refusals carry the model's raw JSON, and every router call is written to the
+ * native console (console.error reaches NSLog in release builds). Set to false before shipping.
+ */
+export const ROUTER_DEBUG = true;
+const devNote = (raw: string, decision: string) => (ROUTER_DEBUG ? ` [dev: ${raw.slice(0, 70)} => ${decision}]` : '');
+
 export class RollamaEngine implements LlmEngine {
   /** For the dev line under each answer: what the model wrote and what the engine did with it. */
   lastRaw = '';
@@ -36,11 +43,12 @@ export class RollamaEngine implements LlmEngine {
     const call = parseRouterJson(r.text);
     this.lastRaw = r.text;
     this.lastDecision = !call ? 'json-invalid' : call.name === 'none' ? 'none' : `tool:${call.name}`;
-    if (!call || call.name === 'none') return { text: noneReply(question), stats: r.stats, toolCalls: [] };
+    if (ROUTER_DEBUG) console.error(`[RL] q=${JSON.stringify(question)} raw=${JSON.stringify(r.text)} decision=${this.lastDecision} tokens=${r.stats.tokens}`);
+    if (!call || call.name === 'none') return { text: noneReply(question) + devNote(r.text, this.lastDecision), stats: r.stats, toolCalls: [] };
     // Live position only when the passenger asked about position; a curiosity-driven router guess never runs the tracking tool.
     if (call.name === 'get_live_tracking' && !LIVE_ASKED.test(question.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''))) {
       this.lastDecision = 'blocked:live-tracking-not-asked';
-      return { text: noneReply(question), stats: r.stats, toolCalls: [] };
+      return { text: noneReply(question) + devNote(r.text, this.lastDecision), stats: r.stats, toolCalls: [] };
     }
     return { text: '', stats: r.stats, toolCalls: [{ id: 'rollama_1', name: call.name, arguments: JSON.stringify(call.arguments) }] };
   }
