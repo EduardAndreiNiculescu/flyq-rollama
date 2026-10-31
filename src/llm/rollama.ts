@@ -127,10 +127,16 @@ export function answerFromTool(tool: string, content: string, question: string):
   if (parsed.error) {
     if (/no flight selected/.test(parsed.error)) return ro ? 'Spune-mi numărul zborului (de exemplu W43763) ca să pot verifica.' : 'Tell me your flight number (for example W43763) so I can check.';
     if (/not found/.test(parsed.error)) return ro ? 'Nu am date offline despre acest zbor. Verifică panourile din aeroport sau aplicația companiei.' : 'I have no offline data for this flight. Check the airport screens or the airline app.';
+    if (tool === 'open_airport_map' && /clarification|confirmed|destination|map/.test(parsed.error)) return ro ? 'Spune-mi ce cauți în aeroport (toaletă, restaurant, farmacie, bancomat, poartă, ieșire…) și îți arăt pe hartă.' : 'Tell me what you are looking for in the airport (toilet, restaurant, pharmacy, ATM, gate, exit…) and I will show it on the map.';
     if (/not allowed|clarification|confirmed|map/.test(parsed.error)) return ro ? 'Nu pot face asta acum. Pot verifica zborul, poarta, timpul rămas sau regulile de călătorie.' : 'I cannot do that right now. I can check your flight, gate, time remaining or travel rules.';
     return ro ? 'Nu am informația asta în baza mea de cunoștințe și nu vreau să te induc în eroare. Întreabă la ghișeul companiei sau la informații.' : 'I do not have this in my knowledge base and I would rather not mislead you. Ask the airline desk or information.';
   }
   const r = parsed.result ?? {};
+  if (tool === 'search_knowledge' && (r as { safetyRefusal?: string }).safetyRefusal === 'unsupported-jurisdiction') {
+    return ro
+      ? 'Am doar reguli verificate pentru UE și România. Pentru o țară din afara UE (viză, documente de intrare, vaccinuri) verifică site-ul Ministerului Afacerilor Externe (mae.ro) sau ambasada țării respective.'
+      : 'I only have verified rules for the EU and Romania. For a country outside the EU (visa, entry documents, vaccines) check the Romanian Ministry of Foreign Affairs (mae.ro) or the embassy of that country.';
+  }
   if (tool === 'search_knowledge') {
     const docs = (r.documents as Array<{ title?: string; text?: string; source?: string; mayBeOutdated?: boolean; verifiedOn?: string | null }> | undefined) ?? [];
     const d = docs[0];

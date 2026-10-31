@@ -33,6 +33,12 @@ export const PHONE_QUESTIONS: { q: string; text?: RegExp; tool?: string }[] = [
   { q: 'Sunt în scaun cu rotile, am nevoie de asistență', text: /mobilitate redusă/ },
   { q: 'Mi-a pierdut bagajul, ce fac?', text: /bagajul nu ajunge|PIR/ },
   { q: 'Primesc despăgubire dacă zborul e anulat?', text: /compensa|despăgub|anul/i },
+  // țări din afara UE: nu se răspunde cu regulile UE
+  { q: 'Pot călători cu buletinul în China?', text: /MAE|mae\.ro|bază de cunoștințe|baza mea/ },
+  { q: 'Pot intra în SUA cu pașaport românesc?', text: /mae\.ro/ },
+  { q: 'Pot merge în Dubai cu buletinul?', text: /mae\.ro/ },
+  { q: 'Am nevoie de viză pentru Japonia?', text: /mae\.ro/ },
+  { q: 'Pot merge în Italia cu buletinul?', text: /Cetățenii UE/ },
   // date din bilet și din zbor
   { q: 'Ce loc am?', text: /12A/ },
   { q: 'Ce scaun am?', text: /12A/ },
@@ -58,6 +64,26 @@ export const PHONE_QUESTIONS: { q: string; text?: RegExp; tool?: string }[] = [
   { q: 'When does boarding start?', text: /08:35/ },
   { q: 'How long is security?', text: /no exact duration/i },
 ];
+
+/** Questions the deterministic layers do NOT catch (no router candidate, no fast path): only the model can route them. With the right tool chosen they must still end in a real answer, not in "I have no safe wording". */
+export const MODEL_ONLY: { q: string; tool: string; text: RegExp }[] = [
+  { q: 'Câtă vreme mai am până să plec?', tool: 'get_time_remaining', text: /decolării|decolare|mai sunt/i },
+  { q: 'Cât timp îmi mai rămâne la dispoziție?', tool: 'get_time_remaining', text: /decolării|decolare|mai sunt/i },
+  { q: 'Unde trebuie să mă duc ca să mă urc în avion?', tool: 'get_gate', text: /Poarta/ },
+  { q: 'La care ușă mă prezint pentru zborul meu?', tool: 'get_gate', text: /Poarta/ },
+  { q: 'Spune-mi numărul ușii de urcare', tool: 'get_gate', text: /Poarta/ },
+  { q: 'Cum stă zborul meu acum?', tool: 'get_flight_details', text: /decolare|decolarea/i },
+];
+
+describe('questions only the model can route (right tool chosen)', () => {
+  for (const c of MODEL_ONLY) {
+    it(c.q, async () => {
+      const r = await runToolLoop(new RollamaEngine(mk(`{"name":"${c.tool}","arguments":{}}`)), [{ role: 'system', content: '' }, { role: 'user', content: c.q }], { now: () => new Date('2026-11-01T09:00:00+02:00'), context: { flightNumber: 'DEMO123', seat: '12A', boarding: '08:35' } as never, flights: DEMO_FLIGHTS }, () => {}, { tools: createTools(), maxSteps: 3, fastPath: true, intentRouting: true, allowSideEffects: true });
+      expect(r.text).toMatch(c.text);
+      expect(r.text).not.toMatch(/formulare sigură|safe wording|Nu am găsit un răspuns sigur/);
+    });
+  }
+});
 
 describe('phone question battery', () => {
   for (const [name, json] of Object.entries(MODELS)) {

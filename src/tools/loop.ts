@@ -119,7 +119,13 @@ export async function runToolLoop(
       });
     }
     if (opts.compose !== false) {
-      const composed = composeAnswer(question, ran, deps.now());
+      let composed = composeAnswer(question, ran, deps.now());
+      // The model chose the right tool for a question worded in a way the composer does not recognise ("La care usa ma prezint?", "Mai e mult pana ma urc?"):
+      // the answer is still the tool's result, composed as for the plain question, instead of "I have no safe wording".
+      if (!composed && ran.length === 1 && ran[0]!.ok) {
+        const plain = ran[0]!.name === 'get_gate' ? 'ce poarta am' : ran[0]!.name === 'get_time_remaining' ? 'cat mai e pana decolam' : null;
+        if (plain) composed = composeAnswer(plain, ran, deps.now());
+      }
       if (composed) {
         convo.push({ role: 'assistant', content: composed });
         return { text: composed, stats: res.stats, trace, timing, stoppedByLimit: false, messages: convo, path: 'composed' };
