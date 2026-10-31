@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import { CircleOff, DoorOpen, MapPin, Plane, Sparkles, Ticket, X } from 'lucide-react-native';
+import { CircleOff, MapPin, Plane, Share2, Sparkles, Ticket, X } from 'lucide-react-native';
 import { useEffect, useMemo, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, Share, StyleSheet, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { AppText } from '../components/AppText';
 import { Badge, type BadgeTone } from '../components/Badge';
@@ -13,6 +13,7 @@ import { formatLocalTime } from '../lib/time';
 import { clock, flightData } from '../services';
 import { recordFor } from '../services/live/DeviceAssistantService';
 import { endFlightActivity, refreshFlightActivity } from '../services/live/liveActivity';
+import { activeShare, createShare, stopShare, type ShareState } from '../services/live/share';
 import type { ArrivalEstimate } from '../services/live/arrival';
 import { useActiveTicket } from '../store/tickets';
 import { colors, radii, spacing } from '../theme/tokens';
@@ -40,9 +41,13 @@ export function LiveFlightScreen() {
   const [now, setNow] = useState(() => clock.now().getTime());
   const [arrival, setArrival] = useState<ArrivalEstimate | null>(null);
   const [note, setNote] = useState<string | null>(null);
+  const [share, setShare] = useState<ShareState | null>(null);
 
   const record = useMemo(() => (flight ? recordFor(flight) : null), [flight]);
 
+  useEffect(() => {
+    void activeShare().then(setShare);
+  }, []);
   useEffect(() => {
     const t = setInterval(() => setNow(clock.now().getTime()), 1000);
     return () => clearInterval(t);
@@ -100,6 +105,32 @@ export function LiveFlightScreen() {
   const progress = inAir ? arrival.progress : now < boardingMs ? 0.08 : now < departureMs ? 0.4 : 0.1;
   const arrivalTime = inAir ? arrival.arrivalTime : formatLocalTime(flight.arrivalUtc, to.utcOffsetMin);
 
+  // Explicit consent first: what is shared, with whom, how to stop. Only then is a link created and the iOS share sheet opened.
+  const sendToFamily = () =>
+    Alert.alert(
+      ro ? 'Trimite zborul familiei' : 'Share your flight with family',
+      ro
+        ? 'Cine are linkul vede zborul tău: poziția avionului, starea, poarta și ora estimată de aterizare. Nu se partajează numele, locul sau codul de rezervare. Linkul expiră după aterizare și îl poți opri oricând.'
+        : 'Anyone with the link sees your flight: aircraft position, status, gate and estimated landing. Your name, seat and booking code are not shared. The link expires after landing and you can stop it any time.',
+      [
+        { text: ro ? 'Anulează' : 'Cancel', style: 'cancel' },
+        {
+          text: ro ? 'Creează link' : 'Create link',
+          onPress: async () => {
+            if (!record) return;
+            const r = await createShare(record);
+            if (!r.ok) return setNote(r.message);
+            setShare(r.share);
+            await Share.share({ message: ro ? `Urmărește zborul meu live: ${r.share.url}` : `Follow my flight live: ${r.share.url}`, url: r.share.url }).catch(() => {});
+          },
+        },
+      ],
+    );
+  const stopSharing = async () => {
+    setNote(await stopShare());
+    setShare(null);
+  };
+
   const stop = async () => {
     const r = await endFlightActivity();
     setNote(r.message);
@@ -147,6 +178,7 @@ export function LiveFlightScreen() {
         <Button label={ro ? 'Arată poarta pe hartă' : 'Show the gate on the map'} icon={MapPin} onPress={() => toMain('Map')} />
         <Button label={ro ? 'Întreabă asistentul' : 'Ask the assistant'} icon={Sparkles} variant="glass" onPress={() => toMain('Assistant')} />
         <Button label={ro ? 'Detalii zbor' : 'Flight details'} icon={Ticket} variant="glass" onPress={() => toMain('Flight')} />
+        <Button label={share ? (ro ? 'Oprește partajarea' : 'Stop sharing') : ro ? 'Trimite familiei' : 'Send to family'} icon={share ? CircleOff : Share2} variant={share ? 'tinted' : 'glass'} onPress={share ? stopSharing : sendToFamily} />
         <Button label={ro ? 'Oprește cardul' : 'Stop the card'} icon={CircleOff} variant="glass" size="sm" onPress={stop} />
         {note ? <AppText variant="caption" color={colors.textMuted} align="center">{note}</AppText> : null}
       </View>

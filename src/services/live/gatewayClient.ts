@@ -53,7 +53,7 @@ async function flyqFetch(path: string, init: RequestInit, timeoutMs = 10_000): P
 }
 
 /** One session per install (re-created when it expires); the app key is only sent to create it. */
-async function flyqToken(force = false): Promise<string> {
+export async function flyqToken(force = false): Promise<string> {
   const { flyqKey, flyqSession, setFlyqSession } = useLive.getState();
   if (!flyqKey) throw new Error('unauthorized' satisfies GatewayError);
   if (!force && flyqSession && Date.parse(flyqSession.expiresAt) - Date.now() > 60_000) return flyqSession.token;

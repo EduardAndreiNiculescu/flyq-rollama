@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FlyQ · zbor partajat</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<style>
+  :root { --bg:#f4f6fb; --card:rgba(255,255,255,.92); --text:#0b1430; --muted:#5b6478; --accent:#2e5bff; --ok:#12b76a; --warn:#f79009; --bad:#f04438; --line:rgba(11,20,48,.1); }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0b0f1a; --card:rgba(20,25,40,.92); --text:#f2f4fa; --muted:#98a2b8; --line:rgba(255,255,255,.12); } }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--text); font:16px/1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; -webkit-text-size-adjust:100%; }
+  #map { position:fixed; inset:0; }
+  #fallback { position:fixed; inset:0; display:none; background:linear-gradient(160deg,#cfe0ff,#efe6ff); }
+  .card { position:fixed; left:12px; right:12px; background:var(--card); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid var(--line); border-radius:22px; padding:14px 16px; box-shadow:0 10px 30px rgba(20,40,120,.18); }
+  #top { top:calc(12px + env(safe-area-inset-top)); max-width:560px; margin:0 auto; }
+  #bottom { bottom:calc(12px + env(safe-area-inset-bottom)); max-width:560px; margin:0 auto; font-size:12px; color:var(--muted); padding:10px 14px; }
+  .row { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .flight { font-weight:700; font-size:15px; color:var(--muted); letter-spacing:.02em; }
+  .pill { font-weight:700; font-size:13px; padding:4px 10px; border-radius:999px; background:color-mix(in srgb, var(--pill, var(--accent)) 16%, transparent); color:var(--pill, var(--accent)); }
+  .route { display:flex; align-items:center; gap:10px; margin:8px 0 2px; }
+  .code { font-size:34px; font-weight:800; letter-spacing:-.02em; line-height:1; }
+  .city { font-size:12px; color:var(--muted); }
+  .bar { flex:1; height:6px; border-radius:3px; background:var(--line); overflow:hidden; }
+  .bar > i { display:block; height:100%; width:0; background:var(--pill, var(--accent)); transition:width .6s ease; }
+  .meta { display:flex; justify-content:space-between; gap:8px; margin-top:10px; font-size:13px; }
+  .meta b { display:block; font-size:18px; font-variant-numeric:tabular-nums; }
+  .meta span { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.06em; }
+  .right { text-align:right; }
+  #end { position:fixed; inset:0; display:none; align-items:center; justify-content:center; text-align:center; padding:24px; background:var(--bg); z-index:10; }
+  #end h1 { margin:0 0 6px; font-size:22px; }
+  #end p { margin:0; color:var(--muted); }
+  .plane { width:34px; height:34px; filter:drop-shadow(0 2px 4px rgba(0,0,0,.35)); }
+  .dot { width:12px; height:12px; border-radius:50%; background:var(--accent); border:3px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.35); }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="fallback"></div>
+
+<div id="top" class="card" aria-live="polite">
+  <div class="row"><div class="flight" id="flight">FlyQ</div><div class="pill" id="status">…</div></div>
+  <div class="route">
+    <div><div class="code" id="from">---</div><div class="city" id="fromCity"></div></div>
+    <div class="bar" role="progressbar" aria-label="progres"><i id="progress"></i></div>
+    <div class="right"><div class="code" id="to">---</div><div class="city" id="toCity"></div></div>
+  </div>
+  <div class="meta">
+    <div><span id="lblGate">Poartă</span><b id="gate">–</b></div>
+    <div class="right"><span id="lblEta">Aterizare</span><b id="eta">–</b></div>
+  </div>
+</div>
+
+<div id="bottom" class="card"><span id="foot"></span></div>
+
+<div id="end"><div><h1 id="endTitle"></h1><p id="endBody"></p></div></div>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script>
+(function () {
+  'use strict';
+  // ---------- config ----------
+  var params = new URLSearchParams(location.search);
+  var demo = params.get('demo') === '1';
+  var lang = (params.get('lang') || navigator.language || 'ro').toLowerCase().indexOf('ro') === 0 ? 'ro' : 'en';
+  var token = params.get('t') || (location.pathname.match(/\/s\/([A-Za-z0-9_-]{16,128})\/?$/) || [])[1] || '';
+  var POLL_MS = 20000;
+  var T = {
+    ro: { gate: 'Poartă', eta: 'Aterizare', noGate: 'neanunțată', in: 'în', min: 'min', h: 'h', ended: 'Partajarea s-a încheiat', endedBody: 'Linkul a expirat sau a fost oprit de persoana care l-a trimis.', badLink: 'Link invalid', badBody: 'Cere persoanei din avion să-ți trimită un link nou.',
+      foot: 'Date de la furnizori de zbor; orele estimate nu sunt informații oficiale.', demoFoot: 'MOD DEMO: zbor simulat, nu e un zbor real.', offline: 'Fără conexiune: reîncerc…',
+      st: { scheduled: 'La timp', boarding: 'Îmbarcare', delayed: 'Întârziat', gate_closing: 'Poarta se închide', in_air: 'În zbor', departed: 'A decolat', landed: 'A aterizat', cancelled: 'Anulat', diverted: 'Deviat' } },
+    en: { gate: 'Gate', eta: 'Landing', noGate: 'not announced', in: 'in', min: 'min', h: 'h', ended: 'Sharing has ended', endedBody: 'The link has expired or was stopped by the person who sent it.', badLink: 'Invalid link', badBody: 'Ask the passenger to send you a new link.',
+      foot: 'Data from flight data providers; estimated times are not official information.', demoFoot: 'DEMO MODE: simulated flight, not a real flight.', offline: 'Offline: retrying…',
+      st: { scheduled: 'On time', boarding: 'Boarding', delayed: 'Delayed', gate_closing: 'Gate closing', in_air: 'In the air', departed: 'Departed', landed: 'Landed', cancelled: 'Cancelled', diverted: 'Diverted' } }
+  }[lang];
+  document.documentElement.lang = lang;
+  var $ = function (id) { return document.getElementById(id); };
+  $('lblGate').textContent = T.gate; $('lblEta').textContent = T.eta;
+  $('foot').textContent = demo ? T.demoFoot : T.foot;
+  var COLORS = { scheduled: '#12b76a', boarding: '#12b76a', delayed: '#f79009', gate_closing: '#f79009', in_air: '#2e5bff', departed: '#2e5bff', landed: '#12b76a', cancelled: '#f04438', diverted: '#f79009' };
+
+  // ---------- geometry (great circle) ----------
+  var rad = function (d) { return d * Math.PI / 180; }, deg = function (r) { return r * 180 / Math.PI; };
+  function gcPoints(a, b, n) {
+    var p1 = rad(a.lat), l1 = rad(a.lon), p2 = rad(b.lat), l2 = rad(b.lon);
+    var d = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((p2 - p1) / 2), 2) + Math.cos(p1) * Math.cos(p2) * Math.pow(Math.sin((l2 - l1) / 2), 2)));
+    var pts = [];
+    for (var i = 0; i <= n; i++) {
+      var f = i / n; if (d === 0) { pts.push([a.lon, a.lat]); continue; }
+      var A = Math.sin((1 - f) * d) / Math.sin(d), B = Math.sin(f * d) / Math.sin(d);
+      var x = A * Math.cos(p1) * Math.cos(l1) + B * Math.cos(p2) * Math.cos(l2);
+      var y = A * Math.cos(p1) * Math.sin(l1) + B * Math.cos(p2) * Math.sin(l2);
+      var z = A * Math.sin(p1) + B * Math.sin(p2);
+      pts.push([deg(Math.atan2(y, x)), deg(Math.atan2(z, Math.sqrt(x * x + y * y)))]);
+    }
+    return pts;
+  }
+  function bearing(a, b) { var p1 = rad(a[1]), p2 = rad(b[1]), dl = rad(b[0] - a[0]); return (deg(Math.atan2(Math.sin(dl) * Math.cos(p2), Math.cos(p1) * Math.sin(p2) - Math.sin(p1) * Math.cos(p2) * Math.cos(dl))) + 360) % 360; }
+  function nearestIndex(pts, lon, lat) { var best = 0, bd = Infinity; for (var i = 0; i < pts.length; i++) { var dx = pts[i][0] - lon, dy = pts[i][1] - lat; var d = dx * dx + dy * dy; if (d < bd) { bd = d; best = i; } } return best; }
+
+  // ---------- map ----------
+  var map = null, planeEl = null, planeMarker = null, path = [], ready = false, pending = null;
+  function planeSvg() {
+    var ns = 'http://www.w3.org/2000/svg', s = document.createElementNS(ns, 'svg'); s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('class', 'plane');
+    var p = document.createElementNS(ns, 'path'); p.setAttribute('d', 'M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z'); p.setAttribute('fill', '#2e5bff'); p.setAttribute('stroke', '#fff'); p.setAttribute('stroke-width', '1.2'); s.appendChild(p); return s;
+  }
+  function initMap() {
+    if (typeof maplibregl === 'undefined') { $('map').style.display = 'none'; $('fallback').style.display = 'block'; return; }
+    map = new maplibregl.Map({ container: 'map', style: 'https://tiles.openfreemap.org/styles/liberty', center: [12, 47], zoom: 3.2, attributionControl: { compact: true }, interactive: true });
+    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'bottom-right');
+    map.on('load', function () {
+      map.addSource('flown', { type: 'geojson', data: line([]) });
+      map.addSource('left', { type: 'geojson', data: line([]) });
+      map.addLayer({ id: 'left', type: 'line', source: 'left', paint: { 'line-color': '#2e5bff', 'line-width': 3, 'line-opacity': .55, 'line-dasharray': [2, 2] } });
+      map.addLayer({ id: 'flown', type: 'line', source: 'flown', paint: { 'line-color': '#2e5bff', 'line-width': 4 } });
+      ready = true; if (pending) { draw(pending); pending = null; }
+    });
+  }
+  function line(c) { return { type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: c } }; }
+  var markers = [], fitted = false;
+  function draw(d) {
+    if (!ready) { pending = d; return; }
+    var a = d.from, b = d.to;
+    if (!path.length) { path = gcPoints(a, b, 96); }
+    var idx = 0;
+    if (d.position) idx = nearestIndex(path, d.position.lon, d.position.lat);
+    map.getSource('flown').setData(line(d.position ? path.slice(0, idx + 1).concat([[d.position.lon, d.position.lat]]) : []));
+    map.getSource('left').setData(line((d.position ? [[d.position.lon, d.position.lat]] : []).concat(path.slice(d.position ? idx + 1 : 0))));
+    if (!markers.length) { [a, b].forEach(function (p) { var e = document.createElement('div'); e.className = 'dot'; markers.push(new maplibregl.Marker({ element: e }).setLngLat([p.lon, p.lat]).addTo(map)); }); }
+    if (d.position) {
+      var hdg = typeof d.position.headingDeg === 'number' ? d.position.headingDeg : bearing(path[Math.max(0, idx - 1)], path[Math.min(path.length - 1, idx + 1)]);
+      if (!planeMarker) { planeEl = planeSvg(); planeMarker = new maplibregl.Marker({ element: planeEl, rotationAlignment: 'map' }).setLngLat([d.position.lon, d.position.lat]).addTo(map); }
+      planeMarker.setLngLat([d.position.lon, d.position.lat]).setRotation(hdg);
+    } else if (planeMarker) { planeMarker.remove(); planeMarker = null; }
+    if (!fitted) { var bb = new maplibregl.LngLatBounds(); path.forEach(function (p) { bb.extend(p); }); map.fitBounds(bb, { padding: { top: 190, bottom: 90, left: 40, right: 40 }, duration: 0, maxZoom: 7 }); fitted = true; }
+  }
+
+  // ---------- card ----------
+  var etaEpoch = null;
+  function fmtRemaining(sec) { var m = Math.max(0, Math.round(sec / 60)); return m >= 60 ? Math.floor(m / 60) + ' ' + T.h + ' ' + (m % 60) + ' ' + T.min : m + ' ' + T.min; }
+  function clock(iso) { var m = /T(\d{2}:\d{2})/.exec(iso || ''); return m ? m[1] : '–'; }
+  function render(d) {
+    var color = COLORS[d.status] || '#2e5bff';
+    document.documentElement.style.setProperty('--pill', color);
+    $('flight').textContent = d.flightNumber || 'FlyQ';
+    $('status').textContent = T.st[d.status] || d.status || '';
+    $('from').textContent = d.from.code; $('fromCity').textContent = d.from.city || '';
+    $('to').textContent = d.to.code; $('toCity').textContent = d.to.city || '';
+    $('gate').textContent = d.gate ? d.gate : T.noGate;
+    var prog = typeof d.progress === 'number' ? d.progress : (d.status === 'landed' ? 1 : d.status === 'in_air' || d.status === 'departed' ? 0.5 : d.status === 'boarding' ? 0.04 : 0);
+    $('progress').style.width = Math.round(Math.max(0, Math.min(1, prog)) * 100) + '%';
+    etaEpoch = d.eta && typeof d.eta.epoch === 'number' ? d.eta.epoch : null;
+    tick(d);
+    if (d.attribution) $('foot').textContent = (demo ? T.demoFoot : T.foot) + ' ' + d.attribution;
+    draw(d);
+  }
+  var last = null;
+  function tick(d) {
+    d = d || last; if (!d) return; last = d;
+    var shown;
+    if (d.status === 'landed') shown = clock(d.estimatedArrival || d.scheduledArrival);
+    else if (etaEpoch) shown = T.in + ' ' + fmtRemaining(etaEpoch - Date.now() / 1000) + ' · ' + clock(new Date(etaEpoch * 1000).toISOString());
+    else shown = clock(d.estimatedArrival || d.scheduledArrival);
+    $('eta').textContent = shown;
+  }
+  setInterval(function () { tick(); }, 1000);
+
+  function ended(title, body) { $('endTitle').textContent = title; $('endBody').textContent = body; $('end').style.display = 'flex'; stop = true; }
+
+  // ---------- data ----------
+  var stop = false;
+  function demoData() {
+    var a = { code: 'CRA', city: 'Craiova', lat: 44.3181, lon: 23.8886 }, b = { code: 'LTN', city: 'Londra Luton', lat: 51.8747, lon: -0.3683 };
+    var pts = gcPoints(a, b, 96), cycle = 240, f = ((Date.now() / 1000) % cycle) / cycle, i = Math.min(96, Math.floor(f * 96)), p = pts[i], q = pts[Math.min(96, i + 1)];
+    var remaining = (1 - f) * 8700;
+    return { flightNumber: 'W69901 · DEMO', from: a, to: b, status: 'in_air', gate: '3', scheduledDeparture: '2026-10-31T08:40:00+02:00', scheduledArrival: '2026-10-31T10:05:00+00:00', progress: f,
+      eta: { epoch: Date.now() / 1000 + remaining, kind: 'demo' }, position: { lat: p[1], lon: p[0], headingDeg: bearing(p, q), altitudeM: 10600, groundSpeedMps: 230 }, updatedAt: Date.now() / 1000 };
+  }
+  function parse(j) {
+    if (!j || !j.from || !j.to || typeof j.from.lat !== 'number' || typeof j.to.lat !== 'number') return null;
+    return j;
+  }
+  function poll() {
+    if (stop) return;
+    if (demo) { render(demoData()); return; }
+    if (!token) { ended(T.badLink, T.badBody); return; }
+    fetch('/v1/public/shares/' + encodeURIComponent(token), { headers: { accept: 'application/json' }, cache: 'no-store', credentials: 'omit', referrerPolicy: 'strict-origin-when-cross-origin' })
+      .then(function (r) {
+        if (r.status === 404 || r.status === 410) { ended(T.ended, T.endedBody); return null; }
+        if (r.status === 429) return null; // slow down: next tick
+        if (!r.ok) throw new Error('http ' + r.status);
+        return r.json();
+      })
+      .then(function (j) { if (j === null || stop) return; var d = parse(j); if (d) { render(d); $('foot').textContent = (d.attribution ? (T.foot + ' ' + d.attribution) : T.foot); } })
+      .catch(function () { $('foot').textContent = T.offline; });
+  }
+  initMap();
+  poll();
+  setInterval(function () { if (!document.hidden) poll(); }, demo ? 2000 : POLL_MS);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) poll(); });
+})();
+</script>
+</body>
+</html>

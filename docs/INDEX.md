@@ -8,6 +8,7 @@
 | `AI_ARCHITECTURE.md` | Pipeline-ul asistentului, politica de refuz, baza de cunoștințe, măsurători reale |
 | `LIVE_ACTIVITIES.md` | Cardul de pe ecranul blocat: fișiere, contractul de date, fluxul, testarea |
 | `NOTIFICARI.md` | Notificările push: abonare, mediul APNs, test din laptop |
+| `SHARE_FLIGHT.md` | Partajarea zborului cu familia: pagina web, contractul serverului, confidențialitate, prompt pentru backend |
 | `IOS_BUILD.md` | Build pe Mac mini comandat din laptop: pași, semnare, depanare |
 | `REPRODUCE.md` | Reproducerea verificărilor, cu timpii măsurați |
 
