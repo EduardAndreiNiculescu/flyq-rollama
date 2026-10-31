@@ -1,4 +1,5 @@
 import { detectLang } from './prompt';
+import { tier1Capability } from './tier1';
 
 /**
  * Requests outside FlightFlow's contract. These are handled before a model sees
@@ -12,7 +13,7 @@ const UNSUPPORTED = [
 ];
 
 /** Asking WHERE to exchange money is a map question, not a request to "change" a reservation: these phrases are removed before the action verbs are tested. */
-const EXCHANGE = /\b(?:schimba\s+bani|schimb(?:ul)?\s+valutar|case?\s+de\s+schimb(?:\s+valutar)?|birou(?:l)?\s+de\s+schimb|exchange\s+money|currency\s+exchange)\b/g;
+const EXCHANGE = /\b(?:schimba\s+ban\w*|schimb(?:ul)?\s+valutar|case?\s+de\s+schimb(?:\s+valutar)?|birou(?:l)?\s+de\s+schimb|exchange\s+money|currency\s+exchange)\b/g;
 
 const CHITCHAT = [
   /\b(spune[- ]mi\s+(?:un\s+)?banc|scrie[- ]mi\s+o\s+poezie|tell\s+me\s+a\s+joke)\b/i,
@@ -26,7 +27,7 @@ export function capabilityBoundary(question: string): 'unsupported-capability' |
   const withoutExchange = normalized.replace(EXCHANGE, ' ');
   if (UNSUPPORTED.some(pattern => pattern.test(withoutExchange))) return 'unsupported-capability';
   if (CHITCHAT.some(pattern => pattern.test(normalized))) return 'out-of-scope';
-  return null;
+  return tier1Capability(withoutExchange); // rules ported from the benchmark pipeline (see tier1.ts)
 }
 
 export function capabilityBoundaryReply(question: string): string {

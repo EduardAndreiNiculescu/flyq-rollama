@@ -60,15 +60,22 @@ SHA-256 așteptat: `16f11f48099052f614a2c02941c767ed811e474d3c029ba56c0c4479daed
 ### Straturile deterministe (frontend + reguli) — MĂSURAT, reproductibil
 `scripts/bench-tier1.ts` rulează cele 1000 de întrebări de stres (`eval/stress_1000.json`) prin normalizator, limita de capabilități și calea rapidă din **codul TypeScript al aplicației**:
 
-| Rezultat | Valoare |
-|---|---|
-| Întrebări decise de reguli, fără model | 112 din 1000 (11,2%) |
-| Decizii ale regulilor corecte / greșite | 111 / 1 (precizie 99,1%) |
-| Rămase pentru modelul RoLlama | 888 (88,8%) |
-| Latența regulilor (mediană, nu e latență de model) | 0,005 ms |
+Regulile din benchmark-ul Python (limita de capabilități și calea rapidă) au fost **portate una la una în TypeScript** (`src/core/tier1.ts`). Benchmark-ul rulează de două ori:
+
+| Rezultat | Echivalent strict cu Python | Runtime-ul aplicației |
+|---|---|---|
+| Decise de reguli | 611 din 1000 (61,1%): 185 limită de capabilități + 426 cale rapidă | 612 (61,2%) |
+| Decizii corecte / greșite | 611 / 0 | 611 / 1 |
+| Rulate fără model (poartă, timp, detalii, poziție, reguli; harta cere destinație) | 567 (56,7%) | 568 (56,8%) |
+| Rămase pentru modelul RoLlama | 389 | 388 |
+| Latența regulilor (mediană, nu e latență de model) | 0,005 ms | 0,008 ms |
+
+Echivalența e exactă: aceleași numere ca în rezultatele publicate de Python (185 / 426 / 389), diferență 0 (`tests/tier1.test.ts` o apără). Runtime-ul diferă prin gărzi: fără tiparele goale „bilet/bilete" și „check-in" (ar refuza întrebări legitime despre biletul propriu), cu excepția „unde schimb bani" (întrebare de hartă) și cu gărzile anti-injecție ale căii rapide.
+
+**Atenție:** regulile au fost scrise uitându-se la acest set de 1000 de întrebări (unele sunt fraze exacte din el, de exemplu „frunze are un stejar"). Deci 100% pe acest set arată doar că portul e fidel, nu cât de bune sunt regulile pe întrebări noi ale pasagerilor.
 
 ### Ce NU se poate reproduce din acest repo și nu e verificat de noi aici
-- **„98,2% (982/1000), mediană 0,1 ms"** (raportat de un benchmark Python). Rulează cu GPU, modelul de bază, adaptorul DPO și o implementare Python a regulilor; nimic din acestea nu e în repo. **Cifrele nu se aplică aplicației de pe telefon.** Acolo regulile decid 11,2%, nu 61%, deci cele mai multe întrebări trec prin model. În benchmark-ul Python, 61% din întrebări erau rezolvate de reguli, iar mediana de 0,1 ms vine de la ele, nu de la model.
+- **„98,2% (982/1000), mediană 0,1 ms"** (raportat de un benchmark Python). Rulează cu GPU, modelul de bază, adaptorul DPO și o implementare Python a regulilor; nimic din acestea nu e în repo. După portarea regulilor, partea de reguli a aplicației reproduce cifrele Python (61% decise fără model). Acuratețea totală de 98,2% include însă modelul pe cele 389 de întrebări rămase (3,5% din ele greșite în rularea Python) și **nu e reproductibilă din acest repo**. Mediana de 0,1 ms vine de la reguli, nu de la model: 39% dintre întrebări trec prin model, cu latență netestată pe iPhone.
 - **Acuratețea și latența modelului RoLlama pe iPhone: NEMĂSURATE.** Pe laptop, doar pentru partea de model, p95 era ~806 ms (GPU), nu valoare de telefon.
 - **GGUF-ul în llama.cpp: NEVALIDAT.** Antetul e valid, tokenizerul complet, dar metadatele nu conțin `llama.rope.freq_base` și șablonul de chat; nu am confirmat comportamentul într-o rulare reală. Decodarea constrânsă (gramatică JSON) e scrisă, dar neverificată pe dispozitiv.
 
