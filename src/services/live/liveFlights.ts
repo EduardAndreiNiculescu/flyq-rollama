@@ -1,6 +1,7 @@
 import { localIso } from '../../core/airports';
 import type { FlightRecord } from '../../core/types';
 import type { Airport, Flight } from '../../types';
+import world from '../../data/airports-world.json'; // ~5,500 airports worldwide (OpenFlights, ODbL): [city, name, lat, lon, tz, schengen]
 
 // Coordonate APROXIMATE ale aeroporturilor, doar pentru desenul și calculele UI de test (progres, distanță).
 // Orice fapt despre zbor (ore, poartă, întârziere, poziție) vine din gateway, nu de aici.
@@ -69,8 +70,17 @@ export function offsetMinAt(tz: string, ms: number): number {
 export type LiveEntry = { flight: Flight; record: FlightRecord; from: Airport; to: Airport };
 export type BuildResult = { ok: true; entry: LiveEntry } | { ok: false; error: string };
 
+const WORLD = world as unknown as Record<string, [string, string, number, number, string, number]>;
+/** The hand-written table first (Romanian names), then the world table; null only for a code that exists in neither */
+export function lookupAirport(code: string): Row | null {
+  const t = TEST_AIRPORTS[code];
+  if (t) return t;
+  const w = WORLD[code];
+  return w ? { city: w[0], name: w[1], lat: w[2], lon: w[3], tz: w[4], schengen: w[5] === 1 } : null;
+}
+
 const airport = (code: string, ms: number): Airport | null => {
-  const a = TEST_AIRPORTS[code];
+  const a = lookupAirport(code);
   return a ? { code, city: a.city, name: a.name, lat: a.lat, lon: a.lon, utcOffsetMin: offsetMinAt(a.tz, ms), schengen: a.schengen } : null;
 };
 
@@ -86,7 +96,7 @@ export function buildLiveEntry(record: FlightRecord): BuildResult {
   if (Number.isNaN(dep) || Number.isNaN(arr) || arr <= dep) return { ok: false, error: 'orarul zborului nu poate fi citit' };
   const from = airport(record.departureAirport, dep);
   const to = airport(record.arrivalAirport, arr);
-  if (!from || !to) return { ok: false, error: `aeroport lipsă din tabelul de test: ${!from ? record.departureAirport : record.arrivalAirport}` };
+  if (!from || !to) return { ok: false, error: `aeroport necunoscut: ${!from ? record.departureAirport : record.arrivalAirport}` };
   const date = new Date(dep).toISOString().slice(0, 10);
   const flight: Flight = {
     id: `live-${m[1]}${m[2]}-${date}`,
