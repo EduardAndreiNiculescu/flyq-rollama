@@ -6,6 +6,8 @@ import { composeAnswer } from './composer';
 import { tryFastPath } from './fastPath';
 import { createTools, executeToolCall, toolSpecs, type ToolDef, type ToolDeps, type ToolResult, type ToolSpec } from './registry';
 import { sanitizeToolCall } from './sanitizer';
+import { composePlaceAnswer, findPlaces } from '../core/places';
+import { isRomanian } from '../llm/rollama';
 
 export type ToolTrace = { name: string; args: string; ok: boolean; sideEffect: boolean };
 export type ToolTiming = { toolMs: number; modelMs: Array<{ totalMs: number; firstTokenMs: number | null; decodeMs: number | null }> };
@@ -22,7 +24,7 @@ export async function runToolLoop(
   messages: ChatMessage[],
   deps: ToolDeps,
   onToken: (partial: string) => void,
-  opts: { tools?: ToolDef[]; /** What the model is shown (default: the registry's own specs). The V4 contract shows a compact view. */ specs?: ToolSpec[]; maxSteps?: number; maxCallsPerStep?: number; maxTokens?: number; allowSideEffects?: boolean; /** Build clear-cut flight answers from the tool result instead of a second model call (default on) */ compose?: boolean; /** Skip the model for a small allowlist of plain flight questions (default off) */ fastPath?: boolean; /** Limit the first model step to deterministic router candidates (default off). */ intentRouting?: boolean; nowMs?: () => number; onTool?: (e: { name: string; phase: 'start' | 'done'; ok?: boolean }) => void } = {},
+  opts: { tools?: ToolDef[]; /** What the model is shown (default: the registry's own specs). The V4 contract shows a compact view. */ specs?: ToolSpec[]; maxSteps?: number; maxCallsPerStep?: number; maxTokens?: number; allowSideEffects?: boolean; /** Build clear-cut flight answers from the tool result instead of a second model call (default on) */ compose?: boolean; /** Skip the model for a small allowlist of plain flight questions (default off) */ fastPath?: boolean; /** Answer "where is X" from the place catalogue (default on) */ places?: boolean; /** Limit the first model step to deterministic router candidates (default off). */ intentRouting?: boolean; nowMs?: () => number; onTool?: (e: { name: string; phase: 'start' | 'done'; ok?: boolean }) => void } = {},
 ): Promise<ToolLoopResult> {
   const tools = opts.tools ?? createTools();
   const specs = opts.specs ?? toolSpecs(tools);
@@ -48,6 +50,28 @@ export async function runToolLoop(
     const text = capabilityBoundaryReply(question);
     convo.push({ role: 'assistant', content: text });
     return { text, stats: { timeToFirstTokenMs: null, tokensPerSecond: null, totalMs: 0, tokens: 0 }, trace, timing, stoppedByLimit: false, messages: convo, path: 'fast' };
+  }
+  // "Unde e toaleta / unde găsesc bancomatul / unde e barul lui Coco": answered from the place catalogue (src/core/places.ts), no model and no fine-tuning.
+  // The map opens on the place when the app has one; the answer says "I opened the map" only when it really did.
+  if (opts.places !== false) {
+    const pq = findPlaces(question);
+    if (pq) {
+      const lang = isRomanian(question) ? 'ro' : 'en';
+      let answer = composePlaceAnswer(pq, lang, question, false);
+      let opened = false;
+      if (answer.open && deps.nav && opts.allowSideEffects === true) {
+        opts.onTool?.({ name: 'find_place', phase: 'start' });
+        try {
+          opened = (await deps.nav.openAirportMap({ destination: answer.open.destination, nodeId: answer.open.nodeId, fromZone: deps.context.currentZone })) !== false;
+        } catch {
+          opened = false;
+        }
+        opts.onTool?.({ name: 'find_place', phase: 'done', ok: opened });
+        if (opened) answer = composePlaceAnswer(pq, lang, question, true);
+      }
+      convo.push({ role: 'assistant', content: answer.text });
+      return { text: answer.text, stats: { timeToFirstTokenMs: null, tokensPerSecond: null, totalMs: 0, tokens: 0 }, trace: [{ name: 'find_place', args: JSON.stringify({ places: pq.places.map(p => p.id), gate: pq.gate ?? null, opened }), ok: true, sideEffect: opened }], timing, stoppedByLimit: false, messages: convo, path: 'fast' };
+    }
   }
   if (opts.fastPath && opts.compose !== false) {
     const fast = await tryFastPath(question, tools, deps, opts.onTool, nowMs, ms => { timing.toolMs += ms; });

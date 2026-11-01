@@ -17,7 +17,7 @@ export type ToolDeps = {
   tracking?: (flightNumber: string) => Promise<TrackingResult | null>;
   /** Target airport coordinates for ETA, from a verified registry. Absent => no ETA. */
   airportPoint?: (iata: string) => Point | null;
-  nav?: { openAirportMap(req: NavigationRequest): void | Promise<void> };
+  nav?: { openAirportMap(req: NavigationRequest): void | boolean | Promise<void | boolean> };
 };
 
 export type ToolResult = { ok: true; data: unknown } | { ok: false; error: string };

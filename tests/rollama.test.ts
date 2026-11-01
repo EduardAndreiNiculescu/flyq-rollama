@@ -91,11 +91,12 @@ describe('RollamaEngine in the tool loop', () => {
     const r = await askRouted(fake('{"name":"none","arguments":{}}'), 'Am nevoie de asistență, sunt în scaun cu rotile');
     expect(r.text).not.toMatch(/Nu pot efectua/);
   });
-  it('a map question runs the map tool with the destination from the router, without relying on the model', async () => {
+  it('a place question is answered from the place catalogue, without the model', async () => {
     const raw = fake('{"name":"none","arguments":{}}');
     const r = await runToolLoop(new RollamaEngine(raw), [{ role: 'system', content: '' }, { role: 'user', content: 'Unde e toaleta?' }], deps(), () => {}, { tools: createTools(), maxSteps: 3, fastPath: false, intentRouting: true, allowSideEffects: true });
-    expect(r.trace.map((t) => t.name)).toEqual(['open_airport_map']);
+    expect(r.trace.map((t) => t.name)).toEqual(['find_place']);
     expect(raw.prompts).toHaveLength(0);
+    expect(r.text).toMatch(/Toalete/);
   });
   it('thanks and "who are you" get a friendly answer from the assistant', async () => {
     expect((await askRouted(fake('{"name":"none","arguments":{}}'), 'Mulțumesc')).text).toMatch(/Cu plăcere/);

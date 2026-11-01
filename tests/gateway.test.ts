@@ -196,8 +196,8 @@ describe('chat: model + tool loop on live data', () => {
   });
   it('side-effect tools are blocked in the gateway', async () => {
     await start(() => okFlight());
-    engineScript = (n) => (n === 0 ? { text: '', toolCalls: [{ name: 'open_airport_map', arguments: '{"destination":"toaleta"}' }] } : { text: 'ok' });
-    const r = (await (await post('/v1/chat', { question: 'Where is the toilet?' })).json()) as any;
+    engineScript = (n) => (n === 0 ? { text: '', toolCalls: [{ name: 'open_airport_map', arguments: '{"destination":"farmacia"}' }] } : { text: 'ok' });
+    const r = (await (await post('/v1/chat', { question: 'Where is the pharmacy?' })).json()) as any; // a place the catalogue does not have: the model path
     expect(r.trace[0]).toMatchObject({ ok: false, sideEffect: true });
   });
   it('validates the question', async () => {

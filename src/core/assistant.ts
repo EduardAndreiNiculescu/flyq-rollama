@@ -39,7 +39,8 @@ export interface LlmEngine {
 
 /** Map module implements this; AI module never imports map code directly. */
 export interface NavigationHandler {
-  openAirportMap(req: NavigationRequest): void | Promise<void>;
+  /** May answer false when the map has no such place (the assistant then does not say it opened the map) */
+  openAirportMap(req: NavigationRequest): void | boolean | Promise<void | boolean>;
 }
 
 export type AskResult = {

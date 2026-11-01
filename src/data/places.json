@@ -1,0 +1,491 @@
+{
+  "_note": "Catalogul de locuri din aeroport pe care asistentul le recunoaște la „unde e / unde găsesc”. `where` e scris doar unde locul se vede în datele terminalului (src/data/terminal.json); la celelalte lipsește intenționat: poziția exactă o dă harta LiDAR când se conectează (registerPlaces în src/core/places.ts). `nodeId` leagă locul de un nod al hărții interioare.",
+  "places": [
+    {
+      "id": "toilet",
+      "kind": "toilet",
+      "names": {
+        "ro": "Toalete",
+        "en": "Toilets"
+      },
+      "aliases": [
+        "toalet",
+        "toaleta",
+        "toalete",
+        "toaletele",
+        "baie",
+        "baia",
+        "baile",
+        "wc",
+        "wc-ul",
+        "closet",
+        "grup sanitar",
+        "toilet",
+        "restroom",
+        "bathroom",
+        "lavatory",
+        "loo"
+      ],
+      "nodeId": "f0_wc",
+      "where": {
+        "ro": "La parter, în hala de check-in, și la etajul 1, lângă porțile de îmbarcare",
+        "en": "On the ground floor by the check-in hall, and on floor 1 near the boarding gates"
+      }
+    },
+    {
+      "id": "checkin",
+      "kind": "checkin",
+      "names": {
+        "ro": "Ghișeele de check-in",
+        "en": "Check-in desks"
+      },
+      "aliases": [
+        "check in",
+        "checkin",
+        "check-in",
+        "ghiseele de check",
+        "ghiseu check",
+        "unde fac check",
+        "predau bagajul",
+        "bag drop",
+        "bagdrop",
+        "lasat bagajul",
+        "depun bagajul"
+      ],
+      "nodeId": "f0_hall_c",
+      "where": {
+        "ro": "La parter, în hala de check-in (ghișeele 1–6 și bag drop)",
+        "en": "On the ground floor in the check-in hall (desks 1–6 and bag drop)"
+      }
+    },
+    {
+      "id": "security",
+      "kind": "security",
+      "names": {
+        "ro": "Controlul de securitate",
+        "en": "Security control"
+      },
+      "aliases": [
+        "securitate",
+        "securitatea",
+        "control de securitate",
+        "controlul",
+        "porti de securitate",
+        "portile de securitate",
+        "security",
+        "security gate",
+        "security gates",
+        "security check",
+        "scanner",
+        "scanare",
+        "filtru",
+        "filtrul"
+      ],
+      "nodeId": "f0_sec_in",
+      "where": {
+        "ro": "La parter, între hala de check-in și zona de plecări",
+        "en": "On the ground floor, between the check-in hall and the departures area"
+      }
+    },
+    {
+      "id": "passport",
+      "kind": "passport",
+      "names": {
+        "ro": "Controlul pașapoartelor",
+        "en": "Passport control"
+      },
+      "aliases": [
+        "pasapoarte",
+        "pasapoartelor",
+        "control pasapoarte",
+        "controlul pasapoartelor",
+        "politia de frontiera",
+        "frontiera",
+        "passport control",
+        "border control",
+        "immigration"
+      ],
+      "nodeId": "f1_pass_in",
+      "where": {
+        "ro": "La etajul 1, înainte de porțile non-Schengen",
+        "en": "On floor 1, before the non-Schengen gates"
+      }
+    },
+    {
+      "id": "info",
+      "kind": "info",
+      "names": {
+        "ro": "Ghișeul de informații",
+        "en": "Information desk"
+      },
+      "aliases": [
+        "informatii",
+        "informatiile",
+        "ghiseu de informatii",
+        "ghiseul de informatii",
+        "ghiseu informatii",
+        "birou de informatii",
+        "biroul de informatii",
+        "info",
+        "information",
+        "information desk",
+        "help desk",
+        "helpdesk"
+      ],
+      "nodeId": "f0_info",
+      "where": {
+        "ro": "La parter, în hala de check-in",
+        "en": "On the ground floor in the check-in hall"
+      }
+    },
+    {
+      "id": "cafe",
+      "kind": "food",
+      "names": {
+        "ro": "Cafenea",
+        "en": "Café"
+      },
+      "aliases": [
+        "cafenea",
+        "cafeneaua",
+        "cafea",
+        "cafe",
+        "coffee",
+        "ceai",
+        "mananc",
+        "manca",
+        "mancare",
+        "de mancare",
+        "foame",
+        "restaurant",
+        "restaurante",
+        "bufet",
+        "gustare",
+        "sa beau",
+        "bea ceva",
+        "food",
+        "eat",
+        "hungry"
+      ],
+      "nodeId": "f0_cafe",
+      "where": {
+        "ro": "La parter, în zona de plecări",
+        "en": "On the ground floor in the departures area"
+      }
+    },
+    {
+      "id": "coco",
+      "kind": "food",
+      "names": {
+        "ro": "Barul lui Coco",
+        "en": "Coco's bar"
+      },
+      "aliases": [
+        "coco",
+        "coco bar",
+        "barul lui coco",
+        "bar coco",
+        "barul coco",
+        "cocos",
+        "bar",
+        "baruri"
+      ],
+      "where": null,
+      "named": true
+    },
+    {
+      "id": "dutyfree",
+      "kind": "shop",
+      "names": {
+        "ro": "Duty-free",
+        "en": "Duty-free"
+      },
+      "aliases": [
+        "duty free",
+        "dutyfree",
+        "duty-free",
+        "magazin",
+        "magazine",
+        "magazinul",
+        "cumparaturi",
+        "suveniruri",
+        "shopping",
+        "shop",
+        "shops",
+        "alcool",
+        "parfumuri"
+      ],
+      "nodeId": "f1_df",
+      "where": {
+        "ro": "La etajul 1, înainte de porțile de îmbarcare",
+        "en": "On floor 1, before the boarding gates"
+      }
+    },
+    {
+      "id": "atm",
+      "kind": "atm",
+      "names": {
+        "ro": "Bancomat (ATM)",
+        "en": "ATM"
+      },
+      "aliases": [
+        "atm",
+        "atm-ul",
+        "atmul",
+        "bancomat",
+        "bancomatul",
+        "bancomate",
+        "scot bani",
+        "scoate bani",
+        "retrag bani",
+        "cash",
+        "numerar",
+        "cash machine"
+      ],
+      "where": null
+    },
+    {
+      "id": "medical",
+      "kind": "medical",
+      "names": {
+        "ro": "Cabinetul medical",
+        "en": "Medical office"
+      },
+      "aliases": [
+        "cabinet medical",
+        "cabinetul medical",
+        "punct medical",
+        "punctul medical",
+        "medical",
+        "medic",
+        "doctor",
+        "doctorul",
+        "asistenta medicala",
+        "prim ajutor",
+        "primul ajutor",
+        "ambulanta",
+        "first aid",
+        "medical office",
+        "clinic",
+        "nurse"
+      ],
+      "where": null
+    },
+    {
+      "id": "vip",
+      "kind": "lounge",
+      "names": {
+        "ro": "Zona VIP / lounge",
+        "en": "VIP lounge"
+      },
+      "aliases": [
+        "vip",
+        "zona vip",
+        "salon vip",
+        "lounge",
+        "lounge-ul",
+        "salon business",
+        "salonul business",
+        "business lounge",
+        "sala vip",
+        "executive lounge"
+      ],
+      "where": null
+    },
+    {
+      "id": "rentacar",
+      "kind": "rental",
+      "names": {
+        "ro": "Închirieri auto (rent a car)",
+        "en": "Car rental"
+      },
+      "aliases": [
+        "rent a car",
+        "rent-a-car",
+        "rentacar",
+        "rent car",
+        "inchirieri",
+        "inchiriere",
+        "inchiriat",
+        "inchiriez",
+        "inchiriat masina",
+        "inchirieri auto",
+        "firme de inchirieri",
+        "masina de inchiriat",
+        "masini de inchiriat",
+        "car rental",
+        "rental",
+        "hertz",
+        "avis",
+        "sixt"
+      ],
+      "where": null
+    },
+    {
+      "id": "smoking",
+      "kind": "smoking",
+      "names": {
+        "ro": "Zonă de fumat",
+        "en": "Smoking area"
+      },
+      "aliases": [
+        "fumat",
+        "fumez",
+        "zona de fumat",
+        "tigara",
+        "tigari",
+        "smoking",
+        "smoke",
+        "cigarette",
+        "fuma",
+        "fumeaza"
+      ],
+      "nodeId": "f1_smoke",
+      "where": {
+        "ro": "La etajul 1, în zona porților",
+        "en": "On floor 1 in the gates area"
+      }
+    },
+    {
+      "id": "power",
+      "kind": "power",
+      "names": {
+        "ro": "Prize / încărcare telefon",
+        "en": "Charging points"
+      },
+      "aliases": [
+        "priza",
+        "prize",
+        "incarc",
+        "incarca",
+        "incarcat",
+        "incarcare",
+        "incarc telefonul",
+        "charging",
+        "charge",
+        "outlet",
+        "power outlet",
+        "usb"
+      ],
+      "nodeId": "f0_power",
+      "where": {
+        "ro": "La parter în zona de plecări și la etajul 1, lângă porți",
+        "en": "On the ground floor in departures and on floor 1 near the gates"
+      }
+    },
+    {
+      "id": "lift",
+      "kind": "lift",
+      "names": {
+        "ro": "Lift",
+        "en": "Lift"
+      },
+      "aliases": [
+        "lift",
+        "liftul",
+        "ascensor",
+        "ascensorul",
+        "elevator"
+      ],
+      "nodeId": "f0_lift",
+      "where": {
+        "ro": "Între parter și etajul 1",
+        "en": "Between the ground floor and floor 1"
+      }
+    },
+    {
+      "id": "stairs",
+      "kind": "stairs",
+      "names": {
+        "ro": "Scări",
+        "en": "Stairs"
+      },
+      "aliases": [
+        "scara",
+        "scari",
+        "scarile",
+        "stairs",
+        "staircase"
+      ],
+      "nodeId": "f0_stairs",
+      "where": {
+        "ro": "Între parter și etajul 1",
+        "en": "Between the ground floor and floor 1"
+      }
+    },
+    {
+      "id": "exit",
+      "kind": "exit",
+      "names": {
+        "ro": "Ieșirea / intrarea",
+        "en": "Exit / entrance"
+      },
+      "aliases": [
+        "iesire",
+        "iesirea",
+        "intrare",
+        "intrarea",
+        "exit",
+        "entrance",
+        "ies din aeroport"
+      ],
+      "nodeId": "f0_entrance",
+      "where": {
+        "ro": "La parter, în fața halei de check-in",
+        "en": "On the ground floor, in front of the check-in hall"
+      }
+    },
+    {
+      "id": "baggage",
+      "kind": "baggage",
+      "names": {
+        "ro": "Ridicare bagaje",
+        "en": "Baggage claim"
+      },
+      "aliases": [
+        "banda de bagaje",
+        "banda",
+        "bagaje sosire",
+        "ridicare bagaje",
+        "ridic bagajul",
+        "iau bagajul",
+        "unde primesc bagajul",
+        "baggage claim",
+        "luggage claim"
+      ],
+      "where": null
+    },
+    {
+      "id": "parking",
+      "kind": "parking",
+      "names": {
+        "ro": "Parcare",
+        "en": "Car park"
+      },
+      "aliases": [
+        "parcare",
+        "parcarea",
+        "parchez",
+        "parking",
+        "car park"
+      ],
+      "where": null
+    },
+    {
+      "id": "taxi",
+      "kind": "taxi",
+      "names": {
+        "ro": "Taxi",
+        "en": "Taxis"
+      },
+      "aliases": [
+        "taxi",
+        "taxiuri",
+        "taxiurile",
+        "uber",
+        "bolt"
+      ],
+      "where": null
+    }
+  ]
+}
