@@ -361,6 +361,7 @@ public final class FlyQSpatialHostView: UIView {
 
     mapView.frame = bounds
     addSubview(mapView)
+    mapView.onRefollowed = { [weak self] in self?.emitState(force: true) }
     mapView.onUserMovedCamera = { [weak self] in
       self?.emitState(force: true)
     }
@@ -522,6 +523,14 @@ public final class FlyQSpatialHostView: UIView {
     case "focusLabel":
       if let id = args["id"] as? String, let g = routeGoals(id).first { mapView.focus(x: Float(g.at.x), z: Float(g.at.y)) }
       emitState(force: true)
+    case "setPose":
+      // The phone's own sensors (compass + steps, see src/flyq/lib/pdr.ts) say where the user is: the pin follows without the camera
+      if let x = (args["x"] as? NSNumber)?.floatValue, let z = (args["z"] as? NSNumber)?.floatValue {
+        setExternalPose(x: x, z: z, headingDeg: (args["headingDeg"] as? NSNumber)?.doubleValue)
+      }
+    case "setHeading":
+      // Only the direction changed (compass): the pin turns, the haptic guide uses it
+      if let d = (args["headingDeg"] as? NSNumber)?.doubleValue { setExternalHeading(d) }
     case "setFollow":
       let enabled = (args["enabled"] as? Bool) ?? true
       mapView.setFollow(enabled)
@@ -912,6 +921,8 @@ public final class FlyQSpatialHostView: UIView {
         mapView.setViewMode(.perspective, animated: true)
       }
       journal("place", ["x": SpatialJSON.number(point.x, digits: 2), "z": SpatialJSON.number(point.z, digits: 2)])
+      // the app (pedestrian dead reckoning) needs to know where the user was put
+      emit("pose", ["x": SpatialJSON.number(point.x, digits: 2), "y": 0, "z": SpatialJSON.number(point.z, digits: 2), "headingDeg": NSNull(), "confidence": "exact"])
       if routeTarget != nil { computeRoute() }
       emitState(force: true)
       return
@@ -922,6 +933,35 @@ public final class FlyQSpatialHostView: UIView {
     let line = navGrid?.route(from: a, fromH: Double(from.y), to: b, toH: Double(lift), flights: flights)
       ?? RouteLine(points: [a, b], heights: [Double(from.y), Double(lift)])
     startWalk(along: line, toLabel: nil)
+  }
+
+  /// Compass heading (degrees clockwise from the map's north) in the pin's convention (radians, counter-clockwise around +Y)
+  private func externalRadians(_ degrees: Double) -> Float { return Float(-degrees * Double.pi / 180) }
+
+  private func setExternalHeading(_ degrees: Double) {
+    simHeading = externalRadians(degrees)
+    lastHeading = simHeading
+    guard let p = simPos, walkTimer == nil else { return }
+    mapView.setPin(position: p, headingRadians: simHeading, confidence: .tracked, elevation: 0)
+  }
+
+  /// A position from outside (pedestrian dead reckoning): the same as choosing it on the map, but repeatedly, and following the route.
+  private func setExternalPose(x: Float, z: Float, headingDeg: Double?) {
+    guard walkTimer == nil else { return }
+    if let d = headingDeg { simHeading = externalRadians(d) }
+    lastHeading = simHeading
+    let first = simPos == nil
+    simPos = SIMD3<Float>(x, 0, z)
+    walkElevation = 0
+    mapView.setPin(position: simPos, headingRadians: simHeading, confidence: .tracked, elevation: 0)
+    if first {
+      mapView.setFollow(true)
+      if mapView.viewMode == .top { mapView.setViewMode(.perspective, animated: true) }
+      if routeTarget != nil { computeRoute() }
+      emitState(force: true)
+    } else if routeTarget != nil {
+      followRoute(SIMD2<Double>(Double(x), Double(z)))
+    }
   }
 
   /// Where the user is now (x, z): the chosen position, else the camera's pin.
@@ -1103,6 +1143,9 @@ public final class FlyQSpatialHostView: UIView {
       if routeTarget != nil { computeRoute() }
     }
     walkLabel = nil
+    if let p = simPos {
+      emit("pose", ["x": SpatialJSON.number(p.x, digits: 2), "y": 0, "z": SpatialJSON.number(p.z, digits: 2), "headingDeg": NSNull(), "confidence": "exact"])
+    }
     emitState(force: true)
   }
 

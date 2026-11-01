@@ -16,7 +16,12 @@
     },
     "plugins": [
       "expo-sqlite",
-      ["expo-widgets", { "enablePushNotifications": true }],
+      [
+        "expo-widgets",
+        {
+          "enablePushNotifications": true
+        }
+      ],
       [
         "expo-build-properties",
         {
@@ -48,6 +53,18 @@
           "microphonePermission": false,
           "recordAudioAndroid": false,
           "barcodeScannerEnabled": true
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "FlyQ folosește busola telefonului ca să te ghideze pe hartă când camera nu poate recunoaște locul."
+        }
+      ],
+      [
+        "expo-sensors",
+        {
+          "motionPermission": "FlyQ folosește senzorii de mișcare (pași, giroscop) ca să-ți urmărească poziția pe hartă."
         }
       ]
     ]

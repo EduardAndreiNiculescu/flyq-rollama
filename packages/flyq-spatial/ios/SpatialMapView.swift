@@ -160,6 +160,9 @@ final class SpatialMapView: UIView, UIGestureRecognizerDelegate {
   var onMapTapMissed: (() -> Void)?
   /// The user moved the camera by hand (the host turns "follow me" off and reports it).
   var onUserMovedCamera: (() -> Void)?
+  /// The camera went back to following the user by itself (a few seconds after the last touch).
+  var onRefollowed: (() -> Void)?
+  private var refollowWork: DispatchWorkItem?
 
   private let scnView = SCNView(frame: .zero, options: nil)
   private let scene = SCNScene()
@@ -399,10 +402,14 @@ final class SpatialMapView: UIView, UIGestureRecognizerDelegate {
 
   /// Labels grow with the camera's distance, so they keep about the same size on screen.
   private func updateLabelScale() {
-    let s = min(max(distance / 15, 0.5), 14)        // a little bigger than at first (Denis, 01.11)
+    // Smaller than before and with a lower floor: zoomed in, the badges no longer cover the map (Alex, 01.11)
+    let s = min(max(distance / 21, 0.2), 14)
     for child in labelsNode.childNodes {
       child.simdScale = SIMD3<Float>(s, s, s)
     }
+    // The person: grows with the distance like the labels, so it stays easy to see (it was too small)
+    let p = min(max(distance / 9, 1.6), 8)
+    pin.root.simdScale = SIMD3<Float>(p, p, p)
   }
 
   /// Once the user is on the map, a label shows when they come near it (fully within
@@ -766,6 +773,19 @@ final class SpatialMapView: UIView, UIGestureRecognizerDelegate {
       followUser = false
       onUserMovedCamera?()
     }
+    scheduleRefollow()
+  }
+
+  /// Auto-follow: a few seconds after the last touch the camera goes back to the user (if there is one).
+  private func scheduleRefollow() {
+    refollowWork?.cancel()
+    let work = DispatchWorkItem { [weak self] in
+      guard let self = self, self.hasPinPose, !self.followUser else { return }
+      self.setFollow(true)
+      self.onRefollowed?()
+    }
+    refollowWork = work
+    DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: work)
   }
 
   private func metersPerPoint() -> Float {

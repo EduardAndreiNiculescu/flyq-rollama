@@ -1017,6 +1017,8 @@ export function parseSpatialEvent(name: string, payload: string): SpatialEvent {
 
 /** Commands understood by the native view (see FlyQSpatialHostView.handle). */
 export type SpatialCommand =
+  | 'setPose'
+  | 'setHeading'
   | 'sync'
   | 'startLocalization'
   | 'stopLocalization'

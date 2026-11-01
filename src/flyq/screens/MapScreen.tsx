@@ -25,6 +25,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { CalibrationPanel } from '../components/CalibrationPanel';
 import { HapticGuide } from '../lib/hapticGuide';
+import { PdrSession } from '../lib/pdr';
 import { DebugPanel } from '../components/DebugPanel';
 import { FlightCard } from '../components/FlightCard';
 import { PlacesBar, RouteCard } from '../components/PlacesBar';
@@ -165,6 +166,9 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
   React.useEffect(() => {
     void AccessibilityInfo.isScreenReaderEnabled().then(on => on && setHapticOn(true));
   }, []);
+  const lastPoseRef = React.useRef<{ x: number; z: number } | null>(null);
+  const pdrRef = React.useRef<PdrSession | null>(null);
+  const [sensorsOn, setSensorsOn] = React.useState(true);
   const hapticOnRef = React.useRef(hapticOn);
   hapticOnRef.current = hapticOn;
   const guide = React.useMemo(
@@ -184,6 +188,10 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
       dispatch({ type: 'event', event });
       if (event.type === 'localized' || event.type === 'calibrationSaved') {
         Vibration.vibrate();
+      }
+      if (event.type === 'pose') {
+        lastPoseRef.current = { x: event.pose.x, z: event.pose.z };
+        pdrRef.current?.moveTo(event.pose.x, event.pose.z); // chosen on the map, or the end of a walk: the steps go on from there
       }
       if (event.type === 'guide' && hapticOnRef.current) {
         guide.update(event.guide.turnDeg, event.guide.metersLeft);
@@ -307,6 +315,29 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
   );
 
   const places = native?.places ?? [];
+  // Compass + steps move the pin when the user was put on the map (no camera): the accelerometer counts steps, the compass gives the way
+  const placedNow = native?.placed ?? false;
+  const walkingNow = native?.walking ?? false;
+  React.useEffect(() => {
+    if (!placedNow || walkingNow || !sensorsOn || !lastPoseRef.current) {
+      pdrRef.current?.stop();
+      pdrRef.current = null;
+      return;
+    }
+    const session = new PdrSession(lastPoseRef.current.x, lastPoseRef.current.z, {
+      onPose: pose => send('setPose', pose),
+      onHeading: headingDeg => send('setHeading', { headingDeg }),
+    });
+    pdrRef.current = session;
+    void session.start();
+    return () => {
+      session.stop();
+      if (pdrRef.current === session) {
+        pdrRef.current = null;
+      }
+    };
+  }, [placedNow, walkingNow, sensorsOn, send]);
+
   // Opened from the assistant ("where is ..."): the route to that place starts once the map knows its places
   const routedInitial = React.useRef(false);
   React.useEffect(() => {
@@ -338,6 +369,11 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
         walking={native?.walking ?? false}
         onWalk={() => send('walkRoute')}
         onClear={() => send('clearRoute')}
+        />
+        <Button
+          label={lang === 'ro' ? (sensorsOn ? 'Senzori (busolă + pași): pornit' : 'Senzori (busolă + pași): oprit') : sensorsOn ? 'Sensors (compass + steps): on' : 'Sensors (compass + steps): off'}
+          compact
+          onPress={() => setSensorsOn(v => !v)}
         />
         <Button
           label={lang === 'ro' ? (hapticOn ? 'Ghid haptic: pornit' : 'Ghid haptic: oprit') : hapticOn ? 'Haptic guide: on' : 'Haptic guide: off'}
