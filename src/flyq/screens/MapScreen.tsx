@@ -12,16 +12,19 @@ import {
   AccessibilityInfo,
   ActivityIndicator,
   Alert,
+  Animated,
   type LayoutChangeEvent,
   Linking,
+  PanResponder,
   Pressable,
   StatusBar,
   StyleSheet,
   Text,
+  TextInput,
   Vibration,
   View,
 } from 'react-native';
-import { Compass } from 'lucide-react-native';
+import { Box, Compass, Search, Settings as SettingsIcon, Square, X } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { CalibrationPanel } from '../components/CalibrationPanel';
@@ -29,7 +32,7 @@ import { HapticGuide } from '../lib/hapticGuide';
 import { PdrSession } from '../lib/pdr';
 import { DebugPanel } from '../components/DebugPanel';
 import { FlightCard } from '../components/FlightCard';
-import { PlacesBar, RouteCard } from '../components/PlacesBar';
+import { PlacesBar, placeName, RouteCard } from '../components/PlacesBar';
 import { SettingsSheet } from '../components/SettingsSheet';
 import { appKey, VENUE_ID } from '../config';
 import { useBackend } from '../hooks/useBackend';
@@ -211,12 +214,37 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
   // camera preview) use the free area in between.
   const [overlayTop, setOverlayTop] = React.useState(0);
   const [overlayBottom, setOverlayBottom] = React.useState(0);
+  // The search bar filters the carousel of places; Enter goes to the first match
+  const [query, setQuery] = React.useState('');
+  // The bottom sheet can be pulled down to a strip and up again
+  const sheetY = React.useRef(new Animated.Value(0)).current;
+  const sheetOpen = React.useRef(true);
+  const collapsedOffset = React.useRef(0);
+  const sheetPan = React.useMemo(
+    () =>
+      PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onPanResponderMove: (_, g) => {
+          const base = sheetOpen.current ? 0 : collapsedOffset.current;
+          sheetY.setValue(Math.min(Math.max(base + g.dy, 0), collapsedOffset.current));
+        },
+        onPanResponderRelease: (_, g) => {
+          const base = sheetOpen.current ? 0 : collapsedOffset.current;
+          const open = Math.abs(g.dy) < 4 ? !sheetOpen.current : base + g.dy < collapsedOffset.current / 2;
+          sheetOpen.current = open;
+          Animated.spring(sheetY, { toValue: open ? 0 : collapsedOffset.current, useNativeDriver: true, bounciness: 0 }).start();
+        },
+      }),
+    [sheetY],
+  );
   const onTopLayout = React.useCallback((e: LayoutChangeEvent) => {
     const { y, height } = e.nativeEvent.layout;
     setOverlayTop(Math.round(y + height));
   }, []);
   const onBottomLayout = React.useCallback((e: LayoutChangeEvent) => {
-    setOverlayBottom(Math.round(e.nativeEvent.layout.height));
+    const h = Math.round(e.nativeEvent.layout.height);
+    setOverlayBottom(h);
+    collapsedOffset.current = Math.max(0, h - 96); // a strip with the handle and the first line stays visible
   }, []);
   React.useEffect(() => {
     const timer = setTimeout(
@@ -316,6 +344,8 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
   );
 
   const places = native?.places ?? [];
+  const plain = (text: string) => text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const filteredPlaces = query.trim() ? places.filter(p => plain(placeName(p, lang)).includes(plain(query.trim()))) : places;
   // Compass + steps move the pin when the user was put on the map (no camera): the accelerometer counts steps, the compass gives the way
   const placedNow = native?.placed ?? false;
   const walkingNow = native?.walking ?? false;
@@ -714,7 +744,7 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
 
   return (
     <View style={styles.root}>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" />
       <FlyQSpatialView
         ref={spatialRef}
         style={StyleSheet.absoluteFill}
@@ -732,68 +762,48 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
           onLayout={onTopLayout}
           style={styles.gapSmall}
         >
-          <View style={styles.topRow}>
-            <Pressable
-              onLongPress={() => setDebug(value => !value)}
-              accessibilityRole="header"
-              style={styles.titleBox}
-            >
-              <Text style={styles.appName}>{t(lang, 'appName')}</Text>
-              <Text style={styles.venue} numberOfLines={1}>
-                {venueName}
-              </Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                backend.refresh();
-                setSettingsOpen(true);
+          <View style={styles.searchBar}>
+            <Search size={18} color={colors.textMuted} />
+            <TextInput
+              value={query}
+              onChangeText={setQuery}
+              placeholder={lang === 'ro' ? 'Caută un loc: toalete, ieșire, cafenea…' : 'Search a place: restroom, exit, café…'}
+              placeholderTextColor={colors.textMuted}
+              style={styles.searchInput}
+              returnKeyType="search"
+              autoCorrect={false}
+              onSubmitEditing={() => {
+                const match = filteredPlaces[0];
+                if (match) {
+                  send('routeTo', { id: match.id });
+                  setQuery('');
+                }
               }}
-              style={styles.backendChip}
-              accessibilityLabel={
-                backend.status === 'online'
-                  ? t(lang, 'backendOnline')
-                  : backend.status === 'offline'
-                  ? t(lang, 'backendOffline')
-                  : t(lang, 'backendChecking')
-              }
-            >
-              <View
-                style={[
-                  styles.backendDot,
-                  backend.status === 'online'
-                    ? styles.dotOnline
-                    : backend.status === 'offline'
-                    ? styles.dotOffline
-                    : styles.dotChecking,
-                ]}
-              />
-              <Text style={styles.backendText}>
-                {backend.status === 'online'
-                  ? 'server'
-                  : backend.status === 'offline'
-                  ? 'offline'
-                  : '…'}
-              </Text>
-            </Pressable>
-          </View>
-
-          <View style={styles.statusPill}>
-            <View
-              style={[
-                styles.statusDot,
-                { backgroundColor: statusColor(phase, confidence) },
-              ]}
             />
-            <Text style={styles.statusText} numberOfLines={2}>
-              {t(lang, statusKey(phase, native))}
-            </Text>
+            {query.length > 0 ? (
+              <Pressable onPress={() => setQuery('')} accessibilityLabel={lang === 'ro' ? 'Șterge' : 'Clear'} hitSlop={10}>
+                <X size={18} color={colors.textMuted} />
+              </Pressable>
+            ) : (
+              <Pressable
+                onPress={() => {
+                  backend.refresh();
+                  setSettingsOpen(true);
+                }}
+                onLongPress={() => setDebug(value => !value)}
+                accessibilityLabel={lang === 'ro' ? 'Setări' : 'Settings'}
+                hitSlop={10}
+              >
+                <SettingsIcon size={18} color={colors.textMuted} />
+              </Pressable>
+            )}
           </View>
 
           {places.length > 0 &&
           phase !== 'calibrating' &&
           phase !== 'recording' ? (
             <PlacesBar
-              places={places}
+              places={filteredPlaces}
               nearby={native?.nearby ?? []}
               activeId={route?.to ?? null}
               lang={lang}
@@ -838,51 +848,32 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
         ) : null}
       </View>
 
-      {places.length > 0 &&
-      (phase === 'ready' ||
-        phase === 'needsCalibration' ||
-        phase === 'unsupported' ||
-        phase === 'placed') ? (
-        <View
-          pointerEvents="box-none"
-          style={[styles.placeFabWrap, { bottom: overlayBottom + 12 }]}
-        >
-          <Pressable
-            accessibilityRole="button"
-            onPress={() =>
-              send('setPlaceMode', { enabled: !native?.placeMode })
-            }
-            style={[styles.placeFab, native?.placeMode && styles.placeFabOn]}
-          >
-            <Text style={styles.placeFabText}>
-              {native?.placeMode
-                ? t(lang, 'cancel')
-                : native?.placed
-                ? t(lang, 'placeMove')
-                : t(lang, 'placeMe')}
-            </Text>
-          </Pressable>
-        </View>
-      ) : null}
-
-      {/* Like the compass button of a maps app: back to the user, following (the map follows again by itself after 5 s as well) */}
-      {native ? (
-        <View pointerEvents="box-none" style={[styles.compassWrap, { bottom: overlayBottom + 76 }]}>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={lang === 'ro' ? 'Centrează pe mine' : 'Centre on me'}
-            onPress={() => {
-              send('recenter');
-              send('setFollow', { enabled: true });
-            }}
-            style={styles.compassButton}
-          >
-            <Compass size={26} color={colors.accent} strokeWidth={2.2} />
-          </Pressable>
-        </View>
-      ) : null}
-
-      <View pointerEvents="box-none" style={styles.bottomWrap}>
+      <Animated.View pointerEvents="box-none" style={[styles.bottomWrap, { transform: [{ translateY: sheetY }] }]}>
+        {/* The two round buttons ride on the sheet: back to me (compass) and 3D / 2D from above */}
+        {native ? (
+          <View pointerEvents="box-none" style={styles.fabColumn}>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={lang === 'ro' ? 'Centrează pe mine' : 'Centre on me'}
+              onPress={() => {
+                send('recenter');
+                send('setFollow', { enabled: true });
+              }}
+              style={styles.roundButton}
+            >
+              <Compass size={26} color={colors.accent} strokeWidth={2.2} />
+            </Pressable>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={lang === 'ro' ? 'Comută 3D / 2D' : 'Toggle 3D / 2D'}
+              onPress={() => send('setViewMode', { mode: native.viewMode === 'top' ? 'perspective' : 'top' })}
+              style={styles.roundButton}
+            >
+              {native.viewMode === 'top' ? <Box size={24} color={colors.accent} strokeWidth={2.2} /> : <Square size={22} color={colors.accent} strokeWidth={2.2} />}
+              <Text style={styles.roundLabel}>{native.viewMode === 'top' ? '3D' : '2D'}</Text>
+            </Pressable>
+          </View>
+        ) : null}
         {debug ? (
           <View style={styles.debugWrap} pointerEvents="none">
             <DebugPanel
@@ -900,9 +891,20 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
           onLayout={onBottomLayout}
           style={[styles.panel, { paddingBottom: insets.bottom + 12 }]}
         >
+          <View {...sheetPan.panHandlers} style={styles.grabber} accessibilityLabel={lang === 'ro' ? 'Trage panoul' : 'Drag the panel'}>
+            <View style={styles.grabberBar} />
+          </View>
           {renderPanel()}
+          {native && !native.placeMode && phase !== 'calibrating' && phase !== 'recording' ? (
+            <Button
+              label={native.placed ? t(lang, 'placeMove') : t(lang, 'placeMe')}
+              compact
+              variant="secondary"
+              onPress={() => send('setPlaceMode', { enabled: true })}
+            />
+          ) : null}
         </View>
-      </View>
+      </Animated.View>
 
       <SettingsSheet
         visible={settingsOpen}
@@ -984,6 +986,67 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 8,
     elevation: 5,
+  },
+  searchBar: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.96)',
+    borderColor: colors.panelBorder,
+    borderRadius: 26,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 11,
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  searchInput: {
+    color: colors.text,
+    flex: 1,
+    fontSize: 16,
+    padding: 0,
+  },
+  fabColumn: {
+    alignItems: 'flex-end',
+    bottom: '100%',
+    gap: 10,
+    marginBottom: 12,
+    paddingRight: 16,
+    position: 'absolute',
+    right: 0,
+  },
+  roundButton: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.97)',
+    borderRadius: 28,
+    height: 56,
+    justifyContent: 'center',
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    width: 56,
+    elevation: 5,
+  },
+  roundLabel: {
+    color: colors.accent,
+    fontSize: 10,
+    fontWeight: '800',
+    marginTop: -1,
+  },
+  grabber: {
+    alignItems: 'center',
+    paddingBottom: 10,
+    paddingTop: 2,
+  },
+  grabberBar: {
+    backgroundColor: 'rgba(15, 23, 42, 0.18)',
+    borderRadius: 3,
+    height: 5,
+    width: 44,
   },
   placeFabWrap: {
     position: 'absolute',
