@@ -19,7 +19,10 @@ export function FlyQMapScreen() {
 export function FlyQMapTab() {
   return (
     <View style={{ flex: 1, paddingBottom: 118 }}>
-      <MapScreen />
+      {/* Clipped: a pulled-down sheet must not show under the tab bar */}
+      <View style={{ flex: 1, overflow: 'hidden' }}>
+        <MapScreen />
+      </View>
     </View>
   );
 }

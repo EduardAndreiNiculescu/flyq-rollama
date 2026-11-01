@@ -521,7 +521,9 @@ public final class FlyQSpatialHostView: UIView {
     case "walkRoute":
       walkRoute()
     case "focusLabel":
-      if let id = args["id"] as? String, let g = routeGoals(id).first { mapView.focus(x: Float(g.at.x), z: Float(g.at.y)) }
+      if let id = args["id"] as? String, let g = routeGoals(id).first {
+        mapView.focus(x: Float(g.at.x), z: Float(g.at.y), distance: (args["distance"] as? NSNumber)?.floatValue)
+      }
       emitState(force: true)
     case "setPose":
       // The phone's own sensors (compass + steps, see src/flyq/lib/pdr.ts) say where the user is: the pin follows without the camera

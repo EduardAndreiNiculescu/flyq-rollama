@@ -380,10 +380,14 @@ final class SpatialMapView: UIView, UIGestureRecognizerDelegate {
   }
 
   /// Looks at a point of the map from where the camera is (stops following the user).
-  func focus(x: Float, z: Float) {
+  func focus(x: Float, z: Float, distance: Float? = nil) {
     followUser = false
     desiredTarget = clampTarget(SIMD3<Float>(x, floorY, z))
-    desiredDistance = min(max(desiredDistance, 20), 45)
+    if let d = distance {
+      desiredDistance = clampDistance(d)          // an explicit zoom (the opening view on the entrance)
+    } else {
+      desiredDistance = min(max(desiredDistance, 20), 45)
+    }
   }
 
   /// Where the pin is (x, z), when there is one.

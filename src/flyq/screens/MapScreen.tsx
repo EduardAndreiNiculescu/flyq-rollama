@@ -121,7 +121,7 @@ function statusColor(phase: Phase, confidence: string | undefined): string {
 
 /** Where the QR poster at the main entrance is (the plan's metres) and the way a person facing it looks: into the hall, south (+z). */
 /** What stays of the bottom sheet when it is pulled down: the handle and the title. */
-const COLLAPSED_STRIP = 64;
+const COLLAPSED_STRIP = 84;
 
 const ENTRANCE_QR = { id: 'qr-hol-1', x: 3.4, z: -10.6, headingDeg: 180 };
 
@@ -392,6 +392,15 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
       }
     };
   }, [placedNow, walkingNow, sensorsOn, send]);
+
+  // Opening view: close on the model, at the hall's entrance (not the whole terminal from afar); not when a route was asked for
+  const openedOnEntrance = React.useRef(false);
+  React.useEffect(() => {
+    if (!initialRoute && !openedOnEntrance.current && places.some(p => p.id === 'iesire-hol')) {
+      openedOnEntrance.current = true;
+      send('focusLabel', { id: 'iesire-hol', distance: 14 });
+    }
+  }, [initialRoute, places, send]);
 
   // Opened from the assistant ("where is ..."): the route to that place starts once the map knows its places
   const routedInitial = React.useRef(false);
@@ -1253,6 +1262,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
   },
   panel: {
+    gap: 8,
     backgroundColor: colors.panel,
     borderColor: colors.panelBorder,
     borderTopLeftRadius: 22,
