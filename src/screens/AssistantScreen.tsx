@@ -4,7 +4,12 @@ import {
   ChevronDown,
   Clock,
   Cpu,
+  Droplets,
   DoorOpen,
+  FileText,
+  Luggage,
+  MapPin,
+  MessageCircle,
   PlaneLanding,
   Send,
   ShieldCheck,
@@ -14,7 +19,7 @@ import {
   type LucideIcon,
 } from 'lucide-react-native';
 import { useEffect, useRef, useState, type ComponentRef } from 'react';
-import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { AppText } from '../components/AppText';
 import { ChatBubble, FloAvatar } from '../components/ChatBubble';
 import { Chip } from '../components/Controls';
@@ -24,6 +29,7 @@ import { pressFeedback } from '../components/press';
 import { EmptyState, ProfileButton, Screen, ScreenHeader } from '../components/Layout';
 import { SkyArt } from '../components/SkyArt';
 import { useLanguage, useT, type TranslationKey } from '../i18n';
+import { nextSuggestions, stageOf, suggestionIdsFor, type SuggestionIcon } from '../lib/suggestions';
 import { formatDuration, formatLocalTime, formatNumber, minutesBetween } from '../lib/time';
 import { useNow } from '../lib/useNow';
 import { assistant, clock, flightData } from '../services';
@@ -45,16 +51,7 @@ interface Message {
   time: string;
 }
 
-const GROUND_SUGGESTIONS: { key: TranslationKey; icon: LucideIcon }[] = [
-  { key: 'assistant.s.seat', icon: Armchair },
-  { key: 'assistant.s.boarding', icon: Clock },
-  { key: 'assistant.s.security', icon: ShieldCheck },
-];
-const AIR_SUGGESTIONS: { key: TranslationKey; icon: LucideIcon }[] = [
-  { key: 'assistant.s.landing', icon: PlaneLanding },
-  { key: 'assistant.s.turbulence', icon: Wind },
-  { key: 'assistant.s.phone', icon: Smartphone },
-];
+const CHIP_ICONS: Record<SuggestionIcon, LucideIcon> = { seat: Armchair, clock: Clock, shield: ShieldCheck, landing: PlaneLanding, wind: Wind, phone: Smartphone, map: MapPin, file: FileText, bag: Luggage, drop: Droplets, chat: MessageCircle };
 
 // Asistentul Flo (schița 06): antet cu avatar, card cu timpul până la îmbarcare și aripa avionului,
 // conversația, întrebări rapide și bara de scris cu tentă violet.
@@ -68,6 +65,7 @@ export function AssistantScreen() {
   const now = useNow();
   const { type } = useLayout();
   const [messages, setMessages] = useState<Message[]>([]);
+  const [asked, setAsked] = useState<ReadonlySet<string>>(() => new Set()); // the guided questions already asked: they leave the chips and others take their place
   const [input, setInput] = useState('');
   const [streamingId, setStreamingId] = useState<number | null>(null);
   const scrollRef = useRef<ComponentRef<typeof ScrollView>>(null);
@@ -108,6 +106,8 @@ export function AssistantScreen() {
     const q = question.trim();
     if (!q || streamingId !== null) return;
     const time = localNow();
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setAsked(prev => new Set([...prev, ...suggestionIdsFor(q)]));
     const userMsg: Message = { id: nextId.current++, role: 'user', text: q, time };
     const answerId = nextId.current++;
     setMessages(m => [...m, userMsg, { id: answerId, role: 'assistant', text: '', time }]);
@@ -125,7 +125,7 @@ export function AssistantScreen() {
     }
   };
 
-  const suggestions = inAir ? AIR_SUGGESTIONS : GROUND_SUGGESTIONS;
+  const suggestions = nextSuggestions(!!inAir, stageOf(!!inAir, toBoarding, position?.progress), language, asked);
   const busy = !input.trim() || streamingId !== null;
 
   return (
@@ -215,7 +215,7 @@ export function AssistantScreen() {
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sugsScroll} contentContainerStyle={styles.sugs} keyboardShouldPersistTaps="handled">
           {suggestions.map(s => (
-            <Chip key={s.key} label={t(s.key)} icon={s.icon} onPress={() => ask(t(s.key))} />
+            <Chip key={s.id} label={s.text} icon={CHIP_ICONS[s.icon]} onPress={() => ask(s.text)} />
           ))}
         </ScrollView>
 

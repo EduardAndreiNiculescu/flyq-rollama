@@ -198,7 +198,7 @@ const FOLLOW_UP = /^(?:si|și|and|dar|but|what about|iar)\b/;
 const CARRY_RULE = /\b(?:pot|putem|poti|am voie|ai voie|avem voie|se poate|e voie|este permis|se permite|can i|may i|am i allowed|is it allowed|are we allowed)\b[^?]{0,40}\b(?:lua|duce|aduce|transporta|calatori|calatoresc|merge|zbura|intra|cu mine|cu noi|in avion|in cabina|in cala|in bagaj|la bord|bring|take|carry|pack|travel|fly)\b|\bam voie cu\b|\b(?:ce|care)\b[^?]{0,20}\b(?:documente|acte|reguli|restrictii)\b/;
 /** Pets and animals are a rules topic on their own ("cu cainele", "o pisica", "dog"). "cat" is left out: RO "cat" (how much) is also the animal without its accent. */
 const PET_RULE = /\b(?:caine\w*|catel\w*|pisic\w*|animal\w*|dogs?|cats|pets?)\b/;
-const KNOWLEDGE_FORCE = /\b(compens\w*|despagub\w*|entitled|drepturi\w*|rights|ce urmeaza|what do i do|how early|cat de devreme|bebelu\w*|infant|pisic\w*|pet|wheelchair|scaun cu rotile|pregnan\w*|restrictions?|miss(?:ed)? (?:my |the )?flight|pierdut legatura|lost (?:my )?connection)\b/;
+const KNOWLEDGE_FORCE = /\b(compens\w*|despagub\w*|entitled|drepturi\w*|rights|ce urmeaza|what do i do|how early|cat de devreme|bebelu\w*|infant|pisic\w*|pet|wheelchair|scaun cu rotile|pregnan\w*|restrictions?|miss(?:ed)? (?:my |the )?flight|pierdut legatura|lost (?:my )?connection|turbulen\w*|telefon\w*|phone|wifi|flight mode|airplane mode|mod avion)\b/;
 const DURATION_FORCE = /\bhow many hours (?:is|does) (?:the )?(?:trip|flight)|\bcat(?:e)? ore (?:face|dureaza|este) (?:drumul|zborul)/;
 
 function candidateFor(i: Intent, text: string): RouteCandidate {

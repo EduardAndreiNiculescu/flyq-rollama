@@ -86,6 +86,11 @@
       "name": "IATA - Lithium batteries guidance",
       "url": "https://www.iata.org/",
       "jurisdiction": "INT"
+    },
+    "EASA": {
+      "name": "EASA - European Union Aviation Safety Agency",
+      "url": "https://www.easa.europa.eu/",
+      "jurisdiction": "EU"
     }
   },
   "entries": [
@@ -295,7 +300,7 @@
       "id": "ff_eu_liquids_100ml",
       "topic": "security",
       "source": "SECURITY",
-      "checked": true,
+      "checked": false,
       "mayBeOutdated": true,
       "keywords": [
         "lichide",
@@ -306,15 +311,21 @@
         "100ml",
         "punga",
         "liquids",
-        "sticla"
+        "sticla",
+        "2 litri",
+        "2 litre",
+        "scanner ct",
+        "scannere ct",
+        "ct scanner",
+        "2 liters"
       ],
       "ro": {
         "title": "Lichide în bagajul de mână (UE)",
-        "body": "Ca regulă generală la plecarea din aeroporturile UE, lichidele din bagajul de mână trebuie să fie în recipiente de cel mult 100 ml, într-o pungă transparentă resigilabilă de maximum un litru. Pot exista excepții și cerințe locale. Verifică regulile aeroportului înainte de călătorie."
+        "body": "Regula generală la plecarea din aeroporturile UE: lichidele din bagajul de mână în recipiente de cel mult 100 ml, într-o pungă transparentă resigilabilă de maximum un litru. Unele aeroporturi cu scannere CT noi au început să permită lichide în recipiente mai mari (până la 2 litri), fără limita de 100 ml, dar nu peste tot: depinde de aeroportul de plecare (și de cel de escală). Pentru Craiova nu avem o confirmare în aplicație, așa că verifică înainte și urmează indicațiile personalului de la control."
       },
       "en": {
         "title": "Liquids in cabin baggage (EU)",
-        "body": "As a general rule when departing an EU airport, cabin liquids must be in containers of no more than 100 ml within one transparent resealable bag of up to one litre. Exceptions and local procedures may apply. Check the airport rules before travel."
+        "body": "General rule when departing an EU airport: cabin liquids in containers of no more than 100 ml, in one transparent resealable bag of up to one litre. Some airports with new CT scanners have started to allow larger containers (up to 2 litres) without the 100 ml limit, but not everywhere: it depends on the departure airport (and any connecting airport). We have no confirmation for Craiova in the app, so check ahead and follow the security staff's instructions."
       }
     },
     {
@@ -882,6 +893,56 @@
       "en": {
         "title": "Power banks and lithium batteries",
         "body": "Power banks and spare lithium batteries go in your carry-on bag only, not in checked baggage. In general they are allowed up to 100 Wh; between 100 and 160 Wh with the airline's approval, and above 160 Wh they cannot be carried. Check your airline's rules before you fly."
+      }
+    },
+    {
+      "id": "ff_phone_in_flight",
+      "topic": "inflight",
+      "source": "EASA",
+      "checked": false,
+      "mayBeOutdated": true,
+      "keywords": [
+        "telefon",
+        "telefonul",
+        "flight mode",
+        "airplane mode",
+        "phone",
+        "use my phone",
+        "folosi telefonul",
+        "telefon mobil",
+        "wifi",
+        "mobile phone"
+      ],
+      "ro": {
+        "title": "Telefonul în avion",
+        "body": "În zborurile din UE, telefonul și celelalte dispozitive electronice se pot folosi în modul avion (flight mode) pe toată durata zborului. Apelurile și datele mobile obișnuite nu se folosesc decât dacă compania oferă un serviciu la bord. Urmează indicațiile echipajului și regulile companiei tale."
+      },
+      "en": {
+        "title": "Phone on board",
+        "body": "On EU flights, phones and other electronic devices can be used in flight mode throughout the flight. Regular mobile calls and data are not used unless the airline offers an onboard service. Follow the crew's instructions and your airline's rules."
+      }
+    },
+    {
+      "id": "ff_turbulence",
+      "topic": "inflight",
+      "source": "EASA",
+      "checked": false,
+      "mayBeOutdated": true,
+      "keywords": [
+        "turbulenta",
+        "turbulente",
+        "ce inseamna turbulenta",
+        "turbulence",
+        "clatinat",
+        "zguduie"
+      ],
+      "ro": {
+        "title": "Turbulența",
+        "body": "Turbulența înseamnă mișcări ale avionului cauzate de aer neregulat (vânt, nori, curenți). E frecventă și avioanele sunt construite să o suporte; de obicei e doar neplăcută. Ține centura de siguranță prinsă cât stai pe scaun și urmează indicațiile echipajului."
+      },
+      "en": {
+        "title": "Turbulence",
+        "body": "Turbulence is the movement of the aircraft caused by uneven air (wind, clouds, air currents). It is common and aircraft are built to handle it; it is usually just uncomfortable. Keep your seat belt fastened while seated and follow the crew's instructions."
       }
     }
   ]
