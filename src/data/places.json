@@ -30,7 +30,8 @@
       "where": {
         "ro": "La parter, în hala de check-in, și la etajul 1, lângă porțile de îmbarcare",
         "en": "On the ground floor by the check-in hall, and on floor 1 near the boarding gates"
-      }
+      },
+      "mapLabel": "toalete"
     },
     {
       "id": "checkin",
@@ -85,7 +86,8 @@
       "where": {
         "ro": "La parter, între hala de check-in și zona de plecări",
         "en": "On the ground floor, between the check-in hall and the departures area"
-      }
+      },
+      "mapLabel": "securitate"
     },
     {
       "id": "passport",
@@ -136,7 +138,8 @@
       "where": {
         "ro": "La parter, în hala de check-in",
         "en": "On the ground floor in the check-in hall"
-      }
+      },
+      "mapLabel": "informatii"
     },
     {
       "id": "cafe",
@@ -171,7 +174,8 @@
       "where": {
         "ro": "La parter, în zona de plecări",
         "en": "On the ground floor in the departures area"
-      }
+      },
+      "mapLabel": "cafenea"
     },
     {
       "id": "coco",
@@ -190,8 +194,12 @@
         "bar",
         "baruri"
       ],
-      "where": null,
-      "named": true
+      "where": {
+        "ro": "Chiar în dreapta cum intri în terminal, la începutul holului",
+        "en": "Right on your right as you enter the terminal, at the start of the hall"
+      },
+      "named": true,
+      "mapLabel": "la-coco"
     },
     {
       "id": "dutyfree",
@@ -219,7 +227,8 @@
       "where": {
         "ro": "La etajul 1, înainte de porțile de îmbarcare",
         "en": "On floor 1, before the boarding gates"
-      }
+      },
+      "mapLabel": "magazin-1"
     },
     {
       "id": "atm",
@@ -269,7 +278,8 @@
         "clinic",
         "nurse"
       ],
-      "where": null
+      "where": null,
+      "mapLabel": "cabinet-medical"
     },
     {
       "id": "vip",
@@ -290,7 +300,8 @@
         "sala vip",
         "executive lounge"
       ],
-      "where": null
+      "where": null,
+      "mapLabel": "salon-vip"
     },
     {
       "id": "rentacar",
@@ -433,7 +444,8 @@
       "where": {
         "ro": "La parter, în fața halei de check-in",
         "en": "On the ground floor, in front of the check-in hall"
-      }
+      },
+      "mapLabel": "kind:exit"
     },
     {
       "id": "baggage",

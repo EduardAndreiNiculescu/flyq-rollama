@@ -62,7 +62,7 @@ export async function runToolLoop(
       if (answer.open && deps.nav && opts.allowSideEffects === true) {
         opts.onTool?.({ name: 'find_place', phase: 'start' });
         try {
-          opened = (await deps.nav.openAirportMap({ destination: answer.open.destination, nodeId: answer.open.nodeId, fromZone: deps.context.currentZone })) !== false;
+          opened = (await deps.nav.openAirportMap({ destination: answer.open.destination, nodeId: answer.open.nodeId, mapLabel: answer.open.mapLabel, fromZone: deps.context.currentZone })) !== false;
         } catch {
           opened = false;
         }

@@ -114,7 +114,7 @@ function statusColor(phase: Phase, confidence: string | undefined): string {
   return colors.textMuted;
 }
 
-export function MapScreen() {
+export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
   const insets = useSafeAreaInsets();
   const spatialRef = React.useRef<FlyQSpatialViewHandle>(null);
   const [state, dispatch] = React.useReducer(screenReducer, initialScreenState);
@@ -307,6 +307,14 @@ export function MapScreen() {
   );
 
   const places = native?.places ?? [];
+  // Opened from the assistant ("where is ..."): the route to that place starts once the map knows its places
+  const routedInitial = React.useRef(false);
+  React.useEffect(() => {
+    if (initialRoute && !routedInitial.current && places.some(p => p.id === initialRoute)) {
+      routedInitial.current = true;
+      send('routeTo', { id: initialRoute });
+    }
+  }, [initialRoute, places, send]);
   const route = native?.route ?? null;
   const routePlace = route ? places.find(p => p.id === route.to) : undefined;
   // The route ended or was cleared: the guide stops; arrival is felt once

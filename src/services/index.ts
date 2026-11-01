@@ -110,7 +110,7 @@ const laptopAssistant = new GatewayAssistantService();
 const deviceDeps = {
   now: () => clock.now(),
   phase: () => useFlightMode.getState().phase,
-  openMap: ({ destination, nodeId }: { destination: string; nodeId?: string }) => openMapFor(destination, nodeId),
+  openMap: ({ destination, nodeId, mapLabel }: { destination: string; nodeId?: string; mapLabel?: string }) => openMapFor(destination, nodeId, mapLabel),
   localTime: (utcIso: string, code: string) => {
     const a = flightData.getAirport(code);
     return a ? formatLocalTime(utcIso, a.utcOffsetMin) : null;

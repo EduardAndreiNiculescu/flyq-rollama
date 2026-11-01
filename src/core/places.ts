@@ -14,6 +14,8 @@ export type Place = {
   aliases: string[];
   /** The node of the indoor map; when present the map can open on the place */
   nodeId?: string;
+  /** The id of the place's label on the 3D terminal map (flyq-spatial): the map opens with a route to it */
+  mapLabel?: string;
   /** Where it is, in words. null/absent: not known yet (the map will say) */
   where?: { ro: string; en: string } | null;
   /** A named venue ("Coco's bar") wins over a generic word ("mananc") when both match */
@@ -99,7 +101,7 @@ export function findPlaces(question: string, places: Place[] = allPlaces()): Pla
 const pick = (variants: string[], seed: string) => variants[[...seed].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7) % variants.length]!;
 const lower = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
 
-export type PlaceAnswer = { text: string; open?: { destination: string; nodeId?: string } };
+export type PlaceAnswer = { text: string; open?: { destination: string; nodeId?: string; mapLabel?: string } };
 
 /** The answer for a place question, from the catalogue only. `mapReady`: the app has a map to open (so "I opened the map" can be said). */
 export function composePlaceAnswer(q: PlaceQuery, lang: Lang, seed: string, mapReady: boolean): PlaceAnswer {
@@ -119,8 +121,13 @@ export function composePlaceAnswer(q: PlaceQuery, lang: Lang, seed: string, mapR
       const text = ro
         ? pick([`${name}: ${lower(where)}.`, `${name} se află ${lower(where)}.`, `Îl găsești așa: ${lower(where)} (${name}).`], seed)
         : pick([`${name}: ${lower(where)}.`, `You will find ${name} ${lower(where)}.`], seed);
-      const opens = !!p.nodeId && mapReady;
-      return { text: opens ? `${text} ${ro ? 'Am deschis harta.' : 'I opened the map.'}` : text, open: p.nodeId ? { destination: name, nodeId: p.nodeId } : undefined };
+      const opens = (!!p.nodeId || !!p.mapLabel) && mapReady;
+      return { text: opens ? `${text} ${ro ? 'Am deschis harta.' : 'I opened the map.'}` : text, open: p.nodeId || p.mapLabel ? { destination: name, nodeId: p.nodeId, mapLabel: p.mapLabel } : undefined };
+    }
+    if (p.mapLabel) {
+      // No description in words, but the 3D terminal map has the place
+      const text = ro ? `${name} e marcat pe harta 3D a terminalului.` : `${name} is marked on the 3D terminal map.`;
+      return { text: mapReady ? `${text} ${ro ? 'Am deschis harta.' : 'I opened the map.'}` : text, open: { destination: name, mapLabel: p.mapLabel } };
     }
     return {
       text: ro

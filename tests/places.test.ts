@@ -61,3 +61,19 @@ describe('where-is questions: every way of asking, every place', () => {
     registerPlaces([]);
   });
 });
+
+describe('places that are on the 3D terminal map', () => {
+  it('open the 3D map with a route to the place, and say so only when it opened', () => {
+    const q = findPlaces('Unde e salonul VIP?')!;
+    const closed = composePlaceAnswer(q, 'ro', 'x', false);
+    expect(closed.text).toContain('harta 3D');
+    expect(closed.text).not.toContain('Am deschis harta');
+    expect(closed.open).toMatchObject({ mapLabel: 'salon-vip' });
+    expect(composePlaceAnswer(q, 'ro', 'x', true).text).toContain('Am deschis harta');
+  });
+  it("Coco's bar says where it is (right as you enter) and opens its label", () => {
+    const a = composePlaceAnswer(findPlaces('Unde e barul lui Coco?')!, 'ro', 'x', true);
+    expect(a.text).toMatch(/dreapta/);
+    expect(a.open).toMatchObject({ mapLabel: 'la-coco' });
+  });
+});

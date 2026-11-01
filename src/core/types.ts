@@ -76,4 +76,4 @@ export type Intent = {
 };
 
 /** `nodeId`: the map node of a place the catalogue already knows (src/core/places.ts); without it the map matches the destination text */
-export type NavigationRequest = { destination: string; fromZone?: string; nodeId?: string };
+export type NavigationRequest = { destination: string; fromZone?: string; nodeId?: string; mapLabel?: string };
