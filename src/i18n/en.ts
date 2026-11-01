@@ -34,6 +34,11 @@ export const en: Record<TranslationKey, string> = {
   'add.demoBadge': 'Demo',
   'add.privacy': 'Your ticket stays on this phone.',
   'add.language': 'Change language',
+  'add.err.noNetwork': 'No internet connection. The ticket is valid, but its flight is not in the app’s schedule and has to be looked up on the server.',
+  'add.err.unauthorized': 'The FlyQ server refused the request (the app key is missing or invalid).',
+  'add.err.upstream': 'The server had an error with the data provider. Try again in a few minutes.',
+  'add.err.wrongDay': 'The ticket is for a different day than the flight found now. Check the date on the ticket.',
+  'add.err.badFlight': 'The flight was found, but its airports cannot be read.',
   'add.notFound': "The ticket is valid, but we can’t find flight {flight} in the schedule.",
 
   'scan.title': 'Scan your ticket',

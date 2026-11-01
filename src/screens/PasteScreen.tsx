@@ -15,7 +15,7 @@ import { useT, type TranslationKey } from '../i18n';
 import { BCBP_FIELDS, BCBP_MANDATORY_LENGTH, DEMO_BCBP, julianToDate, maskPnr, parseBcbp } from '../lib/bcbp';
 import { formatShortDate } from '../lib/time';
 import { clock } from '../services';
-import { useAddTicket } from '../store/addTicket';
+import { addTicketMessage, useAddTicket } from '../store/addTicket';
 import { useLanguage } from '../i18n';
 import { colors, radii, spacing } from '../theme/tokens';
 
@@ -38,15 +38,9 @@ export function PasteScreen() {
 
   const [verifying, runAfterLoader] = useBriefLoading();
   const submit = () =>
-    runAfterLoader(() => {
-      const result = addTicket(code, code === DEMO_BCBP);
-      if (!result.ok) {
-        setSubmitError(
-          result.error === 'flightNotFound'
-            ? t('add.notFound', { flight: result.flight ?? '' })
-            : t(`paste.err.${result.error}` as TranslationKey),
-        );
-      }
+    runAfterLoader(async () => {
+      const result = await addTicket(code, code === DEMO_BCBP);
+      if (!result.ok) setSubmitError(addTicketMessage(result, t));
     });
 
   return (

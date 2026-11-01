@@ -34,6 +34,11 @@ export const ro = {
   'add.demoBadge': 'Demo',
   'add.privacy': 'Biletul rămâne pe telefon.',
   'add.language': 'Schimbă limba',
+  'add.err.noNetwork': 'Nu am conexiune la internet. Biletul e valid, dar zborul nu e în orarul din aplicație și trebuie căutat pe server.',
+  'add.err.unauthorized': 'Serverul FlyQ a refuzat cererea (cheia aplicației lipsește sau nu e validă).',
+  'add.err.upstream': 'Serverul a dat o eroare la furnizorul de date. Încearcă din nou în câteva minute.',
+  'add.err.wrongDay': 'Biletul e pentru altă zi decât zborul găsit acum. Verifică data de pe bilet.',
+  'add.err.badFlight': 'Am găsit zborul, dar aeroporturile lui nu pot fi citite.',
   'add.notFound': 'Biletul e valid, dar nu găsim zborul {flight} în orar.',
 
   'scan.title': 'Scanează biletul',

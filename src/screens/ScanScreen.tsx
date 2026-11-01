@@ -8,11 +8,12 @@ import { AppText } from '../components/AppText';
 import { Button } from '../components/Button';
 import { ErrorBanner } from '../components/ErrorBanner';
 import { Screen, ScreenHeader } from '../components/Layout';
-import { useT, type TranslationKey } from '../i18n';
+import { useT } from '../i18n';
+import { DEMO_BCBP } from '../lib/bcbp';
 import { haptic } from '../lib/native';
 import { cameraScanner } from '../services';
 import { BOARDING_PASS_BARCODES, cameraAccess } from '../services/camera/CameraBarcodeScannerService';
-import { useAddTicket, type AddTicketResult } from '../store/addTicket';
+import { addTicketMessage, useAddTicket, type AddTicketResult } from '../store/addTicket';
 import { colors, radii, spacing } from '../theme/tokens';
 
 // Camera reală: previzualizare, cadru, lanternă. Se oprește la primul cod citit, vibrează ușor, arată „Cod citit”
@@ -67,8 +68,10 @@ export function ScanScreen() {
         setCode(read);
         timer = setTimeout(() => {
           if (!active) return;
-          const result = addTicket(read, true);
-          if (!result.ok) setFailure(result);
+          // A scanned code is a real ticket (the demo ticket is only the demo code)
+          void addTicket(read, read === DEMO_BCBP).then(result => {
+            if (active && !result.ok) setFailure(result);
+          });
         }, 700);
       })
       .catch(() => undefined);
@@ -144,7 +147,7 @@ export function ScanScreen() {
       </View>
       {failure ? (
         <ErrorBanner
-          message={failure.error === 'flightNotFound' ? t('add.notFound', { flight: failure.flight ?? '' }) : t(`paste.err.${failure.error}` as TranslationKey)}
+          message={addTicketMessage(failure, t)}
           retryLabel={t('scan.retry')}
           onRetry={retry}
         />

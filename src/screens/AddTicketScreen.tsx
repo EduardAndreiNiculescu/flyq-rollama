@@ -13,7 +13,7 @@ import { Glass } from '../components/Glass';
 import { RoundButton, ScrollScreen } from '../components/Layout';
 import { useT } from '../i18n';
 import { DEMO_BCBP } from '../lib/bcbp';
-import { useAddTicket } from '../store/addTicket';
+import { addTicketMessage, useAddTicket } from '../store/addTicket';
 import { useSettings } from '../store/settings';
 import { useLayout } from '../theme/responsive';
 import { colors, spacing } from '../theme/tokens';
@@ -30,9 +30,9 @@ export function AddTicketScreen() {
 
   const [verifying, runAfterLoader] = useBriefLoading();
   const addDemo = () =>
-    runAfterLoader(() => {
-      const result = addTicket(DEMO_BCBP, true);
-      if (!result.ok) setError(t('add.notFound', { flight: result.flight ?? '' }));
+    runAfterLoader(async () => {
+      const result = await addTicket(DEMO_BCBP, true);
+      if (!result.ok) setError(addTicketMessage(result, t));
     });
 
   return (
