@@ -181,6 +181,8 @@ final class SpatialMapView: UIView, UIGestureRecognizerDelegate {
   var onLabelTap: ((String) -> Void)?
   /// While the user walks a route, the camera turns behind them (what is ahead shows).
   var walkHeadingUp = false
+  /// The map turns with the way the phone points (like a maps app in compass mode) while it follows the user; off = north up.
+  var headingUp = true
   private let pin = PinGraphic()
   private var displayLink: DisplayLinkProxy?
 
@@ -403,7 +405,7 @@ final class SpatialMapView: UIView, UIGestureRecognizerDelegate {
   /// Labels grow with the camera's distance, so they keep about the same size on screen.
   private func updateLabelScale() {
     // Smaller than before and with a lower floor: zoomed in, the badges no longer cover the map (Alex, 01.11)
-    let s = min(max(distance / 21, 0.2), 14)
+    let s = min(max(distance / 17, 0.34), 14)
     for child in labelsNode.childNodes {
       child.simdScale = SIMD3<Float>(s, s, s)
     }
@@ -609,14 +611,15 @@ final class SpatialMapView: UIView, UIGestureRecognizerDelegate {
   }
 
   private func step(_ dt: Float) {
-    let k = 1 - exp(-dt * 8)
+    // Following the user the camera is stickier: it keeps up with the pin instead of trailing behind it
+    let k = 1 - exp(-dt * (followUser && hasPinPose ? 14 : 8))
     if followUser && hasPinPose {
       desiredTarget = SIMD3<Float>(pinPosition.x, floorY, pinPosition.z)
-      if walkHeadingUp {
-        // turn behind the user, slowly (the camera's yaw and the pin's heading share the angle)
+      if walkHeadingUp || headingUp {
+        // turn behind the user (the camera's yaw and the pin's heading share the angle)
         var d = pinTargetHeading - desiredYaw
         d = atan2(sin(d), cos(d))
-        desiredYaw += d * min(1, dt * 2.5)
+        desiredYaw += d * min(1, dt * (walkHeadingUp ? 2.5 : 4))
       }
     }
     var changed = false
@@ -785,7 +788,7 @@ final class SpatialMapView: UIView, UIGestureRecognizerDelegate {
       self.onRefollowed?()
     }
     refollowWork = work
-    DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: work)
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: work)
   }
 
   private func metersPerPoint() -> Float {

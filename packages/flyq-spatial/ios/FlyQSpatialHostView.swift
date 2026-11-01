@@ -531,6 +531,8 @@ public final class FlyQSpatialHostView: UIView {
     case "setHeading":
       // Only the direction changed (compass): the pin turns, the haptic guide uses it
       if let d = (args["headingDeg"] as? NSNumber)?.doubleValue { setExternalHeading(d) }
+    case "setHeadingUp":
+      mapView.headingUp = (args["enabled"] as? Bool) ?? true
     case "setFollow":
       let enabled = (args["enabled"] as? Bool) ?? true
       mapView.setFollow(enabled)

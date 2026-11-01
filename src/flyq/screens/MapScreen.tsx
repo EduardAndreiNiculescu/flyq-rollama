@@ -858,7 +858,9 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
               onPress={() => {
                 send('recenter');
                 send('setFollow', { enabled: true });
+                send('setHeadingUp', { enabled: true });
               }}
+              onLongPress={() => send('setHeadingUp', { enabled: false })}
               style={styles.roundButton}
             >
               <Compass size={26} color={colors.accent} strokeWidth={2.2} />
