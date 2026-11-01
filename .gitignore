@@ -90,3 +90,6 @@ scripts/apify-*.ts
 
 verify-report.json
 verify-bench.json
+
+# Local Netlify folder
+.netlify

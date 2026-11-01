@@ -1,3 +1,4 @@
 # Deploy the share page (web/share) on Netlify: see docs/SHARE_FLIGHT.md, section "Netlify".
 [build]
   publish = "web/share"
+  command = "echo static page, nothing to build" # without this Netlify runs the app's npm build script (the iOS build on the Mac)
