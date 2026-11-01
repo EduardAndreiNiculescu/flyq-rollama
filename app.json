@@ -40,7 +40,16 @@
           "mode": "development"
         }
       ],
-      "expo-widgets"
+      "expo-widgets",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "FlyQ folosește camera ca să citească codul de pe cartea de îmbarcare.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false,
+          "barcodeScannerEnabled": true
+        }
+      ]
     ]
   }
 }

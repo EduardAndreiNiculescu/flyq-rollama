@@ -78,7 +78,7 @@ Tot ce urmează e citit din cod. Acolo unde vine din `HANDOFF.md`, e spus explic
 
 | Date | De unde vine astăzi | Fișier | Stare |
 |---|---|---|---|
-| Codul biletului | Lipit de utilizator (`PasteScreen`) sau returnat de scanner (`MockBarcodeScannerService.ts`, după 3,2 s, `DEMO_BCBP`). Parsat local de `lib/bcbp.ts`. | `AirportApp/src/services/mock/MockBarcodeScannerService.ts` | Mock la scanare; parser real |
+| Codul biletului | Lipit de utilizator (`PasteScreen`) sau citit de camera reală (expo-camera: PDF417, Aztec, QR; primul cod citit, textul brut). Parsat local de `lib/bcbp.ts`. | `AirportApp/src/services/camera/CameraBarcodeScannerService.ts`, `AirportApp/src/screens/ScanScreen.tsx` | Cameră reală; parser real |
 | Zborul (`findFlight`, `getFlight`, `getAirport`, `getLandmarks`) | Fișierul `flights.json`, citit sincron | `AirportApp/src/services/mock/MockFlightDataService.ts`, `AirportApp/src/data/flights.json` | Mock (date statice) |
 | Ora curentă | Ceas simulat, ancorat la `2026-10-31T06:22Z`, care merge în timp real. Profilul îl poate muta înainte. | `AirportApp/src/services/mock/MockClockService.ts` | Mock |
 | Poziția în zbor | Simulare pe cerc mare, cu viteza ×45. Primele 14 s sunt estimare, apoi „GPS” simulat. Nu există GPS real. | `AirportApp/src/services/mock/MockFlightTrackerService.ts` | Mock |
