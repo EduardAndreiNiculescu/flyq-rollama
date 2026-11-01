@@ -10,12 +10,12 @@ import { useFlightMode } from '../store/flightMode';
 import { useLive } from '../store/live';
 import { useTickets } from '../store/tickets';
 import type { Airport, BoardingPass, Flight, FlightContext, FlightPosition, Landmark } from '../types';
+import { CameraBarcodeScannerService } from './camera/CameraBarcodeScannerService';
 import { DeviceAssistantService, DeviceToolsAssistantService, engine } from './live/DeviceAssistantService';
 import { GatewayAssistantService } from './live/GatewayAssistantService';
 import { LiveFlightTrackerService } from './live/LiveFlightTrackerService';
 import { getLiveAirport, getLiveEntry, isLiveFlightId } from './live/liveFlights';
 import { MockAssistantService } from './mock/MockAssistantService';
-import { MockBarcodeScannerService } from './mock/MockBarcodeScannerService';
 import { MockClockService } from './mock/MockClockService';
 import { MockFlightDataService } from './mock/MockFlightDataService';
 import { MockFlightTrackerService } from './mock/MockFlightTrackerService';
@@ -55,7 +55,9 @@ export const flightData: FlightDataService = {
 };
 
 export const terminalService: TerminalService = new MockTerminalService();
-export const barcodeScanner: BarcodeScannerService = new MockBarcodeScannerService();
+// Camera reală; ecranul de scanare îi dă codurile prin `cameraScanner.handleBarcode`.
+export const cameraScanner = new CameraBarcodeScannerService();
+export const barcodeScanner: BarcodeScannerService = cameraScanner;
 export const indoorPosition: IndoorPositionService = new MockIndoorPositionService();
 
 // Tracker: picks mock or live when a flight starts; subscribers survive a switch.

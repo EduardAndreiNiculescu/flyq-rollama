@@ -1,48 +1,90 @@
 import { useNavigation } from '@react-navigation/native';
-import { CircleCheck, ClipboardPaste, Flashlight } from 'lucide-react-native';
-import { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { CameraView, useCameraPermissions } from 'expo-camera';
+import { CameraOff, CircleCheck, ClipboardPaste, Flashlight, Settings } from 'lucide-react-native';
+import { useEffect, useRef, useState } from 'react';
+import { AppState, Linking, StyleSheet, View } from 'react-native';
 import Animated, { Easing, FadeIn, useAnimatedStyle, useReducedMotion, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 import { AppText } from '../components/AppText';
 import { Button } from '../components/Button';
+import { ErrorBanner } from '../components/ErrorBanner';
 import { Screen, ScreenHeader } from '../components/Layout';
-import { useT } from '../i18n';
-import { barcodeScanner } from '../services';
-import { useAddTicket } from '../store/addTicket';
+import { useT, type TranslationKey } from '../i18n';
+import { haptic } from '../lib/native';
+import { cameraScanner } from '../services';
+import { BOARDING_PASS_BARCODES, cameraAccess } from '../services/camera/CameraBarcodeScannerService';
+import { useAddTicket, type AddTicketResult } from '../store/addTicket';
 import { colors, radii, spacing } from '../theme/tokens';
 
-// Cameră simulată: un bilet tipărit în cadru și o linie de scanare animată.
-// Când va exista o cameră reală, se schimbă doar BarcodeScannerService.
+// Camera reală: previzualizare, cadru, lanternă. Se oprește la primul cod citit, vibrează ușor, arată „Cod citit”
+// și adaugă biletul cu textul brut. Fără permisiune sau fără cameră (simulatorul) rămâne lipirea manuală.
 export function ScanScreen() {
   const t = useT();
   const navigation = useNavigation();
   const addTicket = useAddTicket();
-  const [found, setFound] = useState(false);
+  const [permission, requestPermission, getPermission] = useCameraPermissions();
+  const access = cameraAccess(permission);
+  const [unavailable, setUnavailable] = useState(false);
+  const [code, setCode] = useState<string | null>(null);
+  const [failure, setFailure] = useState<Extract<AddTicketResult, { ok: false }> | null>(null);
   const [torch, setTorch] = useState(false);
+  const [attempt, setAttempt] = useState(0);
+  const asked = useRef(false);
   const line = useSharedValue(0.5);
   const frameHeight = useSharedValue(0);
   // Cu „reducerea mișcării” activă, linia de scanare stă pe loc la mijlocul cadrului
   const reduceMotion = useReducedMotion();
+  const live = access === 'granted' && !unavailable;
+
+  // Fereastra sistemului apare o singură dată; după un refuz rămân Setările.
+  useEffect(() => {
+    if (access === 'ask' && !asked.current) {
+      asked.current = true;
+      void requestPermission();
+    }
+  }, [access, requestPermission]);
+
+  // Întors din Setări: citim din nou permisiunea.
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', state => {
+      if (state === 'active') void getPermission();
+    });
+    return () => sub.remove();
+  }, [getPermission]);
 
   useEffect(() => {
+    if (!live) return;
     if (!reduceMotion) {
       line.value = 0;
       line.value = withRepeat(withTiming(1, { duration: 1300, easing: Easing.inOut(Easing.quad) }), -1, true);
     }
     let active = true;
-    barcodeScanner
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    cameraScanner
       .scan()
-      .then(code => {
+      .then(read => {
         if (!active) return;
-        setFound(true);
-        setTimeout(() => active && addTicket(code, true), 700);
+        haptic('tap');
+        setCode(read);
+        timer = setTimeout(() => {
+          if (!active) return;
+          const result = addTicket(read, true);
+          if (!result.ok) setFailure(result);
+        }, 700);
       })
       .catch(() => undefined);
     return () => {
       active = false;
-      barcodeScanner.cancel();
+      if (timer) clearTimeout(timer);
+      cameraScanner.cancel();
     };
-  }, [addTicket, line, reduceMotion]);
+  }, [addTicket, attempt, line, live, reduceMotion]);
+
+  const retry = () => {
+    setFailure(null);
+    setCode(null);
+    setAttempt(n => n + 1);
+  };
+  const paste = () => navigation.navigate('Paste', code ? { initialCode: code } : undefined);
 
   // Animăm transform (translateY), nu poziția `top`: fluid și pe telefoane vechi
   const lineStyle = useAnimatedStyle(() => ({ transform: [{ translateY: frameHeight.value * (0.08 + line.value * 0.84) }] }));
@@ -50,55 +92,79 @@ export function ScanScreen() {
   return (
     <Screen bottomInset="safeArea" column="columnNarrow">
       <ScreenHeader title={t('scan.title')} titleSize="headline" onBack={() => navigation.goBack()} />
-      <View style={[styles.camera, torch && styles.cameraTorch]} accessible accessibilityLabel={t('scan.simulated')}>
-        <View style={styles.paper}>
-          <View style={[styles.paperLine, { width: '55%' }]} />
-          <View style={[styles.paperLine, { width: '80%' }]} />
-          <View style={[styles.paperLine, { width: '40%' }]} />
-          <View style={styles.barcode}>
-            {BARS.map((w, i) => (
-              <View key={i} style={[styles.bar, { width: w }]} />
-            ))}
+      <View style={styles.camera} accessible={!live} accessibilityLabel={t('scan.camera')}>
+        {live ? (
+          <>
+            <CameraView
+              style={StyleSheet.absoluteFill}
+              facing="back"
+              enableTorch={torch}
+              barcodeScannerSettings={{ barcodeTypes: BOARDING_PASS_BARCODES }}
+              // Fără handler după primul cod: camera nu mai trimite evenimente
+              onBarcodeScanned={code ? undefined : cameraScanner.handleBarcode}
+              onMountError={() => setUnavailable(true)}
+            />
+            <View style={styles.frame} onLayout={e => (frameHeight.value = e.nativeEvent.layout.height)}>
+              <View style={[styles.corner, styles.tl]} />
+              <View style={[styles.corner, styles.tr]} />
+              <View style={[styles.corner, styles.bl]} />
+              <View style={[styles.corner, styles.br]} />
+              {code ? null : <Animated.View style={[styles.scanline, lineStyle]} />}
+            </View>
+            <View style={styles.pill} accessibilityLiveRegion="polite">
+              {code ? <CircleCheck size={16} color={colors.white} /> : <View style={styles.live} />}
+              <AppText variant="caption" color={colors.white}>
+                {code ? t('scan.found') : t('scan.hint')}
+              </AppText>
+            </View>
+            {code ? <Animated.View entering={FadeIn} style={styles.flash} pointerEvents="none" /> : null}
+          </>
+        ) : (
+          <View style={styles.message}>
+            {access === 'checking' || access === 'ask' ? (
+              <AppText variant="body" color={colors.white} align="center">
+                {t('scan.checking')}
+              </AppText>
+            ) : (
+              <>
+                <CameraOff size={32} color={colors.white} />
+                <AppText variant="headline" color={colors.white} align="center">
+                  {unavailable ? t('scan.unavailable') : t('scan.deniedTitle')}
+                </AppText>
+                <AppText variant="body" weight="400" color={colors.white} align="center">
+                  {unavailable ? t('scan.unavailableHint') : t('scan.denied')}
+                </AppText>
+                {access === 'blocked' ? (
+                  <Button label={t('scan.openSettings')} icon={Settings} variant="glass" onPress={() => void Linking.openSettings()} />
+                ) : null}
+              </>
+            )}
           </View>
-          <View style={[styles.paperLine, { width: '65%', marginTop: spacing.md }]} />
-        </View>
-        <View style={styles.frame} onLayout={e => (frameHeight.value = e.nativeEvent.layout.height)}>
-          <View style={[styles.corner, styles.tl]} />
-          <View style={[styles.corner, styles.tr]} />
-          <View style={[styles.corner, styles.bl]} />
-          <View style={[styles.corner, styles.br]} />
-          {found ? null : <Animated.View style={[styles.scanline, lineStyle]} />}
-        </View>
-        <View style={styles.pill}>
-          {found ? <CircleCheck size={16} color={colors.white} /> : <View style={styles.live} />}
-          <AppText variant="caption" color={colors.white}>
-            {found ? t('scan.found') : t('scan.hint')}
-          </AppText>
-        </View>
-        {found ? <Animated.View entering={FadeIn} style={styles.flash} /> : null}
+        )}
       </View>
-      <AppText variant="caption" weight="400" color={colors.text2} align="center">
-        {t('scan.formats')}
-      </AppText>
+      {failure ? (
+        <ErrorBanner
+          message={failure.error === 'flightNotFound' ? t('add.notFound', { flight: failure.flight ?? '' }) : t(`paste.err.${failure.error}` as TranslationKey)}
+          retryLabel={t('scan.retry')}
+          onRetry={retry}
+        />
+      ) : (
+        <AppText variant="caption" weight="400" color={colors.text2} align="center">
+          {t('scan.formats')}
+        </AppText>
+      )}
       <View style={styles.actions}>
-        <Button label={t('scan.torch')} icon={Flashlight} variant="glass" onPress={() => setTorch(v => !v)} style={styles.flex} />
-        <Button label={t('add.paste')} icon={ClipboardPaste} variant="glass" onPress={() => navigation.navigate('Paste')} style={styles.flex} />
+        {live ? <Button label={t('scan.torch')} icon={Flashlight} variant="glass" onPress={() => setTorch(v => !v)} style={styles.flex} /> : null}
+        <Button label={t('add.paste')} icon={ClipboardPaste} variant="glass" onPress={paste} style={styles.flex} />
       </View>
     </Screen>
   );
 }
 
-// Lățimile barelor unui PDF417 stilizat
-const BARS = [3, 1, 2, 4, 1, 1, 3, 2, 1, 4, 2, 1, 1, 3, 1, 2, 2, 4, 1, 3, 1, 1, 2, 3, 4, 1, 2, 1, 3, 2, 1, 4, 1, 2, 3, 1, 1, 2, 4, 2, 1, 3];
-
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   camera: { flex: 1, minHeight: 280, borderRadius: radii.xl, overflow: 'hidden', backgroundColor: colors.camera, justifyContent: 'center', alignItems: 'center' },
-  cameraTorch: { backgroundColor: colors.cameraTorch },
-  paper: { width: '78%', padding: spacing.lg, borderRadius: 6, backgroundColor: colors.paper, transform: [{ rotate: '-8deg' }] },
-  paperLine: { height: 8, borderRadius: 3, backgroundColor: colors.paperInk, marginBottom: spacing.sm },
-  barcode: { flexDirection: 'row', height: 56, gap: 1.5, marginTop: spacing.md, overflow: 'hidden' },
-  bar: { backgroundColor: colors.barcodeInk },
+  message: { alignItems: 'center', gap: spacing.md, padding: spacing.xl },
   frame: { position: 'absolute', left: '12%', right: '12%', top: '32%', bottom: '32%' },
   corner: { position: 'absolute', width: 36, height: 36, borderColor: colors.white },
   tl: { left: 0, top: 0, borderLeftWidth: 4, borderTopWidth: 4, borderTopLeftRadius: 14 },
