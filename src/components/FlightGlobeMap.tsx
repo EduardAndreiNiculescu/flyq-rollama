@@ -7,14 +7,15 @@ import { colors, radii } from '../theme/tokens';
 import type { Airport, FlightPosition, Landmark } from '../types';
 import { FlyQLoader } from './brand/FlyQLoader';
 import { FlightRouteMap } from './FlightRouteMap';
+import { GlobeHtmlSource } from '../lib/globeSource';
 import { GradientFill } from './GradientFill';
 
 // Pagina hărții și datele ei offline stau în android/app/src/main/assets/flightmap (vezi scripts/flightmap-assets.js)
-const SOURCE = { uri: 'file:///android_asset/flightmap/index.html' };
+const SOURCE = Platform.OS === 'android' ? { uri: 'file:///android_asset/flightmap/index.html' } : GlobeHtmlSource;
 // Capitale arătate doar ca reper; cele de lângă aeroporturile demo (Londra, București) ar acoperi pastilele
 const CONTEXT_CITIES = ['Paris', 'Berlin', 'Rome', 'Warsaw', 'Madrid', 'Prague', 'Amsterdam'];
 // Dacă harta nu răspunde în acest timp, rămâne harta desenată
-const READY_TIMEOUT_MS = 25000;
+const READY_TIMEOUT_MS = Platform.OS === 'android' ? 25000 : 16000; // on iOS the globe needs a connection: without one the drawn map appears sooner
 const POSITION_EVERY_MS = 1000;
 // Captură a globului real pentru zborul demo (CRA → LTN, în română), afișată imediat cât se încarcă harta,
 // ca să nu aștepți niciodată un card gol. Pentru alt zbor sau altă limbă rămâne cerul cu logoul animat.
@@ -52,7 +53,7 @@ export const FlightGlobeMap = memo(function GlobeMap(props: Props) {
   const mountedAt = useRef(Date.now());
   const latest = useRef(position);
   latest.current = position;
-  const [status, setStatus] = useState<Status>(Platform.OS === 'android' ? 'loading' : 'failed');
+  const [status, setStatus] = useState<Status>('loading');
   const [attempt, setAttempt] = useState(0);
   // O eroare sau o întârziere (telefon ocupat la pornire) nu duce direct la harta desenată: mai încercăm o dată
   const giveUp = useCallback(() => (attempt < 1 ? setAttempt(a => a + 1) : setStatus('failed')), [attempt]);
