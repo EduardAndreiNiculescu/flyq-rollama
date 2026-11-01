@@ -120,6 +120,9 @@ function statusColor(phase: Phase, confidence: string | undefined): string {
 }
 
 /** Where the QR poster at the main entrance is (the plan's metres) and the way a person facing it looks: into the hall, south (+z). */
+/** What stays of the bottom sheet when it is pulled down: the handle and the title. */
+const COLLAPSED_STRIP = 64;
+
 const ENTRANCE_QR = { id: 'qr-hol-1', x: 3.4, z: -10.6, headingDeg: 180 };
 
 export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
@@ -234,6 +237,7 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
     setTimeout(() => setQrBanner(null), 3000);
   };
   const sheetOpen = React.useRef(true);
+  const [sheetIsOpen, setSheetIsOpen] = React.useState(true);
   const collapsedOffset = React.useRef(0);
   const sheetPan = React.useMemo(
     () =>
@@ -247,6 +251,7 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
           const base = sheetOpen.current ? 0 : collapsedOffset.current;
           const open = Math.abs(g.dy) < 4 ? !sheetOpen.current : base + g.dy < collapsedOffset.current / 2;
           sheetOpen.current = open;
+          setSheetIsOpen(open);
           Animated.spring(sheetY, { toValue: open ? 0 : collapsedOffset.current, useNativeDriver: true, bounciness: 0 }).start();
         },
       }),
@@ -259,16 +264,16 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
   const onBottomLayout = React.useCallback((e: LayoutChangeEvent) => {
     const h = Math.round(e.nativeEvent.layout.height);
     setOverlayBottom(h);
-    collapsedOffset.current = Math.max(0, h - 64); // only the handle and the title stay, clear of the tab bar
+    collapsedOffset.current = Math.max(0, h - COLLAPSED_STRIP); // only the handle and the title stay, clear of the tab bar
   }, []);
   React.useEffect(() => {
     const timer = setTimeout(
       () =>
-        send('setOverlayInsets', { top: overlayTop, bottom: overlayBottom }),
+        send('setOverlayInsets', { top: overlayTop, bottom: sheetIsOpen ? overlayBottom : COLLAPSED_STRIP }),
       60,
     );
     return () => clearTimeout(timer);
-  }, [send, overlayTop, overlayBottom, native?.mode]);
+  }, [send, overlayTop, overlayBottom, sheetIsOpen, native?.mode]);
 
   // Notices disappear on their own.
   const notice = state.notice;

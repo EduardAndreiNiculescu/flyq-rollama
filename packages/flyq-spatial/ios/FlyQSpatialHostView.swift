@@ -3837,6 +3837,8 @@ public final class FlyQSpatialHostView: UIView {
     }
 
     cameraContainer.isUserInteractionEnabled = cameraVisible
+    // Where the map stops above the panel (or the pulled-down panel), the map's own colour shows, never the dark default
+    backgroundColor = mapView.backgroundColor ?? SpatialColors.background
     let changes = {
       self.mapView.frame = mapFrame
       self.cameraContainer.frame = cameraFrame
