@@ -104,7 +104,7 @@ const variantStyles = StyleSheet.create({
     backgroundColor: colors.accent,
   },
   secondary: {
-    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    backgroundColor: 'rgba(2, 132, 199, 0.10)',
   },
   danger: {
     backgroundColor: 'rgba(255, 85, 85, 0.9)',

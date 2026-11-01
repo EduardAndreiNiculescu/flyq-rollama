@@ -21,6 +21,7 @@ import {
   Vibration,
   View,
 } from 'react-native';
+import { Compass } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { CalibrationPanel } from '../components/CalibrationPanel';
@@ -864,6 +865,23 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
         </View>
       ) : null}
 
+      {/* Like the compass button of a maps app: back to the user, following (the map follows again by itself after 5 s as well) */}
+      {native ? (
+        <View pointerEvents="box-none" style={[styles.compassWrap, { bottom: overlayBottom + 76 }]}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={lang === 'ro' ? 'Centrează pe mine' : 'Centre on me'}
+            onPress={() => {
+              send('recenter');
+              send('setFollow', { enabled: true });
+            }}
+            style={styles.compassButton}
+          >
+            <Compass size={26} color={colors.accent} strokeWidth={2.2} />
+          </Pressable>
+        </View>
+      ) : null}
+
       <View pointerEvents="box-none" style={styles.bottomWrap}>
         {debug ? (
           <View style={styles.debugWrap} pointerEvents="none">
@@ -941,14 +959,31 @@ const styles = StyleSheet.create({
   },
   placeHint: {
     alignSelf: 'center',
-    backgroundColor: 'rgba(31, 39, 51, 0.92)',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: 22,
     paddingHorizontal: 16,
     paddingVertical: 10,
   },
   placeHintText: {
-    color: '#FFFFFF',
+    color: '#0F172A',
     fontSize: 14,
+  },
+  compassWrap: {
+    position: 'absolute',
+    right: 16,
+  },
+  compassButton: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.96)',
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 5,
   },
   placeFabWrap: {
     position: 'absolute',
@@ -966,7 +1001,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   placeFabOn: {
-    backgroundColor: '#1F2733',
+    backgroundColor: '#475569',
   },
   placeFabText: {
     color: '#FFFFFF',
