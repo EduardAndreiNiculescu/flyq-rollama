@@ -403,10 +403,10 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
   }, [initialRoute, places, send]);
 
   // Opened from the assistant ("where is ..."): the route to that place starts once the map knows its places
-  const routedInitial = React.useRef(false);
+  const routedInitial = React.useRef<string | null>(null);
   React.useEffect(() => {
-    if (initialRoute && !routedInitial.current && places.some(p => p.id === initialRoute)) {
-      routedInitial.current = true;
+    if (initialRoute && routedInitial.current !== initialRoute && places.some(p => p.id === initialRoute)) {
+      routedInitial.current = initialRoute;
       send('routeTo', { id: initialRoute });
     }
   }, [initialRoute, places, send]);
@@ -880,6 +880,16 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
           </Pressable>
         ) : null}
       </View>
+
+      {route && !route.found && !native?.placed && routePlace ? (
+        <View pointerEvents="none" style={[styles.qrBanner, { top: insets.top + 130 }]}>
+          <Text style={styles.qrBannerText}>
+            {lang === 'ro'
+              ? `${placeName(routePlace, lang)} e marcat pe hartă. Pune-te pe hartă ca să-ți arăt drumul.`
+              : `${placeName(routePlace, lang)} is marked on the map. Put yourself on the map to get the way.`}
+          </Text>
+        </View>
+      ) : null}
 
       {qrBanner ? (
         <View pointerEvents="none" style={[styles.qrBanner, { top: insets.top + 74 }]}>

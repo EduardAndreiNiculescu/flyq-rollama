@@ -1,7 +1,7 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 
 export type TabParamList = {
-  Map: { targetNodeId?: string } | undefined;
+  Map: { targetNodeId?: string; routeTo?: string } | undefined;
   Flight: undefined;
   Assistant: { question?: string } | undefined;
 };

@@ -990,7 +990,7 @@ public final class FlyQSpatialHostView: UIView {
       routeLine = RouteLine(points: [])
       routeShown = routeLine
       mapView.setRoute(nil)
-      mapView.focus(x: Float(first.at.x), z: Float(first.at.y))
+      mapView.focus(x: Float(first.at.x), z: Float(first.at.y), distance: 12)      // the place, close up, until the user is on the map
       emitState(force: true)
       return
     }

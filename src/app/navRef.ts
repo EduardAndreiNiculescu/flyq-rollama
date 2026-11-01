@@ -11,7 +11,7 @@ export const navRef = createNavigationContainerRef<RootStackParamList>();
 export function openMapFor(destination: string, nodeId?: string, mapLabel?: string): boolean {
   // A place that is on the 3D terminal map opens that map with a route to it (iPhone build with the flyq-spatial module)
   if (mapLabel && !benchState.active && navRef.isReady()) {
-    navRef.navigate('FlyQMap', { routeTo: mapLabel });
+    navRef.navigate('Main', { screen: 'Map', params: { routeTo: mapLabel } });
     return true;
   }
   // A node the place catalogue already knows is used as is; otherwise the destination text is matched to a point of the terminal.

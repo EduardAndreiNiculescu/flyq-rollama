@@ -1,7 +1,7 @@
 import { useRoute, type RouteProp } from '@react-navigation/native';
 import { View } from 'react-native';
 import { MapScreen } from '../flyq/screens/MapScreen';
-import type { RootStackParamList } from '../app/navigation';
+import type { RootStackParamList, TabParamList } from '../app/navigation';
 
 /**
  * The 3D terminal map from the flyq-spatial module (Denis): drawn plan, labels, routes, camera localization. Native iOS only; on other platforms
@@ -17,11 +17,12 @@ export function FlyQMapScreen() {
  * from Profile ("Harta veche"), and the assistant opens a place with a route through the `FlyQMap` stack screen.
  */
 export function FlyQMapTab() {
+  const params = useRoute<RouteProp<TabParamList, 'Map'>>().params;
   return (
     <View style={{ flex: 1, paddingBottom: 118 }}>
       {/* Clipped: a pulled-down sheet must not show under the tab bar */}
       <View style={{ flex: 1, overflow: 'hidden' }}>
-        <MapScreen />
+        <MapScreen initialRoute={params?.routeTo} />
       </View>
     </View>
   );
