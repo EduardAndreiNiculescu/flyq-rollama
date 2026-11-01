@@ -127,6 +127,8 @@ export function ProfileScreen() {
         </Glass>
       </View>
 
+      {/* The 3D terminal map from the flyq-spatial module (iPhone, needs the build with the module) */}
+      <Button label={language === 'ro' ? 'Harta 3D a terminalului (beta)' : '3D terminal map (beta)'} icon={Layers} variant="glass" onPress={() => navigation.navigate('FlyQMap')} />
       <Button label={t('profile.clear')} icon={Trash2} variant="danger" onPress={clearData} />
       <AppText variant="caption" weight="400" color={colors.textMuted} align="center">
         {t('profile.version')}

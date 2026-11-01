@@ -14,6 +14,7 @@ export type RootStackParamList = {
   Pass: { ticketId: string; justAdded?: boolean };
   Live: undefined;
   LiveFlight: undefined;
+  FlyQMap: undefined;
   Profile: undefined;
   Main: NavigatorScreenParams<TabParamList> | undefined;
 };

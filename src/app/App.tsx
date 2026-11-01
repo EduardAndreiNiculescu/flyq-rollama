@@ -20,6 +20,7 @@ import { PassScreen } from '../screens/PassScreen';
 import { PasteScreen } from '../screens/PasteScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { LiveFlightScreen } from '../screens/LiveFlightScreen';
+import { FlyQMapScreen } from '../screens/FlyQMapScreen';
 import { LiveScreen } from '../screens/LiveScreen';
 import { ScanScreen } from '../screens/ScanScreen';
 import { startDeviceLink } from '../services/live/deviceLink';
@@ -108,6 +109,7 @@ function RootNavigator() {
       <Stack.Screen name="FlightNumber" component={FlightNumberScreen} />
       <Stack.Screen name="Pass" component={PassScreen} />
       <Stack.Screen name="Live" component={LiveScreen} />
+      <Stack.Screen name="FlyQMap" component={FlyQMapScreen} options={{ animation: 'fade_from_bottom' }} />
       <Stack.Screen name="LiveFlight" component={LiveFlightScreen} options={{ animation: 'fade_from_bottom' }} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Main" component={MainTabs} options={{ animation: 'fade' }} />

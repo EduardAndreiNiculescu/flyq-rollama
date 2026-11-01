@@ -25,6 +25,7 @@
     "expo-sqlite": "~58.0.14",
     "expo-status-bar": "~58.0.4",
     "expo-widgets": "~58.0.26",
+    "flyq-spatial": "file:./packages/flyq-spatial",
     "gsap": "^3.15.0",
     "llama.rn": "0.13.0-rc.8",
     "lucide-react-native": "^1.64.0",

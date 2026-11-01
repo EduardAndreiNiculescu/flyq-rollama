@@ -1,0 +1,31 @@
+{
+  "name": "flyq-spatial",
+  "version": "0.1.0",
+  "description": "FlyQ indoor map (SceneKit) + camera localization (ARKit) as a Fabric native component",
+  "private": true,
+  "main": "src/index.tsx",
+  "react-native": "src/index.tsx",
+  "types": "src/index.tsx",
+  "files": [
+    "src",
+    "ios",
+    "tools",
+    "FlyQSpatial.podspec"
+  ],
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "codegenConfig": {
+    "name": "FlyQSpatialSpec",
+    "type": "components",
+    "jsSrcsDir": "src",
+    "ios": {
+      "components": {
+        "FlyQSpatialView": {
+          "className": "FlyQSpatialViewComponentView"
+        }
+      }
+    }
+  }
+}
