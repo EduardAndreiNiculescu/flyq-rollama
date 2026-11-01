@@ -3,7 +3,7 @@
 # Usage: MAC_HOST=user@host IPHONE=<udid> IPAD=<udid> bash scripts/mac/after-build.sh
 set -u
 done_on_mac() { ssh -o BatchMode=yes -o ConnectTimeout=15 "$MAC_HOST" 'grep -q BUILD-FINISHED ~/build.log 2>/dev/null'; }
-until done_on_mac; do sleep 60; done
+[ "${SKIP_WAIT:-0}" = 1 ] || until done_on_mac; do sleep 60; done
 MAC_DEVICE="$IPHONE" PUSH=1 node scripts/mac/remote.mjs build > /dev/null 2>&1
 sleep 30
 until done_on_mac; do sleep 60; done
