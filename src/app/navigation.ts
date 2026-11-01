@@ -15,6 +15,7 @@ export type RootStackParamList = {
   Live: undefined;
   LiveFlight: undefined;
   FlyQMap: { routeTo?: string } | undefined;
+  OldMap: undefined;
   Profile: undefined;
   Main: NavigatorScreenParams<TabParamList> | undefined;
 };
