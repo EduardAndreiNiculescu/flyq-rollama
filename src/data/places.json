@@ -60,6 +60,28 @@
       }
     },
     {
+      "id": "selfcheckin",
+      "kind": "checkin",
+      "names": {
+        "ro": "Self check-in",
+        "en": "Self check-in"
+      },
+      "aliases": [
+        "self check in",
+        "self checkin",
+        "self check-in",
+        "self check",
+        "check in automat",
+        "checkin automat",
+        "self-service"
+      ],
+      "where": {
+        "ro": "În hala de check-in, urmează indicatoarele „Self check-in” (pe lângă ghișeele numerotate)",
+        "en": "In the check-in hall: follow the \"Self check-in\" signs (next to the numbered desks)"
+      },
+      "named": true
+    },
+    {
       "id": "security",
       "kind": "security",
       "names": {

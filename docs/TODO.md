@@ -30,7 +30,7 @@ Build-ul include codul până la commit-ul cu căutarea live a biletului (scanne
 - [ ] **Aplicația de control a ecranelor** (de definit: ce controlează și pe ce dispozitiv; presupun o aplicație separată/pagină care comută etapele demo pe telefon și pe site).
 - [ ] **Videoclip scurt de prezentare** (script + ce secvențe înregistrăm, în ce ordine).
 - [ ] **Pitch complet** (structură, mesaje, demo live vs. înregistrat, plan B fără internet).
-- [ ] **Polish modul hartă (Dennis):** integrare LiDAR prin `registerPlaces` (`docs/LOCURI_SI_HARTA.md`), `nodeId`-uri reale, text pentru locurile fără poziție.
+- [ ] **Harta 3D (Denis), ramura `feat/denis-map`** (vezi `docs/HARTA_3D_INTEGRARE.md`): primul build cu modulul nativ (`pod install` neverificat), memoriile `.flyqmap` (3 zone, ~96 MB) ca „Găsește-mă” să meargă, testat ghidul haptic mersul real, polish (etichete noi din filmări/poze, Self check-in pe hartă).
 
 ## E. Rămase, mai mici
 - [ ] Globul din aplicație: pastilele sus/jos ca pe site.

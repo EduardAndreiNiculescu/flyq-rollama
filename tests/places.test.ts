@@ -77,3 +77,10 @@ describe('places that are on the 3D terminal map', () => {
     expect(a.open).toMatchObject({ mapLabel: 'la-coco' });
   });
 });
+
+describe('signage seen in the terminal', () => {
+  it('self check-in is a place of its own, and plain check-in still goes to the desks', () => {
+    expect(findPlaces('Unde e self check-in?')!.places[0]!.id).toBe('selfcheckin');
+    expect(findPlaces('Unde fac check-in?')!.places[0]!.id).toBe('checkin');
+  });
+});
