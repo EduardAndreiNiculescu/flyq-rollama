@@ -54,6 +54,15 @@ describe('share-flight contract (docs/SHARE_FLIGHT.md)', () => {
     expect(html).not.toMatch(/typeof j\.from\.lat/);
   });
 
+  it('serves the demo page at /test and /testing, with no token', async () => {
+    for (const path of ['/test', '/testing']) {
+      const res = await fetch(`${base}${path}`);
+      expect(res.status).toBe(200);
+      expect(await res.text()).toContain('testPage');
+    }
+    expect(readFileSync(new URL('../web/share/_redirects', import.meta.url), 'utf8')).toMatch(/^\/test\s+\/index\.html\s+200/m);
+  });
+
   it('answers 404 identically for an unknown, expired and revoked token', async () => {
     const expired = await create();
     const revoked = await create();

@@ -77,6 +77,7 @@ export function createShareServer({ now = () => Date.now(), session = 'dev-sessi
       if (!s || s.revokedAt !== null || s.expiresAt <= now()) return send(res, 404, { error: 'not_found' });
       return send(res, 200, flightState(now(), s.flightNumber, bare));
     }
+    if (req.method === 'GET' && (path === '/test' || path === '/testing')) return send(res, 200, readFileSync(PAGE, 'utf8'), 'text/html; charset=utf-8');
     if (req.method === 'GET' && /^\/s\/[A-Za-z0-9_-]{16,128}$/.test(path)) return send(res, 200, readFileSync(PAGE, 'utf8'), 'text/html; charset=utf-8');
     return send(res, 404, { error: 'not_found' });
   });

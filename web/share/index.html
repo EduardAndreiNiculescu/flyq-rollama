@@ -82,7 +82,10 @@
   'use strict';
   // ---------- config ----------
   var params = new URLSearchParams(location.search);
-  var demoMode = params.get('demo') === '1';
+  // /test (or /testing) and ?demo=1: simulated flight with a stage picker, no token and no server call
+  var testPage = /^\/(test|testing)\/?$/.test(location.pathname);
+  var demoMode = testPage || params.get('demo') === '1';
+  var stage = params.get('stage') || 'auto';
   var lang = (params.get('lang') || navigator.language || 'ro').toLowerCase().indexOf('ro') === 0 ? 'ro' : 'en';
   var token = params.get('t') || (location.pathname.match(/\/s\/([A-Za-z0-9_-]{16,128})\/?$/) || [])[1] || '';
   // The API is the page's own origin; ?api= is honoured only for the FlyQ server itself (so the page can also be hosted elsewhere), never for an arbitrary host.
@@ -160,8 +163,8 @@
     map.getSource('flown').setData(line(pos && path.length ? path.slice(0, idx + 1).concat([[pos.lon, pos.lat]]) : []));
     map.getSource('left').setData(line(path.length ? (pos ? [[pos.lon, pos.lat]] : []).concat(path.slice(pos ? idx + 1 : 0)) : []));
     if (!markers.length && a && b) {
-      markers.push(new maplibregl.Marker({ element: pill(d.from, T.dep, clockOf(d.scheduledDeparture)), anchor: 'left', offset: [10, 0] }).setLngLat([a[1], a[0]]).addTo(map));
-      markers.push(new maplibregl.Marker({ element: pill(d.to, T.arr, clockOf(d.scheduledArrival)), anchor: 'right', offset: [-10, 0] }).setLngLat([b[1], b[0]]).addTo(map));
+      markers.push(new maplibregl.Marker({ element: pill(d.from, T.dep, clockOf(d.scheduledDeparture)), anchor: 'top', offset: [0, 14] }).setLngLat([a[1], a[0]]).addTo(map));
+      markers.push(new maplibregl.Marker({ element: pill(d.to, T.arr, clockOf(d.scheduledArrival)), anchor: 'bottom', offset: [0, -14] }).setLngLat([b[1], b[0]]).addTo(map));
     }
     if (pos) {
       var hdg = typeof pos.headingDeg === 'number' ? pos.headingDeg : (path.length ? bearing(path[Math.max(0, idx - 1)], path[Math.min(path.length - 1, idx + 1)]) : 0);
@@ -176,7 +179,7 @@
         var mid = path[Math.floor(path.length / 2)], H = map.getContainer().clientHeight, W = map.getContainer().clientWidth;
         var lons = path.map(function (p) { return p[0]; }), lats = path.map(function (p) { return p[1]; });
         var span = Math.max(Math.max.apply(null, lons) - Math.min.apply(null, lons), (Math.max.apply(null, lats) - Math.min.apply(null, lats)) * 1.6, 2);
-        var zoom = Math.max(1.4, Math.min(6, Math.log2(Math.min(W * 0.66, H * 1.2) * 360 / (512 * span * 2.6))));
+        var zoom = Math.max(1.4, Math.min(6, Math.log2(Math.min(W * 0.8, H * 1.2) * 360 / (512 * span * 2.2))));
         map.jumpTo({ center: [mid[0], mid[1] + span * 0.16], zoom: zoom });
       }
       else map.jumpTo({ center: pos ? [pos.lon, pos.lat] : [23.889, 44.318], zoom: pos ? 5 : 4 });
@@ -224,11 +227,41 @@
   function ended(title, body) { $('endTitle').textContent = title; $('endBody').textContent = body; $('end').style.display = 'flex'; stop = true; }
 
   // ---------- data ----------
+  var STAGES = [['auto', 'Auto'], ['checkin', 'Check-in'], ['boarding', 'Îmbarcare'], ['closing', 'Poarta se închide'], ['delayed', 'Întârziat'], ['takeoff', 'Decolează'], ['air', 'În aer'], ['landed', 'Aterizat']];
+  function iso(ms, off) { return new Date(ms + off * 3600000).toISOString().replace(/\.\d+Z$/, (off < 0 ? '-' : '+') + ('0' + Math.abs(off)).slice(-2) + ':00'); }
   function demoData() {
     var a = { code: 'CRA', city: 'Craiova', lat: null, lon: null }, b = { code: 'LTN', city: 'Londra Luton', lat: null, lon: null }; // null on purpose: the page must draw with its own table
-    var pts = gcPoints(AIRPORTS.CRA, AIRPORTS.LTN, 96), cycle = 240, f = ((Date.now() / 1000) % cycle) / cycle, i = Math.min(95, Math.floor(f * 96)), p = pts[i], q = pts[i + 1];
-    return { flightNumber: 'W69901', demo: true, from: a, to: b, status: 'in_air', gate: '3', scheduledDeparture: '2026-11-01T10:40:00+02:00', scheduledArrival: '2026-11-01T11:50:00+00:00', progress: f,
-      eta: { epoch: Date.now() / 1000 + (1 - f) * 8700, kind: 'demo' }, position: { lat: p[1], lon: p[0], headingDeg: bearing(p, q), altitudeM: 10600, groundSpeedMps: 230 }, updatedAt: Date.now() / 1000 };
+    var pts = gcPoints(AIRPORTS.CRA, AIRPORTS.LTN, 96), now = Date.now(), flightMs = 8700 * 1000, st = stage;
+    if (st === 'auto') { // one lap of the whole story, 70 s
+      var t = (now / 1000) % 70;
+      st = t < 8 ? 'checkin' : t < 16 ? 'boarding' : t < 22 ? 'closing' : t < 26 ? 'takeoff' : t < 62 ? 'air' : 'landed';
+    }
+    var dep = now + 3600000, status = 'scheduled', gate = null, f = 0, withPos = false, delay = 0;
+    if (st === 'checkin') { dep = now + 150 * 60000; status = 'checkin'; }
+    else if (st === 'boarding') { dep = now + 35 * 60000; status = 'boarding'; gate = '3'; }
+    else if (st === 'closing') { dep = now + 12 * 60000; status = 'gate_closing'; gate = '3'; }
+    else if (st === 'delayed') { dep = now + 40 * 60000; status = 'delayed'; gate = '3'; delay = 45; }
+    else if (st === 'takeoff') { dep = now - 2 * 60000; status = 'departed'; gate = '3'; f = 0.015; withPos = true; }
+    else if (st === 'air') { status = 'in_air'; gate = '3'; f = auto_f(now); dep = now - f * flightMs; withPos = true; }
+    else if (st === 'landed') { dep = now - flightMs; status = 'landed'; gate = '3'; f = 1; withPos = true; }
+    var i = Math.min(95, Math.floor(f * 96)), p = pts[i], q = pts[Math.min(96, i + 1)], arr = dep + flightMs;
+    var d = { flightNumber: 'W69901', demo: true, from: a, to: b, status: status, gate: gate, scheduledDeparture: iso(dep - delay * 60000, 2), scheduledArrival: iso(arr - delay * 60000, 0), progress: f, updatedAt: now / 1000 };
+    if (delay) { d.estimatedDeparture = iso(dep, 2); d.estimatedArrival = iso(arr, 0); }
+    if (withPos) { d.position = { lat: p[1], lon: p[0], headingDeg: bearing(p, q), altitudeM: f < 0.05 || f >= 1 ? 0 : 10600, groundSpeedMps: 230 }; d.eta = { epoch: arr / 1000, kind: 'demo' }; }
+    return d;
+  }
+  function auto_f(now) { return stage === 'auto' ? Math.min(0.98, 0.04 + (((now / 1000) % 70) - 26) / 36 * 0.94) : ((now / 1000) % 120) / 120 * 0.9 + 0.05; }
+  if (testPage) {
+    var bar = document.createElement('div');
+    bar.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px';
+    STAGES.forEach(function (x) {
+      var btn = document.createElement('button'); btn.textContent = x[1]; btn.setAttribute('data-stage', x[0]);
+      btn.style.cssText = 'font:600 12px inherit;font-family:inherit;border:1px solid rgba(11,31,51,.15);background:#fff;color:#0B1F33;border-radius:999px;padding:5px 10px;cursor:pointer';
+      btn.onclick = function () { stage = x[0]; mark(); poll(); };
+      bar.appendChild(btn);
+    });
+    var mark = function () { [].forEach.call(bar.children, function (c) { var on = c.getAttribute('data-stage') === stage; c.style.background = on ? '#0284C7' : '#fff'; c.style.color = on ? '#fff' : '#0B1F33'; }); };
+    $('bottom').insertBefore(bar, $('foot')); mark();
   }
   // The server may send null coordinates; the codes are enough (the page has its own table), so only the codes are required.
   function parse(j) { return j && j.from && j.to && typeof j.from.code === 'string' && typeof j.to.code === 'string' ? j : null; }
