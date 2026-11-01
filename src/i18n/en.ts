@@ -104,6 +104,7 @@ export const en: Record<TranslationKey, string> = {
   'journey.gateClosed': 'The gate has closed',
   'journey.hurry': "Hurry: it’s about {walk} min on foot",
   'journey.gate': 'Gate',
+  'journey.availableFrom': 'From {time}',
   'journey.now': 'Now · ~{min} min',
   'journey.skipped': 'Skipped',
   'journey.prepare': 'Have ready',

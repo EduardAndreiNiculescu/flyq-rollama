@@ -32,10 +32,32 @@ export function buildSteps(ticket: Ticket, flight: Flight, from: Airport, to: Ai
 
 export type StepState = 'done' | 'current' | 'next' | 'skipped';
 
-export function stepStates(steps: JourneyStep[], completed: string[]): StepState[] {
-  let currentFound = false;
+/** The gate area opens this long before departure, and boarding this long before the boarding time: earlier, those steps cannot be started or ticked */
+export const GATE_OPENS_BEFORE_DEPARTURE_MIN = 90;
+export const BOARDING_OPENS_BEFORE_MIN = 5;
+
+/** For each step, the moment (epoch ms) it becomes available, or null when it is open now */
+export function stepOpensAt(steps: JourneyStep[], flight: Flight, nowMs: number): (number | null)[] {
   return steps.map(step => {
+    const at =
+      step.id === 'gate' ? Date.parse(flight.departureUtc) - GATE_OPENS_BEFORE_DEPARTURE_MIN * 60_000
+      : step.id === 'boarding' ? Date.parse(flight.boardingUtc) - BOARDING_OPENS_BEFORE_MIN * 60_000
+      : null;
+    return at !== null && nowMs < at ? at : null;
+  });
+}
+
+/**
+ * `opensAt` (from stepOpensAt): a step that is not open yet is only "next", whatever was ticked before, and nothing after it can be current or done.
+ * Without it, "I am at the gate" could be reached hours before boarding.
+ */
+export function stepStates(steps: JourneyStep[], completed: string[], opensAt?: (number | null)[]): StepState[] {
+  let currentFound = false;
+  let blocked = false;
+  return steps.map((step, i) => {
     if (step.skipped) return 'skipped';
+    if (opensAt?.[i] != null) blocked = true;
+    if (blocked) return 'next';
     if (completed.includes(step.id)) return 'done';
     if (!currentFound) {
       currentFound = true;

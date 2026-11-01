@@ -27,7 +27,7 @@ import { MapPanel } from '../components/map/MapPanel';
 import { SkyArt } from '../components/SkyArt';
 import { StepItem } from '../components/StepItem';
 import { useLanguage, useT, type TranslationKey } from '../i18n';
-import { buildSteps, remainingWalkMin, stepStates, URGENT_GATE_MIN, type JourneyStep, type PrepKey, type StepState } from '../lib/journey';
+import { buildSteps, remainingWalkMin, stepOpensAt, stepStates, URGENT_GATE_MIN, type JourneyStep, type PrepKey, type StepState } from '../lib/journey';
 import { formatDuration, formatLocalTime, formatLongDate, minutesBetween } from '../lib/time';
 import { useNow } from '../lib/useNow';
 import { flightData } from '../services';
@@ -84,7 +84,9 @@ export function JourneyScreen({ onShowFlightDetails }: { onShowFlightDetails?: (
 
   const statusChip = <FlightStatusChip flight={flight} offsetMin={from.utcOffsetMin} />;
   const steps = buildSteps(ticket, flight, from, to);
-  const states = stepStates(steps, completed);
+  const opensAt = stepOpensAt(steps, flight, now.getTime());
+  const states = stepStates(steps, completed, opensAt);
+  const allFinished = states.every(st => st === 'done' || st === 'skipped');
   const current = steps.find((_, i) => states[i] === 'current');
   // Biletul stă fixat sus în locul titlului; pe tableta landscape e în meniul lateral, deci păstrăm doar titlul
   const header = sideNav ? (
@@ -103,7 +105,7 @@ export function JourneyScreen({ onShowFlightDetails }: { onShowFlightDetails?: (
             title={t(`journey.step.${step.id}` as TranslationKey, { gate: flight.gate })}
             meta={stepMeta(step, t, flight, ticket.boardingGroup, ticket.pass.seat, from)}
             status={states[i]!}
-            right={<StepRight state={states[i]!} step={step} flight={flight} from={from} />}
+            right={<StepRight state={states[i]!} step={step} flight={flight} from={from} opensAt={opensAt[i] ?? null} />}
             last={i === steps.length - 1}
           >
             {states[i] === 'current' && (
@@ -130,7 +132,7 @@ export function JourneyScreen({ onShowFlightDetails }: { onShowFlightDetails?: (
           </StepItem>
         ))}
       </Glass>
-      {!current && (
+      {allFinished && (
         <Animated.View entering={FadeIn}>
           <Glass style={styles.allDone}>
             <AppText variant="headline" align="center">{t('journey.allDone')}</AppText>
@@ -185,10 +187,18 @@ function stepMeta(step: JourneyStep, t: ReturnType<typeof useT>, flight: Flight,
   }
 }
 
-function StepRight({ state, step, flight, from }: { state: StepState; step: JourneyStep; flight: Flight; from: Airport }) {
+function StepRight({ state, step, flight, from, opensAt }: { state: StepState; step: JourneyStep; flight: Flight; from: Airport; opensAt: number | null }) {
   const t = useT();
   if (state === 'skipped') return <Badge label={t('journey.skipped')} />;
   if (state === 'current') return <Badge label={t('journey.now', { min: step.etaMin })} tone="accent" />;
+  // A step that is not open yet says from when
+  if (opensAt !== null) {
+    return (
+      <AppText variant="caption" color={colors.text2} tabular>
+        {t('journey.availableFrom', { time: formatLocalTime(new Date(opensAt).toISOString(), from.utcOffsetMin) })}
+      </AppText>
+    );
+  }
   if (step.id === 'boarding') {
     return (
       <AppText variant="caption" color={colors.text2} tabular>

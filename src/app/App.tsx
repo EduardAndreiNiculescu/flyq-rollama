@@ -26,6 +26,7 @@ import { startDeviceLink } from '../services/live/deviceLink';
 import { startMemoryGuard } from '../services/live/memoryGuard';
 import { deviceModelState } from '../services/live/DeviceAssistantService';
 import { startFlightSync } from '../services/live/flightSync';
+import { startPushRegistration } from '../services/live/autoRegister';
 import { useLive } from '../store/live';
 import { initNotifications } from '../services/live/push';
 import { clock, flightData } from '../services';
@@ -123,7 +124,12 @@ export default function App() {
     startMemoryGuard(); // frees the model when the app goes to the background or iOS warns about memory
     // One line in the native console at start: which assistant and model this install uses (read with `devicectl ... --console`).
     void deviceModelState().then(m => console.error(`[FlyQ] start: assistant=${useLive.getState().assistantSource} tier=${useLive.getState().modelTier} backend=${useLive.getState().backend} keySet=${useLive.getState().flyqKey.length > 0} model=${m}`), () => console.error('[FlyQ] start: model check failed'));
-    return startFlightSync(); // the screens follow what the FlyQ server says (gate, delay)
+    const stopSync = startFlightSync(); // the screens follow what the FlyQ server says (gate, delay)
+    const stopPush = startPushRegistration(); // registers the active ticket's flight for push (device token, flight id) with no manual step
+    return () => {
+      stopSync();
+      stopPush();
+    };
   }, []);
   return (
     <GestureHandlerRootView style={styles.fill}>

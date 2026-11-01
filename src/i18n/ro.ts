@@ -104,6 +104,7 @@ export const ro = {
   'journey.gateClosed': 'Poarta s-a închis',
   'journey.hurry': 'Grăbește-te: mai ai ~{walk} min de mers',
   'journey.gate': 'Poarta',
+  'journey.availableFrom': 'De la {time}',
   'journey.now': 'Acum · ~{min} min',
   'journey.skipped': 'Sărit',
   'journey.prepare': 'Pregătește',

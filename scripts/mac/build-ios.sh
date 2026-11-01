@@ -13,6 +13,8 @@ echo "team $TEAM"
 
 # llama.rn adds increased-memory-limit only when NODE_ENV (or EAS_BUILD_PROFILE) is production; prebuild resets NODE_ENV, so the profile variable is what the plugin really sees.
 export NODE_ENV=production EAS_BUILD_PROFILE=production
+# The FlyQ app key is baked into the build from the Mac, never from git: put `export EXPO_PUBLIC_FLYQ_KEY=...` in ~/.flyq-build-env on the Mac (once).
+[ -f "$HOME/.flyq-build-env" ] && . "$HOME/.flyq-build-env" && echo "build env loaded (key length ${#EXPO_PUBLIC_FLYQ_KEY})"
 npm ci
 # Incremental by default (a clean prebuild recompiles React Native from source). CLEAN=1 forces it.
 if [ "${CLEAN:-0}" = 1 ] || [ ! -d ios ]; then npx expo prebuild --platform ios --clean; else npx expo prebuild --platform ios; fi
