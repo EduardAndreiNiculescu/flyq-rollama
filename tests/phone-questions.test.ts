@@ -58,7 +58,7 @@ export const PHONE_QUESTIONS: { q: string; text?: RegExp; tool?: string }[] = [
   { q: 'Unde pot închiria o mașină?', text: /Închirieri auto/ },
   { q: 'Unde e ghișeul de informații?', text: /Ghișeul de informații/ },
   { q: 'Unde e controlul de securitate?', text: /Controlul de securitate/ },
-  { q: 'Unde e poarta 3?', text: /Poarta 3/ },
+  { q: 'Unde e poarta 3?', text: /poarta 3/i },
   { q: 'Where is the restroom?', text: /Toilets/ },
   { q: 'Unde găsesc o farmacie?', tool: 'open_airport_map' },
   { q: 'Unde e un bancomat?', tool: 'find_place' },
