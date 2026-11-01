@@ -136,7 +136,7 @@ export const FlightGlobeMap = memo(function GlobeMap(props: Props) {
   const onGone = giveUp;
 
   if (status === 'failed') {
-    return <FlightRouteMap from={from} to={to} landmarks={landmarks} position={position} accessibilityLabel={accessibilityLabel} estimateLabel={estimateLabel} />;
+    return <FlightRouteMap from={from} to={to} landmarks={landmarks} position={position} accessibilityLabel={accessibilityLabel} estimateLabel={estimateLabel} departureLabel={departureLabel} arrivalLabel={arrivalLabel} />;
   }
 
   return (

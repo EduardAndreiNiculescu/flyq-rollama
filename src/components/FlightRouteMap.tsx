@@ -154,11 +154,14 @@ interface Props {
   position: FlightPosition | null;
   accessibilityLabel: string;
   estimateLabel: string;
+  /** "Decolare 10:40" / "Aterizare 11:50": shown in the airport pills (the pill shows only the code when absent) */
+  departureLabel?: string;
+  arrivalLabel?: string;
 }
 
 // Harta de zbor luminoasă: Europa din puncte albastre, un culoar mai intens de-a lungul rutei,
 // orașele ca puncte calde, ruta parcursă cu gradient și avionul cu puls de radar.
-export const FlightRouteMap = memo(function FlightRouteMap({ from, to, landmarks, position, accessibilityLabel, estimateLabel }: Props) {
+export const FlightRouteMap = memo(function FlightRouteMap({ from, to, landmarks, position, accessibilityLabel, estimateLabel, departureLabel, arrivalLabel }: Props) {
   const reduceMotion = useReducedMotion();
 
   // Ruta pe arc de cerc mare, eșantionată ca o curbă netedă
@@ -232,7 +235,11 @@ export const FlightRouteMap = memo(function FlightRouteMap({ from, to, landmarks
               <Stop offset="1" stopColor={colors.accentGlow} stopOpacity={0} />
             </RadialGradient>
             <LinearGradient id="flown" x1="0" y1="0" x2="1" y2="0">
-              <Stop offset="0" stopColor={colors.accentWarm} />
+              <Stop offset="0" stopColor={colors.accentIndigo} />
+              <Stop offset="1" stopColor={colors.accent} />
+            </LinearGradient>
+            <LinearGradient id="orb" x1="0" y1="0" x2="1" y2="1">
+              <Stop offset="0" stopColor={colors.accent} />
               <Stop offset="1" stopColor={colors.accentIndigo} />
             </LinearGradient>
           </Defs>
@@ -279,23 +286,31 @@ export const FlightRouteMap = memo(function FlightRouteMap({ from, to, landmarks
             </G>
           ) : null}
 
-          {/* Aeroporturile: lumini albe-albastre și codul, cu orașul dedesubt */}
+          {/* Aeroporturile: pastile albe cu un glob în gradient, codul și ora (ca pe harta din site) */}
           {[from, to].map(a => {
             const q = project(a);
-            const below = a === from;
-            // Lângă margini, textul se aliniază spre interior, ca să nu fie tăiat
-            const anchor = q.x < 60 ? 'start' : q.x > W - 60 ? 'end' : 'middle';
-            const tx = anchor === 'start' ? Math.max(6, q.x - 14) : anchor === 'end' ? Math.min(W - 6, q.x + 14) : q.x;
+            const label = a === from ? departureLabel : arrivalLabel;
+            const pw = label ? 104 : 62;
+            const ph = 32;
+            // The pill grows toward the inside of the map, so it is never cut by the edge
+            const toRight = q.x < W / 2;
+            const x0 = toRight ? q.x - 16 : q.x + 16 - pw;
+            const orbX = toRight ? x0 + 16 : x0 + pw - 16;
+            const textX = toRight ? x0 + 34 : x0 + 12;
             return (
               <G key={a.code}>
-                <Circle cx={q.x} cy={q.y} r={18} fill="url(#airportLight)" />
-                <Circle cx={q.x} cy={q.y} r={4} fill={colors.accent} stroke={colors.white} strokeWidth={1.4} />
-                <SvgText x={tx} y={below ? q.y + 22 : q.y - 14} fontSize={13} fontWeight="900" letterSpacing={1.2} fill={colors.text} textAnchor={anchor}>
+                <Rect x={x0} y={q.y - ph / 2 + 1.5} width={pw} height={ph} rx={ph / 2} fill={colors.accent} fillOpacity={0.18} />
+                <Rect x={x0} y={q.y - ph / 2} width={pw} height={ph} rx={ph / 2} fill={colors.white} />
+                <Circle cx={orbX} cy={q.y} r={13} fill={colors.accent} fillOpacity={0.2} />
+                <Circle cx={orbX} cy={q.y} r={10} fill="url(#orb)" />
+                <SvgText x={textX} y={label ? q.y - 2 : q.y + 5} fontSize={13} fontWeight="900" fill={colors.text}>
                   {a.code}
                 </SvgText>
-                <SvgText x={tx} y={below ? q.y + 33 : q.y - 26} fontSize={9} fontWeight="800" letterSpacing={0.8} fill={colors.accentText} textAnchor={anchor}>
-                  {a.city.toUpperCase()}
-                </SvgText>
+                {label ? (
+                  <SvgText x={textX} y={q.y + 10} fontSize={9.5} fontWeight="800" fill={colors.accentText}>
+                    {label}
+                  </SvgText>
+                ) : null}
               </G>
             );
           })}
@@ -323,8 +338,10 @@ export const FlightRouteMap = memo(function FlightRouteMap({ from, to, landmarks
               <AnimatedCircle cx={hp.x} cy={hp.y} fill="none" stroke={colors.accentGlow} strokeWidth={1.4} animatedProps={pulseProps} />
             </G>
           ) : null}
-          <G transform={`translate(${hp.x} ${hp.y}) rotate(${rotation}) scale(1.4)`} opacity={estimate ? 0.7 : 1}>
-            <Path d="M11 0 4-2-1-10h-3l2 8h-8l-2-3h-2l1 5-1 5h2l2-3h8l-2 8h3l5-8z" fill={colors.accent} stroke={colors.white} strokeWidth={1.2} />
+          <Circle cx={hp.x} cy={hp.y + 1.5} r={17} fill={colors.accent} fillOpacity={0.22} />
+          <Circle cx={hp.x} cy={hp.y} r={16} fill={colors.white} />
+          <G transform={`translate(${hp.x} ${hp.y}) rotate(${rotation}) scale(1.05)`} opacity={estimate ? 0.7 : 1}>
+            <Path d="M11 0 4-2-1-10h-3l2 8h-8l-2-3h-2l1 5-1 5h2l2-3h8l-2 8h3l5-8z" fill={colors.accent} />
           </G>
         </Svg>
       </View>
