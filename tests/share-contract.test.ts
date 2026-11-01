@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import type { AddressInfo } from 'node:net';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createShareServer, flightState } from '../scripts/share-dev-server.mjs';
@@ -40,6 +41,17 @@ describe('share-flight contract (docs/SHARE_FLIGHT.md)', () => {
     expect(body).toMatchObject({ flightNumber: 'W69901', status: 'in_air' }); // the fields the page reads
     expect((body.from as { lat: number }).lat).toBeTypeOf('number');
     expect((body.position as { lat: number }).lat).toBeTypeOf('number');
+  });
+
+  it('the page draws a flight whose airports come without coordinates (null) from its own airport table', () => {
+    const html = readFileSync(new URL('../web/share/index.html', import.meta.url), 'utf8');
+    const f = flightState(1_000_000, 'W69901', true) as { from: { lat: number | null }; demo?: boolean };
+    expect(f.from.lat).toBeNull();
+    expect(f.demo).toBe(true);
+    const table = JSON.parse(/var AIRPORTS = (\{.*?\});/.exec(html)![1]!) as Record<string, number[]>;
+    for (const code of ['CRA', 'LTN', 'OTP', 'CDG']) expect(table[code]).toHaveLength(2);
+    expect(html).toContain('typeof j.from.code'); // parse() requires the codes, not the coordinates
+    expect(html).not.toMatch(/typeof j\.from\.lat/);
   });
 
   it('answers 404 identically for an unknown, expired and revoked token', async () => {

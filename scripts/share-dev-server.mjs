@@ -15,11 +15,12 @@ const A = { code: 'CRA', city: 'Craiova', lat: 44.3181, lon: 23.8886 };
 const B = { code: 'LTN', city: 'Londra Luton', lat: 51.8747, lon: -0.3683 };
 
 /** A simulated flight for the shared token: only flight facts, never anything about the passenger. */
-export function flightState(nowMs, flightNumber = 'W69901') {
+/** `bare`: like the real server today, the airports come without coordinates and the flight is marked demo (the page must still draw the route) */
+export function flightState(nowMs, flightNumber = 'W69901', bare = false) {
   const cycle = 240; // seconds for the whole route, so a demo moves visibly
   const f = ((nowMs / 1000) % cycle) / cycle;
   return {
-    flightNumber, from: A, to: B, status: 'in_air', gate: '3',
+    flightNumber, from: bare ? { ...A, lat: null, lon: null } : A, to: bare ? { ...B, lat: null, lon: null } : B, ...(bare ? { demo: true } : {}), status: 'in_air', gate: '3',
     scheduledDeparture: '2026-11-01T08:40:00+02:00', scheduledArrival: '2026-11-01T10:05:00+00:00',
     eta: { epoch: Math.floor(nowMs / 1000 + (1 - f) * 8700), kind: 'position_estimate' }, progress: f,
     position: { lat: A.lat + (B.lat - A.lat) * f, lon: A.lon + (B.lon - A.lon) * f, headingDeg: 300, altitudeM: 10600, groundSpeedMps: 230, observedAtSec: Math.floor(nowMs / 1000) },
@@ -27,7 +28,7 @@ export function flightState(nowMs, flightNumber = 'W69901') {
   };
 }
 
-export function createShareServer({ now = () => Date.now(), session = 'dev-session', ttlMs = 3 * 3600_000 } = {}) {
+export function createShareServer({ now = () => Date.now(), session = 'dev-session', ttlMs = 3 * 3600_000, bare = false } = {}) {
   const shares = new Map(); // token hash -> { id, flightNumber, expiresAt, revokedAt }
   const byId = new Map(); // id -> token hash
   const send = (res, status, body, type = 'application/json') => {
@@ -74,7 +75,7 @@ export function createShareServer({ now = () => Date.now(), session = 'dev-sessi
       const s = shares.get(hash(pub[1]));
       // The same answer for an unknown, expired or revoked token: nothing tells them apart.
       if (!s || s.revokedAt !== null || s.expiresAt <= now()) return send(res, 404, { error: 'not_found' });
-      return send(res, 200, flightState(now(), s.flightNumber));
+      return send(res, 200, flightState(now(), s.flightNumber, bare));
     }
     if (req.method === 'GET' && /^\/s\/[A-Za-z0-9_-]{16,128}$/.test(path)) return send(res, 200, readFileSync(PAGE, 'utf8'), 'text/html; charset=utf-8');
     return send(res, 404, { error: 'not_found' });
@@ -83,5 +84,5 @@ export function createShareServer({ now = () => Date.now(), session = 'dev-sessi
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const port = Number(process.argv[2] ?? 8787);
-  createShareServer().listen(port, '127.0.0.1', () => console.log('share dev server on http://127.0.0.1:' + port + ' (Bearer dev-session for POST/DELETE)'));
+  createShareServer({ bare: process.argv.includes('--bare') }).listen(port, '127.0.0.1', () => console.log('share dev server on http://127.0.0.1:' + port + ' (Bearer dev-session for POST/DELETE)'));
 }
