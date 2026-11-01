@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import type { NearPlace, Place, RouteStatus } from 'flyq-spatial';
+import type { NearPlace, NextTurn, Place, RouteStatus } from 'flyq-spatial';
 
 import { type Lang, t } from '../i18n';
 import { Button } from '../ui/Button';
@@ -50,6 +50,54 @@ export function routeLine(route: RouteStatus, lang: Lang): string {
       ? `< 1 ${t(lang, 'minuteShort')}`
       : `${minutes} ${t(lang, 'minuteShort')}`;
   return `${route.meters} m · ${time}`;
+}
+
+/** "12 m" under 20 m, then to the nearest 5 m ("45 m"), as in a maps app. */
+export function aheadMeters(meters: number): string {
+  return meters < 20
+    ? `${Math.max(1, Math.round(meters))} m`
+    : `${Math.round(meters / 5) * 5} m`;
+}
+
+const TURN_ARROWS: Record<NextTurn['kind'], string> = {
+  left: '←',
+  right: '→',
+  slightLeft: '↖',
+  slightRight: '↗',
+  back: '↶',
+  up: '⇡',
+  down: '⇣',
+  straight: '↑',
+  arrive: '◎',
+};
+
+/** The next turn as an arrow and a line: "În 12 m, la dreapta", "Urcă scările", "Înainte, 40 m". */
+export function nextTurnLine(
+  next: NextTurn,
+  lang: Lang,
+): { arrow: string; text: string } {
+  const arrow = TURN_ARROWS[next.kind];
+  if (next.kind === 'arrive') {
+    return { arrow, text: t(lang, 'turnArrive') };
+  }
+  if (next.kind === 'straight') {
+    return {
+      arrow,
+      text:
+        next.meters < 25
+          ? `${t(lang, 'turnDestination')} ${aheadMeters(next.meters)}`
+          : `${t(lang, 'turnStraight')}, ${aheadMeters(next.meters)}`,
+    };
+  }
+  const key = `turn_${next.kind}` as const;
+  const what = t(lang, key);
+  if (next.meters < 5) {
+    return { arrow, text: what.charAt(0).toUpperCase() + what.slice(1) };
+  }
+  return {
+    arrow,
+    text: `${t(lang, 'turnIn')} ${aheadMeters(next.meters)}, ${what}`,
+  };
 }
 
 /**
@@ -212,6 +260,9 @@ export function RouteCard({
           </Text>
         </View>
       </View>
+      {route.found && route.next ? (
+        <NextTurnRow next={route.next} lang={lang} />
+      ) : null}
       <View style={styles.cardButtons}>
         {canWalk && route.found ? (
           <Button
@@ -230,6 +281,18 @@ export function RouteCard({
           style={styles.flex1}
         />
       </View>
+    </View>
+  );
+}
+
+function NextTurnRow({ next, lang }: { next: NextTurn; lang: Lang }) {
+  const line = nextTurnLine(next, lang);
+  return (
+    <View style={styles.next} accessibilityLiveRegion="polite">
+      <Text style={styles.nextArrow}>{line.arrow}</Text>
+      <Text style={styles.nextText} numberOfLines={2}>
+        {line.text}
+      </Text>
     </View>
   );
 }
@@ -297,6 +360,27 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     fontSize: 14,
     fontVariant: ['tabular-nums'],
+  },
+  next: {
+    alignItems: 'center',
+    backgroundColor: '#EEF5FF',
+    borderRadius: 12,
+    flexDirection: 'row',
+    gap: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+  nextArrow: {
+    color: colors.accent,
+    fontSize: 20,
+    width: 22,
+    textAlign: 'center',
+  },
+  nextText: {
+    color: colors.text,
+    flex: 1,
+    fontSize: 15,
+    fontWeight: '600',
   },
   cardButtons: {
     flexDirection: 'row',

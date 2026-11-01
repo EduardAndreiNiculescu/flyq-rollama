@@ -42,6 +42,8 @@ yarn-error.*
 node_modules/
 .expo/
 ios/
+# the flyq-spatial module keeps its native sources in its own ios/ folder (the generated app ios/ stays ignored)
+!/packages/flyq-spatial/ios/
 android/
 *.gguf
 !assets/models/ff-adapter-v4-f16.gguf

@@ -152,6 +152,24 @@ export interface NearPlace {
   meters: number;
 }
 
+/** What to do next on a route: a turn, the stairs, straight on to the end, or arrived. */
+export type TurnKind =
+  | 'left'
+  | 'right'
+  | 'slightLeft'
+  | 'slightRight'
+  | 'back'
+  | 'up'
+  | 'down'
+  | 'straight'
+  | 'arrive';
+
+export interface NextTurn {
+  kind: TurnKind;
+  /** How far ahead (metres); for `straight` and `arrive`, what is left to the end. */
+  meters: number;
+}
+
 export interface RouteStatus {
   to: string;
   meters: number;
@@ -160,6 +178,8 @@ export interface RouteStatus {
   arrived: boolean;
   /** False when no way there was found (the place is out of reach on this floor). */
   found: boolean;
+  /** The next turn ("În 12 m, la dreapta"); null when arrived or unknown. */
+  next: NextTurn | null;
 }
 
 /** 'plan': the drawn map; '3d': the light 3D scan; '2d': a picture of the scan from above. */
@@ -668,7 +688,33 @@ function parseRoute(value: unknown): RouteStatus | null {
     seconds: Math.max(0, Math.round(seconds)),
     arrived: bool(o.arrived),
     found: o.found === undefined ? true : bool(o.found),
+    next: parseNextTurn(o.next),
   };
+}
+
+const TURN_KINDS: readonly TurnKind[] = [
+  'left',
+  'right',
+  'slightLeft',
+  'slightRight',
+  'back',
+  'up',
+  'down',
+  'straight',
+  'arrive',
+];
+
+function parseNextTurn(value: unknown): NextTurn | null {
+  if (!value || typeof value !== 'object') {
+    return null;
+  }
+  const o = value as Json;
+  const kind = TURN_KINDS.find(k => k === o.kind);
+  const meters = num(o.meters);
+  if (!kind || meters === null || meters < 0) {
+    return null;
+  }
+  return { kind, meters: Math.round(meters) };
 }
 
 const MAP_KINDS = ['plan', '3d', '2d'] as const;
