@@ -6,6 +6,7 @@
 | `../README.md` | Ce este aplicația, starea proiectului (verificat/neverificat), cum o rulezi |
 | `ARHITECTURA.md` | Vedere de ansamblu: straturi, navigare, date, build, decizii, riscuri |
 | `AI_ARCHITECTURE.md` | Pipeline-ul asistentului, politica de refuz, baza de cunoștințe, măsurători reale |
+| `LOCURI_SI_HARTA.md` | „Unde e…?”: catalogul de locuri, regulile de răspuns, cum se conectează harta LiDAR (`registerPlaces`) |
 | `LIVE_ACTIVITIES.md` | Cardul de pe ecranul blocat: fișiere, contractul de date, fluxul, testarea |
 | `NOTIFICARI.md` | Notificările push: abonare, mediul APNs, test din laptop |
 | `DATE_DINAMICE.md` | Ce vine de la backend și de la tracker față de ce afișează aplicația, ce e dinamic și ce lipsește |
