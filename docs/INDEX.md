@@ -3,6 +3,7 @@
 ## Citește mai întâi
 | Document | Ce găsești |
 |---|---|
+| `DOCUMENTATIE_COMPLETA.md` | **Documentația completă a aplicației**: ecrane, asistent, bilet, backend, notificări, partajare, harta 3D, accesibilitate, build, stare |
 | `../README.md` | Ce este aplicația, starea proiectului (verificat/neverificat), cum o rulezi |
 | `ARHITECTURA.md` | Vedere de ansamblu: straturi, navigare, date, build, decizii, riscuri |
 | `AI_ARCHITECTURE.md` | Pipeline-ul asistentului, politica de refuz, baza de cunoștințe, măsurători reale |

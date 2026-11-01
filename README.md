@@ -36,14 +36,9 @@ Principiul: **modelul nu scrie fapte**. Modelul alege doar unealta potrivită, i
 - **Baza de cunoștințe:** `src/core/knowledge.ts` și `src/data/`, căutare cu tolerare de greșeli și rădăcini românești (bagaj, lichide, animale, documente, drepturile pasagerilor).
 - **Siguranță:** urgențele (medical, foc) primesc un răspuns fix cu 112; regulile nu pot fi ocolite de un mesaj care imită o instrucțiune.
 
-## Modulul hărții interactive (Denis) — în dezvoltare
+## Harta 3D a terminalului (Denis)
 
-Harta interioară a aeroportului este realizată din **scanare LiDAR** de către Denis și va permite vizualizarea punctelor de interes (toalete, restaurante, case de schimb, porți, securitate) și **ghidarea pasagerului** către ele.
-
-Starea actuală: tabul „Hartă" are un înlocuitor (`MapPlaceholder`); **modulul LiDAR nu este integrat în acest repo**. Punctul de integrare este deja definit:
-- asistentul poate cere harta prin unealta `open_airport_map`, care apelează `NavigationHandler.openAirportMap({ destination, fromZone })` (`src/core/assistant.ts`, `src/core/types.ts`);
-- întrebări ca „unde e toaleta?" sau „unde pot schimba bani?" ajung deja la această unealtă; modulul hărții primește destinația și face ghidarea;
-- backend-ul FlyQ are un endpoint pentru pachetele de hartă (`/v1/venues`), pe care modulul îl poate folosi.
+Tabul „Hartă" este harta 3D a terminalului din modulul nativ `packages/flyq-spatial` (Swift/SceneKit/ARKit, doar iOS): planul terminalului, etichete cu iconițe, traseu cu indicații, localizare cu camera sau cu pași și busolă, ghid haptic pentru persoane cu deficiențe de vedere, bară de căutare, buton de busolă și comutator 3D/2D. Asistentul deschide harta spre un loc („unde e salonul VIP?"). Harta veche (schematică) rămâne în Profil → „Harta veche". Detalii: `docs/DOCUMENTATIE_COMPLETA.md` §10 și `docs/HARTA_3D_INTEGRARE.md`. Nu e verificat pe teren: senzorii, ghidul haptic și localizarea cu camera.
 
 ## Backend FlyQ
 
