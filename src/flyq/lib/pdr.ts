@@ -39,6 +39,7 @@ export class HeadingFilter {
   private h: number | null = null;
   constructor(private alpha = 0.18) {}
   update(rawDeg: number): number {
+    if (!Number.isFinite(rawDeg)) return this.h ?? 0;
     this.h = this.h === null ? norm360(rawDeg) : norm360(this.h + this.alpha * angleDiff(rawDeg, this.h));
     return this.h;
   }
@@ -63,7 +64,8 @@ export class DeadReckoner {
     return norm360(compassDeg - this.northDeg);
   }
   step(compassDeg: number): { x: number; z: number; headingDeg: number } {
-    const h = this.mapHeading(compassDeg);
+    // A reading that is not a number must never reach the position: it would stay NaN for good
+    const h = Number.isFinite(compassDeg) ? this.mapHeading(compassDeg) : 0;
     const r = (h * Math.PI) / 180;
     this.x += this.stepM * Math.sin(r);
     this.z -= this.stepM * Math.cos(r);
@@ -121,7 +123,9 @@ export class PdrSession {
         }),
       );
       const watch = await Location.watchHeadingAsync(h => {
+        // -1 means the compass is not ready (or not calibrated): skip the reading
         const raw = h.trueHeading >= 0 ? h.trueHeading : h.magHeading;
+        if (!Number.isFinite(raw) || raw < 0) return;
         const smooth = this.heading.update(raw);
         const now = Date.now();
         if (now - this.lastHeadingSent > 200) {

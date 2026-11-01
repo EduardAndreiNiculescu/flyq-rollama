@@ -259,7 +259,7 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
   const onBottomLayout = React.useCallback((e: LayoutChangeEvent) => {
     const h = Math.round(e.nativeEvent.layout.height);
     setOverlayBottom(h);
-    collapsedOffset.current = Math.max(0, h - 96); // a strip with the handle and the first line stays visible
+    collapsedOffset.current = Math.max(0, h - 64); // only the handle and the title stay, clear of the tab bar
   }, []);
   React.useEffect(() => {
     const timer = setTimeout(
@@ -986,7 +986,7 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: colors.background,
+    backgroundColor: '#DDE3EA', // the map's own background: where the sheet is pulled down nothing dark shows
     flex: 1,
   },
   placeHint: {

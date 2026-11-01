@@ -405,7 +405,9 @@ final class SpatialMapView: UIView, UIGestureRecognizerDelegate {
   /// Labels grow with the camera's distance, so they keep about the same size on screen.
   private func updateLabelScale() {
     // Smaller than before and with a lower floor: zoomed in, the badges no longer cover the map (Alex, 01.11)
-    let s = min(max(distance / 17, 0.34), 14)
+    // Far away they grow faster (they were too small to read), close up they stay small
+    let far = 1 + max(0, (distance - 25) / 50)
+    let s = min(max(distance / 17 * far, 0.34), 14)
     for child in labelsNode.childNodes {
       child.simdScale = SIMD3<Float>(s, s, s)
     }
@@ -416,11 +418,12 @@ final class SpatialMapView: UIView, UIGestureRecognizerDelegate {
 
   /// Once the user is on the map, a label shows when they come near it (fully within
   /// `labelNear`, gone past `labelFar`); with no pin, or zoomed out to look around, all of them do.
-  static let labelNear: Float = 16
-  static let labelFar: Float = 26
+  static let labelNear: Float = 30
+  static let labelFar: Float = 70
   static let labelsAllFrom: Float = 60
   private func updateLabelVisibility() {
-    let all = !hasPinPose || distance >= SpatialMapView.labelsAllFrom
+    // Zoomed in on a place far from the user (looking around, not following) it must not disappear
+    let all = !hasPinPose || !followUser || distance >= SpatialMapView.labelsAllFrom
     for child in labelsNode.childNodes {
       var opacity: CGFloat = 1
       if !all {
@@ -650,6 +653,7 @@ final class SpatialMapView: UIView, UIGestureRecognizerDelegate {
     updateFog()
 
     if hasPinPose {
+      pin.root.isHidden = false          // nothing else may leave the person hidden while there is a position
       let kp = 1 - exp(-dt * 12)
       pinPosition += (pinTargetPosition - pinPosition) * kp
       pinHeading += spatialAngleDelta(pinTargetHeading, pinHeading) * kp
