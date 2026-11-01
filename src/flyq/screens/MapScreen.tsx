@@ -119,6 +119,9 @@ function statusColor(phase: Phase, confidence: string | undefined): string {
   return colors.textMuted;
 }
 
+/** Where the QR poster at the main entrance is (the plan's metres) and the way a person facing it looks: into the hall, south (+z). */
+const ENTRANCE_QR = { id: 'qr-hol-1', x: 3.4, z: -10.6, headingDeg: 180 };
+
 export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
   const insets = useSafeAreaInsets();
   const spatialRef = React.useRef<FlyQSpatialViewHandle>(null);
@@ -216,8 +219,20 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
   const [overlayBottom, setOverlayBottom] = React.useState(0);
   // The search bar filters the carousel of places; Enter goes to the first match
   const [query, setQuery] = React.useState('');
+  const [qrBanner, setQrBanner] = React.useState<string | null>(null);
   // The bottom sheet can be pulled down to a strip and up again
   const sheetY = React.useRef(new Animated.Value(0)).current;
+  // A mock of scanning the QR poster at the entrance: the user is put there (the real scan is the camera's job, not built yet)
+  const mockScanQr = () => {
+    lastPoseRef.current = { x: ENTRANCE_QR.x, z: ENTRANCE_QR.z };
+    pdrRef.current?.moveTo(ENTRANCE_QR.x, ENTRANCE_QR.z);
+    send('setPose', { x: ENTRANCE_QR.x, z: ENTRANCE_QR.z, headingDeg: ENTRANCE_QR.headingDeg });
+    Vibration.vibrate();
+    const text = lang === 'ro' ? 'Cod QR citit: intrarea principală' : 'QR code read: main entrance';
+    AccessibilityInfo.announceForAccessibility(text);
+    setQrBanner(text);
+    setTimeout(() => setQrBanner(null), 3000);
+  };
   const sheetOpen = React.useRef(true);
   const collapsedOffset = React.useRef(0);
   const sheetPan = React.useMemo(
@@ -848,6 +863,12 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
         ) : null}
       </View>
 
+      {qrBanner ? (
+        <View pointerEvents="none" style={[styles.qrBanner, { top: insets.top + 74 }]}>
+          <Text style={styles.qrBannerText}>{qrBanner}</Text>
+        </View>
+      ) : null}
+
       <Animated.View pointerEvents="box-none" style={[styles.bottomWrap, { transform: [{ translateY: sheetY }] }]}>
         {/* The two round buttons ride on the sheet: back to me (compass) and 3D / 2D from above */}
         {native ? (
@@ -897,6 +918,13 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
             <View style={styles.grabberBar} />
           </View>
           {renderPanel()}
+          {native && !native.placed && !native.placeMode && phase !== 'calibrating' && phase !== 'recording' ? (
+            <Button
+              label={lang === 'ro' ? 'Scanează codul QR de la intrare (simulat)' : 'Scan the entrance QR code (simulated)'}
+              compact
+              onPress={mockScanQr}
+            />
+          ) : null}
           {native && !native.placeMode && phase !== 'calibrating' && phase !== 'recording' ? (
             <Button
               label={native.placed ? t(lang, 'placeMove') : t(lang, 'placeMe')}
@@ -988,6 +1016,24 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 8,
     elevation: 5,
+  },
+  qrBanner: {
+    alignSelf: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.97)',
+    borderRadius: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 9,
+    position: 'absolute',
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  qrBannerText: {
+    color: colors.accent,
+    fontSize: 14,
+    fontWeight: '700',
   },
   searchBar: {
     alignItems: 'center',
