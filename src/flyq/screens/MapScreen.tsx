@@ -265,7 +265,11 @@ export function MapScreen({ initialRoute }: { initialRoute?: string } = {}) {
     const h = Math.round(e.nativeEvent.layout.height);
     setOverlayBottom(h);
     collapsedOffset.current = Math.max(0, h - COLLAPSED_STRIP); // only the handle and the title stay, clear of the tab bar
-  }, []);
+    // The panel changed height while it was pulled down (a route card appeared, a menu closed): stay at the new bottom, no gap and no overhang
+    if (!sheetOpen.current) {
+      sheetY.setValue(collapsedOffset.current);
+    }
+  }, [sheetY]);
   React.useEffect(() => {
     const timer = setTimeout(
       () =>
